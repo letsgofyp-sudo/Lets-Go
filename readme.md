@@ -38,7 +38,7 @@ Base URL:
 
 Admin portals (confirm which one you use and keep only the correct one):
 - **Django Admin (common)**: `https://lets-go-bay.vercel.app/admin/`
-- **Custom Administration (if enabled)**: `https://lets-go-bay.vercel.app/administration/`
+- **Custom Administration**: `https://lets-go-bay.vercel.app/administration/login/`
 
 APK download:
 - **APK Download**: [Download APK](https://github.com/letsgofyp-sudo/Lets-Go/releases/download/v1.0.0/app-release.apk)
