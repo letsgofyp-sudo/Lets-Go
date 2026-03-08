@@ -41,7 +41,7 @@ Admin portals (confirm which one you use and keep only the correct one):
 - **Custom Administration (if enabled)**: `https://lets-go-bay.vercel.app/administration/`
 
 APK download:
-- **APK Download**: [Download APK](assets/app-release.apk)
+- **APK Download**: [Download APK](https://github.com/letsgofyp-sudo/Lets-Go/releases/download/v1.0.0/app-release.apk)
 
 ---
 
