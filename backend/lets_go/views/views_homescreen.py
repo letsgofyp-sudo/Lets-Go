@@ -10,6 +10,7 @@ import json
 import uuid
 import urllib.request
 import urllib.error
+import urllib.parse
 import math
 import re
 import difflib
@@ -61,6 +62,16 @@ def _ml_debug_requested(request) -> bool:
         return (request is not None) and (str(request.GET.get('ml_debug') or '').strip() == '1')
     except Exception:
         return False
+
+
+def _gradio_http_headers(base_url: str) -> dict:
+    b = (base_url or '').rstrip('/')
+    return {
+        'User-Agent': 'Mozilla/5.0',
+        'Accept': 'application/json',
+        'Origin': b,
+        'Referer': f'{b}/',
+    }
 
 
 def _to_float(value):
@@ -121,7 +132,35 @@ def _post_json(url: str, payload: dict, headers: dict | None = None, timeout_sec
             if isinstance(decoded, dict):
                 return decoded
             return None
-    except Exception:
+    except urllib.error.HTTPError as e:
+        try:
+            raw = e.read().decode('utf-8') if hasattr(e, 'read') else ''
+        except Exception:
+            raw = ''
+
+        decoded = None
+        if raw:
+            try:
+                decoded = json.loads(raw)
+            except Exception:
+                decoded = None
+
+        if isinstance(decoded, dict):
+            decoded = dict(decoded)
+            decoded['_http_error'] = True
+            decoded['_http_status'] = int(getattr(e, 'code', 0) or 0)
+            decoded['_http_url'] = url
+            return decoded
+
+        return {
+            '_http_error': True,
+            '_http_status': int(getattr(e, 'code', 0) or 0),
+            '_http_url': url,
+            '_http_body': (raw or '')[:3000],
+        }
+    except Exception as e:
+        if _ml_debug_enabled():
+            logger.exception('[ml_ranker] _post_json error: %s', str(e))
         return None
 
 
@@ -183,6 +222,63 @@ def _parse_gradio_sse_final_data(sse_text: str | None):
         return None
 
 
+def _parse_gradio_queue_sse_final_output_data(sse_text: str | None):
+    try:
+        if not sse_text:
+            return None
+
+        last_output_data = None
+
+        for raw in str(sse_text).splitlines():
+            line = raw.strip()
+            if not line:
+                continue
+
+            if not line.startswith('data:'):
+                continue
+
+            payload_str = line.split(':', 1)[1].strip()
+            if not payload_str:
+                continue
+
+            msg = None
+            decoded = None
+            try:
+                decoded = json.loads(payload_str)
+                if isinstance(decoded, dict):
+                    msg = decoded.get('msg')
+            except Exception:
+                decoded = None
+
+            if not isinstance(decoded, dict):
+                continue
+
+            out = decoded.get('output')
+            if isinstance(out, list):
+                last_output_data = out
+            elif isinstance(out, dict):
+                od = out.get('data')
+                if isinstance(od, list):
+                    last_output_data = od
+                elif isinstance(od, dict):
+                    odd = od.get('data')
+                    if isinstance(odd, list):
+                        last_output_data = odd
+
+            if last_output_data is None:
+                top_data = decoded.get('data')
+                if isinstance(top_data, list):
+                    last_output_data = top_data
+
+            # stop on completion
+            if msg in ('process_completed', 'process_failed', 'error'):
+                break
+
+        return last_output_data
+    except Exception:
+        return None
+
+
 _HF_CLIENT = None
 
 
@@ -221,6 +317,41 @@ def _gradio_call_predict(payload: dict):
 def _http_call_predict(url: str, payload: dict, timeout_seconds: float = 6.0) -> dict | list | str | None:
     try:
         cleaned_url = (url or '').strip().rstrip('/')
+        parsed0 = urllib.parse.urlsplit(cleaned_url)
+        is_hf_space = bool(parsed0.netloc) and parsed0.netloc.endswith('.hf.space')
+
+        # Gradio 6.x on HF Spaces (your Space config shows api_prefix=/gradio_api, protocol=sse_v3, enable_queue=true)
+        # Use queue/join + queue/data.
+        if is_hf_space or ('/gradio_api/run/' in cleaned_url) or cleaned_url.endswith('.hf.space'):
+            parsed = parsed0
+            if parsed.scheme and parsed.netloc:
+                base = f"{parsed.scheme}://{parsed.netloc}".rstrip('/')
+            else:
+                base = cleaned_url
+                if '/gradio_api/' in base:
+                    base = base.split('/gradio_api/', 1)[0]
+                base = base.rstrip('/')
+
+            headers = _gradio_http_headers(base)
+
+            session_hash = uuid.uuid4().hex
+            join_url = f"{base}/gradio_api/queue/join"
+            join_payload = {
+                'data': [payload],
+                'fn_index': 2,
+                'session_hash': session_hash,
+            }
+
+            join_decoded = _post_json(url=join_url, payload=join_payload, headers=headers, timeout_seconds=timeout_seconds)
+            if join_decoded is None:
+                return None
+            if isinstance(join_decoded, dict) and join_decoded.get('_http_error'):
+                return join_decoded
+
+            data_url = f"{base}/gradio_api/queue/data?session_hash={session_hash}"
+            sse_text = _get_text(url=data_url, headers=headers, timeout_seconds=max(20.0, float(timeout_seconds) * 5.0))
+            out_data = _parse_gradio_queue_sse_final_output_data(sse_text)
+            return out_data if out_data is not None else sse_text
 
         # Preferred Gradio HTTP API (works on HF Spaces):
         # POST {base}/call/{api_name} -> {"event_id": "..."}
@@ -489,7 +620,7 @@ def _rank_trips_with_ml(request, trips: list[dict], user_id: int | None) -> tupl
         'ml_provider': None,
     }
 
-    debug_mode = False
+    debug_mode = _ml_debug_enabled() or _ml_debug_requested(request)
 
     def _fallback_rank(_trips: list[dict]) -> tuple[list[dict], dict]:
         # logger.debug("\n[ml_ranker] USING FALLBACK RANKING (driver_rating)\n")
@@ -508,12 +639,12 @@ def _rank_trips_with_ml(request, trips: list[dict], user_id: int | None) -> tupl
             return (-drf, dep)
 
         trips_sorted = sorted(_trips, key=_fallback_key)
-        return trips_sorted, {
-            'ranked': True,
-            'ranked_by': 'driver_rating',
-            'ml_attempted': meta.get('ml_attempted', False),
-            'ml_error': meta.get('ml_error'),
-        }
+        out_meta = dict(meta)
+        out_meta['ranked'] = True
+        out_meta['ranked_by'] = 'driver_rating'
+        out_meta['ml_attempted'] = meta.get('ml_attempted', False)
+        out_meta['ml_error'] = meta.get('ml_error')
+        return trips_sorted, out_meta
 
     if not trips:
         # logger.debug("[ml_ranker] No trips provided")
@@ -588,10 +719,24 @@ def _rank_trips_with_ml(request, trips: list[dict], user_id: int | None) -> tupl
             meta['ml_provider'] = 'http'
             g_res = _http_call_predict(url=hf_url, payload=payload)
 
+        if debug_mode:
+            try:
+                meta['ml_raw_type'] = str(type(g_res))
+                meta['ml_raw_preview'] = str(g_res)[:1200]
+            except Exception:
+                pass
+
         # logger.debug("[ml_ranker] RAW HF RESPONSE TYPE: %s", type(g_res))
         # logger.debug("[ml_ranker] RAW HF RESPONSE: %s", str(g_res)[:5000])
 
         ranked = _extract_ranked_list(g_res)
+
+        if debug_mode:
+            try:
+                meta['ml_ranked_type'] = str(type(ranked))
+                meta['ml_ranked_preview'] = str(ranked)[:1200]
+            except Exception:
+                pass
 
         # logger.debug("[ml_ranker] EXTRACTED RANKED TYPE: %s", type(ranked))
         # logger.debug("[ml_ranker] EXTRACTED RANKED: %s", str(ranked)[:5000])
