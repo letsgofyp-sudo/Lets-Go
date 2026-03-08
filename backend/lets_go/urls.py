@@ -126,6 +126,7 @@ urlpatterns = [
     path('notifications/<int:notification_id>/dismiss/', views_user_notifications.dismiss_notification, name='dismiss_notification'),
     # Public share links (non-SOS)
     path('trips/<str:trip_id>/share/', views_incidents.trip_share_token, name='trip_share_token'),
+    path('trips/share-app/<str:token>/', views_incidents.trip_share_app_redirect, name='trip_share_app'),
     path('trips/share/<str:token>/', views_incidents.trip_share_view, name='trip_share'),
     path('trips/share/<str:token>/live/', views_incidents.trip_share_live, name='trip_share_live'),
     path('incidents/sos/', views_incidents.sos_incident, name='sos_incident'),

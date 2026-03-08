@@ -231,6 +231,7 @@ class ApiService {
       final endpoint = '$url/lets_go/trips/${Uri.encodeComponent(tripId)}/share/';
       final body = <String, dynamic>{
         'role': role,
+        'target': 'app',
       };
       if (bookingId != null && bookingId > 0) {
         body['booking_id'] = bookingId;
@@ -2884,7 +2885,7 @@ class ApiService {
     int? bookingId,
   }) async {
     try {
-      final endpoint = '$url/lets_go/trips/$tripId/share/';
+      final endpoint = '$url/lets_go/trips/${Uri.encodeComponent(tripId)}/share/';
       final body = <String, dynamic>{
         'role': isDriver ? 'driver' : 'passenger',
         if (!isDriver && bookingId != null) 'booking_id': bookingId,

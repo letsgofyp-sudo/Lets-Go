@@ -164,7 +164,8 @@ class _HomeScreenState extends State<HomeScreen> {
   String? _extractTripShareToken(Uri uri) {
     try {
       final seg = uri.pathSegments;
-      final i = seg.indexOf('share');
+      int i = seg.indexOf('share');
+      if (i < 0) i = seg.indexOf('share-app');
       if (i >= 0 && i + 1 < seg.length && seg.contains('trips')) {
         final token = seg[i + 1].trim();
         if (token.isNotEmpty) return token;

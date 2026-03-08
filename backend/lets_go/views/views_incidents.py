@@ -4,6 +4,7 @@ from datetime import timedelta
 
 import requests
 from django.http import JsonResponse
+from django.http import HttpResponse
 from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
@@ -283,6 +284,7 @@ def trip_share_token(request, trip_id):
 
     role = (data.get('role') or '').strip().lower()
     booking_id = _coerce_int(data.get('booking_id'))
+    target = (data.get('target') or '').strip().lower()
 
     if not trip_id:
         return JsonResponse({'success': False, 'error': 'trip_id is required'}, status=400)
@@ -306,11 +308,43 @@ def trip_share_token(request, trip_id):
 
     expires_at = timezone.now() + timedelta(hours=6)
     share_token = TripShareToken.mint(trip=trip, role=role, booking=booking, expires_at=expires_at)
-    share_url = request.build_absolute_uri(
-        reverse('trip_share', kwargs={'token': share_token.token})
-    )
+    share_route = 'trip_share_app' if target == 'app' else 'trip_share'
+    share_url = request.build_absolute_uri(reverse(share_route, kwargs={'token': share_token.token}))
 
     return JsonResponse({'success': True, 'share_url': share_url})
+
+
+@require_http_methods(["GET"])
+def trip_share_app_redirect(request, token):
+    token = (token or '').strip()
+    if not token:
+        return JsonResponse({'success': False, 'error': 'Invalid link'}, status=404)
+
+    apk_url = (os.getenv('LETS_GO_APK_DOWNLOAD_URL') or os.getenv('APK_DOWNLOAD_URL') or '').strip()
+    if not apk_url:
+        apk_url = 'https://example.com/lets-go.apk'
+
+    host = (request.get_host() or 'lets-go-bay.vercel.app').strip()
+    path = f"/lets_go/trips/share-app/{urllib.parse.quote(token)}/"
+    intent_url = (
+        f"intent://{host}{path}#Intent;scheme=https;package=com.example.lets_go;"
+        f"S.browser_fallback_url={urllib.parse.quote(apk_url, safe='')};end"
+    )
+
+    html = (
+        "<!doctype html><html><head><meta charset='utf-8'>"
+        "<meta name='viewport' content='width=device-width, initial-scale=1'>"
+        "<title>Open Lets Go</title>"
+        "</head><body>"
+        "<script>"
+        "(function(){"
+        f"var u={json.dumps(intent_url)};"
+        "window.location.replace(u);"
+        "})();"
+        "</script>"
+        "</body></html>"
+    )
+    return HttpResponse(html, content_type='text/html; charset=utf-8')
 
 
 @require_http_methods(["GET"])

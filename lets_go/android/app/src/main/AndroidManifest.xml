@@ -120,6 +120,22 @@
 
                     android:pathPrefix="/lets_go/trips/share/" />
 
+                <data
+
+                    android:scheme="https"
+
+                    android:host="lets-go-bay.vercel.app"
+
+                    android:pathPrefix="/lets_go/trips/share-app/" />
+
+                <data
+
+                    android:scheme="http"
+
+                    android:host="lets-go-bay.vercel.app"
+
+                    android:pathPrefix="/lets_go/trips/share-app/" />
+
             </intent-filter>
 
         </activity>
