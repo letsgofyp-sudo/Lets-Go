@@ -11,19 +11,20 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+try:
+    from dotenv import load_dotenv
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-import os
+    load_dotenv(BASE_DIR / '.env')
+except Exception:
+    pass
 
 
-def _load_env_file() -> None:
+def _load_env_file_fallback() -> None:
     try:
         env_path = BASE_DIR / '.env'
         if not env_path.exists():
@@ -45,18 +46,30 @@ def _load_env_file() -> None:
             continue
         if (v.startswith('"') and v.endswith('"')) or (v.startswith("'") and v.endswith("'")):
             v = v[1:-1]
-        if k not in os.environ:
-            os.environ[k] = v
+        os.environ.setdefault(k, v)
 
 
-_load_env_file()
+_load_env_file_fallback()
+
+
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
+
+def _env_bool(name: str, default: bool = False) -> bool:
+    v = os.environ.get(name)
+    if v is None:
+        return default
+    return str(v).strip().lower() in {'1', 'true', 't', 'yes', 'y', 'on'}
+
+
+DEBUG = _env_bool('DJANGO_DEBUG', False)
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '').strip()
+if not SECRET_KEY and not DEBUG:
+    raise ValueError('DJANGO_SECRET_KEY environment variable is required')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = (os.environ.get('DJANGO_DEBUG', 'true').strip().lower() in {'1', 'true', 'yes'})
-
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.100.39','192.168.100.10', '10.163.55.70', '10.182.173.70', '192.168.100.78', '192.168.100.101','*']
+_allowed_hosts_raw = os.environ.get('DJANGO_ALLOWED_HOSTS', 'localhost,127.0.0.1,.vercel.app')
+ALLOWED_HOSTS = [h.strip() for h in _allowed_hosts_raw.split(',') if h.strip()]
 
 # Avoid COOP warnings on non-HTTPS dev origins (e.g. raw LAN IPs).
 # In production, Django's secure default remains enabled.
@@ -79,6 +92,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -185,6 +199,14 @@ USE_I18N = True
 
 USE_TZ = True
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+CSRF_TRUSTED_ORIGINS = [
+    o.strip()
+    for o in os.environ.get('DJANGO_CSRF_TRUSTED_ORIGINS', 'https://*.vercel.app').split(',')
+    if o.strip()
+]
+
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -203,7 +225,17 @@ LOGGING = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
