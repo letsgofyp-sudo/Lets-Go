@@ -296,14 +296,13 @@ def trip_share_token(request, trip_id):
 
     booking = None
     if role == 'passenger':
-        if not booking_id:
-            return JsonResponse({'success': False, 'error': 'booking_id is required for passenger share'}, status=400)
-        try:
-            booking = Booking.objects.get(id=booking_id)
-            if booking.trip_id != trip.id:
-                return JsonResponse({'success': False, 'error': 'Booking does not belong to trip'}, status=400)
-        except Booking.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Booking not found'}, status=404)
+        if booking_id:
+            try:
+                booking = Booking.objects.get(id=booking_id)
+                if booking.trip_id != trip.id:
+                    return JsonResponse({'success': False, 'error': 'Booking does not belong to trip'}, status=400)
+            except Booking.DoesNotExist:
+                return JsonResponse({'success': False, 'error': 'Booking not found'}, status=404)
 
     expires_at = timezone.now() + timedelta(hours=6)
     share_token = TripShareToken.mint(trip=trip, role=role, booking=booking, expires_at=expires_at)
