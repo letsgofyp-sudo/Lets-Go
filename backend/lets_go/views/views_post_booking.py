@@ -19,6 +19,7 @@ from django.urls import reverse
 import os
 import smtplib
 import requests
+import urllib.parse
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from ..models.models_emergency import EmergencyContact
@@ -73,6 +74,7 @@ def _parse_iso_dt(v):
 
 def _get_trip_or_404(trip_id):
     """Fetch a Trip by trip_id or return a JSON 404 response."""
+    trip_id = urllib.parse.unquote(str(trip_id or '')).strip()
     try:
         trip = Trip.objects.get(trip_id=trip_id)
         return trip, None

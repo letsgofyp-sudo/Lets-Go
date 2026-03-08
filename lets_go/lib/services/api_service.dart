@@ -198,7 +198,7 @@ class ApiService {
     final t = token.trim();
     if (t.isEmpty) return null;
     try {
-      final endpoint = '$url/lets_go/trips/share/$t/live/';
+      final endpoint = '$url/lets_go/trips/share/${Uri.encodeComponent(t)}/live/';
       final response = await http
           .get(
             Uri.parse(endpoint),
@@ -228,7 +228,7 @@ class ApiService {
     int? bookingId,
   }) async {
     try {
-      final endpoint = '$url/lets_go/trips/$tripId/share/';
+      final endpoint = '$url/lets_go/trips/${Uri.encodeComponent(tripId)}/share/';
       final body = <String, dynamic>{
         'role': role,
       };

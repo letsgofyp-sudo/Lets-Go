@@ -373,7 +373,8 @@ void _onStart(ServiceInstance service) async {
 
 
 
-    final endpoint = '$url/lets_go/trips/$tripId/location/update/';
+    final endpoint = '$url/lets_go/trips/${Uri.encodeComponent(tripId)}/location/update/';
+
 
 
 
