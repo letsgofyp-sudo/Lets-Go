@@ -916,6 +916,23 @@ def reset_password(request):
             return JsonResponse({'success': True, 'message': 'Password reset successful.'})
         except UsersData.DoesNotExist:
             return JsonResponse({'success': False, 'error': 'User not found.'}, status=404)
+        except UsersData.MultipleObjectsReturned:
+            logger.error(
+                '[reset_password] Multiple users matched %s=%s. Expected unique identifier.',
+                method,
+                value,
+            )
+            return JsonResponse(
+                {
+                    'success': False,
+                    'error': 'Multiple accounts found for this identifier. Please contact support.',
+                    'code': 'DUPLICATE_IDENTIFIER',
+                },
+                status=409,
+            )
+        except Exception as e:
+            logger.exception('[reset_password] Unexpected error: %s', repr(e))
+            return JsonResponse({'success': False, 'error': 'Internal server error.'}, status=500)
     return JsonResponse({'success': False, 'error': 'Invalid request method.'}, status=400)
 
 

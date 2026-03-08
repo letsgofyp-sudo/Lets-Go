@@ -140,14 +140,29 @@ def send_profile_contact_change_otp(request, user_id):
         }
         cache.set(cache_key, cache_data, timeout=300)
 
-        ok = True
-        if which == 'email':
-            ok = send_email_otp(value, otp)
-        else:
-            ok = send_phone_otp(value, otp)
+        try:
+            if which == 'email':
+                ok = send_email_otp(value, otp)
+            else:
+                ok = send_phone_otp(value, otp)
+        except Exception as e:
+            logger.exception('[send_profile_contact_change_otp] OTP delivery exception: %s', repr(e))
+            ok = False
 
         if not ok:
-            return JsonResponse({'success': False, 'error': 'Failed to send OTP. Please try again.'}, status=500)
+            logger.error(
+                '[send_profile_contact_change_otp] Failed to send OTP (which=%s, user_id=%s)',
+                which,
+                user_id,
+            )
+            return JsonResponse(
+                {
+                    'success': False,
+                    'error': 'Failed to send OTP. Please try again later.',
+                    'code': 'OTP_DELIVERY_FAILED',
+                },
+                status=502,
+            )
 
         return JsonResponse({'success': True, 'message': 'OTP sent', 'expiry': expiry})
     except UsersData.DoesNotExist:
