@@ -1,0 +1,112 @@
+{% extends 'administration/base.html' %}
+
+{% block title %}Reached Pending{% endblock %}
+
+{% block content %}
+  <main class="user-main">
+  <div class="card mb-12">
+    <h2>Reached Pending (Overdue)</h2>
+    <div class="text-muted">Now: {{ now|date:'Y-m-d H:i' }}</div>
+    <div class="text-muted mt-8 text-relaxed">
+      This page tracks trips/bookings where the driver and/or passenger(s) have not marked <strong>Reached</strong>
+      after the dynamic trigger time (Estimated Arrival + clamp(ETA-Departure, 2h..12h)).
+      This is separate from SOS incidents.
+    </div>
+
+    <form method="get" class="status-form filters-bar mt-12">
+      <label>Trip status filter:</label>
+      <select name="status">
+        <option value="" {% if not status_filter %}selected{% endif %}>All</option>
+        <option value="SCHEDULED" {% if status_filter == 'SCHEDULED' %}selected{% endif %}>SCHEDULED</option>
+        <option value="IN_PROGRESS" {% if status_filter == 'IN_PROGRESS' %}selected{% endif %}>IN_PROGRESS</option>
+        <option value="COMPLETED" {% if status_filter == 'COMPLETED' %}selected{% endif %}>COMPLETED</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-filter"></i> Apply</button>
+    </form>
+  </div>
+
+  <div class="card mb-12">
+    <h3>Driver pending reached</h3>
+    <div class="text-muted mb-12">Count: {{ driver_overdue|length }}</div>
+
+    <div class="table-container">
+      <table class="styled-table minw-920">
+        <thead>
+          <tr>
+            <th>Trip</th>
+            <th>Route</th>
+            <th>Driver</th>
+            <th>Trip status</th>
+            <th>Departure</th>
+            <th>Est. arrival</th>
+            <th>Trigger time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in driver_overdue %}
+            <tr>
+              <td>{{ row.trip.trip_id }}</td>
+              <td>{{ row.trip.route.route_name|default:'-' }}</td>
+              <td>{{ row.trip.driver.name|default:'-' }} ({{ row.trip.driver.id }})</td>
+              <td>{{ row.trip.trip_status }}</td>
+              <td>{{ row.departure_dt|date:'Y-m-d H:i' }}</td>
+              <td>{{ row.arrival_dt|date:'Y-m-d H:i' }}</td>
+              <td>{{ row.trigger_dt|date:'Y-m-d H:i' }}</td>
+              <td>
+                <div class="table-actions">
+                  <a class="btn btn-outline btn-sm" href="{% url 'administration:admin_trip_detail' row.trip.id %}"><i class="fa-regular fa-eye"></i> Trip details</a>
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="8" class="text-muted">No overdue driver reached items.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Passengers pending reached</h3>
+    <div class="text-muted mb-12">Count: {{ passenger_overdue|length }}</div>
+
+    <div class="table-container">
+      <table class="styled-table minw-980">
+        <thead>
+          <tr>
+            <th>Trip</th>
+            <th>Booking</th>
+            <th>Passenger</th>
+            <th>Ride status</th>
+            <th>Pickup</th>
+            <th>Drop-off</th>
+            <th>Trigger time</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in passenger_overdue %}
+            <tr>
+              <td>{{ row.trip.trip_id }}</td>
+              <td>{{ row.booking.id }}</td>
+              <td>{{ row.booking.passenger.name|default:'-' }} ({{ row.booking.passenger.id }})</td>
+              <td>{{ row.booking.ride_status|default:'-' }}</td>
+              <td>{{ row.booking.from_stop.stop_name|default:'-' }}</td>
+              <td>{{ row.booking.to_stop.stop_name|default:'-' }}</td>
+              <td>{{ row.trigger_dt|date:'Y-m-d H:i' }}</td>
+              <td>
+                <div class="table-actions">
+                  <a class="btn btn-outline btn-sm" href="{% url 'administration:admin_trip_detail' row.trip.id %}"><i class="fa-regular fa-eye"></i> Trip details</a>
+                </div>
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="8" class="text-muted">No overdue passenger reached items.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  </main>
+{% endblock %}

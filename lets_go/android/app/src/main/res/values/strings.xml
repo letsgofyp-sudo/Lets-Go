@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default notification channel ID -->
+    <string name="default_notification_channel_id" translatable="false">ride_requests_v3</string>
+    
+    <!-- Notification channel name -->
+    <string name="default_notification_channel_name" translatable="false">Ride Request Notifications</string>
+    
+    <!-- Notification channel description -->
+    <string name="default_notification_channel_description" translatable="false">This channel is used for ride request notifications</string>
+</resources>

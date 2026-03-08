@@ -1,0 +1,974 @@
+[
+  {
+    "id": "RD8F8E358",
+    "name": "Bagh Wali Masjid, place_of_worship to Danewal Football Ground, pitch",
+    "stops": []
+  },
+  {
+    "id": "R136E1C03",
+    "name": "Eid Gah to Girls Govt. College",
+    "stops": []
+  },
+  {
+    "id": "R7E8FBB71",
+    "name": "Eid Gah to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "R3AF6A992",
+    "name": "Eid Gah to Karkhana bazar",
+    "stops": []
+  },
+  {
+    "id": "RF5F59143",
+    "name": "Eid Gah to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R337F294C",
+    "name": "Eid Gah to Quide e Azam Park",
+    "stops": []
+  },
+  {
+    "id": "R20D390B7",
+    "name": "Eid Gah to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RBC53771D",
+    "name": "Eid Gah to وہاڑی quaid",
+    "stops": []
+  },
+  {
+    "id": "R2A4E2361",
+    "name": "Emporium Mall to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R5C166681",
+    "name": "Emporium Mall to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RA782BC85",
+    "name": "Faisal Town to Dera chachak 53/wb, community_centre",
+    "stops": []
+  },
+  {
+    "id": "R58A15577",
+    "name": "KAM PEDIATRICS, hospital to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R67E8FF35",
+    "name": "Khanewal Chowk to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "R5EF2E1EC",
+    "name": "Khanewal Chowk to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "R760665D8",
+    "name": "Khanewal Chowk to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "RBB94DC34",
+    "name": "Khanewal Chowk to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "RCB79B23E",
+    "name": "Khanewal Chowk to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "RBDF433A2",
+    "name": "Khanewal Chowk to Faisal Town",
+    "stops": []
+  },
+  {
+    "id": "REB50CA64",
+    "name": "Khanewal Chowk to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "R2BC8A068",
+    "name": "Khanewal Chowk to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "R49B7EE89",
+    "name": "Khanewal Chowk to Karkhana bazar",
+    "stops": []
+  },
+  {
+    "id": "R9F935B2C",
+    "name": "Khanewal Chowk to Main Peoples Colony road",
+    "stops": []
+  },
+  {
+    "id": "RB53A247C",
+    "name": "Khanewal Chowk to Off comsats road",
+    "stops": []
+  },
+  {
+    "id": "R64D72FCE",
+    "name": "Khanewal Chowk to Off comsats road",
+    "stops": []
+  },
+  {
+    "id": "RE5197483",
+    "name": "Multan-Vehari Road to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R806E0EE1",
+    "name": "Multan-Vehari Road to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "R3763B342",
+    "name": "Multan-Vehari Road to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R73D71A99",
+    "name": "Muslim's Graveyard, grave_yard to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "R78F36ADB",
+    "name": "Muslim's Graveyard, grave_yard to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "R2206CD76",
+    "name": "Muslim's Graveyard, grave_yard to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "RD33B016B",
+    "name": "Muslim's Graveyard, grave_yard to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "RDC166CA7",
+    "name": "Muslim's Graveyard, grave_yard to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R2572FC09",
+    "name": "Muslim's Graveyard, grave_yard to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "R4C2EC404",
+    "name": "Quide e Azam Park to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R5BDCFA5E",
+    "name": "Seed Farm Corp. Colony to B block",
+    "stops": []
+  },
+  {
+    "id": "REA0C5CA2",
+    "name": "Seed Farm Corp. Colony to Jinnah Hall, townhall",
+    "stops": []
+  },
+  {
+    "id": "R6243C13F",
+    "name": "Seed Farm Corp. Colony to Muslim's Graveyard, grave_yard",
+    "stops": []
+  },
+  {
+    "id": "R24EBB772",
+    "name": "Seed Farm Corp. Colony to University of Education",
+    "stops": []
+  },
+  {
+    "id": "R23375239",
+    "name": "Seed Farm Corp. Colony to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "R722AF9D7",
+    "name": "Seed Farm Corp. Colony to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R9647BFA2",
+    "name": "Start Point to End Point",
+    "stops": []
+  },
+  {
+    "id": "R4CE972DA",
+    "name": "Start Point to End Point",
+    "stops": []
+  },
+  {
+    "id": "RC23AF5E1",
+    "name": "Vehari Wildlife Park, zoo to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R307B1444",
+    "name": "Zoo Raod to C block",
+    "stops": []
+  },
+  {
+    "id": "R41217ECA",
+    "name": "Zoo Raod to Girls Ground, school",
+    "stops": []
+  },
+  {
+    "id": "R82EE08D9",
+    "name": "Zoo Raod to Gol Chowk",
+    "stops": []
+  },
+  {
+    "id": "RAD96DF1F",
+    "name": "Zoo Raod to GULZAR MEDICINE COMPANY, chemist, vehari",
+    "stops": []
+  },
+  {
+    "id": "R62C802E5",
+    "name": "Zoo Raod to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R732E3F37",
+    "name": "Zoo Raod to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R6656871A",
+    "name": "Zoo Raod to Quide e Azam Park",
+    "stops": []
+  },
+  {
+    "id": "R40189CB9",
+    "name": "Zoo Raod to Quide e Azam Park",
+    "stops": []
+  },
+  {
+    "id": "R101A00C6",
+    "name": "Zoo Raod to Quide e Azam Park",
+    "stops": []
+  },
+  {
+    "id": "R338E06BA",
+    "name": "Zoo Raod to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "RCD189D7B",
+    "name": "Zoo Raod to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R891F4818",
+    "name": "Zoo Raod to Zoo Raod",
+    "stops": []
+  },
+  {
+    "id": "R786CF45E",
+    "name": "Zoo Raod to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R6350CAC7",
+    "name": "Zoo Raod to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RD5770169",
+    "name": "وہاڑی loc 1 to وہاڑی loc 3",
+    "stops": []
+  },
+  {
+    "id": "R37C1BB22",
+    "name": "وہاڑی start to Girls Ground, school",
+    "stops": []
+  },
+  {
+    "id": "R519A1C44",
+    "name": "وہاڑی start to وہاڑی end",
+    "stops": []
+  },
+  {
+    "id": "RBB919E5D",
+    "name": "وہاڑی to 29V4+9PJ جناح روڈ",
+    "stops": []
+  },
+  {
+    "id": "R7788B074",
+    "name": "وہاڑی to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "R5E5DDB9D",
+    "name": "وہاڑی to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "RCAB886A2",
+    "name": "وہاڑی to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "RC3A671BC",
+    "name": "وہاڑی to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "R4D7F7189",
+    "name": "وہاڑی to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "R8A2BCB1A",
+    "name": "وہاڑی to Allama Iqbal Town",
+    "stops": []
+  },
+  {
+    "id": "R6CD73FB6",
+    "name": "وہاڑی to Anarkali Bazar",
+    "stops": []
+  },
+  {
+    "id": "RA7CA18E7",
+    "name": "وہاڑی to Boys Ground, school",
+    "stops": []
+  },
+  {
+    "id": "R61569189",
+    "name": "وہاڑی to C block",
+    "stops": []
+  },
+  {
+    "id": "R9F0E0931",
+    "name": "وہاڑی to City Top Hotel, restaurant, Vehari",
+    "stops": []
+  },
+  {
+    "id": "RBB73A655",
+    "name": "وہاڑی to City Top Hotel, restaurant, Vehari",
+    "stops": []
+  },
+  {
+    "id": "RE8D89095",
+    "name": "وہاڑی to Club Road",
+    "stops": []
+  },
+  {
+    "id": "R1D013EB5",
+    "name": "وہاڑی to Faisal Town",
+    "stops": []
+  },
+  {
+    "id": "RE1EA879E",
+    "name": "وہاڑی to Girls Ground, school",
+    "stops": []
+  },
+  {
+    "id": "R7A1F55BC",
+    "name": "وہاڑی to Girls Ground, school",
+    "stops": []
+  },
+  {
+    "id": "RBC7904DA",
+    "name": "وہاڑی to Gol Chowk",
+    "stops": []
+  },
+  {
+    "id": "RDAA6462B",
+    "name": "وہاڑی to Government College",
+    "stops": []
+  },
+  {
+    "id": "RAEDD1C2A",
+    "name": "وہاڑی to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "R3A69CAD5",
+    "name": "وہاڑی to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "R7432A154",
+    "name": "وہاڑی to Hasilpur Road",
+    "stops": []
+  },
+  {
+    "id": "R4BE3717A",
+    "name": "وہاڑی to Islamia High School",
+    "stops": []
+  },
+  {
+    "id": "R80E20923",
+    "name": "وہاڑی to Kacha Khoo Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R60F0E2AB",
+    "name": "وہاڑی to KAM PEDIATRICS, hospital",
+    "stops": []
+  },
+  {
+    "id": "RC8CE511D",
+    "name": "وہاڑی to Karkhana bazar",
+    "stops": []
+  },
+  {
+    "id": "R5CBBF096",
+    "name": "وہاڑی to Khanewal Chowk",
+    "stops": []
+  },
+  {
+    "id": "RB742E676",
+    "name": "وہاڑی to Khanewal Chowk",
+    "stops": []
+  },
+  {
+    "id": "R7D6A9F0F",
+    "name": "وہاڑی to Khanewal Chowk",
+    "stops": []
+  },
+  {
+    "id": "R7E97D377",
+    "name": "وہاڑی to Khizra Mosque, place_of_worship",
+    "stops": [
+      "وہاڑی",
+      "Zoo Raod",
+      "Seed Farm Corp. Colony",
+      "Khizra Mosque, place_of_worship"
+    ]
+  },
+  {
+    "id": "RB2E62F43",
+    "name": "وہاڑی to Main Peoples Colony road",
+    "stops": []
+  },
+  {
+    "id": "R777F0C74",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "RB2D646AB",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "RDA3ECE7C",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R78BD0CA1",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "RFDD0394D",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R5E916845",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R8BE3A8E5",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R7CF5DD35",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "RCAF2CA7A",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R52123390",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "RF260A54A",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R30DB2115",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R6B112E3A",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "R35026162",
+    "name": "وہاڑی to Multan-Vehari Road",
+    "stops": []
+  },
+  {
+    "id": "RD5775D0C",
+    "name": "وہاڑی to Muslim's Graveyard, grave_yard",
+    "stops": []
+  },
+  {
+    "id": "R10F2B039",
+    "name": "وہاڑی to Peoples Colony",
+    "stops": []
+  },
+  {
+    "id": "RC317BEAF",
+    "name": "وہاڑی to Quide e Azam Park",
+    "stops": [
+      "وہاڑی",
+      "Zoo Raod",
+      "Seed Farm Corp. Colony",
+      "Vehari Wildlife Park, zoo",
+      "Quide e Azam Park"
+    ]
+  },
+  {
+    "id": "RCCFFD7D5",
+    "name": "وہاڑی to Quide e Azam Park",
+    "stops": []
+  },
+  {
+    "id": "RB73E2082",
+    "name": "وہاڑی to Quide e Azam Park",
+    "stops": []
+  },
+  {
+    "id": "RF18C391C",
+    "name": "وہاڑی to Quide e Azam Park",
+    "stops": [
+      "وہاڑی",
+      "Zoo Raod",
+      "Seed Farm Corp. Colony",
+      "Vehari Wildlife Park, zoo",
+      "Quide e Azam Park"
+    ]
+  },
+  {
+    "id": "R29695656",
+    "name": "وہاڑی to Railway Station road",
+    "stops": []
+  },
+  {
+    "id": "R2D7C91C7",
+    "name": "وہاڑی to Railway Station road",
+    "stops": []
+  },
+  {
+    "id": "R07924EB4",
+    "name": "وہاڑی to Railway Station road",
+    "stops": []
+  },
+  {
+    "id": "RD71BA7FA",
+    "name": "وہاڑی to Sarhand Colony",
+    "stops": []
+  },
+  {
+    "id": "R7D772029",
+    "name": "وہاڑی to seed farm",
+    "stops": []
+  },
+  {
+    "id": "RF7DC0B10",
+    "name": "وہاڑی to seed farm",
+    "stops": []
+  },
+  {
+    "id": "R833AB1E7",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R4BC4848F",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R2AC05FE6",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "RC602B1F6",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R376CB812",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R9A5D8EE2",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R86C84166",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R4607487D",
+    "name": "وہاڑی to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R5DE5B922",
+    "name": "وہاڑی to Sheikh Cotton Colony",
+    "stops": []
+  },
+  {
+    "id": "R8B83B792",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "RD2EC22F9",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "R5A50B2D3",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "RF0368939",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "RAE8BCE8D",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "R781BC756",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "RCE52730A",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "RDFE06A49",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "R10B09A5A",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "R584355A3",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "R089BBE8D",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "RACE9CFE8",
+    "name": "وہاڑی to Vehari Railway Station",
+    "stops": []
+  },
+  {
+    "id": "RE565CCEF",
+    "name": "وہاڑی to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "R2C1938B9",
+    "name": "وہاڑی to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "RBBC89F2B",
+    "name": "وہاڑی to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "RBEF82800",
+    "name": "وہاڑی to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "R8C00F8BC",
+    "name": "وہاڑی to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "RA3636C19",
+    "name": "وہاڑی to Vehari Wildlife Park, zoo",
+    "stops": []
+  },
+  {
+    "id": "RF88A33C2",
+    "name": "وہاڑی to Vehari-Burewala Road",
+    "stops": []
+  },
+  {
+    "id": "RA898C83F",
+    "name": "وہاڑی to Vehari-Burewala Road",
+    "stops": []
+  },
+  {
+    "id": "R0584384C",
+    "name": "وہاڑی to Zoo Raod",
+    "stops": []
+  },
+  {
+    "id": "RFC98D0A5",
+    "name": "وہاڑی to Zoo Raod",
+    "stops": []
+  },
+  {
+    "id": "RF03F4FEE",
+    "name": "وہاڑی to اسٹریٹ 2",
+    "stops": []
+  },
+  {
+    "id": "R3B885E36",
+    "name": "وہاڑی to اسٹریٹ 2",
+    "stops": []
+  },
+  {
+    "id": "RAAB50217",
+    "name": "وہاڑی to اسٹریٹ 2",
+    "stops": []
+  },
+  {
+    "id": "R99D7AD34",
+    "name": "وہاڑی to اسٹریٹ 2",
+    "stops": []
+  },
+  {
+    "id": "R672D8E2B",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R9547641C",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R70B5F9FA",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RC8298A81",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R542A696D",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RD7235E3F",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RCB9B21E0",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R84D525AE",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R8551C2E9",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R21485B4D",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R8A2D036E",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R873EE77B",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R4B28B434",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RB11550CB",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RDAA919B5",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R2714DFEF",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RE923687B",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R5BE11ADA",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RBBECFAE1",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R4BA4C3C5",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R0CBA09EC",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R8C2B5E2C",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "REAE0B7C3",
+    "name": "وہاڑی to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R54E39AFD",
+    "name": "وہاڑی to وہاڑی4",
+    "stops": []
+  },
+  {
+    "id": "RF60F3C5E",
+    "name": "وہاڑی to وہاڑیstop",
+    "stops": []
+  },
+  {
+    "id": "RDBAD618A",
+    "name": "وہاڑی to وہاڑیstop",
+    "stops": []
+  },
+  {
+    "id": "R027D3490",
+    "name": "وہاڑی1 to City Thana, police",
+    "stops": []
+  },
+  {
+    "id": "R964F9596",
+    "name": "وہاڑی1 to Club Road",
+    "stops": []
+  },
+  {
+    "id": "RA4E5DEE8",
+    "name": "وہاڑی1 to Club Road",
+    "stops": []
+  },
+  {
+    "id": "R65BDC152",
+    "name": "وہاڑی1 to Faisal Town",
+    "stops": []
+  },
+  {
+    "id": "RD8497FA0",
+    "name": "وہاڑی1 to Faisal Town",
+    "stops": []
+  },
+  {
+    "id": "R86018888",
+    "name": "وہاڑی1 to Faisal Town",
+    "stops": []
+  },
+  {
+    "id": "R94018D73",
+    "name": "وہاڑی1 to Faisal Town",
+    "stops": []
+  },
+  {
+    "id": "RE0BFAC9B",
+    "name": "وہاڑی1 to Railway Station road",
+    "stops": []
+  },
+  {
+    "id": "R4A92FC24",
+    "name": "وہاڑی1 to Seed Farm Corp. Colony",
+    "stops": []
+  },
+  {
+    "id": "R005B6C3B",
+    "name": "وہاڑی1 to Zoo Raod",
+    "stops": []
+  },
+  {
+    "id": "RDB4739FF",
+    "name": "وہاڑی1 to Zoo Raod",
+    "stops": []
+  },
+  {
+    "id": "R09C149A5",
+    "name": "وہاڑی1 to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "R22B7CE9B",
+    "name": "وہاڑی1 to وہاڑی",
+    "stops": []
+  },
+  {
+    "id": "RF4860964",
+    "name": "وہاڑی1 to وہاڑی3",
+    "stops": []
+  }
+]

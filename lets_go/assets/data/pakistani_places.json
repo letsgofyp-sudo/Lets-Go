@@ -1,0 +1,310 @@
+{
+  "places": [
+    {
+      "id": "lahore",
+      "name": "Lahore",
+      "display_name": "Lahore, Punjab, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "city",
+      "keywords": ["lahore", "city", "punjab", "capital"]
+    },
+    {
+      "id": "karachi",
+      "name": "Karachi",
+      "display_name": "Karachi, Sindh, Pakistan",
+      "lat": "24.8607",
+      "lon": "67.0011",
+      "type": "city",
+      "keywords": ["karachi", "city", "sindh", "port"]
+    },
+    {
+      "id": "islamabad",
+      "name": "Islamabad",
+      "display_name": "Islamabad, Federal Territory, Pakistan",
+      "lat": "33.6844",
+      "lon": "73.0479",
+      "type": "city",
+      "keywords": ["islamabad", "city", "capital", "federal"]
+    },
+    {
+      "id": "multan",
+      "name": "Multan",
+      "display_name": "Multan, Punjab, Pakistan",
+      "lat": "30.1575",
+      "lon": "71.5249",
+      "type": "city",
+      "keywords": ["multan", "city", "punjab", "sufi"]
+    },
+    {
+      "id": "faisalabad",
+      "name": "Faisalabad",
+      "display_name": "Faisalabad, Punjab, Pakistan",
+      "lat": "31.4180",
+      "lon": "73.0770",
+      "type": "city",
+      "keywords": ["faisalabad", "city", "punjab", "textile"]
+    },
+    {
+      "id": "rawalpindi",
+      "name": "Rawalpindi",
+      "display_name": "Rawalpindi, Punjab, Pakistan",
+      "lat": "33.5651",
+      "lon": "73.0169",
+      "type": "city",
+      "keywords": ["rawalpindi", "city", "punjab", "twin"]
+    },
+    {
+      "id": "peshawar",
+      "name": "Peshawar",
+      "display_name": "Peshawar, Khyber Pakhtunkhwa, Pakistan",
+      "lat": "34.0080",
+      "lon": "71.5785",
+      "type": "city",
+      "keywords": ["peshawar", "city", "kpk", "frontier"]
+    },
+    {
+      "id": "quetta",
+      "name": "Quetta",
+      "display_name": "Quetta, Balochistan, Pakistan",
+      "lat": "30.1798",
+      "lon": "66.9750",
+      "type": "city",
+      "keywords": ["quetta", "city", "balochistan", "fruit"]
+    },
+    {
+      "id": "gujranwala",
+      "name": "Gujranwala",
+      "display_name": "Gujranwala, Punjab, Pakistan",
+      "lat": "32.1877",
+      "lon": "74.1945",
+      "type": "city",
+      "keywords": ["gujranwala", "city", "punjab", "industrial"]
+    },
+    {
+      "id": "sialkot",
+      "name": "Sialkot",
+      "display_name": "Sialkot, Punjab, Pakistan",
+      "lat": "32.4927",
+      "lon": "74.5313",
+      "type": "city",
+      "keywords": ["sialkot", "city", "punjab", "sports"]
+    },
+    {
+      "id": "bahawalpur",
+      "name": "Bahawalpur",
+      "display_name": "Bahawalpur, Punjab, Pakistan",
+      "lat": "29.3956",
+      "lon": "71.6724",
+      "type": "city",
+      "keywords": ["bahawalpur", "city", "punjab", "royal"]
+    },
+    {
+      "id": "sargodha",
+      "name": "Sargodha",
+      "display_name": "Sargodha, Punjab, Pakistan",
+      "lat": "32.0836",
+      "lon": "72.6711",
+      "type": "city",
+      "keywords": ["sargodha", "city", "punjab", "orange"]
+    },
+    {
+      "id": "sukkur",
+      "name": "Sukkur",
+      "display_name": "Sukkur, Sindh, Pakistan",
+      "lat": "27.7031",
+      "lon": "68.8575",
+      "type": "city",
+      "keywords": ["sukkur", "city", "sindh", "bridge"]
+    },
+    {
+      "id": "jhang",
+      "name": "Jhang",
+      "display_name": "Jhang, Punjab, Pakistan",
+      "lat": "31.2704",
+      "lon": "72.3247",
+      "type": "city",
+      "keywords": ["jhang", "city", "punjab", "agricultural"]
+    },
+    {
+      "id": "sheikhupura",
+      "name": "Sheikhupura",
+      "display_name": "Sheikhupura, Punjab, Pakistan",
+      "lat": "31.7131",
+      "lon": "73.9783",
+      "type": "city",
+      "keywords": ["sheikhupura", "city", "punjab", "industrial"]
+    },
+    {
+      "id": "comsats",
+      "name": "COMSATS University",
+      "display_name": "COMSATS University, Islamabad, Pakistan",
+      "lat": "33.6844",
+      "lon": "73.0479",
+      "type": "university",
+      "keywords": ["comsats", "university", "college", "education", "islamabad"]
+    },
+    {
+      "id": "fast",
+      "name": "FAST University",
+      "display_name": "FAST University, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "university",
+      "keywords": ["fast", "university", "college", "education", "lahore"]
+    },
+    {
+      "id": "lums",
+      "name": "LUMS University",
+      "display_name": "LUMS University, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "university",
+      "keywords": ["lums", "university", "college", "education", "lahore"]
+    },
+    {
+      "id": "nust",
+      "name": "NUST University",
+      "display_name": "NUST University, Islamabad, Pakistan",
+      "lat": "33.6844",
+      "lon": "73.0479",
+      "type": "university",
+      "keywords": ["nust", "university", "college", "education", "islamabad"]
+    },
+    {
+      "id": "uol",
+      "name": "University of Lahore",
+      "display_name": "University of Lahore, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "university",
+      "keywords": ["uol", "university", "college", "education", "lahore"]
+    },
+    {
+      "id": "gc",
+      "name": "Government College",
+      "display_name": "Government College, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "university",
+      "keywords": ["gc", "government", "college", "education", "lahore"]
+    },
+    {
+      "id": "lahore_airport",
+      "name": "Lahore Airport",
+      "display_name": "Allama Iqbal International Airport, Lahore, Pakistan",
+      "lat": "31.5216",
+      "lon": "74.4036",
+      "type": "airport",
+      "keywords": ["lahore", "airport", "allama", "iqbal", "international", "flight"]
+    },
+    {
+      "id": "karachi_airport",
+      "name": "Karachi Airport",
+      "display_name": "Jinnah International Airport, Karachi, Pakistan",
+      "lat": "24.9065",
+      "lon": "67.1607",
+      "type": "airport",
+      "keywords": ["karachi", "airport", "jinnah", "international", "flight"]
+    },
+    {
+      "id": "islamabad_airport",
+      "name": "Islamabad Airport",
+      "display_name": "Islamabad International Airport, Islamabad, Pakistan",
+      "lat": "33.5601",
+      "lon": "73.0334",
+      "type": "airport",
+      "keywords": ["islamabad", "airport", "international", "flight"]
+    },
+    {
+      "id": "multan_airport",
+      "name": "Multan Airport",
+      "display_name": "Multan International Airport, Multan, Pakistan",
+      "lat": "30.2033",
+      "lon": "71.4191",
+      "type": "airport",
+      "keywords": ["multan", "airport", "international", "flight"]
+    },
+    {
+      "id": "badshahi_mosque",
+      "name": "Badshahi Mosque",
+      "display_name": "Badshahi Mosque, Lahore, Pakistan",
+      "lat": "31.5881",
+      "lon": "74.3103",
+      "type": "landmark",
+      "keywords": ["badshahi", "mosque", "lahore", "landmark", "historical"]
+    },
+    {
+      "id": "faisal_mosque",
+      "name": "Faisal Mosque",
+      "display_name": "Faisal Mosque, Islamabad, Pakistan",
+      "lat": "33.7294",
+      "lon": "73.0381",
+      "type": "landmark",
+      "keywords": ["faisal", "mosque", "islamabad", "landmark", "national"]
+    },
+    {
+      "id": "minar_e_pakistan",
+      "name": "Minar-e-Pakistan",
+      "display_name": "Minar-e-Pakistan, Lahore, Pakistan",
+      "lat": "31.5925",
+      "lon": "74.3095",
+      "type": "landmark",
+      "keywords": ["minar", "pakistan", "lahore", "landmark", "historical"]
+    },
+    {
+      "id": "shalimar_gardens",
+      "name": "Shalimar Gardens",
+      "display_name": "Shalimar Gardens, Lahore, Pakistan",
+      "lat": "31.5895",
+      "lon": "74.3095",
+      "type": "landmark",
+      "keywords": ["shalimar", "gardens", "lahore", "landmark", "historical"]
+    },
+    {
+      "id": "emporium_mall",
+      "name": "Emporium Mall",
+      "display_name": "Emporium Mall, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "shopping",
+      "keywords": ["emporium", "mall", "lahore", "shopping", "retail"]
+    },
+    {
+      "id": "packages_mall",
+      "name": "Packages Mall",
+      "display_name": "Packages Mall, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "shopping",
+      "keywords": ["packages", "mall", "lahore", "shopping", "retail"]
+    },
+    {
+      "id": "dolmen_mall",
+      "name": "Dolmen Mall",
+      "display_name": "Dolmen Mall, Karachi, Pakistan",
+      "lat": "24.8607",
+      "lon": "67.0011",
+      "type": "shopping",
+      "keywords": ["dolmen", "mall", "karachi", "shopping", "retail"]
+    },
+    {
+      "id": "shaukat_khanum",
+      "name": "Shaukat Khanum Hospital",
+      "display_name": "Shaukat Khanum Hospital, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "hospital",
+      "keywords": ["shaukat", "khanum", "hospital", "lahore", "medical"]
+    },
+    {
+      "id": "mayo_hospital",
+      "name": "Mayo Hospital",
+      "display_name": "Mayo Hospital, Lahore, Pakistan",
+      "lat": "31.5204",
+      "lon": "74.3587",
+      "type": "hospital",
+      "keywords": ["mayo", "hospital", "lahore", "medical"]
+    }
+  ]
+} 

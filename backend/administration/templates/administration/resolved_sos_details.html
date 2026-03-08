@@ -1,0 +1,57 @@
+{% extends 'administration/base.html' %}
+
+{% block title %}Resolved SOS Snapshot #{{ incident.id }}{% endblock %}
+
+{% block content %}
+<main class="user-main">
+  <div class="page-header">
+    <h1>Resolved SOS Snapshot #{{ incident.id }}</h1>
+    <p class="page-subtitle">This page shows the stored audit snapshot JSON for long-term review.</p>
+  </div>
+
+  <div class="table-actions mb-12">
+    <a class="btn btn-outline btn-sm" href="{% url 'administration:sos_incident_detail' incident.id %}"><i class="fa-solid fa-arrow-left"></i> Back to Incident</a>
+    <a class="btn btn-outline btn-sm" href="{% url 'administration:sos_dashboard' %}"><i class="fa-solid fa-arrow-left"></i> Back to SOS Dashboard</a>
+    {% if incident.trip %}
+      <a class="btn btn-primary btn-sm" href="{% url 'administration:admin_trip_detail' trip_pk=incident.trip.id %}"><i class="fa-solid fa-route"></i> Open Trip Details</a>
+    {% endif %}
+    {% if incident.status == 'RESOLVED' %}
+      <form method="post" action="{% url 'administration:resolved_sos_snapshot_regenerate' incident.id %}" class="inline-form">
+        {% csrf_token %}
+        <button class="btn btn-outline btn-sm" type="submit"><i class="fa-solid fa-rotate"></i> Regenerate Snapshot</button>
+      </form>
+    {% endif %}
+  </div>
+
+<div class="card">
+  <div class="card-header">
+    <h2>Snapshot Metadata</h2>
+  </div>
+  <div class="card-body">
+    <table class="styled-table">
+      <tbody>
+        <tr><th>Incident</th><td>#{{ incident.id }}</td></tr>
+        <tr><th>Incident Status</th><td><strong>{{ incident.status }}</strong></td></tr>
+        <tr><th>Resolved At</th><td>{% if incident.resolved_at %}{{ incident.resolved_at }}{% else %}---{% endif %}</td></tr>
+        <tr><th>Resolved By</th><td>{% if incident.resolved_by %}{{ incident.resolved_by.username }}{% else %}---{% endif %}</td></tr>
+        <tr><th>Snapshot Exists</th><td>{% if snapshot %}YES{% else %}NO{% endif %}</td></tr>
+        <tr><th>Snapshot Updated At</th><td>{% if snapshot %}{{ snapshot.updated_at }}{% else %}---{% endif %}</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="card mt-16">
+  <div class="card-header">
+    <h2>Snapshot JSON</h2>
+  </div>
+  <div class="card-body">
+    {% if snapshot %}
+      <pre class="code-block">{{ payload_pretty }}</pre>
+    {% else %}
+      <p>No snapshot row found for this incident yet. If this incident was resolved before the snapshot feature was deployed, resolve it again is not recommended. You can create a backfill later if needed.</p>
+    {% endif %}
+  </div>
+</div>
+</main>
+{% endblock %}

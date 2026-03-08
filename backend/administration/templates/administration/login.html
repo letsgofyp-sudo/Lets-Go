@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Login</title>
+  <link rel="icon" type="image/png" href="{% static 'administration/ride-sharing-logo-black-and-white.png' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'administration/login.css' %}" />
+</head>
+<body>
+  <div class="login-shell">
+    <div class="login-card">
+      <div class="login-hero" aria-hidden="true">
+        <div class="login-hero-top">
+          <div class="login-brand">
+            <img class="login-brand-logo" src="{% static 'administration/white-only-transparent-icon.png' %}" alt="Lets Go" />
+            <div>
+              <div class="login-brand-title">Lets Go</div>
+              <div class="login-brand-subtitle">Administration Console</div>
+            </div>
+          </div>
+
+          <div class="login-hero-badges">
+            <div class="login-badge"><i class="fa-solid fa-shield-halved"></i> Secure access</div>
+            <div class="login-badge"><i class="fa-solid fa-bolt"></i> Fast operations</div>
+            <div class="login-badge"><i class="fa-solid fa-chart-line"></i> Live insights</div>
+          </div>
+        </div>
+
+        <div class="login-hero-content">
+          <h1>Operate. Monitor. Resolve.</h1>
+          <p>
+            Your control center for trips, SOS incidents, support conversations, and system analytics.
+          </p>
+
+          <div class="login-metrics">
+            <div class="login-metric">
+              <div class="login-metric-kpi">24/7</div>
+              <div class="login-metric-label">Monitoring</div>
+            </div>
+            <div class="login-metric">
+              <div class="login-metric-kpi">1 click</div>
+              <div class="login-metric-label">SOS triage</div>
+            </div>
+            <div class="login-metric">
+              <div class="login-metric-kpi">Realtime</div>
+              <div class="login-metric-label">Trip maps</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="login-form-wrap">
+        <form class="login-form" method="post" action="{% url 'administration:login_view' %}">
+          {% csrf_token %}
+
+          <div class="login-form-title">Sign in</div>
+          <div class="login-form-subtitle">Use your admin credentials to continue.</div>
+
+          <div class="input-group">
+            <label for="username">Username</label>
+            <div class="input-with-icon">
+              <i class="fa-regular fa-user"></i>
+              <input name="username" type="text" id="username" required autofocus placeholder="Enter username" />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="password">Password</label>
+            <div class="password-field">
+              <i class="fa-solid fa-lock"></i>
+              <input name="password" type="password" id="password" required placeholder="Enter password" />
+              <button class="toggle" type="button" onclick="togglePassword()">Show</button>
+            </div>
+          </div>
+
+          <button class="login-submit" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+
+          {% if error_message %}
+            <p class="message">{{ error_message }}</p>
+          {% else %}
+            <p class="message" id="msg"></p>
+          {% endif %}
+
+          <div class="login-footnote">
+            <i class="fa-regular fa-circle-question"></i>
+            Tip: Use Shift+Tab to navigate fields quickly.
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script src="{% static 'administration/login.js' %}"></script>
+</body>
+</html>

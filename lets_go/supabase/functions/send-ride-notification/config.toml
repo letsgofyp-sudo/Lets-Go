@@ -1,0 +1,8 @@
+# Environment variables for the Edge Function
+[env]
+# Get this from your Firebase Console > Project Settings > Cloud Messaging > Server Key
+FCM_SERVER_KEY = "YOUR_FCM_SERVER_KEY"
+
+# These will be automatically provided by Supabase
+SUPABASE_URL = ""
+SUPABASE_SERVICE_ROLE_KEY = ""

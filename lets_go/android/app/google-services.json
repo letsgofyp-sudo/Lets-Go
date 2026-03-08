@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "835760692358",
+    "project_id": "letsgonotification-f2104",
+    "storage_bucket": "letsgonotification-f2104.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:835760692358:android:ca9c91447d157b3e51c507",
+        "android_client_info": {
+          "package_name": "com.example.lets_go"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDclY6u2wsEBhOevCqMUmQovvoswtNgqNM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

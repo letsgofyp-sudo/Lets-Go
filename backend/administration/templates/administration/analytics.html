@@ -1,0 +1,44 @@
+{% extends 'administration/base.html' %}
+{% load static %}
+
+{% block title %}Analytics{% endblock %}
+
+{% block head_extra %}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+{% endblock %}
+
+{% block content %}
+  <main class="user-main">
+    <h1 class="page-title">Analytics & Reports</h1>
+    <div class="user-detail-card">
+      <div class="user-fields user-fields--auto">
+        <div class="user-text-field">
+          <strong>From</strong><br>
+          <input class="admin-input w-full mt-8" type="date" id="from" />
+        </div>
+        <div class="user-text-field">
+          <strong>To</strong><br>
+          <input class="admin-input w-full mt-8" type="date" id="to" />
+        </div>
+        <div class="user-text-field">
+          <button class="btn btn-primary btn-sm" type="button" onclick="exportCSV()"><i class="fa-solid fa-file-export"></i> Export CSV</button>
+        </div>
+      </div>
+
+      <div class="chart-container mt-16">
+        <canvas id="deepChart"></canvas>
+      </div>
+    </div>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    new Chart(document.getElementById('deepChart'), {
+      type:'bar',
+      data:{labels:['Mon','Tue','Wed','Thu','Fri'],datasets:[{label:'Rides',data:[100,150,120,170,200],backgroundColor:'#3498db'}]},
+      options:{title:{display:true,text:'Rides per Day'}}
+    });
+    function exportCSV(){ alert('CSV Exported'); }
+  </script>
+{% endblock %}

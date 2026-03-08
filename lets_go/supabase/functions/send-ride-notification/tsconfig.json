@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "types": [],
+    "typeRoots": ["."],
+    "baseUrl": ".",
+    "paths": {
+      "std/*": ["https://deno.land/std@0.177.0/*"],
+      "@supabase/supabase-js": ["https://esm.sh/@supabase/supabase-js@2.39.0"]
+    },
+    "lib": ["esnext", "dom"]
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}

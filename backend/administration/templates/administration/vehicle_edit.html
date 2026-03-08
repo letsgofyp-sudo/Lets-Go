@@ -1,0 +1,202 @@
+{% extends 'administration/base.html' %}
+{% load static %}
+
+{% block title %}{% if is_new %}Add Vehicle{% else %}Edit Vehicle{% endif %}{% endblock %}
+
+{% block content %}
+  <main class="user-main">
+    <h1 class="page-title">{% if is_new %}Add Vehicle{% else %}Edit Vehicle{% endif %} for {{ user.name }}</h1>
+    {% if error %}
+      <div class="alert mb-12">{{ error }}</div>
+    {% endif %}
+    <form id="vehicleEditForm" method="post" class="admin-form" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <div class="admin-form-header">
+        <div>
+          <h2 class="admin-form-title">Vehicle Details</h2>
+          <p class="admin-form-subtitle">Registration, specs, and compliance details for this vehicle.</p>
+        </div>
+      </div>
+
+      <div class="form-error mb-12" data-form-error></div>
+
+      <div class="admin-form-grid">
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="plate_number">Plate Number</label>
+          <input class="admin-control" id="plate_number" type="text" name="plate_number" value="{{ vehicle.plate_number|default_if_none:'' }}" required data-validate="required platePk" placeholder="ABC-1234" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="company_name">Company Name</label>
+          <input class="admin-control" id="company_name" type="text" name="company_name" value="{{ vehicle.company_name|default_if_none:'' }}" required data-validate="required" placeholder="e.g. Honda" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="model_number">Model Number</label>
+          <input class="admin-control" id="model_number" type="text" name="model_number" value="{{ vehicle.model_number|default_if_none:'' }}" required data-validate="required" placeholder="e.g. 2024" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="variant">Variant</label>
+          <input class="admin-control" id="variant" type="text" name="variant" value="{{ vehicle.variant|default_if_none:'' }}" placeholder="Optional" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="vehicle_type">Vehicle Type</label>
+          <select class="admin-control" id="vehicle_type" name="vehicle_type" required data-validate="required">
+            <option value="TW" {% if vehicle and vehicle.vehicle_type == 'TW' %}selected{% endif %}>Two Wheeler</option>
+            <option value="FW" {% if vehicle and vehicle.vehicle_type == 'FW' %}selected{% endif %}>Four Wheeler</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="seats">Seats (Four Wheeler only)</label>
+          <input class="admin-control" id="seats" type="number" name="seats" min="1" value="{{ vehicle.seats|default_if_none:'' }}" data-validate="positiveInt" placeholder="e.g. 4" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="color">Color</label>
+          <input class="admin-control" id="color" type="text" name="color" value="{{ vehicle.color|default_if_none:'' }}" placeholder="Optional" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="fuel_type">Fuel Type</label>
+          <select class="admin-control" id="fuel_type" name="fuel_type">
+            <option value="" {% if not vehicle or not vehicle.fuel_type %}selected{% endif %}>--</option>
+            <option value="Petrol" {% if vehicle and vehicle.fuel_type == 'Petrol' %}selected{% endif %}>Petrol</option>
+            <option value="Diesel" {% if vehicle and vehicle.fuel_type == 'Diesel' %}selected{% endif %}>Diesel</option>
+            <option value="CNG" {% if vehicle and vehicle.fuel_type == 'CNG' %}selected{% endif %}>CNG</option>
+            <option value="Electric" {% if vehicle and vehicle.fuel_type == 'Electric' %}selected{% endif %}>Electric</option>
+            <option value="Hybrid" {% if vehicle and vehicle.fuel_type == 'Hybrid' %}selected{% endif %}>Hybrid</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="photo_front">Front Photo</label>
+          <div>
+            {% if vehicle and vehicle.photo_front_url %}
+              <img src="{{ vehicle.photo_front_url }}" class="user-img" alt="Front Photo">
+            {% else %}
+              <span class="text-muted">No image</span>
+            {% endif %}
+          </div>
+          <input class="admin-control" id="photo_front" type="file" name="photo_front" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="photo_back">Back Photo</label>
+          <div>
+            {% if vehicle and vehicle.photo_back_url %}
+              <img src="{{ vehicle.photo_back_url }}" class="user-img" alt="Back Photo">
+            {% else %}
+              <span class="text-muted">No image</span>
+            {% endif %}
+          </div>
+          <input class="admin-control" id="photo_back" type="file" name="photo_back" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="documents_image">Documents Image</label>
+          <div>
+            {% if vehicle and vehicle.documents_image_url %}
+              <img src="{{ vehicle.documents_image_url }}" class="user-img" alt="Documents Image">
+            {% else %}
+              <span class="text-muted">No image</span>
+            {% endif %}
+          </div>
+          <input class="admin-control" id="documents_image" type="file" name="documents_image" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="engine_number">Engine Number</label>
+          <input class="admin-control" id="engine_number" type="text" name="engine_number" value="{{ vehicle.engine_number|default_if_none:'' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="chassis_number">Chassis Number</label>
+          <input class="admin-control" id="chassis_number" type="text" name="chassis_number" value="{{ vehicle.chassis_number|default_if_none:'' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="registration_date">Registration Date</label>
+          <input class="admin-control" id="registration_date" type="date" name="registration_date" value="{{ vehicle.registration_date|date:'Y-m-d'|default_if_none:'' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="insurance_expiry">Insurance Expiry</label>
+          <input class="admin-control" id="insurance_expiry" type="date" name="insurance_expiry" value="{{ vehicle.insurance_expiry|date:'Y-m-d'|default_if_none:'' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn btn-primary" type="submit"><i class="fa-regular fa-floppy-disk"></i> Save Vehicle</button>
+      </div>
+    </form>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    (function () {
+      const typeEl = document.getElementById('vehicle_type');
+      const seatsEl = document.getElementById('seats');
+      if (!typeEl || !seatsEl) return;
+
+      const syncSeats = () => {
+        const type = String(typeEl.value || '').trim();
+        if (type === 'FW') {
+          seatsEl.disabled = false;
+          seatsEl.required = true;
+          seatsEl.setAttribute('data-validate', 'required positiveInt');
+        } else {
+          seatsEl.value = '';
+          seatsEl.required = false;
+          seatsEl.disabled = true;
+          seatsEl.setAttribute('data-validate', '');
+          const wrapper = seatsEl.closest('[data-field]');
+          if (wrapper) wrapper.classList.remove('has-error');
+          const err = wrapper?.querySelector('.admin-field-error');
+          if (err) err.textContent = '';
+        }
+      };
+
+      typeEl.addEventListener('change', syncSeats);
+      syncSeats();
+    })();
+
+    AdminFormValidator.wire(document.getElementById('vehicleEditForm'), {
+      extraValidate: (form) => {
+        const errors = [];
+        const type = (form.vehicle_type?.value || '').trim();
+        const seats = (form.seats?.value || '').trim();
+
+        if (type === 'FW') {
+          if (!seats) {
+            errors.push('Please specify number of seats for four wheelers.');
+          }
+        } else if (type === 'TW') {
+          if (seats) {
+            errors.push('Seats field is only for four wheelers.');
+          }
+        }
+        return errors;
+      }
+    });
+  </script>
+{% endblock %}

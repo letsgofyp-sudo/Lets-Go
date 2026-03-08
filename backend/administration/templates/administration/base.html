@@ -1,0 +1,90 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}Admin{% endblock %}</title>
+  <link rel="icon" type="image/png" href="{% static 'administration/ride-sharing-logo-black-and-white.png' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="{% static 'administration/style.css' %}">
+  {% block head_extra %}{% endblock %}
+</head>
+<body class="admin-body">
+  <input id="admin-nav-toggle" class="admin-nav-toggle" type="checkbox" />
+
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <label class="admin-burger" for="admin-nav-toggle" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+      <a class="admin-brand" href="{% url 'administration:admin_view' %}">
+        <img class="admin-brand-logo" src="{% static 'administration/white-only-transparent-icon.png' %}" alt="Lets Go" />
+        <span class="admin-brand-text">Lets Go Admin</span>
+      </a>
+    </div>
+
+    <div class="admin-header-right">
+      <a class="admin-toplink" href="{% url 'administration:logout_view' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+    </div>
+  </header>
+
+  <aside class="admin-sidebar">
+    <nav class="admin-nav">
+      <a class="admin-nav-link" href="{% url 'administration:admin_view' %}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a class="admin-nav-link" href="{% url 'administration:rides_dashboard' %}"><i class="fa-solid fa-route"></i> Rides</a>
+      <a class="admin-nav-link" href="{% url 'administration:reached_overdue_dashboard' %}"><i class="fa-regular fa-clock"></i> Reached Pending</a>
+      <a class="admin-nav-link" href="{% url 'administration:sos_dashboard' %}"><i class="fa-solid fa-triangle-exclamation"></i> SOS Incidents</a>
+      <a class="admin-nav-link" href="{% url 'administration:user_list' %}"><i class="fa-solid fa-users"></i> Users</a>
+      <a class="admin-nav-link" href="{% url 'administration:change_requests_list' %}"><i class="fa-solid fa-code-pull-request"></i> Change Requests</a>
+      <a class="admin-nav-link" href="{% url 'administration:guest_list' %}"><i class="fa-regular fa-comments"></i> Guest Support</a>
+      <!-- <a class="admin-nav-link" href="{% url 'administration:analytics_view' %}"><i class="fa-solid fa-chart-line"></i> Analytics</a> -->
+      <!-- <a class="admin-nav-link" href="{% url 'administration:settings_view' %}"><i class="fa-solid fa-gear"></i> Settings</a> -->
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    {% block content %}{% endblock %}
+  </main>
+
+  <label class="admin-overlay" for="admin-nav-toggle" aria-label="Close navigation"></label>
+
+  <script src="{% static 'administration/admin_forms.js' %}"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const currentPath = window.location.pathname.replace(/\/+$/, '') || '/';
+      const links = Array.from(document.querySelectorAll('.admin-nav-link'));
+
+      let best = null;
+      let bestLen = -1;
+      for (const a of links) {
+        let p = '';
+        try {
+          p = new URL(a.href, window.location.origin).pathname;
+        } catch (e) {
+          continue;
+        }
+        p = p.replace(/\/+$/, '') || '/';
+        if (currentPath === p || (p !== '/' && currentPath.startsWith(p + '/')) || (p !== '/' && currentPath.startsWith(p))) {
+          if (p.length > bestLen) {
+            best = a;
+            bestLen = p.length;
+          }
+        }
+      }
+      if (best) best.classList.add('active');
+
+      const navToggle = document.getElementById('admin-nav-toggle');
+      for (const a of links) {
+        a.addEventListener('click', () => {
+          if (navToggle) navToggle.checked = false;
+        });
+      }
+    });
+  </script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

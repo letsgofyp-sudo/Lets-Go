@@ -1,0 +1,283 @@
+{% extends 'administration/base.html' %}
+{% load static %}
+
+{% block title %}Add User{% endblock %}
+
+{% block content %}
+  <main class="user-main">
+    <h1 class="page-title">Add New User</h1>
+    {% if error %}
+      <div class="alert mb-12">{{ error }}</div>
+    {% endif %}
+
+    <form id="userAddForm" method="post" action="" enctype="multipart/form-data" class="admin-form">
+      {% csrf_token %}
+
+      <div class="admin-form-header">
+        <div>
+          <h2 class="admin-form-title">User Profile</h2>
+          <p class="admin-form-subtitle">Create a new account with verified identity and contact details.</p>
+        </div>
+      </div>
+
+      <div id="formError" class="form-error mb-12" data-form-error></div>
+
+      <div class="admin-form-grid">
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="name">Name</label>
+          <input class="admin-control" id="name" type="text" name="name" required data-validate="required" placeholder="Full name" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="username">Username</label>
+          <input class="admin-control" id="username" type="text" name="username" required data-validate="required username" placeholder="e.g. fawad.saqlain" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="email">Email</label>
+          <input class="admin-control" id="email" type="email" name="email" required data-validate="required email" placeholder="name@example.com" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="password">Password</label>
+          <input class="admin-control" id="password" type="password" name="password" required data-validate="required passwordStrong" placeholder="Min 8 chars, strong" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="address">Address</label>
+          <input class="admin-control" id="address" type="text" name="address" placeholder="Address" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="phone_no_local">Phone</label>
+          <div style="display:flex; gap: 8px; align-items: center;">
+            <select class="admin-control" id="phone_no_country" style="max-width: 120px;">
+              <option value="+92" selected>+92</option>
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+971">+971</option>
+              <option value="+966">+966</option>
+            </select>
+            <input class="admin-control" id="phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" />
+          </div>
+          <input class="admin-control" id="phone_no" type="hidden" name="phone_no" data-validate="phoneIntl" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="cnic_no">CNIC</label>
+          <input class="admin-control" id="cnic_no" type="text" name="cnic_no" data-validate="cnic" placeholder="36603-0269853-9" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="gender">Gender</label>
+          <select class="admin-control" id="gender" name="gender">
+            <option value="male">Male</option>
+            <option value="female">Female</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="status">Status</label>
+          <select class="admin-control" id="status" name="status">
+            <option value="PENDING">PENDING</option>
+            <option value="VERIFIED">VERIFIED</option>
+            <option value="REJECTED">REJECTED</option>
+            <option value="BANNED">BANNED</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driver_rating">Driver Rating</label>
+          <input class="admin-control" id="driver_rating" type="number" step="0.01" name="driver_rating" placeholder="0.00" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="passenger_rating">Passenger Rating</label>
+          <input class="admin-control" id="passenger_rating" type="number" step="0.01" name="passenger_rating" placeholder="0.00" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driving_license_no">Driving License No</label>
+          <input class="admin-control" id="driving_license_no" type="text" name="driving_license_no" placeholder="License number" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="accountno">Account No</label>
+          <input class="admin-control" id="accountno" type="text" name="accountno" placeholder="Account number" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="iban">IBAN</label>
+          <input class="admin-control" id="iban" type="text" name="iban" placeholder="IBAN" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="bankname">Bank Name</label>
+          <input class="admin-control" id="bankname" type="text" name="bankname" placeholder="Bank" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="cnic_front_image">CNIC Front Image</label>
+          <input class="admin-control" id="cnic_front_image" type="file" name="cnic_front_image" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="cnic_back_image">CNIC Back Image</label>
+          <input class="admin-control" id="cnic_back_image" type="file" name="cnic_back_image" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driving_license_front">License Front</label>
+          <input class="admin-control" id="driving_license_front" type="file" name="driving_license_front" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driving_license_back">License Back</label>
+          <input class="admin-control" id="driving_license_back" type="file" name="driving_license_back" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="accountqr">Account QR</label>
+          <input class="admin-control" id="accountqr" type="file" name="accountqr" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="profile_photo">Profile Photo</label>
+          <input class="admin-control" id="profile_photo" type="file" name="profile_photo" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="live_photo">Live Photo</label>
+          <input class="admin-control" id="live_photo" type="file" name="live_photo" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="emergency_name">Emergency Contact Name</label>
+          <input class="admin-control" id="emergency_name" type="text" name="emergency_name" placeholder="Name" required data-validate="required" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="emergency_relation">Emergency Relation</label>
+          <select class="admin-control" id="emergency_relation" name="emergency_relation" required data-validate="required">
+            <option value="">--</option>
+            <option value="Father">Father</option>
+            <option value="Mother">Mother</option>
+            <option value="Brother">Brother</option>
+            <option value="Sister">Sister</option>
+            <option value="Husband">Husband</option>
+            <option value="Wife">Wife</option>
+            <option value="Son">Son</option>
+            <option value="Daughter">Daughter</option>
+            <option value="Uncle">Uncle</option>
+            <option value="Aunty">Aunty</option>
+            <option value="Friend">Friend</option>
+            <option value="Other">Other</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="emergency_email">Emergency Email</label>
+          <input class="admin-control" id="emergency_email" type="email" name="emergency_email" data-validate="required email" placeholder="email@example.com" required />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="emergency_phone_no">Emergency Phone</label>
+          <div style="display:flex; gap: 8px; align-items: center;">
+            <select class="admin-control" id="emergency_phone_country" style="max-width: 120px;">
+              <option value="+92" selected>+92</option>
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+971">+971</option>
+              <option value="+966">+966</option>
+            </select>
+            <input class="admin-control" id="emergency_phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" required />
+          </div>
+          <input class="admin-control" id="emergency_phone_no" type="hidden" name="emergency_phone_no" data-validate="required emergencyPhoneDigits" required />
+          <div class="admin-field-error"></div>
+        </div>
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn btn-primary" type="submit"><i class="fa-solid fa-user-plus"></i> Add User</button>
+      </div>
+    </form>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    (function () {
+      const form = document.getElementById('userAddForm');
+      if (!form) return;
+      const country = document.getElementById('phone_no_country');
+      const local = document.getElementById('phone_no_local');
+      const hidden = document.getElementById('phone_no');
+      if (!country || !local || !hidden) return;
+
+      const sync = () => {
+        const cc = (country.value || '').trim();
+        const digits = (local.value || '').replace(/\D/g, '');
+        hidden.value = digits ? (cc + digits) : '';
+      };
+
+      local.addEventListener('input', sync);
+      country.addEventListener('change', sync);
+      sync();
+    })();
+
+    (function () {
+      const country = document.getElementById('emergency_phone_country');
+      const local = document.getElementById('emergency_phone_no_local');
+      const hidden = document.getElementById('emergency_phone_no');
+      if (!country || !local || !hidden) return;
+
+      const sync = () => {
+        const cc = String(country.value || '').trim();
+        const ccDigits = cc.replace(/\D/g, '');
+        const digits = String(local.value || '').replace(/\D/g, '');
+        hidden.value = digits ? (ccDigits + digits) : '';
+      };
+
+      local.addEventListener('input', sync);
+      country.addEventListener('change', sync);
+      sync();
+    })();
+    AdminFormValidator.wire(document.getElementById('userAddForm'), {
+      extraValidate: (form) => {
+        const errors = [];
+        const licenseNo = (form.driving_license_no?.value || '').trim();
+        const licenseFront = form.driving_license_front?.files?.[0];
+        const licenseBack = form.driving_license_back?.files?.[0];
+        if (licenseNo && (!licenseFront || !licenseBack)) {
+          errors.push('Both front and back images of the driving license are required if license number is provided.');
+        }
+        return errors;
+      }
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,388 @@
+{% extends 'administration/base.html' %}
+{% load static %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+  <main class="user-main">
+    <h1 class="page-title">Edit User</h1>
+    {% if error %}
+      <div class="alert mb-12">{{ error }}</div>
+    {% endif %}
+
+    <form id="userEditForm" method="post" action="{% url 'administration:submit_user_edit' user.id %}" enctype="multipart/form-data" class="admin-form">
+      {% csrf_token %}
+
+      <div class="admin-form-header">
+        <div>
+          <h2 class="admin-form-title">User Profile</h2>
+          <p class="admin-form-subtitle">Update account details. Password is optional (leave blank to keep current).</p>
+        </div>
+      </div>
+
+      <div id="formError" class="form-error mb-12" data-form-error></div>
+
+      <div class="admin-form-grid">
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="password">Password (optional)</label>
+          <input class="admin-control" type="password" name="password" id="password" data-validate="passwordStrong" placeholder="Leave blank to keep current password" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="name">Name</label>
+          <input class="admin-control" type="text" name="name" id="name" value="{{ user.name }}" required data-validate="required" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="username">Username</label>
+          <input class="admin-control" type="text" name="username" id="username" value="{{ user.username }}" required data-validate="required username" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="email">Email</label>
+          <input class="admin-control" type="email" name="email" id="email" value="{{ user.email }}" required data-validate="required email" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="address">Address</label>
+          <input class="admin-control" type="text" name="address" id="address" value="{{ user.address }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="phone_no_local">Phone</label>
+          <div style="display:flex; gap: 8px; align-items: center;">
+            <select class="admin-control" id="phone_no_country" style="max-width: 120px;">
+              <option value="+92" selected>+92</option>
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+971">+971</option>
+              <option value="+966">+966</option>
+            </select>
+            <input class="admin-control" id="phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" />
+          </div>
+          <input class="admin-control" type="hidden" name="phone_no" id="phone_no" value="{{ user.phone_no }}" data-validate="phoneIntl" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="genderSelect">Gender</label>
+          <select class="admin-control" name="gender" id="genderSelect">
+            <option value="male" {% if user.gender == 'male' %}selected{% endif %}>Male</option>
+            <option value="female" {% if user.gender == 'female' %}selected{% endif %}>Female</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="statusSelect">Status</label>
+          <select class="admin-control" name="status" id="statusSelect">
+            <option value="PENDING" {% if user.status == 'PENDING' %}selected{% endif %}>PENDING</option>
+            <option value="VERIFIED" {% if user.status == 'VERIFIED' %}selected{% endif %}>VERIFIED</option>
+            <option value="REJECTED" {% if user.status == 'REJECTED' %}selected{% endif %}>REJECTED</option>
+            <option value="BANNED" {% if user.status == 'BANNED' %}selected{% endif %}>BANNED</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driver_rating">Driver Rating</label>
+          <input class="admin-control" type="number" step="0.01" name="driver_rating" id="driver_rating" value="{{ user.driver_rating|default_if_none:'' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="passenger_rating">Passenger Rating</label>
+          <input class="admin-control" type="number" step="0.01" name="passenger_rating" id="passenger_rating" value="{{ user.passenger_rating|default_if_none:'' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="cnic_no">CNIC</label>
+          <input class="admin-control" type="text" name="cnic_no" id="cnic_no" value="{{ user.cnic_no }}" data-validate="cnic" placeholder="36603-0269853-9" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driving_license_no">Driving License No</label>
+          <input class="admin-control" type="text" name="driving_license_no" id="driving_license_no" value="{{ user.driving_license_no }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="accountno">Account No</label>
+          <input class="admin-control" type="text" name="accountno" id="accountno" value="{{ user.accountno }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="iban">IBAN</label>
+          <input class="admin-control" type="text" name="iban" id="iban" value="{{ user.iban }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="bankname">Bank Name</label>
+          <input class="admin-control" type="text" name="bankname" id="bankname" value="{{ user.bankname }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="emergency_name">Emergency Contact Name</label>
+          <input class="admin-control" id="emergency_name" type="text" name="emergency_name" value="{{ emergency_contact.name|default_if_none:'' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="emergency_relation">Emergency Relation</label>
+          <select class="admin-control" id="emergency_relation" name="emergency_relation">
+            <option value="" {% if not emergency_contact or not emergency_contact.relation %}selected{% endif %}>--</option>
+            <option value="Father" {% if emergency_contact and emergency_contact.relation == 'Father' %}selected{% endif %}>Father</option>
+            <option value="Mother" {% if emergency_contact and emergency_contact.relation == 'Mother' %}selected{% endif %}>Mother</option>
+            <option value="Brother" {% if emergency_contact and emergency_contact.relation == 'Brother' %}selected{% endif %}>Brother</option>
+            <option value="Sister" {% if emergency_contact and emergency_contact.relation == 'Sister' %}selected{% endif %}>Sister</option>
+            <option value="Husband" {% if emergency_contact and emergency_contact.relation == 'Husband' %}selected{% endif %}>Husband</option>
+            <option value="Wife" {% if emergency_contact and emergency_contact.relation == 'Wife' %}selected{% endif %}>Wife</option>
+            <option value="Son" {% if emergency_contact and emergency_contact.relation == 'Son' %}selected{% endif %}>Son</option>
+            <option value="Daughter" {% if emergency_contact and emergency_contact.relation == 'Daughter' %}selected{% endif %}>Daughter</option>
+            <option value="Uncle" {% if emergency_contact and emergency_contact.relation == 'Uncle' %}selected{% endif %}>Uncle</option>
+            <option value="Aunty" {% if emergency_contact and emergency_contact.relation == 'Aunty' %}selected{% endif %}>Aunty</option>
+            <option value="Friend" {% if emergency_contact and emergency_contact.relation == 'Friend' %}selected{% endif %}>Friend</option>
+            <option value="Other" {% if emergency_contact and emergency_contact.relation == 'Other' %}selected{% endif %}>Other</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="emergency_email">Emergency Email</label>
+          <input class="admin-control" id="emergency_email" type="email" name="emergency_email" value="{{ emergency_contact.email|default_if_none:'' }}" data-validate="email" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="emergency_phone_no">Emergency Phone</label>
+          <div style="display:flex; gap: 8px; align-items: center;">
+            <select class="admin-control" id="emergency_phone_country" style="max-width: 120px;">
+              <option value="+92" selected>+92</option>
+              <option value="+1">+1</option>
+              <option value="+44">+44</option>
+              <option value="+971">+971</option>
+              <option value="+966">+966</option>
+            </select>
+            <input class="admin-control" id="emergency_phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" />
+          </div>
+          <input class="admin-control" id="emergency_phone_no" type="hidden" name="emergency_phone_no" value="{{ emergency_contact.phone_no|default_if_none:'' }}" data-validate="emergencyPhoneDigits" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="accountqr">Account QR</label>
+          <div>
+            <img id="accountqr_img" src="" alt="Account QR" class="user-img is-hidden-soft">
+          </div>
+          <input class="admin-control" type="file" name="accountqr" id="accountqr" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="profile_photo">Profile Photo</label>
+          <div>
+            <img id="profile_photo_img" src="" alt="Profile Photo" class="user-img is-hidden-soft">
+          </div>
+          <input class="admin-control" type="file" name="profile_photo" id="profile_photo" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="live_photo">Live Photo</label>
+          <div>
+            <img id="live_photo_img" src="" alt="Live Photo" class="user-img is-hidden-soft">
+          </div>
+          <input class="admin-control" type="file" name="live_photo" id="live_photo" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="cnic_front_image">CNIC Front Image</label>
+          <div>
+            <img id="cnic_front_image_img" src="" alt="CNIC Front" class="user-img is-hidden-soft">
+          </div>
+          <input class="admin-control" type="file" name="cnic_front_image" id="cnic_front_image" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="cnic_back_image">CNIC Back Image</label>
+          <div>
+            <img id="cnic_back_image_img" src="" alt="CNIC Back" class="user-img is-hidden-soft">
+          </div>
+          <input class="admin-control" type="file" name="cnic_back_image" id="cnic_back_image" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driving_license_front">Driving License Front</label>
+          <div>
+            <img id="driving_license_front_img" src="" alt="License Front" class="user-img is-hidden-soft">
+          </div>
+          <input class="admin-control" type="file" name="driving_license_front" id="driving_license_front" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="driving_license_back">Driving License Back</label>
+          <div>
+            <img id="driving_license_back_img" src="" alt="License Back" class="user-img is-hidden-soft">
+          </div>
+          <input class="admin-control" type="file" name="driving_license_back" id="driving_license_back" accept="image/*" />
+          <div class="admin-field-error"></div>
+        </div>
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn btn-primary" type="submit"><i class="fa-regular fa-floppy-disk"></i> Save Changes</button>
+      </div>
+    </form>
+  </main>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+  let existingImages = {}; // Store existing images info
+  
+  fetch(`/administration/users/{{ user.id }}/view/api/`)
+    .then(r => r.json())
+    .then(u => {
+      // Store existing images info (using *_url fields)
+      existingImages = {
+        driving_license_front: !!u.driving_license_front_url,
+        driving_license_back: !!u.driving_license_back_url
+      };
+      
+      // Show current images if available (prefer *_url fields)
+      if (u.accountqr_url) {
+        const img = document.getElementById('accountqr_img');
+        img.src = u.accountqr_url;
+        img.classList.remove('is-hidden-soft');
+      }
+      if (u.profile_photo_url) {
+        const img = document.getElementById('profile_photo_img');
+        img.src = u.profile_photo_url;
+        img.classList.remove('is-hidden-soft');
+      }
+      if (u.live_photo_url) {
+        const img = document.getElementById('live_photo_img');
+        img.src = u.live_photo_url;
+        img.classList.remove('is-hidden-soft');
+      }
+      if (u.cnic_front_image_url) {
+        const img = document.getElementById('cnic_front_image_img');
+        img.src = u.cnic_front_image_url;
+        img.classList.remove('is-hidden-soft');
+      }
+      if (u.cnic_back_image_url) {
+        const img = document.getElementById('cnic_back_image_img');
+        img.src = u.cnic_back_image_url;
+        img.classList.remove('is-hidden-soft');
+      }
+      if (u.driving_license_front_url) {
+        const img = document.getElementById('driving_license_front_img');
+        img.src = u.driving_license_front_url;
+        img.classList.remove('is-hidden-soft');
+      }
+      if (u.driving_license_back_url) {
+        const img = document.getElementById('driving_license_back_img');
+        img.src = u.driving_license_back_url;
+        img.classList.remove('is-hidden-soft');
+      }
+    })
+    .catch(err => {
+      // Optionally show error
+      console.error('Error loading user:', err);
+    });
+
+    (function () {
+      const country = document.getElementById('phone_no_country');
+      const local = document.getElementById('phone_no_local');
+      const hidden = document.getElementById('phone_no');
+      if (!country || !local || !hidden) return;
+
+      const parse = (full) => {
+        const s = String(full || '').trim();
+        if (!s.startsWith('+')) return null;
+        const opts = Array.from(country.options || []).map(o => o.value).filter(Boolean);
+        let best = null;
+        for (const code of opts) {
+          if (s.startsWith(code) && (!best || code.length > best.length)) best = code;
+        }
+        if (!best) return null;
+        return { code: best, local: s.slice(best.length) };
+      };
+
+      const init = parse(hidden.value);
+      if (init) {
+        country.value = init.code;
+        local.value = init.local;
+      }
+
+      const sync = () => {
+        const cc = (country.value || '').trim();
+        const digits = (local.value || '').replace(/\D/g, '');
+        hidden.value = digits ? (cc + digits) : '';
+      };
+
+      local.addEventListener('input', sync);
+      country.addEventListener('change', sync);
+      sync();
+    })();
+
+    (function () {
+      const country = document.getElementById('emergency_phone_country');
+      const local = document.getElementById('emergency_phone_no_local');
+      const hidden = document.getElementById('emergency_phone_no');
+      if (!country || !local || !hidden) return;
+
+      const initDigits = String(hidden.value || '').replace(/\D/g, '');
+      if (initDigits) {
+        const ccDigits = String(country.value || '').replace(/\D/g, '');
+        if (ccDigits && initDigits.startsWith(ccDigits)) {
+          local.value = initDigits.slice(ccDigits.length);
+        } else {
+          local.value = initDigits;
+        }
+      }
+
+      const sync = () => {
+        const cc = String(country.value || '').trim();
+        const ccDigits = cc.replace(/\D/g, '');
+        const digits = String(local.value || '').replace(/\D/g, '');
+        hidden.value = digits ? (ccDigits + digits) : '';
+      };
+
+      local.addEventListener('input', sync);
+      country.addEventListener('change', sync);
+      sync();
+    })();
+
+    AdminFormValidator.wire(document.getElementById('userEditForm'), {
+      extraValidate: (form) => {
+        const errors = [];
+        const licenseNo = (form.driving_license_no?.value || '').trim();
+        const licenseFront = form.driving_license_front?.files?.[0];
+        const licenseBack = form.driving_license_back?.files?.[0];
+        if (licenseNo) {
+          const hasFrontImage = Boolean(licenseFront) || Boolean(existingImages.driving_license_front);
+          const hasBackImage = Boolean(licenseBack) || Boolean(existingImages.driving_license_back);
+          if (!hasFrontImage || !hasBackImage) {
+            errors.push('Both front and back images of the driving license are required if license number is provided.');
+          }
+        }
+        return errors;
+      }
+    });
+  </script>
+{% endblock %}
