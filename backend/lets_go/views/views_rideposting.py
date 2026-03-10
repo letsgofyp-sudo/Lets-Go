@@ -75,6 +75,43 @@ def create_trip(request):
             total_seats = data.get('total_seats', 1)
             notes = data.get('notes', '')
             gender_preference = data.get('gender_preference', 'Any')
+
+            # Get driver from request data (since we're not using Django's built-in auth)
+            logger.debug("=== LOOKING UP DRIVER ===")
+            driver_id = data.get('driver_id')
+            logger.debug("Driver ID from request: %s", driver_id)
+
+            if not driver_id:
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Driver ID is required'
+                }, status=400)
+
+            try:
+                logger.debug("Looking for driver with id: %s", driver_id)
+                # Fetch minimal user fields; defer all binary/image fields to avoid heavy loads
+                driver = (
+                    UsersData.objects
+                    .only('id', 'name', 'status')
+                    .defer(
+                        'profile_photo', 'live_photo',
+                        'cnic_front_image', 'cnic_back_image',
+                        'driving_license_front', 'driving_license_back',
+                        'accountqr'
+                    )
+                    .get(id=driver_id)
+                )
+                logger.debug("Driver found: %s (ID: %s)", driver.name, driver.id)
+            except UsersData.DoesNotExist as e:
+                logger.exception("Driver not found: %s", str(e))
+                return JsonResponse({
+                    'success': False,
+                    'error': 'Driver not found'
+                }, status=404)
+
+            blocked = ride_create_block_response(driver.id)
+            if blocked is not None:
+                return blocked
             
             logger.debug("Extracted data:")
             logger.debug("  route_id: %s (type: %s)", route_id, type(route_id))
@@ -100,10 +137,11 @@ def create_trip(request):
                 )
                 logger.debug("Route found: %s (ID: %s)", route.route_name, route.id)
                 
-                logger.debug("Looking for vehicle with id: %s", vehicle_id)
+                logger.debug("Looking for vehicle with id: %s (owner_id: %s)", vehicle_id, driver.id)
                 vehicle = (
                     Vehicle.objects
-                    .only('id', 'model_number', 'company_name', 'plate_number', 'vehicle_type', 'color', 'seats', 'fuel_type', 'status')
+                    .filter(owner_id=driver.id)
+                    .only('id', 'owner_id', 'model_number', 'company_name', 'plate_number', 'vehicle_type', 'color', 'seats', 'fuel_type', 'status')
                     .defer('photo_front', 'photo_back', 'documents_image')
                     .get(id=vehicle_id)
                 )
@@ -194,43 +232,6 @@ def create_trip(request):
                     'source': 'client',
                 },
             }
-            
-            # Get driver from request data (since we're not using Django's built-in auth)
-            logger.debug("=== LOOKING UP DRIVER ===")
-            driver_id = data.get('driver_id')
-            logger.debug("Driver ID from request: %s", driver_id)
-            
-            if not driver_id:
-                return JsonResponse({
-                    'success': False,
-                    'error': 'Driver ID is required'
-                }, status=400)
-            
-            try:
-                logger.debug("Looking for driver with id: %s", driver_id)
-                # Fetch minimal user fields; defer all binary/image fields to avoid heavy loads
-                driver = (
-                    UsersData.objects
-                    .only('id', 'name', 'status')
-                    .defer(
-                        'profile_photo', 'live_photo',
-                        'cnic_front_image', 'cnic_back_image',
-                        'driving_license_front', 'driving_license_back',
-                        'accountqr'
-                    )
-                    .get(id=driver_id)
-                )
-                logger.debug("Driver found: %s (ID: %s)", driver.name, driver.id)
-            except UsersData.DoesNotExist as e:
-                logger.exception("Driver not found: %s", str(e))
-                return JsonResponse({
-                    'success': False,
-                    'error': 'Driver not found'
-                }, status=404)
-
-            blocked = ride_create_block_response(driver.id)
-            if blocked is not None:
-                return blocked
             
             # Create trip
             logger.debug("=== CREATING TRIP ===")
@@ -1838,85 +1839,7 @@ def get_trip_details(request, trip_id):
             return JsonResponse({'success': False, 'error': str(e)}, status=500)
     
     return JsonResponse({'error': 'Invalid request method'}, status=400)
-'''
-def fetch_route_geometry_osm(points, api_key):
-    """Fetch a route geometry polyline from OpenRouteService.
-    points: list of (lat, lng) tuples.
-    Returns a list of {"lat": float, "lng": float} along the road, or [] on failure.
-    """
-    try:
-        logger.debug("[ROUTE_GEOMETRY][OSM] points: %s", points)
-        if not points or len(points) < 2:
-            logger.debug("[ROUTE_GEOMETRY][OSM] not enough points")
-            return []
-        # OpenRouteService-style API expects [lng, lat]
-        coords = [[float(lng), float(lat)] for (lat, lng) in points]
-        logger.debug("[ROUTE_GEOMETRY][OSM] coords for API: %s", coords)
-        if not api_key:
-            logger.debug("[ROUTE_GEOMETRY][OSM] missing api_key")
-            return []
-        url = "https://api.openrouteservice.org/v2/directions/driving-car"
-        headers = {
-            "Authorization": api_key,
-            "Content-Type": "application/json",
-        }
-        # Request directions; newer ORS versions may return encoded polyline by default
-        body = {
-            "coordinates": coords,
-            "instructions": False,
-            "geometry_simplify": False,
-        }
-        logger.debug("[ROUTE_GEOMETRY][OSM] POST %s", url)
-        resp = requests.post(url, json=body, headers=headers, timeout=15)
-        logger.debug("[ROUTE_GEOMETRY][OSM] status %s", resp.status_code)
-        logger.debug("[ROUTE_GEOMETRY][OSM] body_prefix %s", (resp.text or '')[:400])
-        resp.raise_for_status()
-        data = resp.json()
 
-        # ORS v2 directions: geometry is under routes[0]["geometry"]
-        routes = data.get('routes') or []
-        if not routes:
-            logger.debug('[ROUTE_GEOMETRY][OSM] no routes in response')
-            return []
-
-        geom = routes[0].get('geometry')
-
-        # Case 1: GeoJSON LineString (some ORS configs / older versions)
-        if isinstance(geom, dict) and geom.get('type') == 'LineString':
-            line = []
-            for lon, lat in coords_ll:
-                try:
-                    line.append({
-                        'lat': float(lat),
-                        'lng': float(lon),
-                    })
-                except Exception:
-                    continue
-            logger.debug('[ROUTE_GEOMETRY][OSM] extracted points from GeoJSON: %s', len(line))
-            return line
-
-        # Case 2: encoded polyline string (default in newer ORS versions)
-        if isinstance(geom, str):
-            decoded = _decode_ors_polyline(geom)
-            line = []
-            for lat, lon in decoded:
-                try:
-                    line.append({
-                        'lat': float(lat),
-                        'lng': float(lon),
-                    })
-                except Exception:
-                    continue
-            logger.debug('[ROUTE_GEOMETRY][OSM] extracted points from encoded polyline: %s', len(line))
-            return line
-
-        logger.debug('[ROUTE_GEOMETRY][OSM] unexpected geometry format: %s', type(geom))
-        return []
-    except Exception as e:
-        logger.exception('[ROUTE_GEOMETRY][OSM] failed to fetch geometry: %s', str(e))
-        return []
-
-'''
 @csrf_exempt
 def update_trip(request, trip_id):
     """Update trip details"""

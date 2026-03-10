@@ -164,10 +164,22 @@ class MyApp extends StatelessWidget {
           userData: ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {},
           routeData: ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {},
         ),
-        '/ride_booking_details': (context) => RideBookingDetailsScreen(
-          userData: ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {},
-          tripId: ModalRoute.of(context)?.settings.arguments as String? ?? '',
-        ),
+        '/ride_booking_details': (context) {
+          final args = ModalRoute.of(context)?.settings.arguments;
+          if (args is Map) {
+            final m = Map<String, dynamic>.from(args);
+            return RideBookingDetailsScreen(
+              userData: (m['userData'] is Map) ? Map<String, dynamic>.from(m['userData'] as Map) : <String, dynamic>{},
+              tripId: (m['tripId'] ?? m['trip_id'] ?? '').toString(),
+            );
+          }
+          // Backward compatibility: allow passing just tripId string.
+          final tripId = (args ?? '').toString();
+          return RideBookingDetailsScreen(
+            userData: <String, dynamic>{},
+            tripId: tripId,
+          );
+        },
         '/ride-request': (context) {
           final args = (ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>? ?? {});
           return RideRequestScreen(

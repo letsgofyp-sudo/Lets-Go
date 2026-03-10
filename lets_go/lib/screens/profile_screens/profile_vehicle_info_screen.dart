@@ -545,7 +545,7 @@ class _ProfileVehicleInfoScreenState extends State<ProfileVehicleInfoScreen> wit
     final companyName = (vehicle['company_name'] ?? 'Unknown').toString();
     final modelNumber = (vehicle['model_number'] ?? 'Unknown').toString();
     final plateNumber = (vehicle['plate_number'] ?? vehicle['plate'] ?? 'Unknown').toString();
-    final photoFrontUrl = vehicle['photo_front']?.toString();
+    final photoFrontUrl = (vehicle['photo_front_url'] ?? vehicle['photo_front'])?.toString();
     final status = (vehicle['status'] ?? '').toString().toUpperCase();
     final isVerified = status == 'VERIFIED' || status == 'APPROVED';
 

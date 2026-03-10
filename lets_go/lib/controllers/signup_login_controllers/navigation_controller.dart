@@ -68,12 +68,15 @@ class NavigationController {
 
   /// Check if user can create rides
   static bool canUserCreateRides(Map<String, dynamic> userData) {
-    // Check if user has driving license and vehicle
-    final hasLicense = userData['driving_license'] != null && 
-                      userData['driving_license'].toString().isNotEmpty;
-    final hasVehicle = userData['vehicles'] != null && 
-                      (userData['vehicles'] as List).isNotEmpty;
-    
+    String? dl = userData['driving_license_no']?.toString();
+    dl ??= userData['driving_license_number']?.toString();
+    dl ??= userData['license_no']?.toString();
+    dl ??= userData['driving_license']?.toString();
+    final hasLicense = dl != null && dl.isNotEmpty;
+
+    final vehiclesRaw = userData['vehicles'];
+    final hasVehicle = vehiclesRaw is List && vehiclesRaw.isNotEmpty;
+
     return hasLicense && hasVehicle;
   }
 

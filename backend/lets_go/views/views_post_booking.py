@@ -14,7 +14,7 @@ from ..models.models_route import RouteStop, RouteGeometryPoint
 from ..models import TripPayment
 from .views_authentication import upload_to_supabase
 from .views_notifications import send_ride_notification_async
-from ..utils.verification_guard import verification_block_response
+from ..utils.verification_guard import verification_block_response, ride_booking_block_response
 from django.urls import reverse
 import os
 import smtplib
@@ -585,7 +585,7 @@ def start_booking_ride(request, booking_id):
     if already_on_board:
         return JsonResponse({'success': False, 'error': 'You already have an active ride in progress.'}, status=400)
 
-    blocked = verification_block_response(passenger_id)
+    blocked = ride_booking_block_response(passenger_id)
     if blocked is not None:
         return blocked
 

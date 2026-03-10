@@ -177,10 +177,12 @@ def _attach_latest_payments(bookings):
         setattr(b, 'latest_payment_method', getattr(p, 'payment_method', None) if p is not None else None)
 
 
+@login_required
 def guest_list_view(request):
     return render(request, 'administration/guests_list.html')
 
 
+@login_required
 def api_guests(request):
     qs = GuestUser.objects.all().values(
         'id',
@@ -272,6 +274,7 @@ def guest_support_chat_view(request, guest_id):
     )
 
 @csrf_protect
+@login_required
 def user_add_view(request):
     if request.method == 'POST':
         user = UsersData()
@@ -338,6 +341,12 @@ def user_add_view(request):
                 user.accountqr_url = upload_to_supabase(user_bucket, accountqr, dest)
         try:
             user.full_clean()
+
+            if (getattr(user, 'status', None) or '').strip().upper() == 'VERIFIED':
+                missing = _missing_required_user_verification_fields(user)
+                if missing:
+                    raise ValueError('Cannot set user as VERIFIED. Missing required verification fields: ' + ', '.join(missing))
+
             user.save()
 
             emergency_name = (request.POST.get('emergency_name') or '').strip()
@@ -371,14 +380,17 @@ def user_add_view(request):
             return render(request, 'administration/user_add.html', {'error': str(e)})
     return render(request, 'administration/user_add.html')
 # Create your views here.
+@login_required
 def admin_view(request):
     return render(request, "administration/index.html")
 
 
+@login_required
 def analytics_view(request):
     return render(request, 'administration/analytics.html')
 
 
+@login_required
 def settings_view(request):
     return render(request, 'administration/settings.html')
 
@@ -473,6 +485,7 @@ def user_support_chat_view(request, user_id):
     )
 
 
+@login_required
 def rides_dashboard_view(request):
     """Admin dashboard to track rides/trips & bookings."""
     try:
@@ -520,6 +533,7 @@ def rides_dashboard_view(request):
     return render(request, 'administration/rides_dashboard.html', context)
 
 
+@login_required
 def admin_trip_detail_view(request, trip_pk):
     """Admin detail page for a single trip with full related info."""
     trip = get_object_or_404(Trip.objects.select_related('route', 'driver', 'vehicle'), pk=trip_pk)
@@ -757,6 +771,7 @@ def admin_trip_detail_view(request, trip_pk):
 
 
 @require_http_methods(['GET'])
+@login_required
 def change_requests_list_view(request):
     qs = (
         ChangeRequest.objects
@@ -790,6 +805,7 @@ def change_requests_list_view(request):
 
 @require_http_methods(['GET', 'POST'])
 @csrf_protect
+@login_required
 def change_request_detail_view(request, change_request_id):
     cr = get_object_or_404(ChangeRequest.objects.select_related('user', 'vehicle'), pk=change_request_id)
 
@@ -823,6 +839,12 @@ def change_request_detail_view(request, change_request_id):
                         user = cr.user
                         for k, v in (cr.requested_changes or {}).items():
                             setattr(user, k, v)
+
+                        if (getattr(user, 'status', None) or '').strip().upper() == 'VERIFIED':
+                            missing = _missing_required_user_verification_fields(user)
+                            if missing:
+                                raise ValueError('Cannot set user as VERIFIED. Missing required verification fields: ' + ', '.join(missing))
+
                         user.full_clean()
                         user.save()
                     elif cr.entity_type == ChangeRequest.ENTITY_VEHICLE:
@@ -865,6 +887,7 @@ def change_request_detail_view(request, change_request_id):
     })
 
 
+@login_required
 def admin_booking_map_view(request, booking_pk):
     """Admin page to visualize a single booking on the map with distance and price totals."""
     booking = get_object_or_404(
@@ -1015,6 +1038,7 @@ def admin_booking_map_view(request, booking_pk):
 
     return render(request, 'administration/booking_map.html', context)
 
+@login_required
 def api_kpis(request):
     today = timezone.localdate()
     start_7d = today - timedelta(days=6)
@@ -1060,9 +1084,8 @@ def api_kpis(request):
     return JsonResponse(data)
 
 
+@login_required
 def sos_dashboard_view(request):
-    if not getattr(request, 'user', None) or not request.user.is_authenticated:
-        return redirect('administration:login_view')
 
     open_incidents = (
         SosIncident.objects
@@ -1087,9 +1110,8 @@ def sos_dashboard_view(request):
     )
 
 
+@login_required
 def sos_incident_detail_view(request, incident_id):
-    if not getattr(request, 'user', None) or not request.user.is_authenticated:
-        return redirect('administration:login_view')
 
     incident = get_object_or_404(
         SosIncident.objects.select_related('actor', 'trip', 'booking', 'resolved_by'),
@@ -1106,9 +1128,8 @@ def sos_incident_detail_view(request, incident_id):
 
 @require_http_methods(['POST'])
 @csrf_protect
+@login_required
 def sos_incident_resolve_view(request, incident_id):
-    if not getattr(request, 'user', None) or not request.user.is_authenticated:
-        return redirect('administration:login_view')
 
     incident = get_object_or_404(SosIncident, pk=incident_id)
     if incident.status != SosIncident.STATUS_RESOLVED:
@@ -1148,9 +1169,8 @@ def sos_incident_resolve_view(request, incident_id):
 
 @require_http_methods(['POST'])
 @csrf_protect
+@login_required
 def resolved_sos_snapshot_regenerate_view(request, incident_id):
-    if not getattr(request, 'user', None) or not request.user.is_authenticated:
-        return redirect('administration:login_view')
 
     incident = get_object_or_404(
         SosIncident.objects.select_related('trip', 'booking', 'actor', 'resolved_by', 'audit_event'),
@@ -1183,9 +1203,8 @@ def resolved_sos_snapshot_regenerate_view(request, incident_id):
     return redirect('administration:resolved_sos_snapshot_detail', incident_id=incident.id)
 
 
+@login_required
 def resolved_sos_snapshot_detail_view(request, incident_id):
-    if not getattr(request, 'user', None) or not request.user.is_authenticated:
-        return redirect('administration:login_view')
 
     incident = get_object_or_404(
         SosIncident.objects.select_related('actor', 'trip', 'booking', 'resolved_by'),
@@ -1210,6 +1229,7 @@ def resolved_sos_snapshot_detail_view(request, incident_id):
         },
     )
 
+@login_required
 def api_chart_data(request):
     today = timezone.localdate()
     days = [today - timedelta(days=i) for i in range(6, -1, -1)]
@@ -1277,9 +1297,22 @@ def api_chart_data(request):
             pass
 
     # Cancellation breakdown (approximation based on available DB fields)
-    cancelled_bookings_7d = Booking.objects.filter(booking_status='CANCELLED', cancelled_at__date__gte=days[0], cancelled_at__date__lte=days[-1]).count()
-    cancelled_trips_7d = Trip.objects.filter(trip_status='CANCELLED', cancelled_at__date__gte=days[0], cancelled_at__date__lte=days[-1]).count()
-    cancelled_safety_7d = Trip.objects.filter(trip_status='CANCELLED', cancelled_at__date__gte=days[0], cancelled_at__date__lte=days[-1], cancellation_reason__icontains='safety').count()
+    cancelled_bookings_7d = Booking.objects.filter(
+        booking_status='CANCELLED',
+        cancelled_at__date__gte=days[0],
+        cancelled_at__date__lte=days[-1],
+    ).count()
+    cancelled_trips_7d = Trip.objects.filter(
+        trip_status='CANCELLED',
+        cancelled_at__date__gte=days[0],
+        cancelled_at__date__lte=days[-1],
+    ).count()
+    cancelled_safety_7d = Trip.objects.filter(
+        trip_status='CANCELLED',
+        cancelled_at__date__gte=days[0],
+        cancelled_at__date__lte=days[-1],
+        cancellation_reason__icontains='safety',
+    ).count()
     other_cancellations_7d = max(cancelled_trips_7d - cancelled_safety_7d, 0)
     cancel_reasons = [
         cancelled_bookings_7d,
@@ -1300,6 +1333,8 @@ def api_chart_data(request):
         'avgWait': avg_wait_by_day,
     })
 
+
+@login_required
 def user_list_view(request):
     return render(request, 'administration/users_list.html')
 
@@ -1413,12 +1448,15 @@ def reached_overdue_dashboard_view(request):
             'passenger_overdue': passenger_overdue,
         },
     )
-# AJAX API: list users
+
+
+@login_required
 def api_users(request):
     qs = UsersData.objects.all().values(
         'id','name','email','status','driver_rating','passenger_rating','created_at'
     )
     return JsonResponse({'users': list(qs)})
+
 
 # --- User vehicles helpers and CRUD ---
 
@@ -1445,6 +1483,7 @@ def _vehicle_to_dict(v: Vehicle):
     }
 
 
+@login_required
 def api_user_vehicles(request, user_id):
     """Return JSON list of vehicles for a given user (admin view)."""
     user = get_object_or_404(UsersData, pk=user_id)
@@ -1453,10 +1492,13 @@ def api_user_vehicles(request, user_id):
     return JsonResponse({'user_id': user.id, 'vehicles': data})
 
 
+@login_required
 def user_vehicles_redirect_view(request, user_id):
     """Convenience URL that redirects to the user detail page where vehicles are listed."""
     return redirect('administration:user_detail', user_id=user_id)
-# 2) Detail page
+
+
+@login_required
 def user_detail_view(request, user_id):
     # api_user_detail(request, user_id)
     user = get_object_or_404(UsersData, pk=user_id)
@@ -1472,7 +1514,9 @@ def user_detail_view(request, user_id):
             'emergency_contact': emergency_contact,
         },
     )
-# AJAX API: detail JSON
+
+
+@login_required
 def api_user_detail(request, user_id):
     user = get_object_or_404(UsersData, pk=user_id)
     data = {f: getattr(user, f) for f in [
@@ -1489,12 +1533,78 @@ def api_user_detail(request, user_id):
     ]:
         data[img_url_field] = getattr(user, img_url_field, None)
     return JsonResponse(data)
+
+
+def _missing_required_user_verification_fields(user):
+    missing = []
+    if not (getattr(user, 'profile_photo_url', None) or ''):
+        missing.append('profile_photo')
+    if not (getattr(user, 'live_photo_url', None) or ''):
+        missing.append('live_photo')
+    if not (getattr(user, 'cnic_no', None) or ''):
+        missing.append('cnic_no')
+    if not (getattr(user, 'cnic_front_image_url', None) or ''):
+        missing.append('cnic_front_image')
+    if not (getattr(user, 'cnic_back_image_url', None) or ''):
+        missing.append('cnic_back_image')
+    return missing
+
+
+def _user_has_scheduled_confirmed_trips(user_id: int) -> bool:
+    try:
+        return (
+            Booking.objects
+            .filter(
+                trip__driver_id=user_id,
+                trip__trip_status='SCHEDULED',
+                booking_status__in=['CONFIRMED'],
+            )
+            .only('id')
+            .exists()
+        )
+    except Exception:
+        return False
+
+
 # Update status via HTML form
 @require_http_methods(['POST'])
+@login_required
 def update_user_status_view(request, user_id):
     user = get_object_or_404(UsersData, pk=user_id)
     status = request.POST.get('status')
     if status in ['PENDING','VERIFIED','REJECTED','BANNED']:
+        current = (getattr(user, 'status', None) or '').strip().upper()
+        target = (status or '').strip().upper()
+        if target in ['PENDING', 'REJECTED', 'BANNED'] and _user_has_scheduled_confirmed_trips(user.id):
+            vehicles = user.vehicles.all().order_by('-created_at')
+            emergency_contact = EmergencyContact.objects.filter(user=user).first()
+            return render(
+                request,
+                'administration/users_detail.html',
+                {
+                    'user_id': user_id,
+                    'user': user,
+                    'vehicles': vehicles,
+                    'emergency_contact': emergency_contact,
+                    'error': 'User has scheduled trips with confirmed passengers. Cancel trips first before changing verification status.',
+                },
+            )
+        if status == 'VERIFIED':
+            missing = _missing_required_user_verification_fields(user)
+            if missing:
+                vehicles = user.vehicles.all().order_by('-created_at')
+                emergency_contact = EmergencyContact.objects.filter(user=user).first()
+                return render(
+                    request,
+                    'administration/users_detail.html',
+                    {
+                        'user_id': user_id,
+                        'user': user,
+                        'vehicles': vehicles,
+                        'emergency_contact': emergency_contact,
+                        'error': 'Cannot set user as VERIFIED. Missing required verification fields: ' + ', '.join(missing),
+                    },
+                )
         user.status = status
         if status == 'REJECTED':
             reason = (request.POST.get('rejection_reason') or '').strip()
@@ -1504,6 +1614,7 @@ def update_user_status_view(request, user_id):
         user.save()
     return redirect('administration:user_detail', user_id=user_id)
 # 3) Edit page HTML form
+@login_required
 def user_edit_view(request, user_id):
     user = get_object_or_404(UsersData, pk=user_id)
     emergency_contact = EmergencyContact.objects.filter(user=user).first()
@@ -1514,6 +1625,7 @@ def user_edit_view(request, user_id):
     )
 # Handle edit form submission
 @require_http_methods(['POST'])
+@login_required
 def submit_user_edit(request, user_id):
     user = get_object_or_404(UsersData, pk=user_id)
     user.name = request.POST.get('name')
@@ -1579,6 +1691,10 @@ def submit_user_edit(request, user_id):
             dest = f"users/{email}/account_qr_{stamp}.{ext}"
             user.accountqr_url = upload_to_supabase(user_bucket, accountqr, dest)
     try:
+        if (getattr(user, 'status', None) or '').strip().upper() in ['PENDING', 'REJECTED', 'BANNED']:
+            if _user_has_scheduled_confirmed_trips(user.id):
+                raise ValueError('User has scheduled trips with confirmed passengers. Cancel trips first before changing verification status.')
+
         emergency_name = (request.POST.get('emergency_name') or '').strip()
         emergency_relation = (request.POST.get('emergency_relation') or '').strip()
         emergency_email = (request.POST.get('emergency_email') or '').strip()
@@ -1600,6 +1716,12 @@ def submit_user_edit(request, user_id):
             ec.full_clean()
 
         user.full_clean()
+
+        if (getattr(user, 'status', None) or '').strip().upper() == 'VERIFIED':
+            missing = _missing_required_user_verification_fields(user)
+            if missing:
+                raise ValueError('Cannot set user as VERIFIED. Missing required verification fields: ' + ', '.join(missing))
+
         user.save()
 
         if any([emergency_name, emergency_relation, emergency_email, emergency_phone_no]):
@@ -1618,6 +1740,7 @@ def submit_user_edit(request, user_id):
         )
 
 
+@login_required
 def vehicle_detail_view(request, user_id):
     """Show a dedicated page listing all vehicles for a given user."""
     user = get_object_or_404(UsersData, pk=user_id)
@@ -1634,6 +1757,7 @@ def vehicle_detail_view(request, user_id):
 
 
 @csrf_protect
+@login_required
 def vehicle_add_view(request, user_id):
     user = get_object_or_404(UsersData, pk=user_id)
     if request.method == 'POST':
@@ -1644,6 +1768,7 @@ def vehicle_add_view(request, user_id):
         v.plate_number = request.POST.get('plate_number') or ''
         v.vehicle_type = request.POST.get('vehicle_type') or Vehicle.TWO_WHEELER
         v.color = request.POST.get('color') or ''
+        v.status = Vehicle.STATUS_VERIFIED
         seats_raw = request.POST.get('seats')
         v.seats = int(seats_raw) if seats_raw else None
         v.engine_number = request.POST.get('engine_number') or ''
@@ -1706,6 +1831,7 @@ def vehicle_add_view(request, user_id):
 
 
 @csrf_protect
+@login_required
 def vehicle_edit_view(request, user_id, vehicle_id):
     user = get_object_or_404(UsersData, pk=user_id)
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id, owner=user)
@@ -1779,6 +1905,7 @@ def vehicle_edit_view(request, user_id, vehicle_id):
 
 @require_http_methods(['POST'])
 @csrf_protect
+@login_required
 def vehicle_delete_view(request, user_id, vehicle_id):
     user = get_object_or_404(UsersData, pk=user_id)
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id, owner=user)
@@ -1788,6 +1915,7 @@ def vehicle_delete_view(request, user_id, vehicle_id):
 
 @require_http_methods(['POST'])
 @csrf_protect
+@login_required
 def vehicle_update_status_view(request, user_id, vehicle_id):
     user = get_object_or_404(UsersData, pk=user_id)
     vehicle = get_object_or_404(Vehicle, pk=vehicle_id, owner=user)
@@ -1801,7 +1929,11 @@ def vehicle_update_status_view(request, user_id, vehicle_id):
         pass
     vehicle.save(update_fields=['status', 'updated_at'])
     return redirect('administration:vehicle_detail', user_id=user_id)
-@csrf_exempt
+
+
+
+
+@csrf_protect
 def login_view(request):
     error_message = ''
     if request.method == 'POST':
@@ -1814,6 +1946,9 @@ def login_view(request):
         else:
             error_message = 'Invalid credentials'
     return render(request, 'administration/login.html', {'error_message': error_message})
+
+
+@login_required
 def logout_view(request):
     logout(request)
     return redirect('administration:login_view')

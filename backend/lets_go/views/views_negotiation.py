@@ -84,7 +84,7 @@ def handle_ride_booking_request(request, trip_id):
             except Exception:
                 pass
 
-            blocked = verification_block_response(passenger.id)
+            blocked = ride_booking_block_response(passenger.id)
             if blocked is not None:
                 return blocked
 

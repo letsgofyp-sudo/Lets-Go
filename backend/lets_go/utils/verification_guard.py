@@ -60,6 +60,55 @@ def ride_booking_block_response(user_id):
         return blocked
 
     try:
+        user = (
+            UsersData.objects
+            .only(
+                'id',
+                'status',
+                'cnic_no',
+                'profile_photo_url', 'live_photo_url',
+                'cnic_front_image_url', 'cnic_back_image_url',
+            )
+            .get(id=user_id)
+        )
+    except UsersData.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'User not found'}, status=404)
+
+    status = (getattr(user, 'status', None) or '').strip().upper()
+    if status != 'VERIFIED':
+        return JsonResponse(
+            {
+                'success': False,
+                'error': 'Your account is not verified yet. Please complete verification before booking rides.',
+                'code': 'ACCOUNT_NOT_VERIFIED',
+            },
+            status=403,
+        )
+
+    missing = []
+    if not (getattr(user, 'profile_photo_url', None) or ''):
+        missing.append('profile_photo')
+    if not (getattr(user, 'live_photo_url', None) or ''):
+        missing.append('live_photo')
+    if not (getattr(user, 'cnic_no', None) or ''):
+        missing.append('cnic_no')
+    if not (getattr(user, 'cnic_front_image_url', None) or ''):
+        missing.append('cnic_front_image')
+    if not (getattr(user, 'cnic_back_image_url', None) or ''):
+        missing.append('cnic_back_image')
+
+    if missing:
+        return JsonResponse(
+            {
+                'success': False,
+                'error': 'Your verification data is incomplete. Please upload and verify required photos and CNIC before booking rides.',
+                'code': 'VERIFICATION_INCOMPLETE',
+                'missing': missing,
+            },
+            status=403,
+        )
+
+    try:
         pending = list(_pending_user_profile_change_requests(user_id))
 
         has_pending_gender = _has_any_requested_keys(pending, ['gender'])
@@ -97,6 +146,63 @@ def ride_create_block_response(user_id):
     blocked = verification_block_response(user_id)
     if blocked is not None:
         return blocked
+
+    try:
+        user = (
+            UsersData.objects
+            .only(
+                'id',
+                'status',
+                'cnic_no',
+                'profile_photo_url', 'live_photo_url',
+                'cnic_front_image_url', 'cnic_back_image_url',
+                'driving_license_no',
+                'driving_license_front_url', 'driving_license_back_url',
+            )
+            .get(id=user_id)
+        )
+    except UsersData.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'User not found'}, status=404)
+
+    status = (getattr(user, 'status', None) or '').strip().upper()
+    if status != 'VERIFIED':
+        return JsonResponse(
+            {
+                'success': False,
+                'error': 'Your account is not verified yet. Please complete verification before creating rides.',
+                'code': 'ACCOUNT_NOT_VERIFIED',
+            },
+            status=403,
+        )
+
+    missing = []
+    if not (getattr(user, 'profile_photo_url', None) or ''):
+        missing.append('profile_photo')
+    if not (getattr(user, 'live_photo_url', None) or ''):
+        missing.append('live_photo')
+    if not (getattr(user, 'cnic_no', None) or ''):
+        missing.append('cnic_no')
+    if not (getattr(user, 'cnic_front_image_url', None) or ''):
+        missing.append('cnic_front_image')
+    if not (getattr(user, 'cnic_back_image_url', None) or ''):
+        missing.append('cnic_back_image')
+    if not (getattr(user, 'driving_license_no', None) or ''):
+        missing.append('driving_license_no')
+    if not (getattr(user, 'driving_license_front_url', None) or ''):
+        missing.append('driving_license_front')
+    if not (getattr(user, 'driving_license_back_url', None) or ''):
+        missing.append('driving_license_back')
+
+    if missing:
+        return JsonResponse(
+            {
+                'success': False,
+                'error': 'Your driver verification data is incomplete. Please upload and verify CNIC, driving license, and required photos before creating rides.',
+                'code': 'VERIFICATION_INCOMPLETE',
+                'missing': missing,
+            },
+            status=403,
+        )
 
     try:
         pending = list(_pending_user_profile_change_requests(user_id))

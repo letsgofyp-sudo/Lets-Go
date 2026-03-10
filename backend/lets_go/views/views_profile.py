@@ -178,6 +178,30 @@ def upload_user_driving_license(request, user_id):
     try:
         user = UsersData.objects.get(id=user_id)
 
+        try:
+            has_confirmed = (
+                Booking.objects
+                .filter(
+                    trip__driver_id=user.id,
+                    trip__trip_status='SCHEDULED',
+                    booking_status__in=['CONFIRMED'],
+                )
+                .only('id')
+                .exists()
+            )
+        except Exception:
+            has_confirmed = False
+
+        if has_confirmed:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'error': 'You have active scheduled trips with passengers. Please cancel your existing trips before updating driving license details.',
+                    'code': 'CANCEL_TRIPS_FIRST',
+                },
+                status=403,
+            )
+
         if (
             ChangeRequest.objects
             .filter(user_id=user.id, entity_type=ChangeRequest.ENTITY_USER_PROFILE, status=ChangeRequest.STATUS_PENDING)
@@ -333,6 +357,30 @@ def upload_user_cnic(request, user_id):
         return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
     try:
         user = UsersData.objects.get(id=user_id)
+
+        try:
+            has_confirmed = (
+                Booking.objects
+                .filter(
+                    trip__driver_id=user.id,
+                    trip__trip_status='SCHEDULED',
+                    booking_status__in=['CONFIRMED'],
+                )
+                .only('id')
+                .exists()
+            )
+        except Exception:
+            has_confirmed = False
+
+        if has_confirmed:
+            return JsonResponse(
+                {
+                    'success': False,
+                    'error': 'You have active scheduled trips with passengers. Please cancel your existing trips before updating CNIC details.',
+                    'code': 'CANCEL_TRIPS_FIRST',
+                },
+                status=403,
+            )
 
         if (
             ChangeRequest.objects
@@ -574,6 +622,20 @@ def user_profile(request, user_id):
         user = UsersData.objects.get(id=user_id)
         payload = _parse_json_body(request)
 
+        try:
+            has_confirmed = (
+                Booking.objects
+                .filter(
+                    trip__driver_id=user.id,
+                    trip__trip_status='SCHEDULED',
+                    booking_status__in=['CONFIRMED'],
+                )
+                .only('id')
+                .exists()
+            )
+        except Exception:
+            has_confirmed = False
+
         has_pending_profile_cr = (
             ChangeRequest.objects
             .filter(user_id=user.id, entity_type=ChangeRequest.ENTITY_USER_PROFILE, status=ChangeRequest.STATUS_PENDING)
@@ -589,6 +651,15 @@ def user_profile(request, user_id):
                 immediate_updates[k] = payload.get(k)
 
         if 'gender' in payload:
+            if has_confirmed:
+                return JsonResponse(
+                    {
+                        'success': False,
+                        'error': 'You have active scheduled trips with passengers. Please cancel your existing trips before changing gender.',
+                        'code': 'CANCEL_TRIPS_FIRST',
+                    },
+                    status=403,
+                )
             if has_pending_profile_cr:
                 return JsonResponse(
                     {

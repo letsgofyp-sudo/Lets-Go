@@ -47,7 +47,7 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
       },
     );
     isDriver = _controller.isDriver;
-    _tabController = TabController(length: isDriver ? 3 : 2, vsync: this);
+    _tabController = TabController(length: 3, vsync: this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.ensureLicenseIfMissing();
     });
@@ -63,12 +63,6 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    // Rebuild tab controller if driver status changes
-    if (_tabController.length != (_controller.isDriver ? 3 : 2)) {
-      _tabController.dispose();
-      _tabController = TabController(length: _controller.isDriver ? 3 : 2, vsync: this);
-    }
-
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -135,26 +129,19 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
           tabs: [
             const Tab(text: 'General Info'),
             const Tab(text: 'Ride History'),
-            if (_controller.isDriver) const Tab(text: 'Vehicle Info'),
+            const Tab(text: 'Vehicle Info'),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabController,
-        children: _controller.isDriver
-            ? [
-                ProfileGeneralInfoScreen(
-                  userData: _user,
-                ),
-                ProfileRideHistoryScreen(userData: _user),
-                ProfileVehicleInfoScreen(userData: _user),
-              ]
-            : [
-                ProfileGeneralInfoScreen(
-                  userData: _user,
-                ),
-                ProfileRideHistoryScreen(userData: _user),
-              ],
+        children: [
+          ProfileGeneralInfoScreen(
+            userData: _user,
+          ),
+          ProfileRideHistoryScreen(userData: _user),
+          ProfileVehicleInfoScreen(userData: _user),
+        ],
       ),
     );
   }

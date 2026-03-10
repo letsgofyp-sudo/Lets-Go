@@ -117,7 +117,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         Navigator.pushNamed(
           context,
           '/ride_booking_details',
-          arguments: tripId,
+          arguments: {
+            'userData': widget.userData,
+            'tripId': tripId,
+          },
         );
       }
       return;
@@ -129,7 +132,10 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
         Navigator.pushNamed(
           context,
           '/ride_booking_details',
-          arguments: tripId,
+          arguments: {
+            'userData': widget.userData,
+            'tripId': tripId,
+          },
         );
       }
       return;

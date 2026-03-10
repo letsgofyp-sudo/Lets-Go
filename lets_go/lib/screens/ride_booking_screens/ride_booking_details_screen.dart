@@ -899,6 +899,13 @@ class _RideBookingDetailsScreenState extends State<RideBookingDetailsScreen> {
                   final passengerId = int.tryParse(widget.userData['id']?.toString() ?? '') ??
                       int.tryParse(widget.userData['user_id']?.toString() ?? '') ??
                       0;
+                  if (passengerId <= 0) {
+                    if (!mounted) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Missing user session. Please login again.')),
+                    );
+                    return;
+                  }
                   if (passengerId > 0) {
                     final gate = await ApiService.getRideBookingGateStatus(userId: passengerId);
                     if (!mounted) return;

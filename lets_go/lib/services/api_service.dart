@@ -612,6 +612,34 @@ class ApiService {
     return list.whereType<Map>().map((e) => Map<String, dynamic>.from(e)).toList();
   }
 
+  static List<String> _missingBookingVerificationFields(Map<String, dynamic> user) {
+    final missing = <String>[];
+    final profile = (user['profile_photo_url'] ?? '').toString().trim();
+    final live = (user['live_photo_url'] ?? '').toString().trim();
+    final cnicNo = (user['cnic_no'] ?? '').toString().trim();
+    final cnicFront = (user['cnic_front_image_url'] ?? '').toString().trim();
+    final cnicBack = (user['cnic_back_image_url'] ?? '').toString().trim();
+
+    if (profile.isEmpty) missing.add('profile_photo');
+    if (live.isEmpty) missing.add('live_photo');
+    if (cnicNo.isEmpty) missing.add('cnic_no');
+    if (cnicFront.isEmpty) missing.add('cnic_front_image');
+    if (cnicBack.isEmpty) missing.add('cnic_back_image');
+    return missing;
+  }
+
+  static List<String> _missingCreateVerificationFields(Map<String, dynamic> user) {
+    final missing = <String>[];
+    missing.addAll(_missingBookingVerificationFields(user));
+    final dlNo = (user['driving_license_no'] ?? '').toString().trim();
+    final dlFront = (user['driving_license_front_url'] ?? '').toString().trim();
+    final dlBack = (user['driving_license_back_url'] ?? '').toString().trim();
+    if (dlNo.isEmpty) missing.add('driving_license_no');
+    if (dlFront.isEmpty) missing.add('driving_license_front');
+    if (dlBack.isEmpty) missing.add('driving_license_back');
+    return missing;
+  }
+
   static Future<Map<String, dynamic>> getRideBookingGateStatus({
     required int userId,
   }) async {
@@ -623,6 +651,24 @@ class ApiService {
           'blocked': true,
           'code': 'ACCOUNT_BANNED',
           'message': 'Your account is banned. You cannot perform this operation.',
+        };
+      }
+
+      if (userStatus != 'VERIFIED') {
+        return {
+          'blocked': true,
+          'code': 'ACCOUNT_NOT_VERIFIED',
+          'message': 'Your account is not verified yet. Please complete verification before booking rides.',
+        };
+      }
+
+      final missing = _missingBookingVerificationFields(user);
+      if (missing.isNotEmpty) {
+        return {
+          'blocked': true,
+          'code': 'VERIFICATION_INCOMPLETE',
+          'missing': missing,
+          'message': 'Your verification data is incomplete. Please upload and verify required photos and CNIC before booking rides.',
         };
       }
 
@@ -674,6 +720,24 @@ class ApiService {
           'blocked': true,
           'code': 'ACCOUNT_BANNED',
           'message': 'Your account is banned. You cannot perform this operation.',
+        };
+      }
+
+      if (userStatus != 'VERIFIED') {
+        return {
+          'blocked': true,
+          'code': 'ACCOUNT_NOT_VERIFIED',
+          'message': 'Your account is not verified yet. Please complete verification before creating rides.',
+        };
+      }
+
+      final missing = _missingCreateVerificationFields(user);
+      if (missing.isNotEmpty) {
+        return {
+          'blocked': true,
+          'code': 'VERIFICATION_INCOMPLETE',
+          'missing': missing,
+          'message': 'Your driver verification data is incomplete. Please upload and verify CNIC, driving license, and required photos before creating rides.',
         };
       }
 
@@ -735,6 +799,14 @@ class ApiService {
           'code': 'VEHICLE_PENDING',
           'message':
               'Selected vehicle verification is pending. Please wait for admin verification before creating a ride with this vehicle.',
+        };
+      }
+
+      if (st.isNotEmpty && st != 'VERIFIED') {
+        return {
+          'blocked': true,
+          'code': 'VEHICLE_NOT_VERIFIED',
+          'message': 'Selected vehicle is not verified yet. Please use a verified vehicle to create a ride.',
         };
       }
 

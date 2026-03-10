@@ -95,7 +95,8 @@ class ProfileVehicleInfoController {
       errorMessage = null;
       onStateChanged?.call();
 
-      final userId = initialUser['id'];
+      final uid = initialUser['id'];
+      final userId = uid is int ? uid : int.tryParse(uid?.toString() ?? '');
       if (userId == null) {
         errorMessage = 'User ID not found';
         return;

@@ -32,6 +32,10 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
 
   Map<String, dynamic>? _persistedLiveTrackingSession;
 
+  bool _canCreateRide = false;
+  bool _isCheckingCreateRideEligibility = false;
+  String? _createRideBlockMessage;
+
   @override
   void initState() {
     super.initState();
@@ -43,6 +47,87 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
     });
     _initializeController();
     _loadPersistedLiveTrackingSession();
+    _refreshCreateRideEligibility();
+  }
+
+  bool _hasDrivingLicense(Map<String, dynamic> user) {
+    final candidates = [
+      user['driving_license_no'],
+      user['driving_license_number'],
+      user['license_no'],
+      user['driving_license'],
+    ];
+    for (final v in candidates) {
+      final s = (v ?? '').toString().trim();
+      if (s.isNotEmpty && s.toLowerCase() != 'null') return true;
+    }
+    return false;
+  }
+
+  Future<void> _refreshCreateRideEligibility() async {
+    if (_isCheckingCreateRideEligibility) return;
+    final userId = _extractUserId();
+    if (userId <= 0) {
+      if (!mounted) return;
+      setState(() {
+        _canCreateRide = false;
+        _createRideBlockMessage = 'Missing user id';
+      });
+      return;
+    }
+
+    if (!mounted) return;
+    setState(() {
+      _isCheckingCreateRideEligibility = true;
+      _createRideBlockMessage = null;
+    });
+
+    try {
+      final status = (widget.userData['status'] ?? '').toString().trim().toUpperCase();
+      if (status != 'VERIFIED') {
+        if (!mounted) return;
+        setState(() {
+          _canCreateRide = false;
+          _createRideBlockMessage = 'Your profile is not verified yet.';
+        });
+        return;
+      }
+
+      if (!_hasDrivingLicense(widget.userData)) {
+        if (!mounted) return;
+        setState(() {
+          _canCreateRide = false;
+          _createRideBlockMessage = 'Driving license is required to create rides.';
+        });
+        return;
+      }
+
+      final vehicles = await ApiService.getUserVehicles(userId);
+      final anyVerified = vehicles.any((v) {
+        final s = (v['status'] ?? '').toString().trim().toUpperCase();
+        return s == 'VERIFIED';
+      });
+
+      if (!mounted) return;
+      setState(() {
+        _canCreateRide = anyVerified;
+        _createRideBlockMessage = anyVerified
+            ? null
+            : 'At least one verified vehicle is required to create rides.';
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _canCreateRide = false;
+        _createRideBlockMessage = 'Unable to check ride creation eligibility.';
+      });
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isCheckingCreateRideEligibility = false;
+        });
+      }
+    }
   }
 
   int? _extractBookingNumericId(Map<String, dynamic> booking) {
@@ -1229,6 +1314,13 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
           const SizedBox(height: 24),
           ElevatedButton.icon(
             onPressed: () {
+              if (!_canCreateRide) {
+                final msg = _createRideBlockMessage ?? 'You are not eligible to create rides.';
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text(msg)),
+                );
+                return;
+              }
               Navigator.pushReplacementNamed(context, '/create_ride');
             },
             icon: const Icon(Icons.add),
@@ -1371,11 +1463,18 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
           final fab = isCreatedTab
               ? FloatingActionButton.extended(
                   onPressed: () {
+                          if (!_canCreateRide) {
+                            final msg = _createRideBlockMessage ?? 'You are not eligible to create rides.';
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(msg)),
+                            );
+                            return;
+                          }
                           Navigator.pushReplacementNamed(context, '/create_ride');
                         },
                   icon: const Icon(Icons.add),
                   label: const Text('Create Ride'),
-                  backgroundColor: Colors.green,
+                  backgroundColor: _canCreateRide ? Colors.green : Colors.grey,
                   foregroundColor: Colors.white,
                 )
               : FloatingActionButton.extended(
