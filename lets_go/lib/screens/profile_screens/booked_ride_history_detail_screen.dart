@@ -66,15 +66,35 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
     });
 
     try {
-      final res = await ApiService.getTripDetailsById(tripId);
-      if (res['success'] == true && res['trip'] is Map) {
+      // ApiService.getTripDetailsById() returns the trip map directly.
+      // Some other endpoints return {success:true, trip:{...}}. Support both.
+      Map<String, dynamic> trip = <String, dynamic>{};
+      try {
+        final res = await ApiService.getTripDetailsById(tripId);
+        if (res is Map<String, dynamic>) {
+          if (res['success'] == true && res['trip'] is Map) {
+            trip = Map<String, dynamic>.from(res['trip'] as Map);
+          } else {
+            // Most common path in this codebase: res is already the trip
+            // (it should contain trip_id / route / etc.).
+            trip = Map<String, dynamic>.from(res);
+          }
+        }
+      } catch (_) {
+        // Fallback: ride-booking details can still reconstruct trip + route.
+        final detail = await ApiService.getRideBookingDetails(tripId);
+        final normalized = RecreateTripMapper.normalizeRideBookingDetail(detail);
+        trip = normalized;
+      }
+
+      if (trip.isNotEmpty) {
         setState(() {
-          _trip = Map<String, dynamic>.from(res['trip'] as Map);
+          _trip = trip;
           _loading = false;
         });
       } else {
         setState(() {
-          _error = (res['error'] ?? 'Unable to load trip details').toString();
+          _error = 'Unable to load trip details';
           _loading = false;
         });
       }

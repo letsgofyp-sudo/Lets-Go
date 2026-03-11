@@ -4,6 +4,7 @@ from datetime import timedelta
 
 from django.db import transaction
 from django.db.models import Max
+from django.db.models import Avg
 from django.utils import timezone
 
 from lets_go.models import (
@@ -218,6 +219,50 @@ def _archive_trip(trip: Trip) -> bool:
             bs.completed_at = getattr(b, 'completed_at', None)
             bs.finalized_at = getattr(b, 'dropoff_at', None) or getattr(b, 'completed_at', None) or getattr(b, 'updated_at', None)
             bs.save()
+
+        # 2b) Ratings update (driver/passengers)
+        # Ratings are stored on Booking rows (driver_rating/passenger_rating).
+        # Since we are about to purge operational Trip + Booking rows, recompute
+        # aggregate ratings now so UsersData reflects the latest truth.
+        try:
+            if trip.trip_status == 'COMPLETED':
+                # Update driver's average rating across all completed trips.
+                driver_avg = (
+                    Booking.objects
+                    .filter(trip__driver_id=trip.driver_id, trip__trip_status='COMPLETED')
+                    .exclude(driver_rating__isnull=True)
+                    .aggregate(avg=Avg('driver_rating'))
+                    .get('avg')
+                )
+                if driver_avg is not None:
+                    try:
+                        trip.driver.driver_rating = float(driver_avg)
+                        trip.driver.save(update_fields=['driver_rating'])
+                    except Exception:
+                        pass
+
+                # Update each passenger's average rating based on completed bookings.
+                passenger_ids = list(
+                    Booking.objects.filter(trip=trip).values_list('passenger_id', flat=True).distinct()
+                )
+                for pid in passenger_ids:
+                    passenger_avg = (
+                        Booking.objects
+                        .filter(passenger_id=pid, booking_status='COMPLETED')
+                        .exclude(passenger_rating__isnull=True)
+                        .aggregate(avg=Avg('passenger_rating'))
+                        .get('avg')
+                    )
+                    if passenger_avg is None:
+                        continue
+                    try:
+                        from lets_go.models import UsersData
+                        UsersData.objects.filter(id=pid).update(passenger_rating=float(passenger_avg))
+                    except Exception:
+                        pass
+        except Exception:
+            # Rating update must never block archiving.
+            pass
 
         # 3) Actual path summary
         raw_points = []

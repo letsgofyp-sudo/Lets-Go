@@ -939,6 +939,12 @@ class RideDetailsController {
           }
         }
 
+        final List<LatLng> polylineToPersist = useActualPath && actualRoutePoints.length >= 2
+            ? List<LatLng>.from(actualRoutePoints)
+            : (plannedRoutePoints.isNotEmpty
+                ? List<LatLng>.from(plannedRoutePoints)
+                : List<LatLng>.from(routePoints));
+
         final routeData = {
           'coordinates': points
               .map(
@@ -948,7 +954,7 @@ class RideDetailsController {
                 },
               )
               .toList(),
-          'route_points': routePoints
+          'route_points': polylineToPersist
               .map(
                 (p) => {
                   'lat': p.latitude,
