@@ -232,35 +232,56 @@ class _RideEditScreenState extends State<RideEditScreen> {
     final int? totalDurationMin = (fareCalc['total_duration_minutes'] as int?)
             ?? (fareCalc['calculation_breakdown'] is Map ? (fareCalc['calculation_breakdown']['total_duration_minutes'] as int?) : null);
     final num totalPrice = (fareCalc['total_price'] as num?) ?? _controller.dynamicPricePerSeat;
+    final bool isBusy = _controller.isUpdating || _controller.isCancelling;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Edit Ride'),
         backgroundColor: Colors.orange,
         actions: [
           IconButton(
-            icon: const Icon(Icons.cancel),
+            icon: _controller.isCancelling
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                : const Icon(Icons.cancel),
             tooltip: 'Cancel Ride',
-            onPressed: () => _controller.cancelRide(tripId),
+            onPressed: isBusy ? null : () => _controller.cancelRide(tripId),
           ),
           IconButton(
-            icon: const Icon(Icons.save),
-            onPressed: () => _controller.updateRide(widget.userData, tripId),
+            icon: _controller.isUpdating
+                ? const SizedBox(
+                    width: 18,
+                    height: 18,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                    ),
+                  )
+                : const Icon(Icons.save),
+            onPressed: isBusy ? null : () => _controller.updateRide(widget.userData, tripId),
             tooltip: 'Update Ride',
           )
         ],
       ),
-      body: Column(
+      body: Stack(
         children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.33,
-            child: _buildMap(),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+          Column(
+            children: [
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.33,
+                child: _buildMap(),
+              ),
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
                   Row(
                     children: [
                       const Icon(Icons.edit, color: Colors.orange),
@@ -487,10 +508,21 @@ class _RideEditScreenState extends State<RideEditScreen> {
                       ),
                     ),
                   ),
-                ],
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          if (isBusy)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black26,
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
             ),
-          ),
         ],
       ),
     );

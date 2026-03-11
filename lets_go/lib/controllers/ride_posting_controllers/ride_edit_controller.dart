@@ -16,6 +16,10 @@ class RideEditController {
   double? routeDistance;
   int? routeDuration;
 
+  // Submit state
+  bool isUpdating = false;
+  bool isCancelling = false;
+
   // Ride details
   DateTime selectedDate = DateTime.now().add(const Duration(days: 1));
   TimeOfDay selectedTime = TimeOfDay.now();
@@ -362,6 +366,9 @@ class RideEditController {
   }
 
   Future<void> updateRide(Map<String, dynamic> userData, String tripId) async {
+    if (isUpdating) return;
+    isUpdating = true;
+    onStateChanged?.call();
     try {
       final Map<String, dynamic> payload = {
         'route_id': createdRouteId,
@@ -554,10 +561,16 @@ class RideEditController {
       }
     } catch (e) {
       onError?.call('Error updating ride: $e');
+    } finally {
+      isUpdating = false;
+      onStateChanged?.call();
     }
   }
 
   Future<void> cancelRide(String tripId, {String? reason}) async {
+    if (isCancelling) return;
+    isCancelling = true;
+    onStateChanged?.call();
     try {
       final res = await ApiService.cancelTrip(tripId, reason: reason ?? 'Cancelled by driver');
       if (res['success'] == true) {
@@ -567,6 +580,9 @@ class RideEditController {
       }
     } catch (e) {
       onError?.call('Error cancelling ride: $e');
+    } finally {
+      isCancelling = false;
+      onStateChanged?.call();
     }
   }
 

@@ -870,11 +870,17 @@ class RideDetailsController {
 
   // Create ride with user data
   Future<void> createRide(Map<String, dynamic> userData) async {
+    if (isSubmitting) return;
+    isSubmitting = true;
+    onStateChanged?.call();
+
     // Validate all required data is present
     if (!recreateMode && createdRouteId == null) {
       onError?.call(
         'Route not found. Please go back and create a route first.',
       );
+      isSubmitting = false;
+      onStateChanged?.call();
       return;
     }
 
@@ -889,6 +895,8 @@ class RideDetailsController {
 
     if ((manualFareCalculation['stop_breakdown'] as List?)?.isEmpty != false) {
       onError?.call('Fare calculation failed. Please adjust fare once and try again.');
+      isSubmitting = false;
+      onStateChanged?.call();
       return;
     }
 
@@ -897,11 +905,15 @@ class RideDetailsController {
 
     if (selectedVehicle == null) {
       onError?.call('Please select a vehicle');
+      isSubmitting = false;
+      onStateChanged?.call();
       return;
     }
 
     if (totalSeats <= 0) {
       onError?.call('Please select at least 1 seat');
+      isSubmitting = false;
+      onStateChanged?.call();
       return;
     }
 
@@ -921,6 +933,8 @@ class RideDetailsController {
             onError?.call(
               'Actual path does not cover one or more stops. Please delete/adjust those stops (or switch to planned route).',
             );
+            isSubmitting = false;
+            onStateChanged?.call();
             return;
           }
         }
@@ -952,6 +966,8 @@ class RideDetailsController {
           final newRouteId = (r['id'] ?? '').toString();
           if (newRouteId.trim().isEmpty) {
             onError?.call('Failed to create route for recreate ride');
+            isSubmitting = false;
+            onStateChanged?.call();
             return;
           }
           createdRouteId = newRouteId;
@@ -963,6 +979,8 @@ class RideDetailsController {
           } catch (_) {}
         } else {
           onError?.call((rr['error'] ?? 'Failed to create route for recreate ride').toString());
+          isSubmitting = false;
+          onStateChanged?.call();
           return;
         }
       }
@@ -983,6 +1001,8 @@ class RideDetailsController {
       final driverIdInt = await _resolveUserIdWithSessionFallback(userData);
       if (vehicleIdInt == 0 || driverIdInt == 0) {
         onError?.call('Missing vehicle/driver id');
+        isSubmitting = false;
+        onStateChanged?.call();
         return;
       }
 
@@ -992,6 +1012,8 @@ class RideDetailsController {
       );
       if (gate['blocked'] == true) {
         onError?.call(gate['message'] ?? 'Verification pending.');
+        isSubmitting = false;
+        onStateChanged?.call();
         return;
       }
 
