@@ -1301,9 +1301,20 @@ class _RideDetailsScreenState extends State<RideDetailsScreen> {
       ),
       body: _buildRideDetailsView(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _controller.createRide(widget.userData),
-        label: const Text('Create Ride'),
-        icon: const Icon(Icons.check),
+        onPressed: _controller.isSubmitting ? null : () => _controller.createRide(widget.userData),
+        label: _controller.isSubmitting
+            ? const Text('Creating...')
+            : const Text('Create Ride'),
+        icon: _controller.isSubmitting
+            ? const SizedBox(
+                height: 18,
+                width: 18,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              )
+            : const Icon(Icons.check),
       ),
     );
   }

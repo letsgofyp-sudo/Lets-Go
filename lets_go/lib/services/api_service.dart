@@ -614,11 +614,11 @@ class ApiService {
 
   static List<String> _missingBookingVerificationFields(Map<String, dynamic> user) {
     final missing = <String>[];
-    final profile = (user['profile_photo_url'] ?? '').toString().trim();
-    final live = (user['live_photo_url'] ?? '').toString().trim();
+    final profile = (user['profile_photo_url'] ?? user['profile_photo'] ?? '').toString().trim();
+    final live = (user['live_photo_url'] ?? user['live_photo'] ?? '').toString().trim();
     final cnicNo = (user['cnic_no'] ?? '').toString().trim();
-    final cnicFront = (user['cnic_front_image_url'] ?? '').toString().trim();
-    final cnicBack = (user['cnic_back_image_url'] ?? '').toString().trim();
+    final cnicFront = (user['cnic_front_image_url'] ?? user['cnic_front_image'] ?? '').toString().trim();
+    final cnicBack = (user['cnic_back_image_url'] ?? user['cnic_back_image'] ?? '').toString().trim();
 
     if (profile.isEmpty) missing.add('profile_photo');
     if (live.isEmpty) missing.add('live_photo');
@@ -632,8 +632,8 @@ class ApiService {
     final missing = <String>[];
     missing.addAll(_missingBookingVerificationFields(user));
     final dlNo = (user['driving_license_no'] ?? '').toString().trim();
-    final dlFront = (user['driving_license_front_url'] ?? '').toString().trim();
-    final dlBack = (user['driving_license_back_url'] ?? '').toString().trim();
+    final dlFront = (user['driving_license_front_url'] ?? user['driving_license_front'] ?? '').toString().trim();
+    final dlBack = (user['driving_license_back_url'] ?? user['driving_license_back'] ?? '').toString().trim();
     if (dlNo.isEmpty) missing.add('driving_license_no');
     if (dlFront.isEmpty) missing.add('driving_license_front');
     if (dlBack.isEmpty) missing.add('driving_license_back');

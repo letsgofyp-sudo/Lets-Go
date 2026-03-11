@@ -6,6 +6,7 @@ import '../../utils/map_util.dart';
 import '../../services/api_service.dart';
 import '../../utils/fare_calculator.dart';
 import '../../utils/road_polyline_service.dart';
+import '../../utils/auth_session.dart';
 
 class RideDetailsController {
   // Route data
@@ -46,6 +47,9 @@ class RideDetailsController {
   bool hasManualAdjustments = false;
   bool isMapLoading = true;
 
+  // Submit state
+  bool isSubmitting = false;
+
   // Price negotiation
   bool isPriceNegotiable = true; // Default to true as requested
 
@@ -71,6 +75,30 @@ class RideDetailsController {
     if (v == null) return null;
     if (v is int) return v;
     return int.tryParse(v.toString());
+  }
+
+  int _resolveUserId(Map<String, dynamic> userData) {
+    return _toInt(userData['id'])
+            ?? _toInt(userData['user_id'])
+            ?? _toInt(userData['user']?['id'])
+            ?? _toInt(userData['profile']?['id'])
+            ?? 0;
+  }
+
+  Future<int> _resolveUserIdWithSessionFallback(Map<String, dynamic> userData) async {
+    final direct = _resolveUserId(userData);
+    if (direct > 0) return direct;
+
+    try {
+      final session = await AuthSession.load();
+      if (session != null) {
+        final sessId = _toInt(session['id']) ?? _toInt(session['user_id']) ?? 0;
+        if (sessId > 0) return sessId;
+      }
+    } catch (_) {
+      // ignore
+    }
+    return 0;
   }
 
   // Initialize route data from passed data
@@ -952,7 +980,7 @@ class RideDetailsController {
       // Create trip with frontend-calculated data
       // Coerce types safely
       final vehicleIdInt = int.tryParse(selectedVehicle ?? '') ?? _toInt(selectedVehicle) ?? _toInt(userData['vehicle_id']) ?? 0;
-      final driverIdInt = _toInt(userData['id']) ?? _toInt(userData['user_id']) ?? 0;
+      final driverIdInt = await _resolveUserIdWithSessionFallback(userData);
       if (vehicleIdInt == 0 || driverIdInt == 0) {
         onError?.call('Missing vehicle/driver id');
         return;
@@ -1001,6 +1029,9 @@ class RideDetailsController {
       }
     } catch (e) {
       onError?.call('Error creating ride: $e');
+    } finally {
+      isSubmitting = false;
+      onStateChanged?.call();
     }
   }
 }

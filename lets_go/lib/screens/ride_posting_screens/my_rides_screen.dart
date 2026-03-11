@@ -1321,7 +1321,11 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
                 );
                 return;
               }
-              Navigator.pushReplacementNamed(context, '/create_ride');
+              Navigator.pushReplacementNamed(
+                context,
+                '/create_ride',
+                arguments: widget.userData,
+              );
             },
             icon: const Icon(Icons.add),
             label: const Text('Create Ride'),
@@ -1470,7 +1474,11 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
                             );
                             return;
                           }
-                          Navigator.pushReplacementNamed(context, '/create_ride');
+                          Navigator.pushReplacementNamed(
+                            context,
+                            '/create_ride',
+                            arguments: widget.userData,
+                          );
                         },
                   icon: const Icon(Icons.add),
                   label: const Text('Create Ride'),
