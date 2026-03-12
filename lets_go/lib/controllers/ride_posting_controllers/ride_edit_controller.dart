@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:convert';
 import '../../services/api_service.dart';
 import '../../utils/fare_calculator.dart';
 import '../../utils/road_polyline_service.dart';
@@ -59,6 +60,28 @@ class RideEditController {
     return double.tryParse(v.toString());
   }
 
+  List<LatLng> _parsePolyline(dynamic raw) {
+    dynamic normalized = raw;
+    if (normalized is String) {
+      try {
+        normalized = json.decode(normalized);
+      } catch (_) {
+        normalized = null;
+      }
+    }
+    if (normalized is! List) return <LatLng>[];
+    final out = <LatLng>[];
+    for (final p in normalized) {
+      if (p is! Map) continue;
+      final lat = _toDouble(p['lat'] ?? p['latitude']);
+      final lng = _toDouble(p['lng'] ?? p['longitude']);
+      if (lat != null && lng != null) {
+        out.add(LatLng(lat, lng));
+      }
+    }
+    return out;
+  }
+
   void initializeWithRideData(Map<String, dynamic> rideData) {
     try {
       final route = rideData['route'] as Map<String, dynamic>?;
@@ -69,35 +92,46 @@ class RideEditController {
       // Preserve existing actual path (if provided by backend) for overlay purposes.
       // This does NOT affect the planned route that is edited.
       actualRoutePoints = [];
-      final rawActual = rideData['actual_path'];
-      if (rawActual is List) {
-        final pts = <LatLng>[];
-        for (final p in rawActual) {
-          if (p is! Map) continue;
-          final lat = _toDouble(p['lat'] ?? p['latitude']);
-          final lng = _toDouble(p['lng'] ?? p['longitude']);
-          if (lat != null && lng != null) {
-            pts.add(LatLng(lat, lng));
-          }
-        }
-        if (pts.length >= 2) actualRoutePoints = pts;
+      final backendActual = _parsePolyline(
+        rideData['actual_path'] ??
+            rideData['trip']?['actual_path'] ??
+            rideData['trip']?['route']?['actual_path'] ??
+            route?['actual_path'],
+      );
+      if (backendActual.length >= 2) {
+        actualRoutePoints = backendActual;
       }
 
-      final List<dynamic>? stops = (rideData['route_coordinates'] as List<dynamic>?)
-          ?? (rideData['route_stops'] as List<dynamic>?)
-          ?? (rideData['stops'] as List<dynamic>?)
-          ?? (route?['route_stops'] as List<dynamic>?)
-          ?? (route?['stops'] as List<dynamic>?);
+      final backendRoute = _parsePolyline(
+        rideData['route_points'] ??
+            rideData['trip']?['route_points'] ??
+            rideData['trip']?['route']?['route_points'] ??
+            route?['route_points'],
+      );
+      if (backendRoute.length >= 2) {
+        routePoints = backendRoute;
+      }
+
+      final List<dynamic>? stops =
+          (rideData['route_coordinates'] as List<dynamic>?) ??
+          (rideData['route_stops'] as List<dynamic>?) ??
+          (rideData['stops'] as List<dynamic>?) ??
+          (route?['route_stops'] as List<dynamic>?) ??
+          (route?['stops'] as List<dynamic>?);
       if (stops != null && stops.isNotEmpty) {
         points.clear();
         locationNames.clear();
-        routePoints.clear();
         for (final raw in stops) {
           final stop = raw as Map<String, dynamic>;
-          final lat = (stop['latitude'] as num?)?.toDouble() ?? (stop['lat'] as num?)?.toDouble();
-          final lng = (stop['longitude'] as num?)?.toDouble() ?? (stop['lng'] as num?)?.toDouble();
+          final lat =
+              (stop['latitude'] as num?)?.toDouble() ??
+              (stop['lat'] as num?)?.toDouble();
+          final lng =
+              (stop['longitude'] as num?)?.toDouble() ??
+              (stop['lng'] as num?)?.toDouble();
           if (lat != null && lng != null) points.add(LatLng(lat, lng));
-          final name = stop['name'] ?? stop['stop_name'] ?? stop['address'] ?? 'Stop';
+          final name =
+              stop['name'] ?? stop['stop_name'] ?? stop['address'] ?? 'Stop';
           locationNames.add(name.toString());
         }
       }
@@ -107,9 +141,12 @@ class RideEditController {
         try {
           List<dynamic>? sb;
           final fc = rideData['fare_calculation'];
-          if (fc is Map && fc['stop_breakdown'] is List && (fc['stop_breakdown'] as List).isNotEmpty) {
+          if (fc is Map &&
+              fc['stop_breakdown'] is List &&
+              (fc['stop_breakdown'] as List).isNotEmpty) {
             sb = List<dynamic>.from(fc['stop_breakdown']);
-          } else if (rideData['stop_breakdown'] is List && (rideData['stop_breakdown'] as List).isNotEmpty) {
+          } else if (rideData['stop_breakdown'] is List &&
+              (rideData['stop_breakdown'] as List).isNotEmpty) {
             sb = List<dynamic>.from(rideData['stop_breakdown']);
           }
           if (sb != null && sb.isNotEmpty) {
@@ -142,10 +179,15 @@ class RideEditController {
         } catch (_) {}
       }
 
-      if (rideData['trip_date'] != null) selectedDate = DateTime.parse(rideData['trip_date']);
+      if (rideData['trip_date'] != null) {
+        selectedDate = DateTime.parse(rideData['trip_date']);
+      }
       if (rideData['departure_time'] != null) {
         final parts = rideData['departure_time'].toString().split(':');
-        selectedTime = TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
+        selectedTime = TimeOfDay(
+          hour: int.parse(parts[0]),
+          minute: int.parse(parts[1]),
+        );
       }
 
       // Negotiation
@@ -167,19 +209,26 @@ class RideEditController {
 
       // Fare calculation payloads
       if (rideData['fare_calculation'] != null) {
-        fareCalculation = Map<String, dynamic>.from(rideData['fare_calculation']);
+        fareCalculation = Map<String, dynamic>.from(
+          rideData['fare_calculation'],
+        );
       }
       // Pull stop_breakdown from top-level if missing
       if ((fareCalculation['stop_breakdown'] == null ||
-              (fareCalculation['stop_breakdown'] is List && (fareCalculation['stop_breakdown'] as List).isEmpty)) &&
+              (fareCalculation['stop_breakdown'] is List &&
+                  (fareCalculation['stop_breakdown'] as List).isEmpty)) &&
           rideData['stop_breakdown'] != null) {
         try {
           fareCalculation = Map<String, dynamic>.from(fareCalculation);
-          fareCalculation['stop_breakdown'] = List<Map<String, dynamic>>.from(rideData['stop_breakdown']);
+          fareCalculation['stop_breakdown'] = List<Map<String, dynamic>>.from(
+            rideData['stop_breakdown'],
+          );
         } catch (_) {}
       }
-      dynamicPricePerSeat = (fareCalculation['base_fare'] as num?)?.toDouble()
-          ?? (rideData['custom_price'] as num?)?.toDouble() ?? 0.0;
+      dynamicPricePerSeat =
+          (fareCalculation['base_fare'] as num?)?.toDouble() ??
+          (rideData['custom_price'] as num?)?.toDouble() ??
+          0.0;
 
       // Seed manual fare from existing calculation so manual edits work
       if (fareCalculation.isNotEmpty && manualFareCalculation.isEmpty) {
@@ -188,7 +237,9 @@ class RideEditController {
       }
 
       // Build polyline
-      fetchRoutePoints();
+      if (routePoints.length < 2) {
+        fetchRoutePoints();
+      }
       onStateChanged?.call();
     } catch (e) {
       onError?.call('Failed to load ride: $e');
@@ -200,8 +251,13 @@ class RideEditController {
       bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (!serviceEnabled) return;
       var perm = await Geolocator.checkPermission();
-      if (perm == LocationPermission.denied) perm = await Geolocator.requestPermission();
-      if (perm == LocationPermission.denied || perm == LocationPermission.deniedForever) return;
+      if (perm == LocationPermission.denied) {
+        perm = await Geolocator.requestPermission();
+      }
+      if (perm == LocationPermission.denied ||
+          perm == LocationPermission.deniedForever) {
+        return;
+      }
       final pos = await Geolocator.getCurrentPosition();
       currentPosition = LatLng(pos.latitude, pos.longitude);
       onStateChanged?.call();
@@ -214,7 +270,9 @@ class RideEditController {
       userVehicles = vehicles;
       if (vehicles.isNotEmpty && selectedVehicle == null) {
         selectedVehicle = vehicles.first['id'].toString();
-        if (vehicles.first['seats'] != null) totalSeats = (vehicles.first['seats'] as int) - 1;
+        if (vehicles.first['seats'] != null) {
+          totalSeats = (vehicles.first['seats'] as int) - 1;
+        }
       }
       onStateChanged?.call();
     } catch (e) {
@@ -223,17 +281,34 @@ class RideEditController {
   }
 
   void calculateDynamicFare() {
-    if (points.length < 2 || selectedVehicle == null || userVehicles.isEmpty) return;
+    if (points.length < 2 || selectedVehicle == null || userVehicles.isEmpty) {
+      return;
+    }
     try {
-      final selectedVehicleData = userVehicles.firstWhere(
-        (v) => v['id'].toString() == selectedVehicle!,
-        orElse: () => userVehicles.first,
-      );
-      final routeStops = points.asMap().entries.map((entry) => {
-            'latitude': entry.value.latitude,
-            'longitude': entry.value.longitude,
-            'stop_name': (entry.key < locationNames.length) ? locationNames[entry.key] : 'Stop ${entry.key + 1}',
-          }).toList();
+      Map<String, dynamic>? selectedVehicleData;
+      for (final v in userVehicles) {
+        final id = v['id']?.toString();
+        if (id != null && id == selectedVehicle) {
+          selectedVehicleData = Map<String, dynamic>.from(v);
+          break;
+        }
+      }
+      if (selectedVehicleData == null) {
+        return;
+      }
+      final routeStops = points
+          .asMap()
+          .entries
+          .map(
+            (entry) => {
+              'latitude': entry.value.latitude,
+              'longitude': entry.value.longitude,
+              'stop_name': (entry.key < locationNames.length)
+                  ? locationNames[entry.key]
+                  : 'Stop ${entry.key + 1}',
+            },
+          )
+          .toList();
       final departureTime = DateTime(
         selectedDate.year,
         selectedDate.month,
@@ -241,8 +316,11 @@ class RideEditController {
         selectedTime.hour,
         selectedTime.minute,
       );
-      String backendVehicleType = (selectedVehicleData['vehicle_type'] ?? 'FW').toString();
-      String calculatorVehicleType = _mapVehicleTypeForCalculator(backendVehicleType);
+      String backendVehicleType = (selectedVehicleData['vehicle_type'] ?? 'FW')
+          .toString();
+      String calculatorVehicleType = _mapVehicleTypeForCalculator(
+        backendVehicleType,
+      );
       final result = FareCalculator.calculateFare(
         routeStops: routeStops,
         fuelType: selectedVehicleData['fuel_type'] ?? 'Petrol',
@@ -255,11 +333,14 @@ class RideEditController {
         manualFareCalculation = Map<String, dynamic>.from(result);
       }
       fareCalculation = Map<String, dynamic>.from(manualFareCalculation);
-      dynamicPricePerSeat = (manualFareCalculation['base_fare'] as num?)?.toDouble() ?? 0.0;
+      dynamicPricePerSeat =
+          (manualFareCalculation['base_fare'] as num?)?.toDouble() ?? 0.0;
       onStateChanged?.call();
     } catch (e) {
       // fallback
-      dynamicPricePerSeat = dynamicPricePerSeat == 0.0 ? 500.0 : dynamicPricePerSeat;
+      dynamicPricePerSeat = dynamicPricePerSeat == 0.0
+          ? 500.0
+          : dynamicPricePerSeat;
       onStateChanged?.call();
     }
   }
@@ -280,16 +361,22 @@ class RideEditController {
       if (fareCalculation.isEmpty) return;
       manualFareCalculation = Map<String, dynamic>.from(fareCalculation);
     }
-    final stopBreakdown = manualFareCalculation['stop_breakdown'] as List<dynamic>? ?? [];
+    final stopBreakdown =
+        manualFareCalculation['stop_breakdown'] as List<dynamic>? ?? [];
     if (stopBreakdown.isEmpty) return;
     // simple distribute proportional to existing
-    final totalOld = stopBreakdown.fold<double>(0.0, (s, e) => s + ((e['price'] as num?)?.toDouble() ?? 0.0));
+    final totalOld = stopBreakdown.fold<double>(
+      0.0,
+      (s, e) => s + ((e['price'] as num?)?.toDouble() ?? 0.0),
+    );
     final factor = totalOld == 0.0 ? 0.0 : newTotalPrice / totalOld;
     final updated = stopBreakdown
-        .map((e) => {
-              ...Map<String, dynamic>.from(e),
-              'price': (((e['price'] as num?)?.toDouble() ?? 0.0) * factor),
-            })
+        .map(
+          (e) => {
+            ...Map<String, dynamic>.from(e),
+            'price': (((e['price'] as num?)?.toDouble() ?? 0.0) * factor),
+          },
+        )
         .toList();
     manualFareCalculation['stop_breakdown'] = updated;
     manualFareCalculation['total_price'] = newTotalPrice;
@@ -305,12 +392,18 @@ class RideEditController {
       if (fareCalculation.isEmpty) return;
       manualFareCalculation = Map<String, dynamic>.from(fareCalculation);
     }
-    final stopBreakdown = manualFareCalculation['stop_breakdown'] as List<dynamic>? ?? [];
+    final stopBreakdown =
+        manualFareCalculation['stop_breakdown'] as List<dynamic>? ?? [];
     if (stopIndex < 0 || stopIndex >= stopBreakdown.length) return;
-    final updated = List<Map<String, dynamic>>.from(stopBreakdown.map((e) => Map<String, dynamic>.from(e)));
+    final updated = List<Map<String, dynamic>>.from(
+      stopBreakdown.map((e) => Map<String, dynamic>.from(e)),
+    );
     updated[stopIndex]['price'] = newPrice;
     manualFareCalculation['stop_breakdown'] = updated;
-    final total = updated.fold<double>(0.0, (s, e) => s + ((e['price'] as num?)?.toDouble() ?? 0.0));
+    final total = updated.fold<double>(
+      0.0,
+      (s, e) => s + ((e['price'] as num?)?.toDouble() ?? 0.0),
+    );
     manualFareCalculation['total_price'] = total;
     manualFareCalculation['base_fare'] = total;
     dynamicPricePerSeat = total;
@@ -344,9 +437,15 @@ class RideEditController {
 
   void applyUpdatedRouteData(Map<String, dynamic> updated) {
     try {
-      if (updated['points'] != null) points = List<LatLng>.from(updated['points']);
-      if (updated['locationNames'] != null) locationNames = List<String>.from(updated['locationNames']);
-      if (updated['routePoints'] != null) routePoints = List<LatLng>.from(updated['routePoints']);
+      if (updated['points'] != null) {
+        points = List<LatLng>.from(updated['points']);
+      }
+      if (updated['locationNames'] != null) {
+        locationNames = List<String>.from(updated['locationNames']);
+      }
+      if (updated['routePoints'] != null) {
+        routePoints = List<LatLng>.from(updated['routePoints']);
+      }
       if (updated['actualRoutePoints'] != null) {
         try {
           actualRoutePoints = List<LatLng>.from(updated['actualRoutePoints']);
@@ -357,7 +456,9 @@ class RideEditController {
       createdRouteId = updated['routeId']?.toString();
       routeDistance = (updated['distance'] as num?)?.toDouble();
       final duration = updated['duration'];
-      routeDuration = (duration is int) ? duration : (duration as num?)?.toInt();
+      routeDuration = (duration is int)
+          ? duration
+          : (duration as num?)?.toInt();
       onStateChanged?.call();
       calculateDynamicFare();
     } catch (e) {
@@ -378,7 +479,9 @@ class RideEditController {
         'total_seats': totalSeats,
         'gender_preference': genderPreference ?? 'Any',
         'base_fare': dynamicPricePerSeat,
-        'fare_calculation': manualFareCalculation.isNotEmpty ? manualFareCalculation : fareCalculation,
+        'fare_calculation': manualFareCalculation.isNotEmpty
+            ? manualFareCalculation
+            : fareCalculation,
         'auto_fare_calculation': autoFareCalculation,
         'has_manual_adjustments': hasManualAdjustments,
         // Notes/description are optional; never auto-generate from stop names.
@@ -386,22 +489,38 @@ class RideEditController {
         'is_negotiable': isPriceNegotiable,
       };
       if (points.isNotEmpty) {
-        payload['route_stops'] = points.asMap().entries.map((e) => {
-              'latitude': e.value.latitude,
-              'longitude': e.value.longitude,
-              'stop_name': (e.key < locationNames.length) ? locationNames[e.key] : 'Stop ${e.key + 1}',
-            }).toList();
-        payload['route_coordinates'] = points.asMap().entries.map((e) => {
-              'lat': e.value.latitude,
-              'lng': e.value.longitude,
-              'name': (e.key < locationNames.length) ? locationNames[e.key] : 'Stop ${e.key + 1}',
-              'order': e.key + 1,
-            }).toList();
+        payload['route_stops'] = points
+            .asMap()
+            .entries
+            .map(
+              (e) => {
+                'latitude': e.value.latitude,
+                'longitude': e.value.longitude,
+                'stop_name': (e.key < locationNames.length)
+                    ? locationNames[e.key]
+                    : 'Stop ${e.key + 1}',
+              },
+            )
+            .toList();
+        payload['route_coordinates'] = points
+            .asMap()
+            .entries
+            .map(
+              (e) => {
+                'lat': e.value.latitude,
+                'lng': e.value.longitude,
+                'name': (e.key < locationNames.length)
+                    ? locationNames[e.key]
+                    : 'Stop ${e.key + 1}',
+                'order': e.key + 1,
+              },
+            )
+            .toList();
         payload['route_names'] = List<String>.from(locationNames);
       }
       final stopBreakdownRaw = (manualFareCalculation.isNotEmpty
-              ? manualFareCalculation['stop_breakdown']
-              : fareCalculation['stop_breakdown']);
+          ? manualFareCalculation['stop_breakdown']
+          : fareCalculation['stop_breakdown']);
       List<Map<String, dynamic>> sb = [];
       if (stopBreakdownRaw is List) {
         sb = List<Map<String, dynamic>>.from(
@@ -410,7 +529,9 @@ class RideEditController {
       }
 
       // If breakdown missing or any element lacks distance_km, rebuild from points
-      bool needsRebuild = sb.isEmpty || sb.any((m) => (m['distance_km'] ?? m['distance']) == null);
+      bool needsRebuild =
+          sb.isEmpty ||
+          sb.any((m) => (m['distance_km'] ?? m['distance']) == null);
       if (needsRebuild && points.length >= 2) {
         final Distance calc = const Distance();
         final List<Map<String, dynamic>> rebuilt = [];
@@ -425,28 +546,43 @@ class RideEditController {
         // Determine price per segment: prefer existing prices length, else distribute dynamicPricePerSeat
         List<double> segPrices = [];
         if (sb.length == segKm.length) {
-          segPrices = sb.map((m) => ((m['price'] as num?)?.toDouble() ?? 0.0)).toList();
+          segPrices = sb
+              .map((m) => ((m['price'] as num?)?.toDouble() ?? 0.0))
+              .toList();
         } else {
-          final double totalPrice = (manualFareCalculation['total_price'] as num?)?.toDouble()
-              ?? (fareCalculation['total_price'] as num?)?.toDouble()
-              ?? dynamicPricePerSeat;
+          final double totalPrice =
+              (manualFareCalculation['total_price'] as num?)?.toDouble() ??
+              (fareCalculation['total_price'] as num?)?.toDouble() ??
+              dynamicPricePerSeat;
           if (totalKm > 0) {
             for (final dk in segKm) {
               segPrices.add(totalPrice * (dk / totalKm));
             }
           } else {
             // Even split if totalKm is zero
-            final split = (points.length - 1) > 0 ? totalPrice / (points.length - 1) : totalPrice;
+            final split = (points.length - 1) > 0
+                ? totalPrice / (points.length - 1)
+                : totalPrice;
             segPrices = List<double>.filled(points.length - 1, split);
           }
         }
         for (int i = 0; i < points.length - 1; i++) {
           final fromOrder = i + 1;
           final toOrder = i + 2;
-          final fromName = (fromOrder - 1 < locationNames.length) ? locationNames[fromOrder - 1] : 'Stop $fromOrder';
-          final toName = (toOrder - 1 < locationNames.length) ? locationNames[toOrder - 1] : 'Stop $toOrder';
-          final fromCoords = {'lat': points[i].latitude, 'lng': points[i].longitude};
-          final toCoords = {'lat': points[i + 1].latitude, 'lng': points[i + 1].longitude};
+          final fromName = (fromOrder - 1 < locationNames.length)
+              ? locationNames[fromOrder - 1]
+              : 'Stop $fromOrder';
+          final toName = (toOrder - 1 < locationNames.length)
+              ? locationNames[toOrder - 1]
+              : 'Stop $toOrder';
+          final fromCoords = {
+            'lat': points[i].latitude,
+            'lng': points[i].longitude,
+          };
+          final toCoords = {
+            'lat': points[i + 1].latitude,
+            'lng': points[i + 1].longitude,
+          };
           rebuilt.add({
             'from_stop_order': fromOrder,
             'to_stop_order': toOrder,
@@ -466,7 +602,6 @@ class RideEditController {
       }
 
       if (sb.isNotEmpty) {
-
         // Normalize orders, names, coordinates, and field names
         List<Map<String, dynamic>> normalized = [];
         double sumKm = 0.0;
@@ -474,7 +609,8 @@ class RideEditController {
         double sumPrice = 0.0;
         for (int i = 0; i < sb.length; i++) {
           final m = sb[i];
-          int fromOrder = (m['from_stop_order'] ?? m['from_stop'] ?? (i + 1)) as int;
+          int fromOrder =
+              (m['from_stop_order'] ?? m['from_stop'] ?? (i + 1)) as int;
           int toOrder = (m['to_stop_order'] ?? m['to_stop'] ?? (i + 2)) as int;
 
           // Clamp to valid range using points length if available
@@ -485,17 +621,32 @@ class RideEditController {
           if (toOrder > maxOrder) toOrder = maxOrder;
 
           // Names
-          final fromName = m['from_stop_name'] ?? (fromOrder - 1 < locationNames.length ? locationNames[fromOrder - 1] : 'Stop $fromOrder');
-          final toName = m['to_stop_name'] ?? (toOrder - 1 < locationNames.length ? locationNames[toOrder - 1] : 'Stop $toOrder');
+          final fromName =
+              m['from_stop_name'] ??
+              (fromOrder - 1 < locationNames.length
+                  ? locationNames[fromOrder - 1]
+                  : 'Stop $fromOrder');
+          final toName =
+              m['to_stop_name'] ??
+              (toOrder - 1 < locationNames.length
+                  ? locationNames[toOrder - 1]
+                  : 'Stop $toOrder');
 
           // Coordinates
-          Map<String, dynamic>? fromCoords = (m['from_coordinates'] as Map?)?.map((k, v) => MapEntry(k.toString(), v));
-          Map<String, dynamic>? toCoords = (m['to_coordinates'] as Map?)?.map((k, v) => MapEntry(k.toString(), v));
-          if (fromCoords == null && points.isNotEmpty && fromOrder - 1 < points.length) {
+          Map<String, dynamic>? fromCoords = (m['from_coordinates'] as Map?)
+              ?.map((k, v) => MapEntry(k.toString(), v));
+          Map<String, dynamic>? toCoords = (m['to_coordinates'] as Map?)?.map(
+            (k, v) => MapEntry(k.toString(), v),
+          );
+          if (fromCoords == null &&
+              points.isNotEmpty &&
+              fromOrder - 1 < points.length) {
             final p = points[fromOrder - 1];
             fromCoords = {'lat': p.latitude, 'lng': p.longitude};
           }
-          if (toCoords == null && points.isNotEmpty && toOrder - 1 < points.length) {
+          if (toCoords == null &&
+              points.isNotEmpty &&
+              toOrder - 1 < points.length) {
             final p = points[toOrder - 1];
             toCoords = {'lat': p.latitude, 'lng': p.longitude};
           }
@@ -529,17 +680,23 @@ class RideEditController {
         payload['stop_breakdown'] = normalized;
         // Mirror into fare_calculation as some backends read from this path
         try {
-          final fc = Map<String, dynamic>.from(payload['fare_calculation'] as Map<String, dynamic>);
+          final fc = Map<String, dynamic>.from(
+            payload['fare_calculation'] as Map<String, dynamic>,
+          );
           fc['stop_breakdown'] = normalized;
           fc['total_distance_km'] = sumKm;
           fc['total_duration_minutes'] = sumMin;
-          fc['total_price'] = sumPrice > 0 ? sumPrice : (payload['base_fare'] as num?)?.toDouble();
+          fc['total_price'] = sumPrice > 0
+              ? sumPrice
+              : (payload['base_fare'] as num?)?.toDouble();
           payload['fare_calculation'] = fc;
         } catch (_) {}
       }
       // Debug: log essential fields before PUT
       try {
-        debugPrint('[UPDATE_RIDE] route_id=${payload['route_id']} vehicle_id=${payload['vehicle_id']} total_seats=${payload['total_seats']}');
+        debugPrint(
+          '[UPDATE_RIDE] route_id=${payload['route_id']} vehicle_id=${payload['vehicle_id']} total_seats=${payload['total_seats']}',
+        );
         final sbDbg = (payload['stop_breakdown'] as List?)?.map((e) {
           final m = e as Map<String, dynamic>;
           return {
@@ -551,7 +708,9 @@ class RideEditController {
           };
         }).toList();
         debugPrint('[UPDATE_RIDE] stop_breakdown: $sbDbg');
-        debugPrint('[UPDATE_RIDE] fare_calculation keys: ${(payload['fare_calculation'] as Map?)?.keys.toList()}');
+        debugPrint(
+          '[UPDATE_RIDE] fare_calculation keys: ${(payload['fare_calculation'] as Map?)?.keys.toList()}',
+        );
       } catch (_) {}
       final response = await ApiService.updateTrip(tripId, payload);
       if (response['success'] == true) {
@@ -572,7 +731,10 @@ class RideEditController {
     isCancelling = true;
     onStateChanged?.call();
     try {
-      final res = await ApiService.cancelTrip(tripId, reason: reason ?? 'Cancelled by driver');
+      final res = await ApiService.cancelTrip(
+        tripId,
+        reason: reason ?? 'Cancelled by driver',
+      );
       if (res['success'] == true) {
         onSuccess?.call('Ride cancelled successfully');
       } else {
@@ -586,6 +748,8 @@ class RideEditController {
     }
   }
 
-  String _fmtDate(DateTime d) => '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
-  String _fmtTime(TimeOfDay t) => '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
+  String _fmtDate(DateTime d) =>
+      '${d.year.toString().padLeft(4, '0')}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')}';
+  String _fmtTime(TimeOfDay t) =>
+      '${t.hour.toString().padLeft(2, '0')}:${t.minute.toString().padLeft(2, '0')}';
 }

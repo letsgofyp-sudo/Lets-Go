@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
+import 'dart:convert';
 import '../../utils/road_polyline_service.dart';
 import '../../services/api_service.dart';
 import '../../utils/map_util.dart';
@@ -10,24 +11,20 @@ class RideDetailsViewController {
   Map<String, dynamic> rideData = {};
   bool isLoading = true;
   String? errorMessage;
-  
+
   // Route data
   List<LatLng> routePoints = [];
   List<String> locationNames = [];
   List<LatLng> stopPoints = [];
   double? routeDistance;
   int? routeDuration;
-  
+
   // Callbacks for UI updates
   VoidCallback? onStateChanged;
   Function(String)? onError;
   Function(String)? onInfo;
 
-  RideDetailsViewController({
-    this.onStateChanged,
-    this.onError,
-    this.onInfo,
-  });
+  RideDetailsViewController({this.onStateChanged, this.onError, this.onInfo});
 
   double? _toDouble(dynamic v) {
     if (v == null) return null;
@@ -36,9 +33,17 @@ class RideDetailsViewController {
   }
 
   List<LatLng> _parsePolyline(dynamic raw) {
-    if (raw is! List) return <LatLng>[];
+    dynamic normalized = raw;
+    if (normalized is String) {
+      try {
+        normalized = json.decode(normalized);
+      } catch (_) {
+        normalized = null;
+      }
+    }
+    if (normalized is! List) return <LatLng>[];
     final out = <LatLng>[];
-    for (final p in raw) {
+    for (final p in normalized) {
       if (p is! Map) continue;
       final lat = _toDouble(p['lat'] ?? p['latitude']);
       final lng = _toDouble(p['lng'] ?? p['longitude']);
@@ -55,20 +60,26 @@ class RideDetailsViewController {
         errorMessage = null;
       });
 
-      final data = await ApiService.getRideBookingDetails(tripId);
-      
-      if (data['success'] == true) {
+      final Map<String, dynamic> data =
+          Map<String, dynamic>.from(await ApiService.getRideBookingDetails(tripId));
+
+      // ApiService responses are not consistent: some endpoints return
+      // `{success:true, ...}`, while others return the payload directly.
+      // Treat a missing `success` field as a successful payload.
+      final bool ok = data['success'] == null || data['success'] == true;
+
+      if (ok) {
         rideData = data;
-        
+
         // Extract route information
         if (data['route'] != null) {
-          final route = data['route'] as Map<String, dynamic>;
+          final route = Map<String, dynamic>.from(data['route'] as Map);
           routeDistance = route['total_distance_km']?.toDouble();
           routeDuration = route['estimated_duration_minutes']?.toInt();
-          
+
           // Extract stops and coordinates
           if (route['stops'] != null) {
-            final stops = route['stops'] as List<dynamic>;
+            final stops = List<dynamic>.from(route['stops'] as List);
             locationNames.clear();
             routePoints.clear();
             stopPoints.clear();
@@ -91,11 +102,13 @@ class RideDetailsViewController {
             // Fall back to `actual_path` only when route_points is missing.
             final preferred = backendRoutePoints.length >= 2
                 ? backendRoutePoints
-                : (backendActualPath.length >= 2 ? backendActualPath : <LatLng>[]);
+                : (backendActualPath.length >= 2
+                      ? backendActualPath
+                      : <LatLng>[]);
             if (preferred.length >= 2) {
               routePoints = List<LatLng>.from(preferred);
             }
-            
+
             for (final stop in stops) {
               locationNames.add(stop['name'] ?? 'Unknown Stop');
               if (stop['latitude'] != null && stop['longitude'] != null) {
@@ -107,15 +120,19 @@ class RideDetailsViewController {
                 stopCoords.add(p);
               }
             }
-            
+
             // Try to fetch a road-following polyline; fallback to interpolation on failure
             if (routePoints.length < 2 && stopCoords.length > 1) {
-              final road = await RoadPolylineService.fetchRoadPolyline(stopCoords);
-              routePoints = (road.length > 1) ? road : _generateInterpolatedRoute(stopCoords);
+              final road = await RoadPolylineService.fetchRoadPolyline(
+                stopCoords,
+              );
+              routePoints = (road.length > 1)
+                  ? road
+                  : _generateInterpolatedRoute(stopCoords);
             }
           }
         }
-        
+
         setState(() {
           isLoading = false;
         });
@@ -245,10 +262,10 @@ class RideDetailsViewController {
   bool isRideBookable() {
     final trip = rideData['trip'];
     if (trip == null) return false;
-    
+
     final status = trip['trip_status'];
     final availableSeats = trip['available_seats'] ?? 0;
-    
+
     return status == 'SCHEDULED' && availableSeats > 0;
   }
 
@@ -264,7 +281,7 @@ class RideDetailsViewController {
   List<LatLng> getInterpolatedRoutePoints() {
     return routePoints;
   }
-  
+
   // Calculate distance between two points using Haversine formula
   double _calculateDistance(LatLng point1, LatLng point2) {
     return MapUtil.calculateDistanceMeters(point1, point2);

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'dart:convert';
 
 import '../../services/api_service.dart';
 import '../../utils/map_util.dart';
@@ -18,10 +19,12 @@ class CreatedRideHistoryDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<CreatedRideHistoryDetailScreen> createState() => _CreatedRideHistoryDetailScreenState();
+  State<CreatedRideHistoryDetailScreen> createState() =>
+      _CreatedRideHistoryDetailScreenState();
 }
 
-class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetailScreen> {
+class _CreatedRideHistoryDetailScreenState
+    extends State<CreatedRideHistoryDetailScreen> {
   bool _loading = true;
   String? _error;
   Map<String, dynamic>? _trip;
@@ -37,7 +40,9 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
     final tripId = widget.tripId.trim();
     if (tripId.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Trip id missing; cannot recreate this ride')),
+        const SnackBar(
+          content: Text('Trip id missing; cannot recreate this ride'),
+        ),
       );
       return;
     }
@@ -68,17 +73,28 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
         return;
       }
 
-      final bool hasActualInPayload = RecreateTripMapper.parsePolylinePoints(trip['actual_path']).length >= 2;
+      final bool hasActualInPayload =
+          RecreateTripMapper.parsePolylinePoints(trip['actual_path']).length >=
+          2;
       final bool preferActualPath = _useActualPath || hasActualInPayload;
 
       try {
-        final plannedLen = RecreateTripMapper.parsePolylinePoints(trip['route_points'] ?? (trip['route'] is Map ? (trip['route'] as Map)['route_points'] : null)).length;
-        final actualLen = RecreateTripMapper.parsePolylinePoints(trip['actual_path']).length;
+        final plannedLen = RecreateTripMapper.parsePolylinePoints(
+          trip['route_points'] ??
+              (trip['route'] is Map
+                  ? (trip['route'] as Map)['route_points']
+                  : null),
+        ).length;
+        final actualLen = RecreateTripMapper.parsePolylinePoints(
+          trip['actual_path'],
+        ).length;
         debugPrint(
           '[CREATED_HISTORY][_recreateRide] tripId=$tripId preferActualPath=$preferActualPath plannedRawLen=$plannedLen actualRawLen=$actualLen has_actual_path=${trip['has_actual_path']}',
         );
       } catch (e) {
-        debugPrint('[CREATED_HISTORY][_recreateRide] pre-routeData debug failed: $e');
+        debugPrint(
+          '[CREATED_HISTORY][_recreateRide] pre-routeData debug failed: $e',
+        );
       }
 
       final routeData = RecreateTripMapper.buildRouteDataFromNormalizedTrip(
@@ -87,13 +103,19 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
       );
 
       try {
-        final plannedLen = (routeData?['routePoints'] is List) ? (routeData!['routePoints'] as List).length : -1;
-        final actualLen = (routeData?['actualRoutePoints'] is List) ? (routeData!['actualRoutePoints'] as List).length : -1;
+        final plannedLen = (routeData?['routePoints'] is List)
+            ? (routeData!['routePoints'] as List).length
+            : -1;
+        final actualLen = (routeData?['actualRoutePoints'] is List)
+            ? (routeData!['actualRoutePoints'] as List).length
+            : -1;
         debugPrint(
           '[CREATED_HISTORY][_recreateRide] built routeData preferActualPath=${routeData?['preferActualPath']} plannedLen=$plannedLen actualLen=$actualLen',
         );
       } catch (e) {
-        debugPrint('[CREATED_HISTORY][_recreateRide] post-routeData debug failed: $e');
+        debugPrint(
+          '[CREATED_HISTORY][_recreateRide] post-routeData debug failed: $e',
+        );
       }
 
       if (routeData == null) {
@@ -117,8 +139,11 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
             initialTripDate: (trip['trip_date'] ?? '').toString(),
             initialDepartureTime: (trip['departure_time'] ?? '').toString(),
             initialVehicleId: (vehicle['id'] ?? '').toString(),
-            initialTotalSeats: int.tryParse((trip['total_seats'] ?? '').toString()),
-            initialGenderPreference: (trip['gender_preference'] ?? '').toString(),
+            initialTotalSeats: int.tryParse(
+              (trip['total_seats'] ?? '').toString(),
+            ),
+            initialGenderPreference: (trip['gender_preference'] ?? '')
+                .toString(),
             initialNotes: '',
             initialIsNegotiable: (trip['is_negotiable'] == true),
             initialBaseFare: int.tryParse((trip['base_fare'] ?? '').toString()),
@@ -128,9 +153,9 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
     } catch (e) {
       if (!mounted) return;
       Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to recreate trip: $e')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Failed to recreate trip: $e')));
     }
   }
 
@@ -142,7 +167,10 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
         final raw = widget.userData['id'] ?? widget.userData['user_id'];
         final userId = int.tryParse(raw?.toString() ?? '') ?? 0;
         if (userId > 0) {
-          await ApiService.triggerAutoArchiveForDriver(userId: userId, limit: 10);
+          await ApiService.triggerAutoArchiveForDriver(
+            userId: userId,
+            limit: 10,
+          );
         }
       } catch (_) {
         // ignore
@@ -163,10 +191,14 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
       if (!mounted) return;
 
       try {
-        final ap = (detail['actual_path'] is List) ? List.from(detail['actual_path'] as List) : <dynamic>[];
+        final ap = (detail['actual_path'] is List)
+            ? List.from(detail['actual_path'] as List)
+            : <dynamic>[];
         final p0 = ap.isNotEmpty ? ap[0] : null;
         final p1 = ap.length > 1 ? ap[1] : null;
-        debugPrint('[CREATED_HISTORY][_load] tripId=${widget.tripId} actual_path_len=${ap.length}');
+        debugPrint(
+          '[CREATED_HISTORY][_load] tripId=${widget.tripId} actual_path_len=${ap.length}',
+        );
         if (p0 is Map) {
           debugPrint(
             '[CREATED_HISTORY][_load] actual_path[0]=${p0.toString()} latType=${p0['lat']?.runtimeType ?? p0['latitude']?.runtimeType} lngType=${p0['lng']?.runtimeType ?? p0['longitude']?.runtimeType}',
@@ -210,16 +242,32 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
   }
 
   List<Map<String, dynamic>> _stopsFromTrip(Map<String, dynamic> trip) {
-    final route = (trip['route'] is Map) ? Map<String, dynamic>.from(trip['route'] as Map) : <String, dynamic>{};
-    final stops = (route['stops'] is List) ? List.from(route['stops'] as List) : <dynamic>[];
-    return stops.whereType<Map>().map((e) => Map<String, dynamic>.from(e)).toList();
+    final route = (trip['route'] is Map)
+        ? Map<String, dynamic>.from(trip['route'] as Map)
+        : <String, dynamic>{};
+    final stops = (route['stops'] is List)
+        ? List.from(route['stops'] as List)
+        : <dynamic>[];
+    return stops
+        .whereType<Map>()
+        .map((e) => Map<String, dynamic>.from(e))
+        .toList();
   }
 
   List<LatLng> _polylineFromTrip(Map<String, dynamic> trip) {
-    final route = (trip['route'] is Map) ? Map<String, dynamic>.from(trip['route'] as Map) : <String, dynamic>{};
+    final route = (trip['route'] is Map)
+        ? Map<String, dynamic>.from(trip['route'] as Map)
+        : <String, dynamic>{};
 
     final planned = <LatLng>[];
-    final rp = route['route_points'];
+    dynamic rp = route['route_points'];
+    if (rp is String) {
+      try {
+        rp = json.decode(rp);
+      } catch (_) {
+        rp = null;
+      }
+    }
     if (rp is List) {
       for (final p in rp) {
         if (p is! Map) continue;
@@ -246,9 +294,17 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
   }
 
   List<LatLng> _actualPolylineFromTrip(Map<String, dynamic> trip) {
-    final raw = (trip['actual_path'] is List) ? List.from(trip['actual_path'] as List) : <dynamic>[];
+    dynamic raw = trip['actual_path'];
+    if (raw is String) {
+      try {
+        raw = json.decode(raw);
+      } catch (_) {
+        raw = null;
+      }
+    }
+    final listRaw = (raw is List) ? List.from(raw) : <dynamic>[];
     final actual = <LatLng>[];
-    for (final p in raw) {
+    for (final p in listRaw) {
       if (p is! Map) continue;
       final lat = _toDouble(p['lat'] ?? p['latitude']);
       final lng = _toDouble(p['lng'] ?? p['longitude']);
@@ -286,14 +342,14 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
           IconButton(
             onPressed: _loading ? null : _load,
             icon: const Icon(Icons.refresh),
-          )
+          ),
         ],
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : (_error != null)
-              ? Center(child: Text(_error!))
-              : _buildContent(),
+          ? Center(child: Text(_error!))
+          : _buildContent(),
     );
   }
 
@@ -307,8 +363,12 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
     final showActual = _useActualPath && hasActual;
     final mapPolyline = showActual ? actualPolyline : plannedPolyline;
 
-    final vehicle = (trip['vehicle'] is Map) ? Map<String, dynamic>.from(trip['vehicle'] as Map) : <String, dynamic>{};
-    final driver = (trip['driver'] is Map) ? Map<String, dynamic>.from(trip['driver'] as Map) : <String, dynamic>{};
+    final vehicle = (trip['vehicle'] is Map)
+        ? Map<String, dynamic>.from(trip['vehicle'] as Map)
+        : <String, dynamic>{};
+    final driver = (trip['driver'] is Map)
+        ? Map<String, dynamic>.from(trip['driver'] as Map)
+        : <String, dynamic>{};
 
     final tripDate = _safe(trip['trip_date']);
     final depTime = _safe(trip['departure_time']);
@@ -318,9 +378,13 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
     final dur = trip['total_duration_minutes'];
     final baseFare = trip['base_fare'];
 
-    final distText = (dist is num) ? '${_formatNum(dist, digits: 1)} km' : _safe(dist);
+    final distText = (dist is num)
+        ? '${_formatNum(dist, digits: 1)} km'
+        : _safe(dist);
     final durText = (dur is num) ? '${dur.toString()} min' : _safe(dur);
-    final fareText = (baseFare is num) ? 'Rs. ${baseFare.toInt()}' : _safe(baseFare);
+    final fareText = (baseFare is num)
+        ? 'Rs. ${baseFare.toInt()}'
+        : _safe(baseFare);
 
     final notes = _safe(trip['notes'], fallback: '');
 
@@ -389,9 +453,14 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: FlutterMap(
-                      options: MapOptions(initialCenter: initialCenter, initialZoom: 12),
+                      options: MapOptions(
+                        initialCenter: initialCenter,
+                        initialZoom: 12,
+                      ),
                       children: [
-                        MapUtil.buildDefaultTileLayer(userAgentPackageName: 'com.example.lets_go'),
+                        MapUtil.buildDefaultTileLayer(
+                          userAgentPackageName: 'com.example.lets_go',
+                        ),
                         if (mapPolyline.length >= 2)
                           MapUtil.buildPolylineLayerFromPolylines(
                             polylines: [
@@ -412,8 +481,15 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
                                   return Marker(
                                     width: 42,
                                     height: 42,
-                                    point: LatLng(lat.toDouble(), lng.toDouble()),
-                                    child: const Icon(Icons.location_on, color: Colors.red, size: 34),
+                                    point: LatLng(
+                                      lat.toDouble(),
+                                      lng.toDouble(),
+                                    ),
+                                    child: const Icon(
+                                      Icons.location_on,
+                                      color: Colors.red,
+                                      size: 34,
+                                    ),
                                   );
                                 })
                                 .whereType<Marker>()
@@ -456,13 +532,13 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
                   const Divider(height: 18),
                   Align(
                     alignment: Alignment.centerLeft,
-                    child: Text('Notes', style: TextStyle(color: Colors.grey[700])),
+                    child: Text(
+                      'Notes',
+                      style: TextStyle(color: Colors.grey[700]),
+                    ),
                   ),
                   const SizedBox(height: 6),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(notes),
-                  ),
+                  Align(alignment: Alignment.centerLeft, child: Text(notes)),
                 ],
               ],
             ),
@@ -483,7 +559,9 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
                     children: stops.asMap().entries.map((e) {
                       final idx = e.key;
                       final s = e.value;
-                      final title = _safe(s['name'] ?? s['stop_name'] ?? 'Stop');
+                      final title = _safe(
+                        s['name'] ?? s['stop_name'] ?? 'Stop',
+                      );
                       final lat = s['latitude'];
                       final lng = s['longitude'];
                       final coord = (lat is num && lng is num)
@@ -494,7 +572,10 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
                         dense: true,
                         leading: CircleAvatar(
                           radius: 14,
-                          child: Text('${idx + 1}', style: const TextStyle(fontSize: 12)),
+                          child: Text(
+                            '${idx + 1}',
+                            style: const TextStyle(fontSize: 12),
+                          ),
                         ),
                         title: Text(title),
                         subtitle: Text(coord),
@@ -572,7 +653,9 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
       padding: const EdgeInsets.only(bottom: 6),
       child: Row(
         children: [
-          Expanded(child: Text(k, style: TextStyle(color: Colors.grey[700]))),
+          Expanded(
+            child: Text(k, style: TextStyle(color: Colors.grey[700])),
+          ),
           const SizedBox(width: 12),
           Expanded(child: Text(v, textAlign: TextAlign.right)),
         ],

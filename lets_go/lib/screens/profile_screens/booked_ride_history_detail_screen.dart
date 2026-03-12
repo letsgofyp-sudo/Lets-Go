@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'dart:convert';
 
 import '../../services/api_service.dart';
 import '../../utils/map_util.dart';
@@ -17,10 +18,12 @@ class BookedRideHistoryDetailScreen extends StatefulWidget {
   });
 
   @override
-  State<BookedRideHistoryDetailScreen> createState() => _BookedRideHistoryDetailScreenState();
+  State<BookedRideHistoryDetailScreen> createState() =>
+      _BookedRideHistoryDetailScreenState();
 }
 
-class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailScreen> {
+class _BookedRideHistoryDetailScreenState
+    extends State<BookedRideHistoryDetailScreen> {
   bool _loading = true;
   String? _error;
   Map<String, dynamic>? _trip;
@@ -80,7 +83,9 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
       } catch (_) {
         // Fallback: ride-booking details can still reconstruct trip + route.
         final detail = await ApiService.getRideBookingDetails(tripId);
-        final normalized = RecreateTripMapper.normalizeRideBookingDetail(detail);
+        final normalized = RecreateTripMapper.normalizeRideBookingDetail(
+          detail,
+        );
         trip = normalized;
       }
 
@@ -104,16 +109,32 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
   }
 
   List<Map<String, dynamic>> _stopsFromTrip(Map<String, dynamic> trip) {
-    final route = (trip['route'] is Map) ? Map<String, dynamic>.from(trip['route'] as Map) : <String, dynamic>{};
-    final stops = (route['stops'] is List) ? List.from(route['stops'] as List) : <dynamic>[];
-    return stops.whereType<Map>().map((e) => Map<String, dynamic>.from(e)).toList();
+    final route = (trip['route'] is Map)
+        ? Map<String, dynamic>.from(trip['route'] as Map)
+        : <String, dynamic>{};
+    final stops = (route['stops'] is List)
+        ? List.from(route['stops'] as List)
+        : <dynamic>[];
+    return stops
+        .whereType<Map>()
+        .map((e) => Map<String, dynamic>.from(e))
+        .toList();
   }
 
   List<LatLng> _polylineFromTrip(Map<String, dynamic> trip) {
-    final route = (trip['route'] is Map) ? Map<String, dynamic>.from(trip['route'] as Map) : <String, dynamic>{};
+    final route = (trip['route'] is Map)
+        ? Map<String, dynamic>.from(trip['route'] as Map)
+        : <String, dynamic>{};
 
     final planned = <LatLng>[];
-    final rp = route['route_points'];
+    dynamic rp = route['route_points'];
+    if (rp is String) {
+      try {
+        rp = json.decode(rp);
+      } catch (_) {
+        rp = null;
+      }
+    }
     if (rp is List) {
       for (final p in rp) {
         if (p is! Map) continue;
@@ -140,9 +161,17 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
   }
 
   List<LatLng> _actualPolylineFromTrip(Map<String, dynamic> trip) {
-    final raw = (trip['actual_path'] is List) ? List.from(trip['actual_path'] as List) : <dynamic>[];
+    dynamic raw = trip['actual_path'];
+    if (raw is String) {
+      try {
+        raw = json.decode(raw);
+      } catch (_) {
+        raw = null;
+      }
+    }
+    final listRaw = (raw is List) ? List.from(raw) : <dynamic>[];
     final actual = <LatLng>[];
-    for (final p in raw) {
+    for (final p in listRaw) {
       if (p is! Map) continue;
       final lat = p['lat'] ?? p['latitude'];
       final lng = p['lng'] ?? p['longitude'];
@@ -161,7 +190,10 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
         final raw = widget.userData['id'] ?? widget.userData['user_id'];
         final userId = int.tryParse(raw?.toString() ?? '') ?? 0;
         if (userId > 0) {
-          await ApiService.triggerAutoArchiveForDriver(userId: userId, limit: 10);
+          await ApiService.triggerAutoArchiveForDriver(
+            userId: userId,
+            limit: 10,
+          );
         }
       } catch (_) {
         // ignore
@@ -176,7 +208,10 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 120, child: Text(k, style: TextStyle(color: Colors.grey[700]))),
+          SizedBox(
+            width: 120,
+            child: Text(k, style: TextStyle(color: Colors.grey[700])),
+          ),
           Expanded(child: Text(v)),
         ],
       ),
@@ -194,7 +229,11 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(width: 10, height: 10, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+        Container(
+          width: 10,
+          height: 10,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
         const SizedBox(width: 6),
         Text(label),
       ],
@@ -212,14 +251,14 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
           IconButton(
             onPressed: _loading ? null : _load,
             icon: const Icon(Icons.refresh),
-          )
+          ),
         ],
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : (_error != null)
-              ? Center(child: Text(_error!))
-              : _buildContent(booking),
+          ? Center(child: Text(_error!))
+          : _buildContent(booking),
     );
   }
 
@@ -240,9 +279,13 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
     final dur = trip['total_duration_minutes'];
     final baseFare = trip['base_fare'];
 
-    final distText = (dist is num) ? '${_formatNum(dist, digits: 1)} km' : _safe(dist);
+    final distText = (dist is num)
+        ? '${_formatNum(dist, digits: 1)} km'
+        : _safe(dist);
     final durText = (dur is num) ? '${dur.toString()} min' : _safe(dur);
-    final fareText = (baseFare is num) ? 'Rs. ${baseFare.toInt()}' : _safe(baseFare);
+    final fareText = (baseFare is num)
+        ? 'Rs. ${baseFare.toInt()}'
+        : _safe(baseFare);
 
     LatLng initialCenter = const LatLng(33.6844, 73.0479);
     final mapPolyline = showActual ? actualPolyline : plannedPolyline;
@@ -266,17 +309,35 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
             padding: const EdgeInsets.all(12),
             child: Column(
               children: [
-                _kv('Booking ID', _safe(booking['booking_id'] ?? booking['id'])),
+                _kv(
+                  'Booking ID',
+                  _safe(booking['booking_id'] ?? booking['id']),
+                ),
                 _kv('Trip ID', _safe(booking['trip_id'])),
-                _kv('Status', _safe(booking['booking_status'] ?? booking['status'])),
+                _kv(
+                  'Status',
+                  _safe(booking['booking_status'] ?? booking['status']),
+                ),
                 _kv('Ride Status', _safe(booking['ride_status'])),
                 _kv('Payment', _safe(booking['payment_status'])),
-                _kv('From', _safe((booking['route_names'] is List && (booking['route_names'] as List).isNotEmpty)
-                    ? (booking['route_names'] as List).first
-                    : booking['from_stop_name'])),
-                _kv('To', _safe((booking['route_names'] is List && (booking['route_names'] as List).isNotEmpty)
-                    ? (booking['route_names'] as List).last
-                    : booking['to_stop_name'])),
+                _kv(
+                  'From',
+                  _safe(
+                    (booking['route_names'] is List &&
+                            (booking['route_names'] as List).isNotEmpty)
+                        ? (booking['route_names'] as List).first
+                        : booking['from_stop_name'],
+                  ),
+                ),
+                _kv(
+                  'To',
+                  _safe(
+                    (booking['route_names'] is List &&
+                            (booking['route_names'] as List).isNotEmpty)
+                        ? (booking['route_names'] as List).last
+                        : booking['to_stop_name'],
+                  ),
+                ),
                 _kv('Seats', _safe(booking['number_of_seats'])),
                 _kv('Fare Paid', _safe(booking['total_fare'])),
                 if (_safe(booking['updated_at'], fallback: '').isNotEmpty)
@@ -313,7 +374,12 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
               children: [
                 Row(
                   children: [
-                    Expanded(child: Text('Map', style: Theme.of(context).textTheme.titleMedium)),
+                    Expanded(
+                      child: Text(
+                        'Map',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                    ),
                     if (hasActual)
                       SegmentedButton<bool>(
                         segments: const [
@@ -335,9 +401,14 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(12),
                     child: FlutterMap(
-                      options: MapOptions(initialCenter: initialCenter, initialZoom: 12),
+                      options: MapOptions(
+                        initialCenter: initialCenter,
+                        initialZoom: 12,
+                      ),
                       children: [
-                        MapUtil.buildDefaultTileLayer(userAgentPackageName: 'com.example.lets_go'),
+                        MapUtil.buildDefaultTileLayer(
+                          userAgentPackageName: 'com.example.lets_go',
+                        ),
                         if (mapPolyline.length >= 2)
                           MapUtil.buildPolylineLayerFromPolylines(
                             polylines: [
@@ -358,8 +429,15 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
                                   return Marker(
                                     width: 42,
                                     height: 42,
-                                    point: LatLng(lat.toDouble(), lng.toDouble()),
-                                    child: const Icon(Icons.location_on, color: Colors.red, size: 34),
+                                    point: LatLng(
+                                      lat.toDouble(),
+                                      lng.toDouble(),
+                                    ),
+                                    child: const Icon(
+                                      Icons.location_on,
+                                      color: Colors.red,
+                                      size: 34,
+                                    ),
                                   );
                                 })
                                 .whereType<Marker>()
