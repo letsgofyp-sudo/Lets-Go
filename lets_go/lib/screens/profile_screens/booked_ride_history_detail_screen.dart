@@ -5,7 +5,6 @@ import 'package:latlong2/latlong.dart';
 import '../../services/api_service.dart';
 import '../../utils/map_util.dart';
 import '../../utils/recreate_trip_mapper.dart';
-import '../ride_posting_screens/create_ride_details_screen.dart';
 
 class BookedRideHistoryDetailScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -71,14 +70,12 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
       Map<String, dynamic> trip = <String, dynamic>{};
       try {
         final res = await ApiService.getTripDetailsById(tripId);
-        if (res is Map<String, dynamic>) {
-          if (res['success'] == true && res['trip'] is Map) {
-            trip = Map<String, dynamic>.from(res['trip'] as Map);
-          } else {
-            // Most common path in this codebase: res is already the trip
-            // (it should contain trip_id / route / etc.).
-            trip = Map<String, dynamic>.from(res);
-          }
+        if (res['success'] == true && res['trip'] is Map) {
+          trip = Map<String, dynamic>.from(res['trip'] as Map);
+        } else {
+          // Most common path in this codebase: res is already the trip
+          // (it should contain trip_id / route / etc.).
+          trip = Map<String, dynamic>.from(res);
         }
       } catch (_) {
         // Fallback: ride-booking details can still reconstruct trip + route.
@@ -154,83 +151,6 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
       }
     }
     return actual;
-  }
-
-  Future<void> _recreateRide() async {
-    final tripId = _tripId();
-    if (tripId.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Trip id missing; cannot recreate this ride')),
-      );
-      return;
-    }
-
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (_) => const Center(child: CircularProgressIndicator()),
-    );
-
-    try {
-      Map<String, dynamic> detail = <String, dynamic>{};
-      try {
-        detail = await ApiService.getRideBookingDetails(tripId);
-      } catch (_) {
-        detail = await ApiService.getTripDetailsById(tripId);
-      }
-
-      if (!mounted) return;
-      Navigator.of(context).pop();
-
-      final trip = RecreateTripMapper.normalizeRideBookingDetail(detail);
-      if (trip.isEmpty) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Unable to load trip details')),
-        );
-        return;
-      }
-
-      final routeData = RecreateTripMapper.buildRouteDataFromNormalizedTrip(
-        trip,
-        preferActualPath: _useActualPath,
-      );
-
-      if (routeData == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Trip route data missing')),
-        );
-        return;
-      }
-
-      final vehicle = (trip['vehicle'] is Map)
-          ? Map<String, dynamic>.from(trip['vehicle'] as Map)
-          : <String, dynamic>{};
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (_) => RideDetailsScreen(
-            userData: widget.userData,
-            routeData: routeData,
-            recreateMode: true,
-            initialTripDate: (trip['trip_date'] ?? '').toString(),
-            initialDepartureTime: (trip['departure_time'] ?? '').toString(),
-            initialVehicleId: (vehicle['id'] ?? '').toString(),
-            initialTotalSeats: int.tryParse((trip['total_seats'] ?? '').toString()),
-            initialGenderPreference: (trip['gender_preference'] ?? '').toString(),
-            initialNotes: '',
-            initialIsNegotiable: (trip['is_negotiable'] == true),
-            initialBaseFare: int.tryParse((trip['base_fare'] ?? '').toString()),
-          ),
-        ),
-      );
-    } catch (e) {
-      if (!mounted) return;
-      Navigator.of(context).pop();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to recreate trip: $e')),
-      );
-    }
   }
 
   @override
@@ -339,20 +259,6 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton.icon(
-            onPressed: _recreateRide,
-            icon: const Icon(Icons.replay),
-            label: const Text('Recreate Ride'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.teal,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 12),
-            ),
-          ),
-        ),
-        const SizedBox(height: 12),
         _sectionTitle('Booking'),
         Card(
           elevation: 0,
@@ -432,23 +338,13 @@ class _BookedRideHistoryDetailScreenState extends State<BookedRideHistoryDetailS
                       options: MapOptions(initialCenter: initialCenter, initialZoom: 12),
                       children: [
                         MapUtil.buildDefaultTileLayer(userAgentPackageName: 'com.example.lets_go'),
-                        if (plannedPolyline.length >= 2)
+                        if (mapPolyline.length >= 2)
                           MapUtil.buildPolylineLayerFromPolylines(
                             polylines: [
                               MapUtil.polyline(
-                                points: plannedPolyline,
-                                color: Colors.blue.withValues(alpha: showActual ? 0.35 : 1.0),
-                                strokeWidth: showActual ? 3 : 4,
-                              ),
-                            ],
-                          ),
-                        if (actualPolyline.length >= 2)
-                          MapUtil.buildPolylineLayerFromPolylines(
-                            polylines: [
-                              MapUtil.polyline(
-                                points: actualPolyline,
-                                color: Colors.green,
-                                strokeWidth: showActual ? 4 : 0,
+                                points: mapPolyline,
+                                color: showActual ? Colors.green : Colors.blue,
+                                strokeWidth: 4,
                               ),
                             ],
                           ),

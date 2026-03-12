@@ -205,47 +205,26 @@ class _CreateRouteScreenState extends State<CreateRouteScreen> {
           children: [
             widget.tileLayerOverride ??
                 MapUtil.buildDefaultTileLayer(userAgentPackageName: 'com.example.lets_go'),
-            if (_controller.showActualPathOverlay && _controller.actualRoutePoints.length > 1)
+            if (_controller.actualRoutePoints.length > 1 || _controller.routePoints.length > 1)
               MapUtil.buildPolylineLayerFromPolylines(
                 polylines: [
-                  MapUtil.polyline(
-                    points: _controller.actualRoutePoints,
-                    color: Colors.black45,
-                    strokeWidth: 5.0,
-                  ),
-                ],
-              ),
-            if (_controller.routePoints.length > 1)
-              MapUtil.buildPolylineLayerFromPolylines(
-                polylines: [
-                  MapUtil.polyline(
-                    points: _controller.routePoints,
-                    color: Colors.blue,
-                    strokeWidth: 4.0,
-                  ),
+                  if (_controller.actualRoutePoints.length > 1)
+                    MapUtil.polyline(
+                      points: _controller.actualRoutePoints,
+                      color: Colors.grey,
+                      strokeWidth: 5.0,
+                    ),
+                  if (_controller.routePoints.length > 1)
+                    MapUtil.polyline(
+                      points: _controller.routePoints,
+                      color: Colors.blue,
+                      strokeWidth: 4.0,
+                    ),
                 ],
               ),
             _buildMarkerLayer(),
           ],
         ),
-        if (_controller.actualRoutePoints.length > 1)
-          Positioned(
-            bottom: 88,
-            left: 16,
-            right: 16,
-            child: Card(
-              child: SwitchListTile(
-                secondary: const Icon(Icons.alt_route),
-                title: const Text('Show actual path overlay'),
-                value: _controller.showActualPathOverlay,
-                onChanged: (v) {
-                  setState(() {
-                    _controller.showActualPathOverlay = v;
-                  });
-                },
-              ),
-            ),
-          ),
         if (_controller.isSearchingPlace)
           Positioned.fill(
             child: Container(

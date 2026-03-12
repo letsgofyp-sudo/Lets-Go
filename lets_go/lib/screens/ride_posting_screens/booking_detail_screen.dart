@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'dart:convert';
 import '../../services/api_service.dart';
 import '../../utils/image_utils.dart';
 import '../../utils/map_util.dart';
@@ -101,6 +102,14 @@ class BookingDetailScreen extends StatelessWidget {
 
     try {
       final detail = await ApiService.getRideBookingDetails(tripId);
+
+      // Preserve polylines if provided at the top-level of the payload.
+      if (detail['route_points'] != null) {
+        merged['route_points'] = detail['route_points'];
+      }
+      if (detail['actual_path'] != null) {
+        merged['actual_path'] = detail['actual_path'];
+      }
       if (detail['trip'] is Map<String, dynamic>) {
         final existingTrip = (merged['trip'] is Map<String, dynamic>)
             ? Map<String, dynamic>.from(merged['trip'] as Map)
@@ -109,6 +118,19 @@ class BookingDetailScreen extends StatelessWidget {
           ...existingTrip,
           ...Map<String, dynamic>.from(detail['trip']),
         };
+
+        // Also preserve polylines if they are on the trip object.
+        final t = Map<String, dynamic>.from(detail['trip']);
+        if (t['route_points'] != null) {
+          (merged['trip'] as Map<String, dynamic>)['route_points'] = t['route_points'];
+        } else if (detail['route_points'] != null) {
+          (merged['trip'] as Map<String, dynamic>)['route_points'] = detail['route_points'];
+        }
+        if (t['actual_path'] != null) {
+          (merged['trip'] as Map<String, dynamic>)['actual_path'] = t['actual_path'];
+        } else if (detail['actual_path'] != null) {
+          (merged['trip'] as Map<String, dynamic>)['actual_path'] = detail['actual_path'];
+        }
       }
 
       if (detail['driver'] is Map<String, dynamic>) {
@@ -813,6 +835,57 @@ class BookingDetailScreen extends StatelessWidget {
     final points = <LatLng>[];
     final names = <String>[];
 
+    double? toDouble(dynamic v) {
+      if (v == null) return null;
+      if (v is num) return v.toDouble();
+      return double.tryParse(v.toString());
+    }
+
+    List<LatLng> parsePolyline(dynamic raw) {
+      dynamic normalized = raw;
+      if (normalized is String) {
+        try {
+          normalized = json.decode(normalized);
+        } catch (_) {
+          normalized = null;
+        }
+      }
+      if (normalized is! List) return <LatLng>[];
+      final out = <LatLng>[];
+      for (final p in normalized) {
+        if (p is! Map) continue;
+        final lat = toDouble(p['lat'] ?? p['latitude']);
+        final lng = toDouble(p['lng'] ?? p['longitude']);
+        if (lat != null && lng != null) {
+          out.add(LatLng(lat, lng));
+        }
+      }
+      return out;
+    }
+
+    // Prefer backend-provided geometry if available (authoritative route line).
+    // NOTE: For recreated/hybrid rides we persist the selected/hybrid geometry into
+    // `route_points`, while `actual_path` (if present) may still represent the
+    // original purely-actual track. So `route_points` must take precedence.
+    final backendRoutePoints = parsePolyline(
+      dataSource['route_points'] ??
+          dataSource['route_points_list'] ??
+          dataSource['route_points_polyline'] ??
+          dataSource['trip']?['route_points'] ??
+          dataSource['trip']?['route']?['route_points'] ??
+          dataSource['route']?['route_points'],
+    );
+    final backendActualPath = parsePolyline(
+      dataSource['actual_path'] ??
+          dataSource['trip']?['actual_path'] ??
+          dataSource['trip']?['route']?['actual_path'],
+    );
+    // Prefer `route_points` (supports hybrid). Only fall back to `actual_path` if
+    // route_points is missing.
+    final polylineOverride = backendRoutePoints.length >= 2
+        ? backendRoutePoints
+        : (backendActualPath.length >= 2 ? backendActualPath : <LatLng>[]);
+
     // 1) Try to build from stop_breakdown segment coordinates for better path approximation
     List<dynamic> stopBreakdown = const [];
     if (dataSource['stop_breakdown'] is List) {
@@ -912,7 +985,7 @@ class BookingDetailScreen extends StatelessWidget {
       );
     }
 
-    final center = MapUtil.centerFromPoints(points);
+    final center = MapUtil.centerFromPoints(polylineOverride.isNotEmpty ? polylineOverride : points);
 
     // Determine which part of the route the passenger actually booked so we can
     // visually distinguish it. We rely on either explicit stop orders or names
@@ -1012,16 +1085,19 @@ class BookingDetailScreen extends StatelessWidget {
           ),
           children: [
             MapUtil.buildDefaultTileLayer(),
-            FutureBuilder<List<LatLng>>(
-              future: MapUtil.roadPolylineOrFallback(points),
-              builder: (context, snapshot) {
-                final polyPoints =
-                    (snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.length > 1)
-                        ? snapshot.data!
-                        : points;
-                return MapUtil.buildPolylineLayer(points: polyPoints);
-              },
-            ),
+            if (polylineOverride.length >= 2)
+              MapUtil.buildPolylineLayer(points: polylineOverride)
+            else
+              FutureBuilder<List<LatLng>>(
+                future: MapUtil.roadPolylineOrFallback(points),
+                builder: (context, snapshot) {
+                  final polyPoints =
+                      (snapshot.connectionState == ConnectionState.done && snapshot.hasData && snapshot.data!.length > 1)
+                          ? snapshot.data!
+                          : points;
+                  return MapUtil.buildPolylineLayer(points: polyPoints);
+                },
+              ),
             MarkerLayer(
               markers: [
                 for (int i = 0; i < points.length; i++)

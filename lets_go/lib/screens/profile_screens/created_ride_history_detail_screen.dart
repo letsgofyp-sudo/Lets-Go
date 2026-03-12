@@ -27,6 +27,12 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
   Map<String, dynamic>? _trip;
   bool _useActualPath = false;
 
+  double? _toDouble(dynamic v) {
+    if (v == null) return null;
+    if (v is num) return v.toDouble();
+    return double.tryParse(v.toString());
+  }
+
   Future<void> _recreateRide() async {
     final tripId = widget.tripId.trim();
     if (tripId.isEmpty) {
@@ -62,10 +68,33 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
         return;
       }
 
+      final bool hasActualInPayload = RecreateTripMapper.parsePolylinePoints(trip['actual_path']).length >= 2;
+      final bool preferActualPath = _useActualPath || hasActualInPayload;
+
+      try {
+        final plannedLen = RecreateTripMapper.parsePolylinePoints(trip['route_points'] ?? (trip['route'] is Map ? (trip['route'] as Map)['route_points'] : null)).length;
+        final actualLen = RecreateTripMapper.parsePolylinePoints(trip['actual_path']).length;
+        debugPrint(
+          '[CREATED_HISTORY][_recreateRide] tripId=$tripId preferActualPath=$preferActualPath plannedRawLen=$plannedLen actualRawLen=$actualLen has_actual_path=${trip['has_actual_path']}',
+        );
+      } catch (e) {
+        debugPrint('[CREATED_HISTORY][_recreateRide] pre-routeData debug failed: $e');
+      }
+
       final routeData = RecreateTripMapper.buildRouteDataFromNormalizedTrip(
         trip,
-        preferActualPath: _useActualPath,
+        preferActualPath: preferActualPath,
       );
+
+      try {
+        final plannedLen = (routeData?['routePoints'] is List) ? (routeData!['routePoints'] as List).length : -1;
+        final actualLen = (routeData?['actualRoutePoints'] is List) ? (routeData!['actualRoutePoints'] as List).length : -1;
+        debugPrint(
+          '[CREATED_HISTORY][_recreateRide] built routeData preferActualPath=${routeData?['preferActualPath']} plannedLen=$plannedLen actualLen=$actualLen',
+        );
+      } catch (e) {
+        debugPrint('[CREATED_HISTORY][_recreateRide] post-routeData debug failed: $e');
+      }
 
       if (routeData == null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -133,6 +162,25 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
       final detail = await ApiService.getTripDetailsById(widget.tripId);
       if (!mounted) return;
 
+      try {
+        final ap = (detail['actual_path'] is List) ? List.from(detail['actual_path'] as List) : <dynamic>[];
+        final p0 = ap.isNotEmpty ? ap[0] : null;
+        final p1 = ap.length > 1 ? ap[1] : null;
+        debugPrint('[CREATED_HISTORY][_load] tripId=${widget.tripId} actual_path_len=${ap.length}');
+        if (p0 is Map) {
+          debugPrint(
+            '[CREATED_HISTORY][_load] actual_path[0]=${p0.toString()} latType=${p0['lat']?.runtimeType ?? p0['latitude']?.runtimeType} lngType=${p0['lng']?.runtimeType ?? p0['longitude']?.runtimeType}',
+          );
+        }
+        if (p1 is Map) {
+          debugPrint(
+            '[CREATED_HISTORY][_load] actual_path[1]=${p1.toString()} latType=${p1['lat']?.runtimeType ?? p1['latitude']?.runtimeType} lngType=${p1['lng']?.runtimeType ?? p1['longitude']?.runtimeType}',
+          );
+        }
+      } catch (e) {
+        debugPrint('[CREATED_HISTORY][_load] actual_path debug failed: $e');
+      }
+
       if (detail.isEmpty) {
         setState(() {
           _error = 'Unable to load trip details';
@@ -143,6 +191,8 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
 
       setState(() {
         _trip = detail;
+        // Prefer actual path by default if available, so recreation also uses it.
+        _useActualPath = _actualPolylineFromTrip(detail).length >= 2;
         _loading = false;
       });
     } catch (e) {
@@ -173,10 +223,10 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
     if (rp is List) {
       for (final p in rp) {
         if (p is! Map) continue;
-        final lat = p['lat'];
-        final lng = p['lng'];
-        if (lat is num && lng is num) {
-          planned.add(LatLng(lat.toDouble(), lng.toDouble()));
+        final lat = _toDouble(p['lat'] ?? p['latitude']);
+        final lng = _toDouble(p['lng'] ?? p['longitude']);
+        if (lat != null && lng != null) {
+          planned.add(LatLng(lat, lng));
         }
       }
     }
@@ -186,10 +236,10 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
     final stops = _stopsFromTrip(trip);
     final points = <LatLng>[];
     for (final s in stops) {
-      final lat = s['latitude'];
-      final lng = s['longitude'];
-      if (lat is num && lng is num) {
-        points.add(LatLng(lat.toDouble(), lng.toDouble()));
+      final lat = _toDouble(s['latitude'] ?? s['lat']);
+      final lng = _toDouble(s['longitude'] ?? s['lng']);
+      if (lat != null && lng != null) {
+        points.add(LatLng(lat, lng));
       }
     }
     return points;
@@ -200,10 +250,10 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
     final actual = <LatLng>[];
     for (final p in raw) {
       if (p is! Map) continue;
-      final lat = p['lat'];
-      final lng = p['lng'];
-      if (lat is num && lng is num) {
-        actual.add(LatLng(lat.toDouble(), lng.toDouble()));
+      final lat = _toDouble(p['lat'] ?? p['latitude']);
+      final lng = _toDouble(p['lng'] ?? p['longitude']);
+      if (lat != null && lng != null) {
+        actual.add(LatLng(lat, lng));
       }
     }
 
@@ -342,23 +392,13 @@ class _CreatedRideHistoryDetailScreenState extends State<CreatedRideHistoryDetai
                       options: MapOptions(initialCenter: initialCenter, initialZoom: 12),
                       children: [
                         MapUtil.buildDefaultTileLayer(userAgentPackageName: 'com.example.lets_go'),
-                        if (plannedPolyline.length >= 2)
+                        if (mapPolyline.length >= 2)
                           MapUtil.buildPolylineLayerFromPolylines(
                             polylines: [
                               MapUtil.polyline(
-                                points: plannedPolyline,
-                                color: Colors.blue.withValues(alpha: showActual ? 0.35 : 1.0),
-                                strokeWidth: showActual ? 3 : 4,
-                              ),
-                            ],
-                          ),
-                        if (actualPolyline.length >= 2)
-                          MapUtil.buildPolylineLayerFromPolylines(
-                            polylines: [
-                              MapUtil.polyline(
-                                points: actualPolyline,
-                                color: Colors.green,
-                                strokeWidth: showActual ? 4 : 0,
+                                points: mapPolyline,
+                                color: showActual ? Colors.green : Colors.blue,
+                                strokeWidth: 4,
                               ),
                             ],
                           ),

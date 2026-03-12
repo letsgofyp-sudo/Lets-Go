@@ -90,6 +90,15 @@ class RecreateTripMapper {
         ? MapUtil.densifyPolyline(actual, maxStepMeters: 25)
         : actual;
 
+    try {
+      // ignore: avoid_print
+      print(
+        '[RECREATE_MAPPER] tripId=${trip['trip_id']} preferActualPath=$preferActualPath plannedLen=${planned.length} actualLen=${actual.length} actualDensifiedLen=${actualDensified.length} has_actual_path=${trip['has_actual_path']}',
+      );
+    } catch (_) {
+      // ignore
+    }
+
     return <String, dynamic>{
       'points': points,
       'locationNames': locationNames,

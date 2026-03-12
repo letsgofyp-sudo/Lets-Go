@@ -145,9 +145,12 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
         return;
       }
 
+      final bool hasActualInPayload = RecreateTripMapper.parsePolylinePoints(trip['actual_path']).length >= 2;
+      final bool preferActualPath = (useActualPath == true) || hasActualInPayload;
+
       final routeData = RecreateTripMapper.buildRouteDataFromNormalizedTrip(
         trip,
-        preferActualPath: (useActualPath == true),
+        preferActualPath: preferActualPath,
       );
       if (routeData == null) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -191,6 +194,7 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
 
   Future<void> _loadRideHistory() async {
     try {
+      if (!mounted) return;
       setState(() {
         isLoading = true;
         errorMessage = null;
@@ -218,10 +222,12 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
         _loadMoreBooked(initial: true),
       ]);
 
+      if (!mounted) return;
       setState(() {
         isLoading = false;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         errorMessage = 'Failed to load ride history: $e';
         isLoading = false;
@@ -241,12 +247,14 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
 
     final userId = _extractUserId();
     if (userId <= 0) {
+      if (!mounted) return;
       setState(() {
         errorMessage = 'User ID not found';
       });
       return;
     }
 
+    if (!mounted) return;
     setState(() {
       isLoadingMoreCreated = true;
     });
@@ -261,26 +269,31 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
       if (res['success'] == true) {
         final list = (res['rides'] is List) ? List.from(res['rides'] as List) : <dynamic>[];
         final mapped = list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+        if (!mounted) return;
         setState(() {
           createdRides = [...createdRides, ...mapped];
           createdOffset += mapped.length;
           hasMoreCreated = mapped.length >= _pageSize;
         });
       } else {
+        if (!mounted) return;
         setState(() {
           errorMessage = (res['error'] ?? 'Failed to load created rides history').toString();
           hasMoreCreated = false;
         });
       }
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         errorMessage = 'Failed to load created rides history: $e';
         hasMoreCreated = false;
       });
     } finally {
-      setState(() {
-        isLoadingMoreCreated = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoadingMoreCreated = false;
+        });
+      }
     }
   }
 
@@ -290,12 +303,14 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
 
     final userId = _extractUserId();
     if (userId <= 0) {
+      if (!mounted) return;
       setState(() {
         errorMessage = 'User ID not found';
       });
       return;
     }
 
+    if (!mounted) return;
     setState(() {
       isLoadingMoreBooked = true;
     });
@@ -312,26 +327,31 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
             ? List.from(res['bookings'] as List)
             : <dynamic>[];
         final mapped = list.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+        if (!mounted) return;
         setState(() {
           bookedRides = [...bookedRides, ...mapped];
           bookedOffset += mapped.length;
           hasMoreBooked = mapped.length >= _pageSize;
         });
       } else {
+        if (!mounted) return;
         setState(() {
           errorMessage = (res['error'] ?? 'Failed to load booked rides history').toString();
           hasMoreBooked = false;
         });
       }
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         errorMessage = 'Failed to load booked rides history: $e';
         hasMoreBooked = false;
       });
     } finally {
-      setState(() {
-        isLoadingMoreBooked = false;
-      });
+      if (mounted) {
+        setState(() {
+          isLoadingMoreBooked = false;
+        });
+      }
     }
   }
 

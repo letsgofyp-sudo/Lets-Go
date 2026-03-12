@@ -19,7 +19,6 @@ class CreateRouteController {
   // This is for visualization only; edits operate on stops + planned routePoints.
   List<LatLng> actualRoutePoints = [];
   bool preferActualPath = false;
-  bool showActualPathOverlay = true;
   LatLng? currentPosition;
   bool isLoading = true;
   bool isSearchingPlace = false;

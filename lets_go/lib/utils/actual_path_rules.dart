@@ -6,7 +6,7 @@ class ActualPathRules {
   static bool polylineCoversStop(
     List<LatLng> poly,
     LatLng stop, {
-    double thresholdMeters = 150,
+    double thresholdMeters = 500,
   }) {
     if (poly.isEmpty) return false;
     for (final p in poly) {
@@ -19,7 +19,7 @@ class ActualPathRules {
   static bool validateActualPathCoversAllStops(
     List<LatLng> actual,
     List<LatLng> stops, {
-    double thresholdMeters = 150,
+    double thresholdMeters = 500,
   }) {
     if (actual.length < 2) return false;
     if (stops.length < 2) return false;

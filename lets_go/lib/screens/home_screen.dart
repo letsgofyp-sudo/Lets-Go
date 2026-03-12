@@ -689,6 +689,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> _loadRides() async {
     try {
+      if (!mounted) return;
       setState(() {
         isLoading = true;
         errorMessage = null;
@@ -715,6 +716,7 @@ class _HomeScreenState extends State<HomeScreen> {
             )
           : await ApiService.getAllTrips(userId: userId);
       
+      if (!mounted) return;
       setState(() {
         rides = ridesData;
         _pendingNewRides = [];
@@ -722,6 +724,7 @@ class _HomeScreenState extends State<HomeScreen> {
         isLoading = false;
       });
     } catch (e) {
+      if (!mounted) return;
       setState(() {
         errorMessage = 'Failed to load rides: $e';
         isLoading = false;

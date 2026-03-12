@@ -233,6 +233,20 @@ class LiveTrackingController {
 
   }
 
+  List<LatLng> _parsePolyline(dynamic raw) {
+    if (raw is! List) return <LatLng>[];
+    final out = <LatLng>[];
+    for (final p in raw) {
+      if (p is! Map) continue;
+      final lat = _asDouble(p['lat'] ?? p['latitude']);
+      final lng = _asDouble(p['lng'] ?? p['longitude']);
+      if (lat != null && lng != null) {
+        out.add(LatLng(lat, lng));
+      }
+    }
+    return out;
+  }
+
 
 
   int? _asIntSafe(dynamic v) {
@@ -982,21 +996,27 @@ class LiveTrackingController {
 
       }
 
-      routePolyline = polyPoints;
+      // Prefer backend geometry if present (authoritative polyline).
+      // This supports recreated/hybrid rides where `route_points` contains the
+      // selected/hybrid geometry.
+      final routeTop = data['route_points'] ??
+          data['trip']?['route_points'] ??
+          data['trip']?['route']?['route_points'] ??
+          routeTopLevel?['route_points'] ??
+          routeFromTrip?['route_points'];
+      final backendRoutePoints = _parsePolyline(routeTop);
+      if (backendRoutePoints.length >= 2) {
+        routePolyline = backendRoutePoints;
+      } else {
+        routePolyline = polyPoints;
 
-
-
-      try {
-
-        final road = await _fetchRoadPolyline(polyPoints);
-
-        if (road.length >= 2) {
-
-          routePolyline = road;
-
-        }
-
-      } catch (_) {}
+        try {
+          final road = await _fetchRoadPolyline(polyPoints);
+          if (road.length >= 2) {
+            routePolyline = road;
+          }
+        } catch (_) {}
+      }
 
 
 

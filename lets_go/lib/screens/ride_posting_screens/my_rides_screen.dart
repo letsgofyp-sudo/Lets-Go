@@ -530,6 +530,14 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
       try {
         // Fetch heavy fields (stop_breakdown, fare_calculation) only when needed
         final detail = await ApiService.getRideBookingDetails(tripId);
+
+        // Preserve polylines if provided at the top-level of the payload.
+        if (detail['route_points'] != null) {
+          merged['route_points'] = detail['route_points'];
+        }
+        if (detail['actual_path'] != null) {
+          merged['actual_path'] = detail['actual_path'];
+        }
         // Merge core trip fields
         if (detail['trip'] is Map<String, dynamic>) {
           final t = Map<String, dynamic>.from(detail['trip']);
@@ -540,6 +548,18 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
             ...existingTrip,
             ...t,
           };
+
+          // Also preserve polylines if they are on the trip object.
+          if (t['route_points'] != null) {
+            (merged['trip'] as Map<String, dynamic>)['route_points'] = t['route_points'];
+          } else if (detail['route_points'] != null) {
+            (merged['trip'] as Map<String, dynamic>)['route_points'] = detail['route_points'];
+          }
+          if (t['actual_path'] != null) {
+            (merged['trip'] as Map<String, dynamic>)['actual_path'] = t['actual_path'];
+          } else if (detail['actual_path'] != null) {
+            (merged['trip'] as Map<String, dynamic>)['actual_path'] = detail['actual_path'];
+          }
 
           // Prefer nested trip sub-objects when present
           if (t['route'] is Map<String, dynamic>) {

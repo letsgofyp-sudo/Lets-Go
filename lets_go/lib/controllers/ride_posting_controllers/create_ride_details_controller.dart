@@ -71,6 +71,25 @@ class RideDetailsController {
     this.enableRoadSnapping = true,
   });
 
+  bool _polylinesRoughlyEqual(
+    List<LatLng> a,
+    List<LatLng> b, {
+    double epsilon = 1e-6,
+  }) {
+    if (a.length < 2 || b.length < 2) return false;
+    if (!_sameLatLng(a.first, b.first, epsilon: epsilon)) return false;
+    if (!_sameLatLng(a.last, b.last, epsilon: epsilon)) return false;
+
+    // Compare a few samples to avoid O(n) in large polylines.
+    final samples = <double>[0.25, 0.5, 0.75];
+    for (final t in samples) {
+      final ia = (t * (a.length - 1)).round().clamp(0, a.length - 1);
+      final ib = (t * (b.length - 1)).round().clamp(0, b.length - 1);
+      if (!_sameLatLng(a[ia], b[ib], epsilon: epsilon)) return false;
+    }
+    return true;
+  }
+
   int? _toInt(dynamic v) {
     if (v == null) return null;
     if (v is int) return v;
@@ -103,6 +122,15 @@ class RideDetailsController {
 
   // Initialize route data from passed data
   void initializeRouteData(Map<String, dynamic> routeData) {
+    try {
+      // ignore: avoid_print
+      print(
+        '[CREATE_CTRL][initRouteData] keys=${routeData.keys.toList()} preferActualPath=${routeData['preferActualPath']} pointsType=${routeData['points']?.runtimeType} routePointsType=${routeData['routePoints']?.runtimeType} actualRoutePointsType=${routeData['actualRoutePoints']?.runtimeType}',
+      );
+    } catch (_) {
+      // ignore
+    }
+
     if (routeData['points'] != null) {
       points = List<LatLng>.from(routeData['points']);
     }
@@ -127,6 +155,27 @@ class RideDetailsController {
     final preferActual = routeData['preferActualPath'];
     useActualPath = (preferActual == true) && actualRoutePoints.length >= 2;
 
+    // If we have an actual path but the "planned" polyline is missing or effectively
+    // the same line (common when backend persisted only one geometry), rebuild a
+    // planned polyline from stops so UI can render planned (grey) vs actual/hybrid (blue).
+    if (points.length >= 2 && actualRoutePoints.length >= 2) {
+      final plannedMissing = plannedRoutePoints.length < 2;
+      final plannedSameAsActual = plannedRoutePoints.length >= 2 &&
+          _polylinesRoughlyEqual(plannedRoutePoints, actualRoutePoints);
+      if (plannedMissing || plannedSameAsActual) {
+        plannedRoutePoints = List<LatLng>.from(points);
+      }
+    }
+
+    try {
+      // ignore: avoid_print
+      print(
+        '[CREATE_CTRL][initRouteData] useActualPath=$useActualPath plannedLen=${plannedRoutePoints.length} actualLen=${actualRoutePoints.length} pointsLen=${points.length}',
+      );
+    } catch (_) {
+      // ignore
+    }
+
     // Snapshot the original stops once, so we can detect appended stops later.
     if (_initialStopsSnapshot.isEmpty && points.isNotEmpty) {
       _initialStopsSnapshot = List<LatLng>.from(points);
@@ -136,6 +185,15 @@ class RideDetailsController {
     routePoints = useActualPath && actualRoutePoints.length >= 2
         ? List<LatLng>.from(actualRoutePoints)
         : List<LatLng>.from(plannedRoutePoints.isNotEmpty ? plannedRoutePoints : points);
+
+    try {
+      // ignore: avoid_print
+      print(
+        '[CREATE_CTRL][initRouteData] final routePointsLen=${routePoints.length} (plannedLen=${plannedRoutePoints.length} actualLen=${actualRoutePoints.length})',
+      );
+    } catch (_) {
+      // ignore
+    }
 
     createdRouteId = routeData['routeId'];
     routeDistance = routeData['distance'];
@@ -156,6 +214,19 @@ class RideDetailsController {
 
   void setUseActualPath(bool value) {
     useActualPath = value && hasActualPathAvailable;
+
+    // If user switches to actual path but planned polyline isn't available (or looks
+    // like it was overwritten by actual), rebuild planned from stops so it can be
+    // rendered in grey.
+    if (useActualPath && points.length >= 2 && actualRoutePoints.length >= 2) {
+      final plannedMissing = plannedRoutePoints.length < 2;
+      final plannedSameAsActual = plannedRoutePoints.length >= 2 &&
+          _polylinesRoughlyEqual(plannedRoutePoints, actualRoutePoints);
+      if (plannedMissing || plannedSameAsActual) {
+        plannedRoutePoints = List<LatLng>.from(points);
+      }
+    }
+
     routePoints = useActualPath
         ? List<LatLng>.from(actualRoutePoints)
         : List<LatLng>.from(plannedRoutePoints.isNotEmpty ? plannedRoutePoints : points);
@@ -168,6 +239,7 @@ class RideDetailsController {
       if (!useActualPath) {
         _ensurePlannedRouteOnRoads();
       } else {
+        _ensurePlannedRouteOnRoads();
         _ensureActualPathExtendedToStops();
       }
     }
@@ -190,7 +262,7 @@ class RideDetailsController {
   bool _doesPolylineCoverStop(
     List<LatLng> poly,
     LatLng stop, {
-    double thresholdMeters = 150,
+    double thresholdMeters = 500,
   }) {
     if (poly.isEmpty) return false;
     for (final p in poly) {
@@ -200,15 +272,18 @@ class RideDetailsController {
     return false;
   }
 
-  bool _validateActualPathCoversStops({double thresholdMeters = 150}) {
+  bool _validateActualPathCoversStops({double thresholdMeters = 500}) {
     if (!useActualPath) return true;
     if (actualRoutePoints.length < 2) return false;
     if (points.length < 2) return false;
 
     // The user wants: if the actual path doesn't cover any stop, block creation.
     // We interpret "cover" as each stop being within threshold of some actual point.
+    // Validate against the currently selected/persisted polyline.
+    // In hybrid mode this includes the planned extension to appended stops.
+    final polyToCheck = routePoints;
     for (final s in points) {
-      if (!_doesPolylineCoverStop(actualRoutePoints, s, thresholdMeters: thresholdMeters)) {
+      if (!_doesPolylineCoverStop(polyToCheck, s, thresholdMeters: thresholdMeters)) {
         return false;
       }
     }
@@ -233,9 +308,12 @@ class RideDetailsController {
     var targets = points.sublist(_initialStopsSnapshot.length);
     if (targets.isEmpty) return;
 
-    final actualEnd = actualRoutePoints.last;
-    // If the first target is effectively the same as actual end, skip it.
-    if (_sameLatLng(actualEnd, targets.first)) {
+    // Hybrid rule (recreate-mode behavior): keep `actualRoutePoints` immutable.
+    // We extend ONLY `routePoints` (the persisted/displayed polyline) by adding a
+    // planned segment from the CURRENT hybrid end to the appended stop(s).
+    final start = (routePoints.isNotEmpty ? routePoints.last : actualRoutePoints.last);
+    // If the first target is effectively the same as current end, skip it.
+    if (_sameLatLng(start, targets.first)) {
       targets = targets.sublist(1);
     }
     if (targets.isEmpty) return;
@@ -244,13 +322,12 @@ class RideDetailsController {
     onStateChanged?.call();
 
     try {
-      final ext = await RoadPolylineService.fetchRoadPolyline([actualEnd, ...targets]);
+      final ext = await RoadPolylineService.fetchRoadPolyline([start, ...targets]);
       if (ext.length >= 2) {
-        // Avoid duplicating the first point (actualEnd).
+        // Avoid duplicating the first point (start).
         final toAppend = ext.sublist(1);
         if (toAppend.isNotEmpty) {
-          actualRoutePoints = [...actualRoutePoints, ...toAppend];
-          routePoints = List<LatLng>.from(actualRoutePoints);
+          routePoints = [...routePoints, ...toAppend];
           _recalculateDistanceDurationFromRoutePoints();
           calculateDynamicFare();
           // Update snapshot so future appended stops are detected correctly.
@@ -928,7 +1005,7 @@ class RideDetailsController {
 
         // If user chose actual path, ensure it meaningfully aligns with the stops.
         if (useActualPath) {
-          final ok = _validateActualPathCoversStops(thresholdMeters: 150);
+          final ok = _validateActualPathCoversStops(thresholdMeters: 500);
           if (!ok) {
             onError?.call(
               'Actual path does not cover one or more stops. Please delete/adjust those stops (or switch to planned route).',
@@ -940,10 +1017,21 @@ class RideDetailsController {
         }
 
         final List<LatLng> polylineToPersist = useActualPath && actualRoutePoints.length >= 2
-            ? List<LatLng>.from(actualRoutePoints)
+            // When using actual path, we persist the currently selected polyline.
+            // This may be a hybrid (actual + planned extension) if the user appended stops.
+            ? List<LatLng>.from(routePoints)
             : (plannedRoutePoints.isNotEmpty
                 ? List<LatLng>.from(plannedRoutePoints)
                 : List<LatLng>.from(routePoints));
+
+        try {
+          // ignore: avoid_print
+          print(
+            '[CREATE_CTRL][recreate] useActualPath=$useActualPath plannedLen=${plannedRoutePoints.length} actualLen=${actualRoutePoints.length} routePointsLen=${routePoints.length} persistedLen=${polylineToPersist.length}',
+          );
+        } catch (_) {
+          // ignore
+        }
 
         final routeData = {
           'coordinates': points
@@ -965,6 +1053,16 @@ class RideDetailsController {
           'location_names': locationNames,
           'created_at': DateTime.now().toIso8601String(),
         };
+
+        try {
+          final rp = routeData['route_points'];
+          // ignore: avoid_print
+          print(
+            '[CREATE_CTRL][recreate] createRoute payload route_points_len=${rp is List ? rp.length : -1} coordinates_len=${(routeData['coordinates'] is List) ? (routeData['coordinates'] as List).length : -1}',
+          );
+        } catch (_) {
+          // ignore
+        }
 
         final rr = await ApiService.createRoute(routeData);
         if (rr['success'] == true) {

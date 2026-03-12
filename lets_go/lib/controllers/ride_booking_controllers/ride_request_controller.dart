@@ -53,6 +53,24 @@ class RideRequestController {
     this.onInfo,
   });
 
+  double? _toDouble(dynamic v) {
+    if (v == null) return null;
+    if (v is num) return v.toDouble();
+    return double.tryParse(v.toString());
+  }
+
+  List<LatLng> _parsePolyline(dynamic raw) {
+    if (raw is! List) return <LatLng>[];
+    final out = <LatLng>[];
+    for (final p in raw) {
+      if (p is! Map) continue;
+      final lat = _toDouble(p['lat'] ?? p['latitude']);
+      final lng = _toDouble(p['lng'] ?? p['longitude']);
+      if (lat != null && lng != null) out.add(LatLng(lat, lng));
+    }
+    return out;
+  }
+
   // Initialize controller with ride data
   void initializeWithRideData(Map<String, dynamic> data) {
     // Log initialization for debugging
@@ -71,6 +89,28 @@ class RideRequestController {
         locationNames.clear();
         routePoints.clear();
         stopPoints.clear();
+
+        // Prefer backend geometry if present (authoritative line).
+        final backendRoutePoints = _parsePolyline(
+          data['route_points'] ??
+              data['trip']?['route_points'] ??
+              data['trip']?['route']?['route_points'] ??
+              route['route_points'],
+        );
+        final backendActualPath = _parsePolyline(
+          data['actual_path'] ??
+              data['trip']?['actual_path'] ??
+              data['trip']?['route']?['actual_path'] ??
+              route['actual_path'],
+        );
+        // Prefer `route_points` because it may contain the hybrid/selected geometry.
+        // Fall back to `actual_path` only when route_points is missing.
+        final preferred = backendRoutePoints.length >= 2
+            ? backendRoutePoints
+            : (backendActualPath.length >= 2 ? backendActualPath : <LatLng>[]);
+        if (preferred.length >= 2) {
+          routePoints = List<LatLng>.from(preferred);
+        }
         
         for (final stop in stops) {
           locationNames.add(stop['name'] ?? 'Unknown Stop');
@@ -79,7 +119,6 @@ class RideRequestController {
               (stop['latitude'] as num).toDouble(),
               (stop['longitude'] as num).toDouble(),
             );
-            routePoints.add(p);
             stopPoints.add(p);
           }
         }
@@ -90,8 +129,8 @@ class RideRequestController {
           selectedToStop = locationNames.length;
         }
 
-        // Try to fetch a road-following polyline; fallback to interpolation on failure
-        if (stopPoints.length > 1) {
+        // If backend geometry isn't available, fall back to road-snapping stops.
+        if (routePoints.length < 2 && stopPoints.length > 1) {
           RoadPolylineService.fetchRoadPolyline(stopPoints).then((road) {
             routePoints = (road.length > 1) ? road : _generateInterpolatedRoute(stopPoints);
             onStateChanged?.call();

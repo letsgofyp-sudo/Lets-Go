@@ -29,6 +29,24 @@ class RideDetailsViewController {
     this.onInfo,
   });
 
+  double? _toDouble(dynamic v) {
+    if (v == null) return null;
+    if (v is num) return v.toDouble();
+    return double.tryParse(v.toString());
+  }
+
+  List<LatLng> _parsePolyline(dynamic raw) {
+    if (raw is! List) return <LatLng>[];
+    final out = <LatLng>[];
+    for (final p in raw) {
+      if (p is! Map) continue;
+      final lat = _toDouble(p['lat'] ?? p['latitude']);
+      final lng = _toDouble(p['lng'] ?? p['longitude']);
+      if (lat != null && lng != null) out.add(LatLng(lat, lng));
+    }
+    return out;
+  }
+
   // Load ride details from API
   Future<void> loadRideDetails(String tripId) async {
     try {
@@ -55,6 +73,28 @@ class RideDetailsViewController {
             routePoints.clear();
             stopPoints.clear();
             final List<LatLng> stopCoords = [];
+
+            // Prefer backend geometry if present (authoritative line).
+            final backendRoutePoints = _parsePolyline(
+              data['route_points'] ??
+                  data['trip']?['route_points'] ??
+                  data['trip']?['route']?['route_points'] ??
+                  route['route_points'],
+            );
+            final backendActualPath = _parsePolyline(
+              data['actual_path'] ??
+                  data['trip']?['actual_path'] ??
+                  data['trip']?['route']?['actual_path'] ??
+                  route['actual_path'],
+            );
+            // Prefer `route_points` because it may contain the hybrid/selected geometry.
+            // Fall back to `actual_path` only when route_points is missing.
+            final preferred = backendRoutePoints.length >= 2
+                ? backendRoutePoints
+                : (backendActualPath.length >= 2 ? backendActualPath : <LatLng>[]);
+            if (preferred.length >= 2) {
+              routePoints = List<LatLng>.from(preferred);
+            }
             
             for (final stop in stops) {
               locationNames.add(stop['name'] ?? 'Unknown Stop');
@@ -63,14 +103,13 @@ class RideDetailsViewController {
                   (stop['latitude'] as num).toDouble(),
                   (stop['longitude'] as num).toDouble(),
                 );
-                routePoints.add(p);
                 stopPoints.add(p);
                 stopCoords.add(p);
               }
             }
             
             // Try to fetch a road-following polyline; fallback to interpolation on failure
-            if (stopCoords.length > 1) {
+            if (routePoints.length < 2 && stopCoords.length > 1) {
               final road = await RoadPolylineService.fetchRoadPolyline(stopCoords);
               routePoints = (road.length > 1) ? road : _generateInterpolatedRoute(stopCoords);
             }

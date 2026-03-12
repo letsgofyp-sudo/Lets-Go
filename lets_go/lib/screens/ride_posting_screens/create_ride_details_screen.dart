@@ -384,14 +384,32 @@ class _RideDetailsScreenState extends State<RideDetailsScreen> {
             }),
           ],
         ),
-        if (_controller.routePoints.isNotEmpty)
+        if ((_controller.routePoints.length > 1) ||
+            (_controller.plannedRoutePoints.length > 1) ||
+            (_controller.actualRoutePoints.length > 1))
           MapUtil.buildPolylineLayerFromPolylines(
             polylines: [
-              MapUtil.polyline(
-                points: _controller.routePoints,
-                color: Colors.blue,
-                strokeWidth: 4,
-              ),
+              // Unselected (grey) first so selected (blue) draws on top.
+              if (_controller.useActualPath && _controller.plannedRoutePoints.length > 1)
+                MapUtil.polyline(
+                  points: _controller.plannedRoutePoints,
+                  color: Colors.grey,
+                  strokeWidth: 3,
+                ),
+              if (!_controller.useActualPath && _controller.actualRoutePoints.length > 1)
+                MapUtil.polyline(
+                  points: _controller.actualRoutePoints,
+                  color: Colors.grey,
+                  strokeWidth: 3,
+                ),
+
+              // Selected (blue)
+              if (_controller.routePoints.length > 1)
+                MapUtil.polyline(
+                  points: _controller.routePoints,
+                  color: Colors.blue,
+                  strokeWidth: 4,
+                ),
             ],
           ),
       ],
