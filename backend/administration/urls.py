@@ -6,6 +6,9 @@ app_name = 'administration'
 urlpatterns = [
     # Admin view
     path('', views.admin_view, name='admin_view'),
+    path('todos/', views.todos_inbox_view, name='todos_inbox'),
+    path('todos/<int:todo_id>/done/', views.todo_mark_done_view, name='todo_mark_done'),
+    path('todos/<int:todo_id>/reopen/', views.todo_reopen_view, name='todo_reopen'),
     path('analytics/', views.analytics_view, name='analytics_view'),
     path('settings/', views.settings_view, name='settings_view'),
     path('reached/', views.reached_overdue_dashboard_view, name='reached_overdue_dashboard'),

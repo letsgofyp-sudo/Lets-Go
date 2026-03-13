@@ -6,7 +6,7 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from datetime import timedelta
 from django.views.decorators.http import require_http_methods
 from django.utils import timezone
-from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F, Q, Sum, Max
+from django.db.models import Avg, Count, DurationField, ExpressionWrapper, F, Q, Sum, Max, OuterRef, Subquery
 from django.db.models.functions import Coalesce, ExtractHour
 from django.conf import settings
 from lets_go.models import (
@@ -39,6 +39,8 @@ from lets_go.views.views_notifications import send_ride_notification_async
 from lets_go.views.views_authentication import upload_to_supabase
 
 from datetime import datetime
+
+from .models import AdminTodoItem
 
 
 def _build_resolved_sos_snapshot_payload(incident: SosIncident) -> dict:
@@ -864,6 +866,24 @@ def change_request_detail_view(request, change_request_id):
                     cr.reviewed_at = timezone.now()
                     cr.save(update_fields=['status', 'review_notes', 'reviewed_at'])
 
+                    try:
+                        payload = {
+                            'recipient_id': str(cr.user_id),
+                            'user_id': str(cr.user_id),
+                            'driver_id': '0',
+                            'title': 'Change request approved',
+                            'body': 'Your requested changes were approved by admin.',
+                            'data': {
+                                'type': 'change_request_reviewed',
+                                'status': str(cr.status),
+                                'change_request_id': str(cr.id),
+                                'entity_type': str(cr.entity_type),
+                            },
+                        }
+                        send_ride_notification_async(payload)
+                    except Exception:
+                        pass
+
                 elif action == 'reject':
                     if cr.entity_type == ChangeRequest.ENTITY_VEHICLE and cr.vehicle is not None:
                         vehicle = cr.vehicle
@@ -875,6 +895,24 @@ def change_request_detail_view(request, change_request_id):
                     cr.review_notes = notes
                     cr.reviewed_at = timezone.now()
                     cr.save(update_fields=['status', 'review_notes', 'reviewed_at'])
+
+                    try:
+                        payload = {
+                            'recipient_id': str(cr.user_id),
+                            'user_id': str(cr.user_id),
+                            'driver_id': '0',
+                            'title': 'Change request rejected',
+                            'body': 'Your requested changes were rejected by admin.',
+                            'data': {
+                                'type': 'change_request_reviewed',
+                                'status': str(cr.status),
+                                'change_request_id': str(cr.id),
+                                'entity_type': str(cr.entity_type),
+                            },
+                        }
+                        send_ride_notification_async(payload)
+                    except Exception:
+                        pass
 
                 return redirect('administration:change_request_detail', change_request_id=cr.id)
             except Exception as e:
@@ -1612,7 +1650,261 @@ def update_user_status_view(request, user_id):
         else:
             user.rejection_reason = None
         user.save()
+
+        if current != target:
+            try:
+                title = 'Account status updated'
+                body = f"Your account status is now {target}."
+                if target == 'VERIFIED':
+                    body = 'Your account has been verified.'
+                elif target == 'REJECTED':
+                    body = 'Your account verification was rejected.'
+                elif target == 'BANNED':
+                    body = 'Your account was banned. Please contact support.'
+                elif target == 'PENDING':
+                    body = 'Your account status is pending verification.'
+
+                payload = {
+                    'recipient_id': str(user.id),
+                    'user_id': str(user.id),
+                    'driver_id': '0',
+                    'title': title,
+                    'body': body,
+                    'data': {
+                        'type': 'user_status_updated',
+                        'status': str(target),
+                        'user_id': str(user.id),
+                    },
+                }
+                send_ride_notification_async(payload)
+            except Exception:
+                pass
     return redirect('administration:user_detail', user_id=user_id)
+
+
+def _sync_admin_todos(request) -> None:
+    """Upsert todos based on current system state.
+
+    This runs on page load to avoid needing Celery/Redis.
+    """
+
+    try:
+        # 1) User verification todos
+        pending_users = UsersData.objects.filter(status='PENDING').only('id', 'name', 'status').order_by('-created_at')[:400]
+        pending_user_ids = set()
+        for u in pending_users:
+            pending_user_ids.add(int(u.id))
+            AdminTodoItem.objects.get_or_create(
+                source_type=AdminTodoItem.SOURCE_USER_VERIFICATION,
+                source_id=int(u.id),
+                defaults={
+                    'title': f"Verify user: {u.name} (#{u.id})",
+                    'details': None,
+                    'link_url': reverse('administration:user_detail', kwargs={'user_id': u.id}),
+                    'category': AdminTodoItem.CATEGORY_VERIFICATION,
+                    'priority': AdminTodoItem.PRIORITY_HIGH,
+                    'status': AdminTodoItem.STATUS_PENDING,
+                },
+            )
+
+        # 2) SOS incidents todos
+        open_incidents = SosIncident.objects.filter(status=SosIncident.STATUS_OPEN).only('id', 'status', 'created_at').order_by('-created_at')[:400]
+        open_incident_ids = set()
+        for i in open_incidents:
+            open_incident_ids.add(int(i.id))
+            AdminTodoItem.objects.get_or_create(
+                source_type=AdminTodoItem.SOURCE_SOS_INCIDENT,
+                source_id=int(i.id),
+                defaults={
+                    'title': f"Resolve SOS incident: #{i.id}",
+                    'details': None,
+                    'link_url': reverse('administration:sos_incident_detail', kwargs={'incident_id': i.id}),
+                    'category': AdminTodoItem.CATEGORY_SOS,
+                    'priority': AdminTodoItem.PRIORITY_HIGH,
+                    'status': AdminTodoItem.STATUS_PENDING,
+                },
+            )
+
+        # 3) Change request todos
+        pending_crs = ChangeRequest.objects.filter(status=ChangeRequest.STATUS_PENDING).only('id', 'status', 'entity_type', 'created_at').order_by('-created_at')[:400]
+        pending_cr_ids = set()
+        for cr in pending_crs:
+            pending_cr_ids.add(int(cr.id))
+            AdminTodoItem.objects.get_or_create(
+                source_type=AdminTodoItem.SOURCE_CHANGE_REQUEST,
+                source_id=int(cr.id),
+                defaults={
+                    'title': f"Review change request: #{cr.id} ({cr.entity_type})",
+                    'details': None,
+                    'link_url': reverse('administration:change_request_detail', kwargs={'change_request_id': cr.id}),
+                    'category': AdminTodoItem.CATEGORY_CHANGE_REQUEST,
+                    'priority': AdminTodoItem.PRIORITY_MEDIUM,
+                    'status': AdminTodoItem.STATUS_PENDING,
+                },
+            )
+
+        # 4) Support thread todos (only when latest unread sender is USER)
+        latest_msg = (
+            SupportMessage.objects
+            .filter(thread_id=OuterRef('pk'))
+            .order_by('-id')
+        )
+        threads = (
+            SupportThread.objects
+            .filter(is_closed=False)
+            .annotate(latest_message_id=Subquery(latest_msg.values('id')[:1]))
+            .annotate(latest_sender_type=Subquery(latest_msg.values('sender_type')[:1]))
+            .select_related('user', 'guest')
+            .only('id', 'user_id', 'guest_id', 'thread_type', 'is_closed', 'admin_last_seen_id', 'last_message_at', 'updated_at', 'user__id', 'user__name', 'guest__id', 'guest__username')
+            .order_by('-last_message_at')[:500]
+        )
+        pending_thread_ids = set()
+        for t in threads:
+            try:
+                latest_id = int(getattr(t, 'latest_message_id', 0) or 0)
+                if latest_id <= int(getattr(t, 'admin_last_seen_id', 0) or 0):
+                    continue
+                if (getattr(t, 'latest_sender_type', None) or '').upper() != 'USER':
+                    continue
+
+                pending_thread_ids.add(int(t.id))
+                if t.user_id:
+                    title = f"Reply user: {getattr(getattr(t, 'user', None), 'name', '')} (#{t.user_id})"
+                    link_url = reverse('administration:user_support_chat', kwargs={'user_id': t.user_id})
+                    category = AdminTodoItem.CATEGORY_SUPPORT_USER
+                else:
+                    title = f"Reply guest: {getattr(getattr(t, 'guest', None), 'username', '')} (#{t.guest_id})"
+                    link_url = reverse('administration:guest_support_chat', kwargs={'guest_id': t.guest_id})
+                    category = AdminTodoItem.CATEGORY_SUPPORT_GUEST
+
+                AdminTodoItem.objects.get_or_create(
+                    source_type=AdminTodoItem.SOURCE_SUPPORT_THREAD,
+                    source_id=int(t.id),
+                    defaults={
+                        'title': title,
+                        'details': None,
+                        'link_url': link_url,
+                        'category': category,
+                        'priority': AdminTodoItem.PRIORITY_MEDIUM,
+                        'status': AdminTodoItem.STATUS_PENDING,
+                    },
+                )
+            except Exception:
+                continue
+
+        # Auto-complete / reopen (unless manually done)
+        todo_qs = AdminTodoItem.objects.all().only('id', 'source_type', 'source_id', 'status', 'manual_done', 'done_at')
+        for todo in todo_qs[:2000]:
+            try:
+                st = todo.source_type
+                sid = int(todo.source_id)
+                resolved = False
+                pending = False
+
+                if st == AdminTodoItem.SOURCE_USER_VERIFICATION:
+                    pending = sid in pending_user_ids
+                    resolved = not pending
+                elif st == AdminTodoItem.SOURCE_SOS_INCIDENT:
+                    pending = sid in open_incident_ids
+                    resolved = not pending
+                elif st == AdminTodoItem.SOURCE_CHANGE_REQUEST:
+                    pending = sid in pending_cr_ids
+                    resolved = not pending
+                elif st == AdminTodoItem.SOURCE_SUPPORT_THREAD:
+                    pending = sid in pending_thread_ids
+                    resolved = not pending
+
+                if resolved and todo.status != AdminTodoItem.STATUS_DONE and not todo.manual_done:
+                    todo.mark_done(by_user=None, manual=False)
+                if pending and todo.status == AdminTodoItem.STATUS_DONE and not todo.manual_done:
+                    todo.reopen()
+            except Exception:
+                continue
+    except Exception:
+        return
+
+
+@require_http_methods(['GET'])
+@login_required
+def todos_inbox_view(request):
+    _sync_admin_todos(request)
+
+    status_filter = (request.GET.get('status') or 'PENDING').strip().upper()
+    priority_filter = (request.GET.get('priority') or '').strip().upper()
+    category_filter = (request.GET.get('category') or '').strip().upper()
+    sort = (request.GET.get('sort') or '').strip().lower()
+
+    qs = AdminTodoItem.objects.all()
+
+    if status_filter in (AdminTodoItem.STATUS_PENDING, AdminTodoItem.STATUS_DONE):
+        qs = qs.filter(status=status_filter)
+    else:
+        status_filter = ''
+
+    if priority_filter in (AdminTodoItem.PRIORITY_LOW, AdminTodoItem.PRIORITY_MEDIUM, AdminTodoItem.PRIORITY_HIGH):
+        qs = qs.filter(priority=priority_filter)
+    else:
+        priority_filter = ''
+
+    if category_filter in {c[0] for c in AdminTodoItem.CATEGORY_CHOICES}:
+        qs = qs.filter(category=category_filter)
+    else:
+        category_filter = ''
+
+    if sort == 'done_desc':
+        qs = qs.order_by('-done_at', '-updated_at')
+    elif sort == 'priority_desc':
+        qs = qs.order_by('-priority', '-created_at')
+    elif sort == 'created_asc':
+        qs = qs.order_by('created_at')
+    else:
+        qs = qs.order_by('-created_at')
+
+    embed = (request.GET.get('embed') or '').strip() in {'1', 'true', 'yes'}
+    template_name = 'administration/todos_inbox_embed.html' if embed else 'administration/todos_inbox.html'
+
+    return render(request, template_name, {
+        'todos': qs[:500],
+        'status_filter': status_filter,
+        'priority_filter': priority_filter,
+        'category_filter': category_filter,
+        'sort': sort,
+        'category_choices': AdminTodoItem.CATEGORY_CHOICES,
+        'priority_choices': AdminTodoItem.PRIORITY_CHOICES,
+        'status_choices': AdminTodoItem.STATUS_CHOICES,
+    })
+
+
+@require_http_methods(['POST'])
+@csrf_protect
+@login_required
+def todo_mark_done_view(request, todo_id):
+    todo = get_object_or_404(AdminTodoItem, pk=todo_id)
+    todo.mark_done(by_user=request.user, manual=True)
+
+    embed = (request.GET.get('embed') or '').strip() in {'1', 'true', 'yes'}
+    if embed:
+        return redirect(reverse('administration:todos_inbox') + '?embed=1')
+    back = request.META.get('HTTP_REFERER')
+    if back:
+        return redirect(back)
+    return redirect('administration:todos_inbox')
+
+
+@require_http_methods(['POST'])
+@csrf_protect
+@login_required
+def todo_reopen_view(request, todo_id):
+    todo = get_object_or_404(AdminTodoItem, pk=todo_id)
+    todo.reopen()
+
+    embed = (request.GET.get('embed') or '').strip() in {'1', 'true', 'yes'}
+    if embed:
+        return redirect(reverse('administration:todos_inbox') + '?embed=1')
+    back = request.META.get('HTTP_REFERER')
+    if back:
+        return redirect(back)
+    return redirect('administration:todos_inbox')
 # 3) Edit page HTML form
 @login_required
 def user_edit_view(request, user_id):

@@ -28,6 +28,9 @@
     </div>
 
     <div class="admin-header-right">
+      <button type="button" class="admin-toplink" id="admin-todos-panel-open">
+        <i class="fa-regular fa-square-check"></i> Todos
+      </button>
       <a class="admin-toplink" href="{% url 'administration:logout_view' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
     </div>
   </header>
@@ -35,6 +38,7 @@
   <aside class="admin-sidebar">
     <nav class="admin-nav">
       <a class="admin-nav-link" href="{% url 'administration:admin_view' %}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a class="admin-nav-link" href="{% url 'administration:todos_inbox' %}"><i class="fa-regular fa-square-check"></i> Todos</a>
       <a class="admin-nav-link" href="{% url 'administration:rides_dashboard' %}"><i class="fa-solid fa-route"></i> Rides</a>
       <a class="admin-nav-link" href="{% url 'administration:reached_overdue_dashboard' %}"><i class="fa-regular fa-clock"></i> Reached Pending</a>
       <a class="admin-nav-link" href="{% url 'administration:sos_dashboard' %}"><i class="fa-solid fa-triangle-exclamation"></i> SOS Incidents</a>
@@ -49,6 +53,17 @@
   <main class="admin-main">
     {% block content %}{% endblock %}
   </main>
+
+  <div class="admin-panel-overlay" id="admin-panel-overlay" hidden></div>
+  <aside class="admin-panel" id="admin-todos-panel" aria-hidden="true">
+    <div class="admin-panel-header">
+      <div class="admin-panel-title"><i class="fa-regular fa-square-check"></i> Todos</div>
+      <button type="button" class="admin-panel-close" id="admin-todos-panel-close" aria-label="Close">&times;</button>
+    </div>
+    <div class="admin-panel-body" id="admin-todos-panel-body">
+      <div class="admin-panel-loading">Loading...</div>
+    </div>
+  </aside>
 
   <label class="admin-overlay" for="admin-nav-toggle" aria-label="Close navigation"></label>
 
@@ -81,6 +96,92 @@
       for (const a of links) {
         a.addEventListener('click', () => {
           if (navToggle) navToggle.checked = false;
+        });
+      }
+
+      const panel = document.getElementById('admin-todos-panel');
+      const panelBody = document.getElementById('admin-todos-panel-body');
+      const openBtn = document.getElementById('admin-todos-panel-open');
+      const closeBtn = document.getElementById('admin-todos-panel-close');
+      const overlay = document.getElementById('admin-panel-overlay');
+
+      const showPanel = () => {
+        if (!panel || !overlay) return;
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden', 'false');
+        overlay.hidden = false;
+      };
+
+      const hidePanel = () => {
+        if (!panel || !overlay) return;
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden', 'true');
+        overlay.hidden = true;
+      };
+
+      const loadPanelUrl = async (url, options) => {
+        if (!panelBody) return;
+        try {
+          panelBody.innerHTML = '<div class="admin-panel-loading">Loading...</div>';
+          const res = await fetch(url, options || { headers: { 'X-Requested-With': 'XMLHttpRequest' } });
+          const html = await res.text();
+          panelBody.innerHTML = html;
+        } catch (e) {
+          panelBody.innerHTML = '<div class="admin-panel-loading">Failed to load.</div>';
+        }
+      };
+
+      if (openBtn) {
+        openBtn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          showPanel();
+          await loadPanelUrl('{% url "administration:todos_inbox" %}?embed=1');
+        });
+      }
+
+      if (closeBtn) closeBtn.addEventListener('click', () => hidePanel());
+      if (overlay) overlay.addEventListener('click', () => hidePanel());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') hidePanel();
+      });
+
+      if (panelBody) {
+        panelBody.addEventListener('click', async (e) => {
+          const a = e.target.closest('a');
+          if (!a) return;
+          const href = a.getAttribute('href');
+          if (!href) return;
+          if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+          e.preventDefault();
+          const url = new URL(href, window.location.origin);
+          url.searchParams.set('embed', '1');
+          await loadPanelUrl(url.toString());
+        });
+
+        panelBody.addEventListener('submit', async (e) => {
+          const form = e.target;
+          if (!form || form.tagName !== 'FORM') return;
+          e.preventDefault();
+          const method = (form.getAttribute('method') || 'GET').toUpperCase();
+          const action = form.getAttribute('action') || window.location.href;
+          const formData = new FormData(form);
+
+          if (method === 'GET') {
+            const url = new URL(action, window.location.origin);
+            for (const [k, v] of formData.entries()) url.searchParams.set(k, v);
+            url.searchParams.set('embed', '1');
+            await loadPanelUrl(url.toString());
+            return;
+          }
+
+          const url = new URL(action, window.location.origin);
+          url.searchParams.set('embed', '1');
+          await loadPanelUrl(url.toString(), {
+            method,
+            body: formData,
+            headers: { 'X-Requested-With': 'XMLHttpRequest' },
+          });
         });
       }
     });

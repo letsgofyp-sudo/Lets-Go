@@ -303,6 +303,55 @@ async function loadDashboard() {
       }
     }
   });
+
+  // 6) Active Users (stacked): drivers + riders
+  _renderChart('activeUsersStackedChart', {
+    type: 'bar',
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Active Drivers',
+          data: drivers,
+          backgroundColor: 'rgba(52,152,219,0.65)',
+          borderColor: '#2980b9',
+          borderWidth: 1,
+          barPercentage: 0.75,
+          categoryPercentage: 0.8,
+          stack: 'users'
+        },
+        {
+          label: 'Active Riders',
+          data: riders,
+          backgroundColor: 'rgba(155,89,182,0.65)',
+          borderColor: '#9b59b6',
+          borderWidth: 1,
+          barPercentage: 0.75,
+          categoryPercentage: 0.8,
+          stack: 'users'
+        }
+      ]
+    },
+    options: {
+      title: { display: true, text: 'Active Users (Drivers + Riders)' },
+      responsive: true,
+      maintainAspectRatio: false,
+      layout: baseLayout,
+      scales: {
+        xAxes: [{
+          stacked: true,
+          gridLines: { display: false },
+          ticks: { fontColor: tickColor, maxRotation: 0, autoSkip: true }
+        }],
+        yAxes: [{
+          stacked: true,
+          gridLines: { color: gridColor, drawBorder: false },
+          ticks: { beginAtZero: true, fontColor: tickColor, precision: 0 },
+          scaleLabel: { display: true, labelString: 'Users', fontColor: axisLabelColor }
+        }]
+      }
+    }
+  });
 }
 
 loadDashboard();

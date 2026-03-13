@@ -1,0 +1,111 @@
+{% load static %}
+
+<div class="admin-panel-content">
+  <div class="admin-panel-subheader">
+    <div class="admin-panel-subtitle">Admin Todos</div>
+    <a class="btn btn-outline btn-sm" href="{% url 'administration:todos_inbox' %}" target="_blank" rel="noopener">Open full page</a>
+  </div>
+
+  <form method="get" class="status-form filters-bar">
+    <input type="hidden" name="embed" value="1" />
+
+    <label>Status:
+      <select name="status">
+        <option value="" {% if not status_filter %}selected{% endif %}>All</option>
+        <option value="PENDING" {% if status_filter == 'PENDING' %}selected{% endif %}>PENDING</option>
+        <option value="DONE" {% if status_filter == 'DONE' %}selected{% endif %}>DONE</option>
+      </select>
+    </label>
+
+    <label>Priority:
+      <select name="priority">
+        <option value="" {% if not priority_filter %}selected{% endif %}>All</option>
+        <option value="HIGH" {% if priority_filter == 'HIGH' %}selected{% endif %}>HIGH</option>
+        <option value="MEDIUM" {% if priority_filter == 'MEDIUM' %}selected{% endif %}>MEDIUM</option>
+        <option value="LOW" {% if priority_filter == 'LOW' %}selected{% endif %}>LOW</option>
+      </select>
+    </label>
+
+    <label>Category:
+      <select name="category">
+        <option value="" {% if not category_filter %}selected{% endif %}>All</option>
+        {% for c, label in category_choices %}
+          <option value="{{ c }}" {% if category_filter == c %}selected{% endif %}>{{ c }}</option>
+        {% endfor %}
+      </select>
+    </label>
+
+    <label>Sort:
+      <select name="sort">
+        <option value="" {% if not sort %}selected{% endif %}>created_desc</option>
+        <option value="created_asc" {% if sort == 'created_asc' %}selected{% endif %}>created_asc</option>
+        <option value="priority_desc" {% if sort == 'priority_desc' %}selected{% endif %}>priority_desc</option>
+        <option value="done_desc" {% if sort == 'done_desc' %}selected{% endif %}>done_desc</option>
+      </select>
+    </label>
+
+    <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-filter"></i> Filter</button>
+    <a class="btn btn-outline btn-sm" href="{% url 'administration:todos_inbox' %}?embed=1"><i class="fa-solid fa-rotate-left"></i> Reset</a>
+  </form>
+
+  <div class="table-container">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Priority</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Done At</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in todos %}
+          <tr>
+            <td>
+              <strong>{{ t.title }}</strong>
+              {% if t.details %}
+                <div class="muted">{{ t.details }}</div>
+              {% endif %}
+            </td>
+            <td>{{ t.category }}</td>
+            <td>{{ t.priority }}</td>
+            <td>
+              {{ t.status }}
+              {% if t.manual_done %}
+                <span class="muted">(manual)</span>
+              {% endif %}
+            </td>
+            <td>{{ t.created_at|date:'Y-m-d H:i' }}</td>
+            <td>{% if t.done_at %}{{ t.done_at|date:'Y-m-d H:i' }}{% else %}-{% endif %}</td>
+            <td>
+              <div class="table-actions">
+                {% if t.link_url %}
+                  <a class="btn btn-outline btn-sm" href="{{ t.link_url }}" target="_blank" rel="noopener"><i class="fa-regular fa-eye"></i> Open</a>
+                {% endif %}
+
+                {% if t.status == 'PENDING' %}
+                  <form method="post" action="{% url 'administration:todo_mark_done' t.id %}?embed=1" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary btn-sm"><i class="fa-regular fa-circle-check"></i> Mark done</button>
+                  </form>
+                {% else %}
+                  <form method="post" action="{% url 'administration:todo_reopen' t.id %}?embed=1" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-outline btn-sm"><i class="fa-solid fa-rotate-left"></i> Reopen</button>
+                  </form>
+                {% endif %}
+              </div>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="7">No todo items found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
