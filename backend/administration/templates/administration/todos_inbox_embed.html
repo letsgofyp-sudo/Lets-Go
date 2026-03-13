@@ -3,7 +3,7 @@
 <div class="admin-panel-content">
   <div class="admin-panel-subheader">
     <div class="admin-panel-subtitle">Admin Todos</div>
-    <a class="btn btn-outline btn-sm" href="{% url 'administration:todos_inbox' %}" target="_blank" rel="noopener">Open full page</a>
+    <a class="btn btn-outline btn-sm" href="{% url 'administration:todos_inbox' %}" data-panel-nav="main">Open full page</a>
   </div>
 
   <form method="get" class="status-form filters-bar">
@@ -83,7 +83,7 @@
             <td>
               <div class="table-actions">
                 {% if t.link_url %}
-                  <a class="btn btn-outline btn-sm" href="{{ t.link_url }}" target="_blank" rel="noopener"><i class="fa-regular fa-eye"></i> Open</a>
+                  <a class="btn btn-outline btn-sm" href="{{ t.link_url }}" data-panel-nav="main"><i class="fa-regular fa-eye"></i> Open</a>
                 {% endif %}
 
                 {% if t.status == 'PENDING' %}

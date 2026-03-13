@@ -38,7 +38,6 @@
   <aside class="admin-sidebar">
     <nav class="admin-nav">
       <a class="admin-nav-link" href="{% url 'administration:admin_view' %}"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
-      <a class="admin-nav-link" href="{% url 'administration:todos_inbox' %}"><i class="fa-regular fa-square-check"></i> Todos</a>
       <a class="admin-nav-link" href="{% url 'administration:rides_dashboard' %}"><i class="fa-solid fa-route"></i> Rides</a>
       <a class="admin-nav-link" href="{% url 'administration:reached_overdue_dashboard' %}"><i class="fa-regular fa-clock"></i> Reached Pending</a>
       <a class="admin-nav-link" href="{% url 'administration:sos_dashboard' %}"><i class="fa-solid fa-triangle-exclamation"></i> SOS Incidents</a>
@@ -153,6 +152,15 @@
           const href = a.getAttribute('href');
           if (!href) return;
           if (href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) return;
+
+          const panelNav = a.getAttribute('data-panel-nav');
+          if (panelNav === 'main') {
+            e.preventDefault();
+            hidePanel();
+            window.location.href = href;
+            return;
+          }
+
           e.preventDefault();
           const url = new URL(href, window.location.origin);
           url.searchParams.set('embed', '1');

@@ -473,6 +473,14 @@
   border: 1px solid rgba(255,255,255,0.14);
 }
 
+.admin-header-right .admin-toplink {
+  background: rgba(255,255,255,0.06);
+}
+
+.admin-header-right .admin-toplink:hover {
+  background: rgba(255,255,255,0.14);
+}
+
 .admin-panel-overlay {
   position: fixed;
   top: var(--header-h);
@@ -486,13 +494,13 @@
 .admin-panel {
   position: fixed;
   top: var(--header-h);
-  left: 0;
+  right: 0;
   bottom: 0;
   width: min(560px, 92vw);
   background: var(--surface);
-  border-right: 1px solid var(--border);
-  box-shadow: 20px 0 60px rgba(0,0,0,0.30);
-  transform: translateX(-102%);
+  border-left: 1px solid var(--border);
+  box-shadow: -20px 0 60px rgba(0,0,0,0.30);
+  transform: translateX(102%);
   transition: transform .18s ease;
   z-index: 1100;
   display: flex;
