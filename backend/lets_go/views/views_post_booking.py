@@ -19,6 +19,7 @@ from django.urls import reverse
 import os
 import smtplib
 import requests
+import threading
 import urllib.parse
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
@@ -157,6 +158,22 @@ def _send_sms(phone_number: str, message: str) -> bool:
     return send_incident_sms(phone_number, message)
 
 
+def _cron_sms_async_enabled() -> bool:
+    v = (os.getenv('CRON_SMS_ASYNC') or '').strip().lower()
+    return v in ('1', 'true', 'yes', 'on')
+
+
+def _send_sms_cron(phone_number: str, message: str) -> bool:
+    if not _cron_sms_async_enabled():
+        return _send_sms(phone_number, message)
+    try:
+        t = threading.Thread(target=_send_sms, args=(phone_number, message), daemon=True)
+        t.start()
+        return True
+    except Exception:
+        return _send_sms(phone_number, message)
+
+
 def _combine_trip_dt(trip: Trip, t) -> datetime | None:
     try:
         d = getattr(trip, 'trip_date', None)
@@ -278,7 +295,7 @@ def cron_post_booking_reached_reminders(request):
                         if getattr(drv_contact, 'email', None):
                             _send_email(subject, body, [drv_contact.email])
                         if getattr(drv_contact, 'phone_no', None):
-                            _send_sms(drv_contact.phone_no, body)
+                            _send_sms_cron(drv_contact.phone_no, body)
                 except Exception:
                     pass
 
@@ -332,7 +349,7 @@ def cron_post_booking_reached_reminders(request):
                     if getattr(p_contact, 'email', None):
                         _send_email(subject, body, [p_contact.email])
                     if getattr(p_contact, 'phone_no', None):
-                        _send_sms(p_contact.phone_no, body)
+                        _send_sms_cron(p_contact.phone_no, body)
             except Exception:
                 pass
 

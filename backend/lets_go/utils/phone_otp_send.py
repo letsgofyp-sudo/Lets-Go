@@ -1,5 +1,6 @@
 import requests
 import os
+import time
 from requests.exceptions import HTTPError, Timeout
 import logging
 
@@ -11,6 +12,26 @@ DEVICE_ID = (os.getenv("TEXTBEE_DEVICE_ID") or '').strip()
 # Endpoint path template
 
 SEND_SMS_PATH = "/api/v1/gateway/devices/{device_id}/send-sms"
+
+
+def _get_textbee_timeout_seconds() -> float:
+    try:
+        v = float(os.getenv('TEXTBEE_TIMEOUT_SECONDS', '8'))
+        if v <= 0:
+            return 8.0
+        return v
+    except Exception:
+        return 8.0
+
+
+def _get_textbee_retries() -> int:
+    try:
+        v = int(os.getenv('TEXTBEE_RETRIES', '0'))
+        if v < 0:
+            return 0
+        return v
+    except Exception:
+        return 0
 
 
 def send_sms_message(phone_number: str, message: str) -> bool:
@@ -34,16 +55,27 @@ def send_sms_message(phone_number: str, message: str) -> bool:
         "message": message,
     }
 
-    try:
-        resp = requests.post(url, json=payload, headers=headers, timeout=8)
-        resp.raise_for_status()
-        return True
-    except (HTTPError, Timeout) as err:
-        logger.error(f"Failed to send SMS: {err}")
-        return False
-    except Exception as err:
-        logger.error(f"An unexpected error occurred while sending SMS: {err}")
-        return False
+    timeout_seconds = _get_textbee_timeout_seconds()
+    retries = _get_textbee_retries()
+    attempts = max(1, 1 + retries)
+
+    for attempt in range(attempts):
+        try:
+            resp = requests.post(url, json=payload, headers=headers, timeout=timeout_seconds)
+            resp.raise_for_status()
+            return True
+        except Timeout as err:
+            logger.error(f"Failed to send SMS: {err}")
+            if attempt < attempts - 1:
+                time.sleep(0.25)
+                continue
+            return False
+        except HTTPError as err:
+            logger.error(f"Failed to send SMS: {err}")
+            return False
+        except Exception as err:
+            logger.error(f"An unexpected error occurred while sending SMS: {err}")
+            return False
 
 def send_phone_otp(phone_number:str, otp_code: str) -> bool:
     """
