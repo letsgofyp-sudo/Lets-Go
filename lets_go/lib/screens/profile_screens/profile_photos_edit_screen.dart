@@ -175,7 +175,13 @@ class _ProfilePhotosEditScreenState extends State<ProfilePhotosEditScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Photos'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Edit Photos',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: const Color(0xFF00897B),
         actions: [
           IconButton(

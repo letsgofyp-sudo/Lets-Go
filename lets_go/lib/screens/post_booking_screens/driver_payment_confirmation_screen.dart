@@ -285,7 +285,13 @@ class _DriverPaymentConfirmationScreenState extends State<DriverPaymentConfirmat
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Confirm Payments'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Confirm Payments',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),
@@ -308,11 +314,11 @@ class _DriverPaymentConfirmationScreenState extends State<DriverPaymentConfirmat
                   ),
                 if (_payments.isEmpty)
                   const Padding(
-                    padding: EdgeInsets.only(top: 24),
-                    child: Center(child: Text('No bookings found for this trip.')),
+                    padding: EdgeInsets.only(top: 80),
+                    child: Center(child: Text('No pending payments')),
                   )
                 else
-                  for (final p in _payments) _paymentCard(p),
+                  ..._payments.map(_paymentCard),
                 const SizedBox(height: 12),
                 OutlinedButton(
                   onPressed: _submitting ? null : () => Navigator.of(context).pop(),

@@ -258,7 +258,15 @@ class _RequestResponseScreenState extends State<RequestResponseScreen> {
     final passengerPhotoUrl = _passengerPhotoUrl(req) ?? _passengerPhotoUrl(raw);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Respond to Request')),
+      appBar: AppBar(
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Respond to Request',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

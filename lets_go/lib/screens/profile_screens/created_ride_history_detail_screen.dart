@@ -337,7 +337,13 @@ class _CreatedRideHistoryDetailScreenState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ride Details'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Ride Details',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         actions: [
           IconButton(
             onPressed: _loading ? null : _load,

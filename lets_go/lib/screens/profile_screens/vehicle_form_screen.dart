@@ -311,7 +311,13 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: const Color(0xFF00897B),
         foregroundColor: Colors.white,
         actions: [

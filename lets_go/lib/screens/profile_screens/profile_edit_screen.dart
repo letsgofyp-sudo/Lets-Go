@@ -132,7 +132,13 @@ class _ProfileEditScreenState extends State<ProfileEditScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Profile'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Edit Profile',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: const Color(0xFF00897B),
         actions: [
           IconButton(

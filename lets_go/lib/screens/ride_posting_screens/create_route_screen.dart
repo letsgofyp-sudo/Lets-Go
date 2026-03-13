@@ -616,7 +616,13 @@ class _CreateRouteScreenState extends State<CreateRouteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.routeEditMode ? 'Edit Route' : 'Create Route'),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            widget.routeEditMode ? 'Edit Route' : 'Create Route',
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         actions: [
           if (_controller.points.isNotEmpty)
             IconButton(

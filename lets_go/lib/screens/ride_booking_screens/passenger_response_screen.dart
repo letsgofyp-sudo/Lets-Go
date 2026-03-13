@@ -296,7 +296,15 @@ class _PassengerResponseScreenState extends State<PassengerResponseScreen> {
     final passengerPhotoUrl = _passengerPhotoUrl(ride) ?? _passengerPhotoUrl(widget.userData);
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Negotiation')),
+      appBar: AppBar(
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Negotiation',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+      ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(

@@ -232,7 +232,13 @@ class _ProfileCnicEditScreenState extends State<ProfileCnicEditScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit CNIC'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Edit CNIC',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: const Color(0xFF00897B),
         actions: [
           IconButton(

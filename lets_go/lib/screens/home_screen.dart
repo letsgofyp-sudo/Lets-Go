@@ -923,7 +923,13 @@ class _HomeScreenState extends State<HomeScreen> {
             height: 28,
           ),
         ),
-        title: const Text('Available Rides', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Available Rides',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          )
+        ),
         actions: [
           IconButton(
             tooltip: 'Notifications',

@@ -60,7 +60,13 @@ class _DriverChatMembersScreenState extends State<DriverChatMembersScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Trip Passengers'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Trip Passengers',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
       ),
       body: _isLoading
           ? const Center(child: CircularProgressIndicator())

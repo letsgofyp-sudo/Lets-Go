@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-import '../../constants.dart';
+ 
+import '../../services/api_service.dart';
 import '../../services/notification_service.dart';
 import '../../utils/auth_session.dart';
 import '../../controllers/profile/profile_main_controller.dart';
@@ -69,7 +68,13 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
         elevation: 0,
         backgroundColor: const Color(0xFF00897B),
         foregroundColor: Colors.white,
-        title: const Text('My Profile', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'My Profile',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+          ),
+        ),
         actions: [
           IconButton(
             tooltip: 'Change Password',
@@ -98,18 +103,8 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
             icon: const Icon(Icons.logout),
             onPressed: () async {
               try {
-                final uri = Uri.parse('$url/lets_go/logout/');
-                final userId = _user['id'];
-                final resp = await http.post(
-                  uri,
-                  headers: {'Content-Type': 'application/json'},
-                  body: userId != null ? '{"user_id": $userId}' : null,
-                );
-                debugPrint('🔐 Logout response: ${resp.statusCode} ${resp.body}');
-              } catch (e) {
-                debugPrint('❌ Logout request failed: $e');
-              }
-
+                await ApiService.logout();
+              } catch (_) {}
               await NotificationService.onUserLogout();
               await AuthSession.clear();
 

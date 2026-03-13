@@ -485,7 +485,13 @@ class _VehicleDetailScreenState extends State<VehicleDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(_title(merged)),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            _title(merged),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: const Color(0xFF00897B),
         foregroundColor: Colors.white,
         actions: [

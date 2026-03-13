@@ -1429,7 +1429,13 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Rides'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'My Rides',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
         actions: [

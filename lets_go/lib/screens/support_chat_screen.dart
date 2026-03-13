@@ -514,7 +514,13 @@ class _SupportChatScreenState extends State<SupportChatScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Support Chat'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Support Chat',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
         bottom: TabBar(

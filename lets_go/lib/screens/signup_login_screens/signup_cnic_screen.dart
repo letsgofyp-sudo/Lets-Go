@@ -260,7 +260,13 @@ class _SignupCnicScreenState extends State<SignupCnicScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Signup - CNIC & Photos'),
+          title: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Signup - CNIC & Photos',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () async {

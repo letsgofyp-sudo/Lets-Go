@@ -255,7 +255,13 @@ class _PassengerPaymentScreenState extends State<PassengerPaymentScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Payment'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Payment',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh),

@@ -303,7 +303,13 @@ class _SignupEmergencyContactScreenState extends State<SignupEmergencyContactScr
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Signup - Emergency Contact'),
+          title: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Signup - Emergency Contact',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () async {

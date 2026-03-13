@@ -33,7 +33,15 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
     method = args?['method'] ?? 'email';
     value = args?['value'] ?? '';
     return Scaffold(
-      appBar: AppBar(title: Text('Reset Password')),
+      appBar: AppBar(
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Reset Password',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(

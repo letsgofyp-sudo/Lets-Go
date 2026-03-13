@@ -227,15 +227,21 @@ class _RideEditScreenState extends State<RideEditScreen> {
     final List<dynamic> stopBreakdown = (fareCalc['stop_breakdown'] as List<dynamic>?)
             ?? (widget.rideData['stop_breakdown'] as List<dynamic>?)
             ?? <dynamic>[];
-    final num? totalDistanceKm = (fareCalc['total_distance_km'] as num?)
-            ?? (fareCalc['calculation_breakdown'] is Map ? (fareCalc['calculation_breakdown']['total_distance_km'] as num?) : null);
+    final num? totalDistanceKm = (fareCalc['total_distance_km'] as num?) ??
+            (fareCalc['calculation_breakdown'] is Map ? (fareCalc['calculation_breakdown']['total_distance_km'] as num?) : null);
     final int? totalDurationMin = (fareCalc['total_duration_minutes'] as int?)
             ?? (fareCalc['calculation_breakdown'] is Map ? (fareCalc['calculation_breakdown']['total_duration_minutes'] as int?) : null);
     final num totalPrice = (fareCalc['total_price'] as num?) ?? _controller.dynamicPricePerSeat;
     final bool isBusy = _controller.isUpdating || _controller.isCancelling;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Ride'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Edit Ride',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: Colors.orange,
         actions: [
           IconButton(

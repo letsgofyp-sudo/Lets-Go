@@ -144,7 +144,13 @@ class _CreateRideScreenState extends State<CreateRideScreen> {
     if (_blockedMessage != null) {
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Create Ride'),
+          title: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Create Ride',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
         ),
         body: Padding(
           padding: const EdgeInsets.all(16),

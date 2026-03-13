@@ -189,7 +189,13 @@ class _ProfileBankInfoEditScreenState extends State<ProfileBankInfoEditScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Edit Bank Info'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Edit Bank Info',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: const Color(0xFF00897B),
         actions: [
           IconButton(

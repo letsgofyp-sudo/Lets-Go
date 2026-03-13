@@ -146,7 +146,13 @@ class _ProfileContactChangeScreenState extends State<ProfileContactChangeScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_title),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            _title,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: const Color(0xFF00897B),
         foregroundColor: Colors.white,
       ),

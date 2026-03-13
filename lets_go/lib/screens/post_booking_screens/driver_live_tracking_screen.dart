@@ -1240,7 +1240,13 @@ class _DriverLiveTrackingScreenState extends State<DriverLiveTrackingScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Live Ride Tracking'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Live Ride Tracking',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
       ),
       body: Column(
         children: [

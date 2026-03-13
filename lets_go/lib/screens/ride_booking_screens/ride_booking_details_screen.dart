@@ -1012,7 +1012,13 @@ class _RideBookingDetailsScreenState extends State<RideBookingDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ride Details'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Ride Details',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         backgroundColor: Colors.teal,
         foregroundColor: Colors.white,
         actions: [

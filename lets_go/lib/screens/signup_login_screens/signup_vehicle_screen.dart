@@ -495,7 +495,13 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
       child: Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Signup - Vehicle Details'),
+          title: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'Signup - Vehicle Details',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () async {
@@ -517,7 +523,7 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
                 ElevatedButton.icon(
                   onPressed: _isLoading ? null : _addVehicle,
                   icon: const Icon(Icons.add),
-                  label: const Text('Add Vehicle'),
+                  label: const Text('Add Another Vehicle'),
                 ),
                 const SizedBox(height: 20),
                 if (_errorMessage != null)

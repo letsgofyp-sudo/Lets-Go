@@ -163,7 +163,13 @@ class _PassengerLiveTrackingScreenState extends State<PassengerLiveTrackingScree
               child: Column(
                 children: [
                   AppBar(
-                    title: const Text('Scan Pickup QR'),
+                    title: const FittedBox(
+                      fit: BoxFit.scaleDown,
+                      child: Text(
+                        'Scan Pickup QR',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                      ),
+                    ),
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -969,7 +975,13 @@ class _PassengerLiveTrackingScreenState extends State<PassengerLiveTrackingScree
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Live Ride Tracking'),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Live Ride Tracking',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
       ),
       body: Column(
         children: [

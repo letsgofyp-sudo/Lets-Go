@@ -402,7 +402,13 @@ class _RegisterPendingScreenState extends State<RegisterPendingScreen> {
       ),
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text(headerTitle),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            headerTitle,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
         actions: [
           IconButton(
             tooltip: 'Notifications',

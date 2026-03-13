@@ -89,7 +89,13 @@ class _RideRequestScreenState extends State<RideRequestScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Request Ride', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Request Ride',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),

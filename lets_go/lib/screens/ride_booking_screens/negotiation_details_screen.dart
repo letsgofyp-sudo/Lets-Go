@@ -189,7 +189,15 @@ class _NegotiationDetailsScreenState extends State<NegotiationDetailsScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Negotiation Details')),
+      appBar: AppBar(
+        title: const FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+            'Negotiation Details',
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+          ),
+        ),
+      ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(

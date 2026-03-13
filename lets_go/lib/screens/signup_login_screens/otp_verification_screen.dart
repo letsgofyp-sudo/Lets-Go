@@ -120,7 +120,13 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
       canPop: false,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('OTP Verification'),
+          title: const FittedBox(
+            fit: BoxFit.scaleDown,
+            child: Text(
+              'OTP Verification',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+            ),
+          ),
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
