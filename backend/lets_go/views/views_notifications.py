@@ -328,7 +328,28 @@ def _normalize_ride_notification_payload(payload: dict) -> dict:
     if not safe_data.get('type'):
         if payload.get('type') is not None:
             safe_data['type'] = _to_str(payload.get('type'))
+# for testing
+    # Ensure sender_type exists for clients (Flutter) to reliably decide which avatar/icon to show.
+    # Keep it conservative: do not overwrite if already provided by caller.
+    if not safe_data.get('sender_type'):
+        ntype = (safe_data.get('type') or '').strip().lower()
+        sender_role = (safe_data.get('sender_role') or '').strip().lower()
+        derived = ''
+        if ntype in {'support_admin', 'user_status_updated', 'change_request_reviewed'}:
+            derived = 'admin'
+        elif ntype in {'support_bot', 'notification_summary'}:
+            derived = 'system'
+        elif sender_role in {'driver', 'passenger', 'user', 'guest'}:
+            derived = sender_role
+        else:
+            # If we have a non-empty sender_id, treat it as a user-initiated notification.
+            try:
+                derived = 'user' if str(sender_id or '').strip() not in ('', '0', 'None') else 'system'
+            except Exception:
+                derived = 'system'
+        safe_data['sender_type'] = _to_str(derived)
 
+ # for testing   
     normalized = dict(payload)
     normalized['title'] = _to_str(normalized.get('title'))
     normalized['body'] = _to_str(normalized.get('body'))
@@ -450,3 +471,4 @@ def register_fcm_token_with_supabase_async(recipient_key: str, fcm_token: str):
             logger.exception('[register_fcm_token_with_supabase_async][ERROR]: %s', str(e))
 
     threading.Thread(target=_worker, daemon=True).start()
+

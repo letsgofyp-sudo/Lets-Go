@@ -199,19 +199,44 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         final type = (data['type'] ?? n['notification_type'] ?? '').toString();
 
                         final senderName = (data['sender_name'] ?? data['name'] ?? '').toString().trim();
-                        final photoUrl = (data['sender_photo_url'] ?? data['photo_url'] ?? '').toString().trim();
+                        final senderPhotoUrl = (data['sender_photo_url'] ?? '').toString().trim();
+                        final genericPhotoUrl = (data['photo_url'] ?? '').toString().trim();
+                        final driverPhotoUrl = (data['driver_photo_url'] ?? '').toString().trim();
+                        final passengerPhotoUrl = (data['passenger_photo_url'] ?? '').toString().trim();
+                        final userPhotoUrl = (data['user_photo_url'] ?? '').toString().trim();
+                        final initiator = (data['initiator'] ?? data['source'] ?? data['sender_type'] ?? '').toString().trim().toLowerCase();
 
                         ImageProvider? avatar;
                         Widget? avatarChild;
 
-                        if (photoUrl.isNotEmpty) {
-                          avatar = NetworkImage(photoUrl);
-                        } else if (type == 'support_admin') {
+                        final isSupportAdmin = type == 'support_admin' || initiator == 'admin' || initiator == 'administration';
+                        final isSupportBot = type == 'support_bot' || initiator == 'system' || initiator == 'bot';
+                        final isAdminInitiated = type == 'support_admin' || type == 'user_status_updated' || type == 'change_request_reviewed';
+                        final isSystemInitiated = type == 'support_bot' || type == 'notification_summary';
+
+                        String resolvedPhotoUrl = '';
+                        if (senderPhotoUrl.isNotEmpty) {
+                          resolvedPhotoUrl = senderPhotoUrl;
+                        } else if (!isSupportAdmin && !isSupportBot && genericPhotoUrl.isNotEmpty) {
+                          resolvedPhotoUrl = genericPhotoUrl;
+                        } else if (driverPhotoUrl.isNotEmpty) {
+                          resolvedPhotoUrl = driverPhotoUrl;
+                        } else if (passengerPhotoUrl.isNotEmpty) {
+                          resolvedPhotoUrl = passengerPhotoUrl;
+                        } else if (userPhotoUrl.isNotEmpty) {
+                          resolvedPhotoUrl = userPhotoUrl;
+                        }
+
+                        if (resolvedPhotoUrl.isNotEmpty) {
+                          avatar = NetworkImage(resolvedPhotoUrl);
+                        } else if (isAdminInitiated) {
                           avatarChild = Image.asset('assets/images/admin_support.png', width: 28, height: 28);
-                        } else if (type == 'support_bot') {
+                        } else if (isSystemInitiated || isSupportBot) {
                           avatarChild = Image.asset('assets/images/app_logo.png', width: 28, height: 28);
+                        } else if (initiator == 'user' || initiator == 'driver' || initiator == 'passenger' || senderName.isNotEmpty) {
+                          avatarChild = const Icon(Icons.person, size: 20);
                         } else {
-                          avatarChild = const Icon(Icons.notifications, size: 20);
+                          avatarChild = const Icon(Icons.notifications_active, size: 20);
                         }
 
                         return Dismissible(
