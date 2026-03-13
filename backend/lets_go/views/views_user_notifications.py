@@ -33,7 +33,7 @@ def list_notifications(request):
 
     qs = (
         NotificationInbox.objects
-        .filter(recipient_key=recipient_key)
+        .filter(recipient_key=recipient_key, is_dismissed=False)
         .order_by('-created_at')
     )
 

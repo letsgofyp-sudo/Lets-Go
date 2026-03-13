@@ -30,6 +30,47 @@ class _CreatedRideHistoryDetailScreenState
   Map<String, dynamic>? _trip;
   bool _useActualPath = false;
 
+  int? _toInt(dynamic v) {
+    if (v == null) return null;
+    if (v is int) return v;
+    if (v is num) return v.toInt();
+    return int.tryParse(v.toString());
+  }
+
+  List<Map<String, dynamic>> _sortedStopsForDisplay(
+    List<Map<String, dynamic>> stops,
+  ) {
+    final indexed = stops.asMap().entries.map((e) {
+      final stop = e.value;
+      final order = _toInt(stop['stop_order'] ?? stop['order']);
+      return {
+        ...stop,
+        '_idx': e.key,
+        '_order': order,
+      };
+    }).toList();
+
+    indexed.sort((a, b) {
+      final ao = a['_order'] as int?;
+      final bo = b['_order'] as int?;
+      if (ao != null && bo != null) return ao.compareTo(bo);
+      if (ao != null) return -1;
+      if (bo != null) return 1;
+      return (a['_idx'] as int).compareTo(b['_idx'] as int);
+    });
+
+    return indexed
+        .map((e) => Map<String, dynamic>.from(e)..remove('_idx')..remove('_order'))
+        .toList();
+  }
+
+  Color _stopMarkerColor({required int index, required int total}) {
+    if (total <= 1) return Colors.green;
+    if (index == 0) return Colors.green;
+    if (index == total - 1) return Colors.red;
+    return Colors.orange;
+  }
+
   double? _toDouble(dynamic v) {
     if (v == null) return null;
     if (v is num) return v.toDouble();
@@ -361,7 +402,7 @@ class _CreatedRideHistoryDetailScreenState
 
   Widget _buildContent() {
     final trip = _trip ?? <String, dynamic>{};
-    final stops = _stopsFromTrip(trip);
+    final stops = _sortedStopsForDisplay(_stopsFromTrip(trip));
     final plannedPolyline = _polylineFromTrip(trip);
     final actualPolyline = _actualPolylineFromTrip(trip);
 
@@ -480,10 +521,18 @@ class _CreatedRideHistoryDetailScreenState
                         if (stops.isNotEmpty)
                           MarkerLayer(
                             markers: stops
-                                .map((s) {
+                                .asMap()
+                                .entries
+                                .map((e) {
+                                  final idx = e.key;
+                                  final s = e.value;
                                   final lat = s['latitude'];
                                   final lng = s['longitude'];
                                   if (lat is! num || lng is! num) return null;
+                                  final color = _stopMarkerColor(
+                                    index: idx,
+                                    total: stops.length,
+                                  );
                                   return Marker(
                                     width: 42,
                                     height: 42,
@@ -491,9 +540,9 @@ class _CreatedRideHistoryDetailScreenState
                                       lat.toDouble(),
                                       lng.toDouble(),
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.location_on,
-                                      color: Colors.red,
+                                      color: color,
                                       size: 34,
                                     ),
                                   );
@@ -510,7 +559,9 @@ class _CreatedRideHistoryDetailScreenState
                   spacing: 10,
                   runSpacing: 6,
                   children: [
-                    _legendDot('Stops', Colors.red),
+                    _legendDot('Start', Colors.green),
+                    _legendDot('Middle', Colors.orange),
+                    _legendDot('End', Colors.red),
                     _legendDot('Planned path', Colors.blue),
                     if (hasActual) _legendDot('Actual path', Colors.green),
                   ],

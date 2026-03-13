@@ -24,6 +24,22 @@ class _ProfileBlockedUsersScreenState extends State<ProfileBlockedUsersScreen> {
   String? _searchError;
   List<Map<String, dynamic>> _searchResults = <Map<String, dynamic>>[];
 
+  String? _photoUrlFromUser(Map<String, dynamic> u) {
+    final raw = (u['profile_photo_url'] ?? u['photo_url'] ?? u['profile_photo'])
+        ?.toString()
+        .trim();
+    if (raw == null || raw.isEmpty) return null;
+    return raw;
+  }
+
+  Widget _userAvatar(Map<String, dynamic> u) {
+    final url = _photoUrlFromUser(u);
+    if (url != null) {
+      return CircleAvatar(backgroundImage: NetworkImage(url));
+    }
+    return const CircleAvatar(child: Icon(Icons.person));
+  }
+
   int? get _userId {
     final v = widget.userData['id'];
     if (v is int) return v;
@@ -184,7 +200,7 @@ class _ProfileBlockedUsersScreenState extends State<ProfileBlockedUsersScreen> {
               textInputAction: TextInputAction.search,
               onSubmitted: (_) => _searchUsers(),
               decoration: InputDecoration(
-                hintText: 'Search users to block (name / username / email / phone)',
+                hintText: 'Search users to block (name / username)',
                 prefixIcon: const Icon(Icons.search),
                 suffixIcon: _searchCtrl.text.trim().isEmpty
                     ? null
@@ -236,16 +252,12 @@ class _ProfileBlockedUsersScreenState extends State<ProfileBlockedUsersScreen> {
                 final uid = id is int ? id : int.tryParse(id?.toString() ?? '');
                 final name = (u['name'] ?? 'User').toString();
                 final username = (u['username'] ?? '').toString();
-                final email = (u['email'] ?? '').toString();
-                final phone = (u['phone_no'] ?? '').toString();
                 return Card(
                   child: ListTile(
-                    leading: const CircleAvatar(child: Icon(Icons.person)),
+                    leading: _userAvatar(u),
                     title: Text(name),
                     subtitle: Text([
                       if (username.isNotEmpty) '@$username',
-                      if (email.isNotEmpty) email,
-                      if (phone.isNotEmpty) phone,
                     ].join('\n')),
                     trailing: ElevatedButton(
                       onPressed: uid == null ? null : () => _block(uid),
@@ -283,7 +295,7 @@ class _ProfileBlockedUsersScreenState extends State<ProfileBlockedUsersScreen> {
 
                 return Card(
                   child: ListTile(
-                    leading: const CircleAvatar(child: Icon(Icons.person)),
+                    leading: _userAvatar(blockedUser),
                     title: Text(name),
                     subtitle: Text(
                       [

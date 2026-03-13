@@ -29,6 +29,110 @@ class _BookedRideHistoryDetailScreenState
   Map<String, dynamic>? _trip;
   bool _useActualPath = false;
 
+  int? _toInt(dynamic v) {
+    if (v == null) return null;
+    if (v is int) return v;
+    if (v is num) return v.toInt();
+    return int.tryParse(v.toString());
+  }
+
+  List<Map<String, dynamic>> _sortedStopsForDisplay(
+    List<Map<String, dynamic>> stops,
+  ) {
+    final indexed = stops.asMap().entries.map((e) {
+      final stop = e.value;
+      final order = _toInt(stop['stop_order'] ?? stop['order']);
+      return {
+        ...stop,
+        '_idx': e.key,
+        '_order': order,
+      };
+    }).toList();
+
+    indexed.sort((a, b) {
+      final ao = a['_order'] as int?;
+      final bo = b['_order'] as int?;
+      if (ao != null && bo != null) return ao.compareTo(bo);
+      if (ao != null) return -1;
+      if (bo != null) return 1;
+      return (a['_idx'] as int).compareTo(b['_idx'] as int);
+    });
+
+    return indexed
+        .map((e) => Map<String, dynamic>.from(e)..remove('_idx')..remove('_order'))
+        .toList();
+  }
+
+  ({int startIdx, int endIdx}) _bookingSegmentBounds(
+    Map<String, dynamic> booking,
+    List<Map<String, dynamic>> sortedStops,
+  ) {
+    int? fromOrder = _toInt(
+      booking['from_stop_order'] ?? booking['from_stop'] ?? booking['fromStop'],
+    );
+    int? toOrder = _toInt(
+      booking['to_stop_order'] ?? booking['to_stop'] ?? booking['toStop'],
+    );
+
+    final fromName = (booking['from_stop_name'] ?? booking['fromStopName'])
+        ?.toString()
+        .trim();
+    final toName = (booking['to_stop_name'] ?? booking['toStopName'])
+        ?.toString()
+        .trim();
+
+    int? idxByName(String? name) {
+      if (name == null || name.isEmpty) return null;
+      final needle = name.toLowerCase();
+      for (int i = 0; i < sortedStops.length; i++) {
+        final stopName = (sortedStops[i]['name'] ?? sortedStops[i]['stop_name'])
+            ?.toString()
+            .trim();
+        if (stopName != null && stopName.toLowerCase() == needle) return i;
+      }
+      return null;
+    }
+
+    int? idxByOrder(int? order) {
+      if (order == null) return null;
+      for (int i = 0; i < sortedStops.length; i++) {
+        final stopOrder = _toInt(
+          sortedStops[i]['stop_order'] ?? sortedStops[i]['order'],
+        );
+        if (stopOrder == order) return i;
+      }
+      // Common pattern: UI orders are 1-based indices.
+      final idx = order - 1;
+      if (idx >= 0 && idx < sortedStops.length) return idx;
+      return null;
+    }
+
+    int start =
+        idxByOrder(fromOrder) ?? idxByName(fromName) ?? 0;
+    int end =
+        idxByOrder(toOrder) ?? idxByName(toName) ?? (sortedStops.length - 1);
+    if (start > end) {
+      final tmp = start;
+      start = end;
+      end = tmp;
+    }
+    start = start.clamp(0, sortedStops.length - 1);
+    end = end.clamp(0, sortedStops.length - 1);
+    return (startIdx: start, endIdx: end);
+  }
+
+  Color _stopMarkerColorForBookedHistory({
+    required int index,
+    required ({int startIdx, int endIdx}) segment,
+  }) {
+    if (index < segment.startIdx || index > segment.endIdx) {
+      return Colors.grey;
+    }
+    if (index == segment.startIdx) return Colors.green;
+    if (index == segment.endIdx) return Colors.red;
+    return Colors.orange;
+  }
+
   String _safe(dynamic v, {String fallback = 'N/A'}) {
     final s = (v ?? '').toString().trim();
     return s.isEmpty ? fallback : s;
@@ -148,7 +252,7 @@ class _BookedRideHistoryDetailScreenState
 
     if (planned.length >= 2) return planned;
 
-    final stops = _stopsFromTrip(trip);
+    final stops = _sortedStopsForDisplay(_stopsFromTrip(trip));
     final fallback = <LatLng>[];
     for (final s in stops) {
       final lat = s['latitude'];
@@ -273,7 +377,8 @@ class _BookedRideHistoryDetailScreenState
 
     final plannedPolyline = _polylineFromTrip(trip);
     final actualPolyline = _actualPolylineFromTrip(trip);
-    final stops = _stopsFromTrip(trip);
+    final stops = _sortedStopsForDisplay(_stopsFromTrip(trip));
+    final segment = _bookingSegmentBounds(booking, stops);
 
     final hasActual = actualPolyline.length >= 2;
     final showActual = _useActualPath && hasActual;
@@ -428,10 +533,18 @@ class _BookedRideHistoryDetailScreenState
                         if (stops.isNotEmpty)
                           MarkerLayer(
                             markers: stops
-                                .map((s) {
+                                .asMap()
+                                .entries
+                                .map((e) {
+                                  final idx = e.key;
+                                  final s = e.value;
                                   final lat = s['latitude'];
                                   final lng = s['longitude'];
                                   if (lat is! num || lng is! num) return null;
+                                  final color = _stopMarkerColorForBookedHistory(
+                                    index: idx,
+                                    segment: segment,
+                                  );
                                   return Marker(
                                     width: 42,
                                     height: 42,
@@ -439,9 +552,9 @@ class _BookedRideHistoryDetailScreenState
                                       lat.toDouble(),
                                       lng.toDouble(),
                                     ),
-                                    child: const Icon(
+                                    child: Icon(
                                       Icons.location_on,
-                                      color: Colors.red,
+                                      color: color,
                                       size: 34,
                                     ),
                                   );
@@ -458,7 +571,10 @@ class _BookedRideHistoryDetailScreenState
                   spacing: 10,
                   runSpacing: 6,
                   children: [
-                    _legendDot('Stops', Colors.red),
+                    _legendDot('Start', Colors.green),
+                    _legendDot('Middle', Colors.orange),
+                    _legendDot('End', Colors.red),
+                    _legendDot('Outside booking', Colors.grey),
                     _legendDot('Planned path', Colors.blue),
                     if (hasActual) _legendDot('Actual path', Colors.green),
                   ],

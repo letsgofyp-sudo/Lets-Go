@@ -25,7 +25,7 @@ from lets_go.models import (
 from lets_go.models.models_payment import TripPayment
 
 
-def _archive_trip(trip: Trip) -> bool:
+def auto_archive_trip(trip, final_dt=None):
     """Archive one eligible trip.
 
     Returns True if archived (snapshotted + purged), False if skipped.
@@ -154,7 +154,63 @@ def _archive_trip(trip: Trip) -> bool:
         snap.gender_preference = trip.gender_preference
         snap.notes = trip.notes
         snap.is_negotiable = bool(getattr(trip, 'is_negotiable', True))
-        snap.fare_calculation = trip.fare_calculation or {}
+        fc = trip.fare_calculation or {}
+        if not isinstance(fc, dict):
+            fc = {}
+
+        # Ensure totals are present for frontend history screens.
+        # Prefer Trip fields, then fare_calculation, then stop breakdown sum.
+        total_km = getattr(trip, 'total_distance_km', None)
+        total_min = getattr(trip, 'total_duration_minutes', None)
+        if total_km is None:
+            try:
+                total_km = fc.get('total_distance_km')
+            except Exception:
+                total_km = None
+        if total_min is None:
+            try:
+                total_min = fc.get('total_duration_minutes')
+            except Exception:
+                total_min = None
+
+        if total_km is None or total_min is None:
+            try:
+                dist_sum = 0.0
+                dur_sum = 0
+                any_dist = False
+                any_dur = False
+                for sb in TripStopBreakdown.objects.filter(trip=trip):
+                    if total_km is None and getattr(sb, 'distance_km', None) is not None:
+                        try:
+                            dist_sum += float(sb.distance_km)
+                            any_dist = True
+                        except Exception:
+                            pass
+                    if total_min is None and getattr(sb, 'duration_minutes', None) is not None:
+                        try:
+                            dur_sum += int(sb.duration_minutes)
+                            any_dur = True
+                        except Exception:
+                            pass
+                if total_km is None and any_dist:
+                    total_km = dist_sum
+                if total_min is None and any_dur:
+                    total_min = dur_sum
+            except Exception:
+                pass
+
+        if total_km is not None and fc.get('total_distance_km') is None:
+            try:
+                fc['total_distance_km'] = float(total_km)
+            except Exception:
+                fc['total_distance_km'] = total_km
+        if total_min is not None and fc.get('total_duration_minutes') is None:
+            try:
+                fc['total_duration_minutes'] = int(total_min)
+            except Exception:
+                fc['total_duration_minutes'] = total_min
+
+        snap.fare_calculation = fc
         breakdown = []
         try:
             for sb in TripStopBreakdown.objects.filter(trip=trip).order_by('from_stop_order', 'to_stop_order'):

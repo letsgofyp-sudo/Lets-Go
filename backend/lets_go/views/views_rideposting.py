@@ -1023,15 +1023,51 @@ def get_user_created_rides_history(request, user_id):
                 vehicle_data = None
 
             fc = getattr(snap, 'fare_calculation', None) or {}
+            sb_fallback = getattr(snap, 'stop_breakdown', None) or []
             distance = None
             duration = None
             try:
                 if isinstance(fc, dict):
                     distance = fc.get('total_distance_km')
                     duration = fc.get('total_duration_minutes')
+                    if (not sb_fallback) and isinstance(fc.get('stop_breakdown'), list):
+                        sb_fallback = fc.get('stop_breakdown') or []
             except Exception:
                 distance = None
                 duration = None
+
+            if distance is None or duration is None:
+                try:
+                    dist_sum = 0.0
+                    dur_sum = 0
+                    any_dist = False
+                    any_dur = False
+                    if isinstance(sb_fallback, list):
+                        for row in sb_fallback:
+                            if not isinstance(row, dict):
+                                continue
+                            if distance is None:
+                                dv = row.get('distance_km')
+                                if dv is not None:
+                                    try:
+                                        dist_sum += float(dv)
+                                        any_dist = True
+                                    except Exception:
+                                        pass
+                            if duration is None:
+                                dv = row.get('duration_minutes')
+                                if dv is not None:
+                                    try:
+                                        dur_sum += int(dv)
+                                        any_dur = True
+                                    except Exception:
+                                        pass
+                    if distance is None and any_dist:
+                        distance = dist_sum
+                    if duration is None and any_dur:
+                        duration = dur_sum
+                except Exception:
+                    pass
 
             booking_count = int(getattr(snap, 'booking_count', 0) or 0)
             has_actual_path = bool(getattr(snap, 'has_actual_path', False))
