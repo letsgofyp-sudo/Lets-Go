@@ -197,6 +197,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         final isRead = n['is_read'] == true;
                         final data = (n['data'] as Map?)?.cast<String, dynamic>() ?? <String, dynamic>{};
                         final type = (data['type'] ?? n['notification_type'] ?? '').toString();
+                        final typeNorm = type.trim().toLowerCase();
 
                         final senderName = (data['sender_name'] ?? data['name'] ?? '').toString().trim();
                         final senderPhotoUrl = (data['sender_photo_url'] ?? '').toString().trim();
@@ -209,22 +210,25 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                         ImageProvider? avatar;
                         Widget? avatarChild;
 
-                        final isSupportAdmin = type == 'support_admin' || initiator == 'admin' || initiator == 'administration';
-                        final isSupportBot = type == 'support_bot' || initiator == 'system' || initiator == 'bot';
-                        final isAdminInitiated = type == 'support_admin' || type == 'user_status_updated' || type == 'change_request_reviewed';
-                        final isSystemInitiated = type == 'support_bot' || type == 'notification_summary';
+                        final isSupportAdmin = typeNorm == 'support_admin' || initiator == 'admin' || initiator == 'administration';
+                        final isSupportBot = typeNorm == 'support_bot' || initiator == 'system' || initiator == 'bot';
+                        final isAdminInitiated = typeNorm == 'support_admin' || typeNorm == 'user_status_updated' || typeNorm == 'change_request_reviewed';
+                        final isSystemInitiated = typeNorm == 'support_bot' || typeNorm == 'notification_summary';
 
                         String resolvedPhotoUrl = '';
                         if (senderPhotoUrl.isNotEmpty) {
                           resolvedPhotoUrl = senderPhotoUrl;
-                        } else if (!isSupportAdmin && !isSupportBot && genericPhotoUrl.isNotEmpty) {
-                          resolvedPhotoUrl = genericPhotoUrl;
-                        } else if (driverPhotoUrl.isNotEmpty) {
-                          resolvedPhotoUrl = driverPhotoUrl;
-                        } else if (passengerPhotoUrl.isNotEmpty) {
-                          resolvedPhotoUrl = passengerPhotoUrl;
-                        } else if (userPhotoUrl.isNotEmpty) {
-                          resolvedPhotoUrl = userPhotoUrl;
+                        } else {
+                          final blockNonSenderFallbacks = isSupportAdmin || isSupportBot || isAdminInitiated || isSystemInitiated;
+                          if (!blockNonSenderFallbacks && genericPhotoUrl.isNotEmpty) {
+                            resolvedPhotoUrl = genericPhotoUrl;
+                          } else if (!blockNonSenderFallbacks && driverPhotoUrl.isNotEmpty) {
+                            resolvedPhotoUrl = driverPhotoUrl;
+                          } else if (!blockNonSenderFallbacks && passengerPhotoUrl.isNotEmpty) {
+                            resolvedPhotoUrl = passengerPhotoUrl;
+                          } else if (!blockNonSenderFallbacks && userPhotoUrl.isNotEmpty) {
+                            resolvedPhotoUrl = userPhotoUrl;
+                          }
                         }
 
                         if (resolvedPhotoUrl.isNotEmpty) {

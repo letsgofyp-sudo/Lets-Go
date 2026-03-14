@@ -59,44 +59,9 @@ class NotificationService {
   static dynamic _navigatorKey;
   static String? _pendingNavigationPayload;
 
-  static int _asInt(dynamic v) {
-    if (v == null) return 0;
-    if (v is int) return v;
-    if (v is num) return v.toInt();
-    return int.tryParse(v.toString()) ?? 0;
-  }
-
   static String _clip(String s, int max) {
     if (s.length <= max) return s;
     return s.substring(0, max);
-  }
-
-  static int? _tryParsePkrFromText(String text) {
-    try {
-      final m = RegExp(r'PKR\s*([0-9]{1,9})', caseSensitive: false).firstMatch(text);
-      if (m == null) return null;
-      return int.tryParse(m.group(1) ?? '');
-    } catch (_) {
-      return null;
-    }
-  }
-
-  static String _fmtTripBooking(String tripId, String bookingId) {
-    final t = tripId.trim();
-    final b = bookingId.trim();
-    if (t.isNotEmpty && b.isNotEmpty) return 'Trip $t • Booking $b';
-    if (t.isNotEmpty) return 'Trip $t';
-    if (b.isNotEmpty) return 'Booking $b';
-    return '';
-  }
-
-  static String _fmtStops(Map<String, dynamic> data) {
-    final from = (data['from_stop_name'] ?? data['pickup_stop_name'] ?? '').toString().trim();
-    final to = (data['to_stop_name'] ?? data['dropoff_stop_name'] ?? '').toString().trim();
-    if (from.isNotEmpty && to.isNotEmpty) return '$from → $to';
-    if (from.isNotEmpty) return 'Pickup: $from';
-    if (to.isNotEmpty) return 'Drop-off: $to';
-    return '';
   }
 
   static void setNavigatorKey(dynamic key) {
@@ -395,29 +360,36 @@ class NotificationService {
     Map<String, dynamic> data,
     String type,
   ) async {
+    final typeNorm = type.trim().toLowerCase();
+    final senderType = (data['sender_type'] ?? data['initiator'] ?? data['source'] ?? '').toString().trim().toLowerCase();
+    final isAdminInitiated = senderType == 'admin' || senderType == 'administration'
+        || typeNorm == 'support_admin' || typeNorm == 'user_status_updated' || typeNorm == 'change_request_reviewed';
+    final isSystemInitiated = senderType == 'system' || senderType == 'bot'
+        || typeNorm == 'support_bot' || typeNorm == 'notification_summary';
+
     final senderPhotoUrl = (data['sender_photo_url'] ?? '').toString();
     if (senderPhotoUrl.isNotEmpty) {
       final remote = await _getRemoteLargeIcon(senderPhotoUrl);
       if (remote != null) return remote;
     }
 
-    // For support notifications, do NOT fall back to generic photo_url because it can
+    if (isAdminInitiated) {
+      final admin = await _getAdminSupportLargeIcon();
+      return admin ?? _getAppLogoLargeIcon();
+    }
+
+    if (isSystemInitiated) {
+      return _getAppLogoLargeIcon();
+    }
+
+    // For admin/system notifications, do NOT fall back to generic photo_url because it can
     // be the receiver's profile photo depending on sender implementation.
-    if (type != 'support_admin' && type != 'support_bot') {
+    if (typeNorm != 'support_admin' && typeNorm != 'support_bot') {
       final photoUrl = (data['photo_url'] ?? '').toString();
       if (photoUrl.isNotEmpty) {
         final remote = await _getRemoteLargeIcon(photoUrl);
         if (remote != null) return remote;
       }
-    }
-
-    if (type == 'support_admin') {
-      final admin = await _getAdminSupportLargeIcon();
-      return admin ?? _getAppLogoLargeIcon();
-    }
-
-    if (type == 'support_bot') {
-      return _getAppLogoLargeIcon();
     }
 
     return _getAppLogoLargeIcon();
@@ -551,278 +523,86 @@ class NotificationService {
     try {
       await _initializeLocalNotifications();
       _dbg('onBackgroundMessage: _initializeLocalNotifications() ok');
-    } catch (_) {}
-    await _showNotification(message);
+      await _showNotification(message);
+    } catch (e) {
+      _dbg('onBackgroundMessage: failed to show local notification: $e');
+    }
   }
 
   static Future<void> _showNotification(RemoteMessage message) async {
-    // ignore: avoid_print
-    debugPrint('[NotificationService] _showNotification: type=${(message.data['type'] ?? message.data['notification_type'] ?? '').toString()}');
-    final type = (message.data['type'] ?? message.data['notification_type'] ?? '').toString();
-    final actions = _buildAndroidActionsForData(message.data);
-
-    _dbg('_showNotification: messageId=${message.messageId} type=$type dataKeys=${message.data.keys.toList()}');
-
-    // ignore: avoid_print
-    debugPrint('[NotificationService] _showNotification: actions=${actions.length}');
-
-    _dbg('_showNotification: actions=${actions.map((a) => a.id).toList()}');
-
-    final dataTitle = (message.data['title'] ?? '').toString();
-    final dataBody = (message.data['body'] ?? '').toString();
-    final senderName = (message.data['sender_name'] ?? '').toString();
-    final messageText = (message.data['message_text'] ?? '').toString();
-
-    String title = (message.notification?.title ?? '').toString();
-    String body = (message.notification?.body ?? '').toString();
-
-    if (title.isEmpty) title = dataTitle;
-    if (body.isEmpty) body = dataBody;
-
-    if (type == 'chat_message' || type == 'chat_broadcast') {
-      if (senderName.isNotEmpty) {
-        title = senderName;
-      }
-      if (messageText.isNotEmpty) {
-        body = messageText;
-      }
-    }
-
-    if (type == 'support_admin') {
-      if (senderName.isNotEmpty) {
-        title = senderName;
-      } else if (title.isEmpty) {
-        title = 'Admin Support';
-      }
-      if (messageText.isNotEmpty) {
-        body = messageText;
-      }
-    }
-
-    if (type == 'support_bot') {
-      if (title.isEmpty) {
-        title = 'Support Bot';
-      }
-      if (messageText.isNotEmpty) {
-        body = messageText;
-      }
-    }
-
-    final tripId = (message.data['trip_id'] ?? '').toString();
-    final bookingIdStr = (message.data['booking_id'] ?? '').toString();
-    final action = (message.data['action'] ?? '').toString();
-    final seats = _asInt(message.data['seats'] ?? message.data['number_of_seats']);
-    final sender = (senderName.isNotEmpty ? senderName : (message.data['sender_name'] ?? '').toString()).trim();
-    final ctx = _fmtTripBooking(tripId, bookingIdStr);
-    final stops = _fmtStops(message.data);
-
-    if (type == 'chat_message' || type == 'chat_broadcast') {
-      final who = sender.isNotEmpty ? sender : 'Message';
-      title = tripId.trim().isNotEmpty ? '$who • Trip ${tripId.trim()}' : who;
-      if (messageText.isNotEmpty) {
-        body = _clip(messageText.trim(), 180);
-      }
-    }
-
-    if (type == 'support_admin') {
-      final who = sender.isNotEmpty ? sender : 'Admin Support';
-      title = who;
-      if (messageText.isNotEmpty) {
-        body = _clip(messageText.trim(), 180);
-      }
-    }
-
-    if (type == 'support_bot') {
-      title = 'Support Bot';
-      if (messageText.isNotEmpty) {
-        body = _clip(messageText.trim(), 180);
-      }
-    }
-
-    if (type == 'ride_request') {
-      final who = sender.isNotEmpty ? sender : 'Passenger';
-      final seatsTxt = seats > 0 ? '$seats seat${seats == 1 ? '' : 's'}' : '';
-      title = stops.isNotEmpty ? 'Ride request • $stops' : (tripId.trim().isNotEmpty ? 'Ride request • Trip ${tripId.trim()}' : 'New ride request');
-      final parts = <String>[];
-      parts.add('$who requested${seatsTxt.isNotEmpty ? ' $seatsTxt' : ''}.');
-      if (stops.isNotEmpty && title != 'Ride request • $stops') parts.add(stops);
-      if (ctx.isNotEmpty && stops.isEmpty) parts.add(ctx);
-      body = _clip(parts.join(' '), 180);
-    }
-
-    if (type == 'booking_update') {
-      final who = sender.isNotEmpty ? sender : (action.startsWith('driver_') ? 'Driver' : 'Passenger');
-      final pkr = _asInt(message.data['counter_fare'] ?? message.data['fare_per_seat'] ?? message.data['fare']);
-      final pkrFromText = pkr > 0 ? pkr : _tryParsePkrFromText(body);
-      final seatsTxt = seats > 0 ? '$seats seat${seats == 1 ? '' : 's'}' : '';
-
-      if (action == 'driver_accept') {
-        title = stops.isNotEmpty ? 'Accepted • $stops' : 'Accepted • $who';
-        final parts = <String>['Booking accepted.'];
-        if (seatsTxt.isNotEmpty) parts.add(seatsTxt);
-        if (stops.isNotEmpty) parts.add(stops);
-        if (ctx.isNotEmpty && stops.isEmpty) parts.add(ctx);
-        body = _clip(parts.join(' • '), 180);
-      } else if (action == 'driver_reject') {
-        title = stops.isNotEmpty ? 'Rejected • $stops' : 'Rejected • $who';
-        final parts = <String>['Booking rejected.'];
-        if (stops.isNotEmpty) parts.add(stops);
-        if (ctx.isNotEmpty && stops.isEmpty) parts.add(ctx);
-        body = _clip(parts.join(' • '), 180);
-      } else if (action == 'driver_counter') {
-        title = stops.isNotEmpty ? 'Counter offer • $stops' : 'Counter offer • $who';
-        final parts = <String>[];
-        if (pkrFromText != null) {
-          parts.add('PKR $pkrFromText/seat');
-        }
-        if (seatsTxt.isNotEmpty) parts.add(seatsTxt);
-        if (stops.isNotEmpty) parts.add(stops);
-        if (ctx.isNotEmpty && stops.isEmpty) parts.add(ctx);
-        body = _clip(parts.join(' • '), 180);
-      } else if (action == 'passenger_accept') {
-        title = stops.isNotEmpty ? 'Passenger accepted • $stops' : 'Passenger accepted • $who';
-        final parts = <String>[];
-        if (seatsTxt.isNotEmpty) parts.add(seatsTxt);
-        if (stops.isNotEmpty) parts.add(stops);
-        if (ctx.isNotEmpty && stops.isEmpty) parts.add(ctx);
-        body = _clip(parts.isEmpty ? 'Booking accepted.' : parts.join(' • '), 180);
-      } else if (action == 'passenger_counter') {
-        title = stops.isNotEmpty ? 'Passenger counter • $stops' : 'Passenger counter • $who';
-        final parts = <String>[];
-        if (pkrFromText != null) {
-          parts.add('PKR $pkrFromText/seat');
-        }
-        if (seatsTxt.isNotEmpty) parts.add(seatsTxt);
-        if (stops.isNotEmpty) parts.add(stops);
-        if (ctx.isNotEmpty && stops.isEmpty) parts.add(ctx);
-        body = _clip(parts.join(' • '), 180);
-      } else if (action == 'passenger_withdraw') {
-        title = stops.isNotEmpty ? 'Request withdrawn • $stops' : 'Request withdrawn • $who';
-        body = _clip(stops.isNotEmpty ? stops : (ctx.isNotEmpty ? ctx : 'Booking request withdrawn.'), 180);
-      }
-    }
-
-    if (type == 'ride_started') {
-      title = tripId.trim().isNotEmpty ? 'Ride started • Trip ${tripId.trim()}' : 'Ride started';
-      body = _clip(ctx.isNotEmpty ? '$ctx • Live tracking is now active.' : 'Live tracking is now active.', 180);
-    }
-
-    if (type == 'passenger_started') {
-      title = tripId.trim().isNotEmpty ? 'Passenger on board • Trip ${tripId.trim()}' : 'Passenger on board';
-      body = _clip(ctx.isNotEmpty ? ctx : body, 180);
-    }
-
-    if (type == 'trip_completed') {
-      title = tripId.trim().isNotEmpty ? 'Trip completed • Trip ${tripId.trim()}' : 'Trip completed';
-      body = _clip(ctx.isNotEmpty ? ctx : body, 180);
-    }
-
-    if (type == 'passenger_dropped_off') {
-      title = tripId.trim().isNotEmpty ? 'Passenger dropped off • Trip ${tripId.trim()}' : 'Passenger dropped off';
-      body = _clip(ctx.isNotEmpty ? ctx : body, 180);
-    }
-
-    if (type == 'payment_submitted') {
-      final method = (message.data['payment_method'] ?? '').toString().trim();
-      title = 'Payment submitted';
-      final parts = <String>[];
-      if (method.isNotEmpty) parts.add(method.toUpperCase());
-      if (ctx.isNotEmpty) parts.add(ctx);
-      body = _clip(parts.isNotEmpty ? parts.join(' • ') : body, 180);
-    }
-
-    if (type == 'pickup_code_verified') {
-      title = 'Pickup verified';
-      body = _clip(ctx.isNotEmpty ? '$ctx • Pickup code verified.' : 'Pickup code verified.', 180);
-    }
-
-    if (type == 'booking_cancelled_by_passenger') {
-      title = tripId.trim().isNotEmpty ? 'Booking cancelled • Trip ${tripId.trim()}' : 'Booking cancelled';
-      body = _clip(ctx.isNotEmpty ? ctx : body, 180);
-    }
-
-    if (type == 'trip_cancelled_by_driver') {
-      title = tripId.trim().isNotEmpty ? 'Trip cancelled • Trip ${tripId.trim()}' : 'Trip cancelled';
-      body = _clip(ctx.isNotEmpty ? ctx : body, 180);
-    }
-
-    if (type == 'pre_ride_reminder_driver') {
-      title = tripId.trim().isNotEmpty ? 'Trip starting soon • Trip ${tripId.trim()}' : 'Trip starting soon';
-      body = _clip('Please get ready. Keep location and internet ON.', 180);
-    }
-
-    if (type == 'pre_ride_reminder_passenger') {
-      title = tripId.trim().isNotEmpty ? 'Pickup soon • Trip ${tripId.trim()}' : 'Pickup soon';
-      body = _clip('Please be ready outside. Keep location and internet ON.', 180);
-    }
-
-    final largeIcon = await _getLargeIconForData(message.data, type);
-
-    _dbg('_showNotification: final titleLen=${title.length} bodyLen=${body.length} channel=$_androidChannelId');
-
-    // Create Android-specific notification details
-    final AndroidNotificationDetails androidPlatformChannelSpecifics =
-        AndroidNotificationDetails(
-      _androidChannelId,
-      'Ride Request Notifications',
-      channelDescription: 'This channel is used for ride request notifications',
-      importance: Importance.max,
-      priority: Priority.high,
-      playSound: true,
-      enableVibration: true,
-      showWhen: false,
-      // NOTE: `icon` must be a drawable resource name. We use an existing drawable
-      // wrapper that points at the launcher mipmap.
-      icon: 'ic_stat_lets_go',
-      largeIcon: largeIcon ?? const DrawableResourceAndroidBitmap('ic_stat_lets_go'),
-      actions: actions,
-    );
-
-    // Create notification details
-    final NotificationDetails platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-    );
-
-    // Show the notification
     try {
+      await _initializeLocalNotifications();
+
+      final data = message.data;
+      final typeRaw = (data['type'] ?? data['notification_type'] ?? '').toString();
+      final type = typeRaw.trim().toLowerCase();
+
+      String title = (data['title'] ?? '').toString().trim();
+      String body = (data['body'] ?? '').toString().trim();
+
+      final senderName = (data['sender_name'] ?? data['name'] ?? '').toString().trim();
+      final messageText = (data['message_text'] ?? '').toString().trim();
+
+      // Prefer Firebase notification fields if present.
+      final nTitle = (message.notification?.title ?? '').toString().trim();
+      final nBody = (message.notification?.body ?? '').toString().trim();
+      if (nTitle.isNotEmpty) title = nTitle;
+      if (nBody.isNotEmpty) body = nBody;
+
+      // Support: make titles deterministic
+      if (type == 'support_admin') {
+        title = senderName.isNotEmpty ? senderName : (title.isNotEmpty ? title : 'Admin Support');
+        if (messageText.isNotEmpty) body = _clip(messageText, 180);
+      }
+      if (type == 'support_bot') {
+        title = title.isNotEmpty ? title : 'Support Bot';
+        if (messageText.isNotEmpty) body = _clip(messageText, 180);
+      }
+
+      if (title.isEmpty) title = 'Lets Go';
+      if (body.isEmpty) body = 'You have a new notification';
+
+      final actions = _buildAndroidActionsForData(data);
+      final largeIcon = await _getLargeIconForData(data, type);
+
+      final androidPlatformChannelSpecifics = AndroidNotificationDetails(
+        _androidChannelId,
+        'Ride Request Notifications',
+        channelDescription: 'This channel is used for ride request notifications',
+        importance: Importance.max,
+        priority: Priority.high,
+        playSound: true,
+        enableVibration: true,
+        showWhen: false,
+        icon: 'ic_stat_lets_go',
+        largeIcon: largeIcon ?? const DrawableResourceAndroidBitmap('ic_stat_lets_go'),
+        actions: actions,
+      );
+
+      final platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
+
       await _flutterLocalNotificationsPlugin.show(
         message.hashCode,
         title,
         body,
         platformChannelSpecifics,
-        payload: jsonEncode(message.data),
+        payload: jsonEncode(data),
       );
 
-      _dbg('_showNotification: show() ok id=${message.hashCode}');
-
-      try {
-        final android = _flutterLocalNotificationsPlugin
-            .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>();
-        final active = await android?.getActiveNotifications();
-        // ignore: avoid_print
-        debugPrint(
-          '[NotificationService] after show(): activeNotifications=${active?.length ?? -1} shownId=${message.hashCode}',
-        );
-        _dbg('_showNotification: activeNotifications=${active?.length ?? -1}');
-      } catch (e) {
-        // ignore: avoid_print
-        debugPrint('[NotificationService] getActiveNotifications() failed: $e');
-        _dbg('_showNotification: getActiveNotifications() failed: $e');
-      }
+      _dbg('_showNotification: show() ok id=${message.hashCode} type=$type');
     } catch (e) {
-      // ignore: avoid_print
-      debugPrint('[NotificationService] local show() failed: $e');
-      _dbg('_showNotification: local show() failed: $e');
+      _dbg('_showNotification: failed: $e');
     }
   }
 
   static List<AndroidNotificationAction> _buildAndroidActionsForData(Map<String, dynamic> data) {
     final type = (data['type'] ?? data['notification_type'] ?? '').toString();
+    final typeNorm = type.trim().toLowerCase();
     final action = (data['action'] ?? '').toString();
 
     _dbg('_buildAndroidActionsForData: type=$type action=$action dataKeys=${data.keys.toList()}');
 
-    if (type == 'chat_message' || type == 'chat_broadcast') {
+    if (typeNorm == 'chat_message' || typeNorm == 'chat_broadcast') {
       return <AndroidNotificationAction>[
         AndroidNotificationAction(
           'reply',
@@ -845,7 +625,7 @@ class NotificationService {
       ];
     }
 
-    if (type == 'support_admin' || type == 'support_bot') {
+    if (typeNorm == 'support_admin' || typeNorm == 'support_bot') {
       return <AndroidNotificationAction>[
         AndroidNotificationAction(
           'reply',
@@ -868,7 +648,7 @@ class NotificationService {
       ];
     }
 
-    if (type == 'ride_request') {
+    if (typeNorm == 'ride_request') {
       return <AndroidNotificationAction>[
         const AndroidNotificationAction(
           'driver_accept',
@@ -906,7 +686,7 @@ class NotificationService {
       ];
     }
 
-    if (type == 'booking_update') {
+    if (typeNorm == 'booking_update') {
       if (action == 'driver_counter') {
         return <AndroidNotificationAction>[
           AndroidNotificationAction(
@@ -977,7 +757,7 @@ class NotificationService {
       ];
     }
 
-    if (type == 'payment_submitted') {
+    if (typeNorm == 'payment_submitted') {
       return const <AndroidNotificationAction>[
         AndroidNotificationAction(
           'open',
@@ -987,7 +767,7 @@ class NotificationService {
       ];
     }
 
-    if (type == 'driver_task_pickup') {
+    if (typeNorm == 'driver_task_pickup') {
       return const <AndroidNotificationAction>[
         AndroidNotificationAction(
           'driver_reached_pickup',
@@ -1002,7 +782,7 @@ class NotificationService {
       ];
     }
 
-    if (type == 'driver_task_dropoff') {
+    if (typeNorm == 'driver_task_dropoff') {
       return const <AndroidNotificationAction>[
         AndroidNotificationAction(
           'driver_reached_dropoff',
@@ -1017,20 +797,20 @@ class NotificationService {
       ];
     }
 
-    if (type == 'ride_started' ||
-        type == 'passenger_started' ||
-        type == 'pickup_code_verified' ||
-        type == 'trip_completed' ||
-        type == 'passenger_dropped_off' ||
-        type == 'driver_near_pickup' ||
-        type == 'near_destination' ||
-        type == 'driver_reached_pickup' ||
-        type == 'driver_reached_dropoff' ||
-        type == 'driver_dropoff_completed' ||
-        type == 'pre_ride_reminder_driver' ||
-        type == 'pre_ride_reminder_passenger' ||
-        type == 'booking_cancelled_by_passenger' ||
-        type == 'trip_cancelled_by_driver') {
+    if (typeNorm == 'ride_started' ||
+        typeNorm == 'passenger_started' ||
+        typeNorm == 'pickup_code_verified' ||
+        typeNorm == 'trip_completed' ||
+        typeNorm == 'passenger_dropped_off' ||
+        typeNorm == 'driver_near_pickup' ||
+        typeNorm == 'near_destination' ||
+        typeNorm == 'driver_reached_pickup' ||
+        typeNorm == 'driver_reached_dropoff' ||
+        typeNorm == 'driver_dropoff_completed' ||
+        typeNorm == 'pre_ride_reminder_driver' ||
+        typeNorm == 'pre_ride_reminder_passenger' ||
+        typeNorm == 'booking_cancelled_by_passenger' ||
+        typeNorm == 'trip_cancelled_by_driver') {
       return const <AndroidNotificationAction>[
         AndroidNotificationAction(
           'open',
