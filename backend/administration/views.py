@@ -450,18 +450,19 @@ def user_support_chat_view(request, user_id):
             try:
                 payload = {
                     'recipient_id': str(user.id),
-                    'sender_id': str(admin_sender.id) if admin_sender is not None else '0',
+                    'sender_id': '0',
                     'user_id': str(user.id),
-                    'driver_id': str(admin_sender.id) if admin_sender is not None else '0',
+                    'driver_id': '0',
                     'title': 'Admin Support Reply',
                     'body': message_text[:140],
                     'data': {
                         'type': 'support_admin',
                         'thread_type': 'ADMIN',
                         'user_id': str(user.id),
-                        'sender_id': str(admin_sender.id) if admin_sender is not None else '0',
-                        'sender_name': str(getattr(admin_sender, 'name', '') or 'Admin'),
-                        'sender_photo_url': str(getattr(admin_sender, 'profile_photo_url', '') or ''),
+                        'sender_type': 'admin',
+                        'sender_id': '0',
+                        'sender_name': 'Admin Support',
+                        'sender_photo_url': '',
                         'message_text': message_text,
                     },
                 }
