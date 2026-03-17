@@ -1,5 +1,14 @@
 # Unit Testing Output
 
+| Section | Test suite | Sub-area | Total test cases | Passed | Failed | Pass % |
+|---|---|---:|---:|---:|---:|---:|
+| A | Flutter behavioral (`lets_go/test/*.dart`) | Behavioral + widget tests | 18 | 18 | 0 | 100% |
+| B | Flutter generated contracts (`lets_go/test/generated/**`) | Utils contracts | 45 | 45 | 0 | 100% |
+| B | Flutter generated contracts (`lets_go/test/generated/**`) | Controllers contracts | 59 | 59 | 0 | 100% |
+| B | Flutter generated contracts (`lets_go/test/generated/**`) | Screens contracts | 159 | 159 | 0 | 100% |
+| C | Backend pytest (`backend/lets_go/test/**`) | Views + utils + integration smoke | 199 | 199 | 0 | 100% |
+| Overall | All | All | 480 | 480 | 0 | 100% |
+
 ## Section A: Flutter behavioral tests (`lets_go/test/*.dart`)
 
 ### Flutter tests (behavioral) — Documentation Table (Part 1)
