@@ -1,0 +1,448 @@
+timestamp: 2026-05-01T06:56:29
+users: -1
+extensive: YES
+story_mode: NO
+
+============================================================
+user_id: -1
+user_name: Guest
+
+You: hi
+Bot: Hi Guest. What would you like to do today—book a ride or create a ride?
+
+You: help
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: capabilities
+Bot: I can help you with:
+- book a ride (find trips and reserve seats)
+- create/post a ride (if you're a driver)
+- list your vehicles, bookings, and rides
+- delete your created ride (if allowed)
+- cancel your created ride (if allowed)
+- cancel your booking
+- view/send trip chat messages (only if authorized)
+
+Try: 'book a ride from X to Y tomorrow 6pm' or 'create a ride'.
+
+You: faq
+Bot: No FAQs are available at this time.
+
+You: manual
+Bot: User manual topics:
+- Booking a ride
+- Creating a ride
+- Selecting a route and stops
+- Fare calculation and breakdown
+- Payments and payment confirmation
+- Messaging and chat
+- Fare negotiation
+- Cancel booking / cancel trip
+- Deleting a trip
+- Guest mode limitations
+- Profile and verification requests
+- SOS and safety
+
+Ask a question like: 'How do I book a ride?'
+
+You: what is this app about
+Bot: I can help you with:
+- book a ride (find trips and reserve seats)
+- create/post a ride (if you're a driver)
+- list your vehicles, bookings, and rides
+- delete your created ride (if allowed)
+- cancel your created ride (if allowed)
+- cancel your booking
+- view/send trip chat messages (only if authorized)
+
+Try: 'book a ride from X to Y tomorrow 6pm' or 'create a ride'.
+
+You: guest mode
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: my profile
+Bot: Guests cannot access this feature.
+
+You: profile
+Bot: Guests cannot access this feature.
+
+You: show my vehicles
+Bot: Guests cannot access this feature.
+
+You: list my vehicles
+Bot: Guests cannot access this feature.
+
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+You: my rides
+Bot: Guests cannot access this feature.
+
+You: trip details
+Bot: Guests cannot access this feature.
+
+You: chat list
+Bot: Guests cannot access this feature.
+
+You: payment details
+Bot: Guests cannot access this feature.
+
+You: change requests
+Bot: Guests cannot access this feature.
+
+You: verification requests
+Bot: Guests cannot access this feature.
+
+You: pickup code
+Bot: I'm not able to assist with that request here. To obtain your pickup code, please use the app's official screens or follow the support flow, or you can contact an admin for further assistance.
+
+You: how do payments work
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: how do notifications work
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: why can't i book
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: why can't i create
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: sos
+Bot: I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.
+
+You: cancel
+Bot: Cancelled. What would you like to do next?
+
+You: reset
+Bot: Cancelled. What would you like to do next?
+
+You: suggest stops q=vehari
+Bot: Stops:
+- Multan-Vehari Road
+- Multan-Vehari Road
+- Multan-Vehari Road
+- Multan-Vehari Road
+- Multan-Vehari Road
+- Multan-Vehari Road
+- Multan-Vehari Road
+- Multan-Vehari Road
+
+You: from vehari to vehari
+Bot: I couldn't understand the locations. Try: 'From A to B' or 'From A to B via C'.
+
+You: suggest stops q=multan
+Bot: Stops:
+- Multan
+- Multan
+- Multan
+- Multan
+- Multan
+- Multan
+- Multan
+- Multan
+
+You: from multan to multan
+Bot: I couldn't understand the locations. Could you please provide more details about your route, for example, 'From Multan to Multan via a specific location' or simply 'From one location in Multan to another in Multan'? This will help me better understand your request.
+
+You: suggest stops q=lahore
+Bot: No stops found for Lahore. Please try a different query to get suggested stops.
+
+You: from lahore to lahore
+Bot: I couldn't understand the locations. Try: 'From A to B' or 'From A to B via C'.
+
+You: suggest stops q=islamabad
+Bot: Stops:
+- COMSATS University Islamabad Vehari Campus
+- COMSATS University Islamabad Vehari Campus
+- COMSATS University Islamabad Vehari Campus
+- COMSATS University Islamabad Vehari Campus
+- COMSATS University Islamabad Vehari Campus
+- COMSATS University Islamabad Vehari Campus
+- COMSATS University Islamabad Vehari Campus
+- COMSATS University Islamabad Vehari Campus
+
+You: from islamabad to islamabad
+Bot: I couldn't understand the locations. Try: 'From A to B' or 'From A to B via C'.
+
+You: suggest stops q=karachi
+Bot: Stops:
+- Khanewal Chowk
+
+You: from karachi to karachi
+Bot: I couldn't understand the locations. Please try again using the format 'From A to B' or 'From A to B via C' to help me better understand your route.
+
+You: from comsats vehari to multan
+Bot: I found multiple matches for 'Multan'. Please reply with the location number you mean:
+1) Multan Institute Of Kidney Disease
+2) Multan, Pakistan
+3) Multan, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: book a ride from comsats vehari to multan
+Bot: I found multiple matches for 'Multan'. Please reply with the location number you mean:
+1) Multan Institute Of Kidney Disease
+2) Multan, Pakistan
+3) Multan, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: create a ride from comsats vehari to multan
+Bot: I found multiple matches for 'Multan'. Please reply with the location number you mean:
+1) Multan Institute Of Kidney Disease
+2) Multan, Pakistan
+3) Multan, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: from vehari to peoples colony
+Bot: I found multiple matches for 'Vehari'. Please reply with the location number you mean:
+1) Vehari, Pakistan
+2) Vehari, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: book a ride from vehari to peoples colony
+Bot: I found multiple matches for 'Vehari'. Please reply with the location number you mean:
+1) Vehari, Pakistan
+2) Vehari, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: create a ride from vehari to peoples colony
+Bot: I found multiple matches for 'Vehari'. Please reply with the location number you mean:
+1) Vehari, Pakistan
+2) Vehari, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: from zoo road to khizra mosque
+Bot: I found multiple matches for 'Khizra Mosque'. Please reply with the location number you mean:
+1) Khizra Mosque, Vehari, PB, Pakistan
+2) Khizra Mosque Ground, Vehari, PB, Pakistan
+3) Mosque
+You can also say 'cancel' to stop.
+
+You: book a ride from zoo road to khizra mosque
+Bot: I found multiple matches for 'Khizra Mosque'. Please reply with the location number you mean:
+1) Khizra Mosque, Vehari, PB, Pakistan
+2) Khizra Mosque Ground, Vehari, PB, Pakistan
+3) Mosque
+You can also say 'cancel' to stop.
+
+You: create a ride from zoo road to khizra mosque
+Bot: I found multiple matches for 'Khizra Mosque'. Please reply with the location number you mean:
+1) Khizra Mosque, Vehari, PB, Pakistan
+2) Khizra Mosque Ground, Vehari, PB, Pakistan
+3) Mosque
+You can also say 'cancel' to stop.
+
+You: from multan-vehari road to comsats university
+Bot: I found multiple matches for 'Multan-Vehari Road'. Please reply with the location number you mean:
+1) Multan-Vehari Road, Vehari, PB, Pakistan
+2) Multan-Vehari Road, PB, Pakistan
+3) Multan-Vehari Road, PB, Pakistan
+4) Multan-Vehari Road, PB, Pakistan
+5) Multan-Vehari Road, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: book a ride from multan-vehari road to comsats university
+Bot: I found multiple matches for 'Multan-Vehari Road'. Please reply with the location number you mean:
+1) Multan-Vehari Road, Vehari, PB, Pakistan
+2) Multan-Vehari Road, PB, Pakistan
+3) Multan-Vehari Road, PB, Pakistan
+4) Multan-Vehari Road, PB, Pakistan
+5) Multan-Vehari Road, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: create a ride from multan-vehari road to comsats university
+Bot: I found multiple matches for 'Multan-Vehari Road'. Please reply with the location number you mean:
+1) Multan-Vehari Road, Vehari, PB, Pakistan
+2) Multan-Vehari Road, PB, Pakistan
+3) Multan-Vehari Road, PB, Pakistan
+4) Multan-Vehari Road, PB, Pakistan
+5) Multan-Vehari Road, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: from railway station to bus stand
+Bot: I found multiple matches for 'Railway Station'. Please reply with the location number you mean:
+1) Padidan Railway Station
+2) Railway Station, Dera Ghazi Khan, PB, Pakistan
+3) Samasata Railway Station, PB, Pakistan
+4) Samasata Railway Station, PB, Pakistan
+5) Railway Station, KP, Pakistan
+You can also say 'cancel' to stop.
+
+You: book a ride from railway station to bus stand
+Bot: I found multiple matches for 'Railway Station'. Please reply with the location number you mean:
+1) Padidan Railway Station
+2) Railway Station, Dera Ghazi Khan, PB, Pakistan
+3) Samasata Railway Station, PB, Pakistan
+4) Samasata Railway Station, PB, Pakistan
+5) Railway Station, KP, Pakistan
+You can also say 'cancel' to stop.
+
+You: create a ride from railway station to bus stand
+Bot: I found multiple matches for 'Railway Station'. Please reply with the location number you mean:
+1) Padidan Railway Station
+2) Railway Station, Dera Ghazi Khan, PB, Pakistan
+3) Samasata Railway Station, PB, Pakistan
+4) Samasata Railway Station, PB, Pakistan
+5) Railway Station, KP, Pakistan
+You can also say 'cancel' to stop.
+
+You: create a ride today 5 pm
+Bot: I found multiple matches for 'Bus Stand'. Please reply with the location number you mean:
+1) chashma bus stand Masque
+2) Khipro-Sanghar Bus Stand, SD, Pakistan
+3) Bus station, Bannu, KP, Pakistan
+4) Bus washing, Karachi, SD, Pakistan
+You can also say 'cancel' to stop.
+
+You: book a ride today 5 pm
+Bot: Please choose a number between 1 and 4.
+
+You: create a ride tomorrow 9 am
+Bot: Please choose a number between 1 and 4.
+
+You: book a ride tomorrow 9 am
+Bot: Please choose a number between 1 and 4.
+
+You: create a ride tomorrow 10 am
+Bot: Please choose a number between 1 and 4.
+
+You: book a ride tomorrow 10 am
+Bot: Please choose a number between 1 and 4.
+
+You: create a ride next monday 8:30
+Bot: Please choose a number between 1 and 4.
+
+You: book a ride next monday 8:30
+Bot: Please choose a number between 1 and 4.
+
+You: create a ride 2026-05-01 14:15
+Bot: Please choose a number between 1 and 4.
+
+You: book a ride 2026-05-01 14:15
+Bot: Please choose a number between 1 and 4.
+
+You: create ride 1 seat
+Bot: Route: Railway Station, Kp, Pakistan → Chashma Bus Stand Masque
+Distance: 435.70 km
+Estimated time: 522 min
+Estimated fare: PKR 7668
+Segments: 1
+Distance: 435.70 km
+Duration: 522 min
+Fare (sum of segments): PKR 7668
+
+You: book ride 1 seat
+Bot: Where are you starting from (pickup stop)?
+
+You: create ride 2 seats
+Bot: Where do you want to go (drop-off stop)?
+
+You: book ride 2 seats
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: create ride 3 seats
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: book ride 3 seats
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: create ride 4 seats
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: book ride 4 seats
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: create ride fare 50
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: book ride fare 50
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: create ride fare 70
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: book ride fare 70
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: create ride fare 100
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: book ride fare 100
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: create ride fare 150
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: book ride fare 150
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: cancel booking
+Bot: I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.
+
+You: cancel trip
+Bot: I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.
+
+You: delete trip
+Bot: I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.
+
+You: send message
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: negotiate
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+You: round trip create ride
+Bot: Trips are currently one-way only. If you need a return journey, please create a second ride for the return leg.
+
+You: two way trip
+Bot: Trips are currently one-way only. If you need a return journey, please create a second ride for the return leg.
+
+You: what about that
+Bot: Which date? (today / tomorrow / YYYY-MM-DD)
+
+[summary] ok=87 fail=0 trip_id=- booking_id=-
+
+============================================================
+TOTAL ok=87 fail=0

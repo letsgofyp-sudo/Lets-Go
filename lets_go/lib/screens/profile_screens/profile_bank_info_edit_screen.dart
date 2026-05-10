@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../services/api_service.dart';
 import '../../utils/auth_session.dart';
+import '../../utils/pk_bank_list.dart';
 
 class ProfileBankInfoEditScreen extends StatefulWidget {
   final int userId;
@@ -25,6 +27,8 @@ class _ProfileBankInfoEditScreenState extends State<ProfileBankInfoEditScreen> {
   final TextEditingController _accountNo = TextEditingController();
   final TextEditingController _bankName = TextEditingController();
   final TextEditingController _iban = TextEditingController();
+
+  String? _selectedBank;
 
   static const int _maxQrImageSizeBytes = 1024 * 1024;
 
@@ -59,6 +63,31 @@ class _ProfileBankInfoEditScreenState extends State<ProfileBankInfoEditScreen> {
     _accountNo.text = (widget.initialUser['accountno'] ?? '').toString();
     _bankName.text = (widget.initialUser['bankname'] ?? '').toString();
     _iban.text = (widget.initialUser['iban'] ?? '').toString();
+
+    final existingBank = _bankName.text.trim();
+
+    const legacyMap = <String, String>{
+      'HBL': 'Habib Bank Limited (HBL)',
+      'UBL': 'United Bank Limited (UBL)',
+      'MCB': 'MCB Bank Limited',
+      'Allied Bank': 'Allied Bank Limited',
+      'Bank Alfalah': 'Bank Alfalah Limited',
+      'Meezan Bank': 'Meezan Bank Limited',
+      'Faysal Bank': 'Faysal Bank Limited',
+      'Standard Chartered': 'Standard Chartered Bank (Pakistan) Limited',
+      'NBP': 'National Bank of Pakistan (NBP)',
+    };
+
+    final normalizedExisting = legacyMap[existingBank] ?? existingBank;
+
+    if (normalizedExisting.isNotEmpty && pkBankOptions.contains(normalizedExisting)) {
+      _selectedBank = normalizedExisting;
+      _bankName.text = normalizedExisting;
+    } else if (normalizedExisting.isNotEmpty) {
+      _selectedBank = 'Other';
+    } else {
+      _selectedBank = null;
+    }
   }
 
   @override
@@ -106,9 +135,10 @@ class _ProfileBankInfoEditScreenState extends State<ProfileBankInfoEditScreen> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final accTrim = _accountNo.text.trim();
-    final ibanTrim = _iban.text.trim();
-    final bankTrim = _bankName.text.trim();
+    final accTrim = _accountNo.text.trim().replaceAll(' ', '');
+    final ibanTrim = _iban.text.trim().toUpperCase().replaceAll(' ', '');
+    final selected = (_selectedBank ?? '').trim();
+    final bankTrim = (selected.isNotEmpty && selected != 'Other') ? selected : _bankName.text.trim();
     final initialAcc = (widget.initialUser['accountno'] ?? '').toString().trim();
     final initialIban = (widget.initialUser['iban'] ?? '').toString().trim();
     final initialBank = (widget.initialUser['bankname'] ?? '').toString().trim();
@@ -223,6 +253,20 @@ class _ProfileBankInfoEditScreenState extends State<ProfileBankInfoEditScreen> {
               TextFormField(
                 controller: _accountNo,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(20)],
+                validator: (v) {
+                  final s = (v ?? '').trim().replaceAll(' ', '');
+                  if (s.isEmpty) return null;
+                  final ok = RegExp(r'^\d{10,20}$').hasMatch(s);
+                  if (!ok) return 'Account number must be 10-20 digits';
+                  final bank = _bankName.text.trim();
+                  final iban = _iban.text.trim().toUpperCase().replaceAll(' ', '');
+                  if (bank.isEmpty && (s.isNotEmpty || iban.isNotEmpty)) {
+                    return 'Bank name is required when providing bank details';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               const Text('IBAN (optional)', style: TextStyle(fontWeight: FontWeight.w600)),
@@ -230,14 +274,76 @@ class _ProfileBankInfoEditScreenState extends State<ProfileBankInfoEditScreen> {
               TextFormField(
                 controller: _iban,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
+                textCapitalization: TextCapitalization.characters,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9 ]')),
+                  LengthLimitingTextInputFormatter(34),
+                ],
+                validator: (v) {
+                  final s = (v ?? '').trim().toUpperCase().replaceAll(' ', '');
+                  if (s.isEmpty) return null;
+                  final ok = RegExp(r'^PK\d{2}[A-Z]{4}\d{16}$').hasMatch(s);
+                  if (!ok) return 'Enter a valid Pakistan IBAN (e.g. PK36SCBL0000001123456702)';
+                  final bank = _bankName.text.trim();
+                  final acc = _accountNo.text.trim().replaceAll(' ', '');
+                  if (bank.isEmpty && (acc.isNotEmpty || s.isNotEmpty)) {
+                    return 'Bank name is required when providing bank details';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               const Text('Bank Name', style: TextStyle(fontWeight: FontWeight.w600)),
               const SizedBox(height: 6),
-              TextFormField(
-                controller: _bankName,
+              DropdownButtonFormField<String>(
+                initialValue: _selectedBank,
+                items: [
+                  const DropdownMenuItem<String>(value: null, child: Text('--')),
+                  ...pkBankOptions.map((b) => DropdownMenuItem<String>(value: b, child: Text(b))),
+                ],
+                onChanged: (v) {
+                  setState(() {
+                    _selectedBank = v;
+                    if (v != null && v != 'Other') {
+                      _bankName.text = v;
+                    }
+                  });
+                },
                 decoration: const InputDecoration(border: OutlineInputBorder()),
+                validator: (v) {
+                  final acc = _accountNo.text.trim().replaceAll(' ', '');
+                  final iban = _iban.text.trim().toUpperCase().replaceAll(' ', '');
+                  final any = acc.isNotEmpty || iban.isNotEmpty;
+                  if (!any) return null;
+                  if (v == null || v.trim().isEmpty) {
+                    return 'Bank name is required when providing bank details';
+                  }
+                  return null;
+                },
               ),
+              if ((_selectedBank ?? '') == 'Other') ...[
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: _bankName,
+                  decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter bank name'),
+                  textCapitalization: TextCapitalization.words,
+                  inputFormatters: [
+                    FilteringTextInputFormatter.allow(RegExp(r"[A-Za-z .&\-]")),
+                    LengthLimitingTextInputFormatter(120),
+                  ],
+                  validator: (v) {
+                    final s = (v ?? '').trim();
+                    final acc = _accountNo.text.trim().replaceAll(' ', '');
+                    final iban = _iban.text.trim().toUpperCase().replaceAll(' ', '');
+                    final any = acc.isNotEmpty || iban.isNotEmpty;
+                    if (!any) return null;
+                    if (s.isEmpty) return 'Bank name is required when providing bank details';
+                    final ok = RegExp(r'^[A-Za-z][A-Za-z .&\-]{1,118}[A-Za-z.]$').hasMatch(s);
+                    if (!ok) return 'Enter a valid bank name';
+                    return null;
+                  },
+                ),
+              ],
               const SizedBox(height: 16),
               const Text('Account QR', style: TextStyle(fontWeight: FontWeight.w600)),
               const SizedBox(height: 8),

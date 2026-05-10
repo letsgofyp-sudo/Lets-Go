@@ -66,7 +66,7 @@ class SupportThread(models.Model):
                 name='uniq_supportthread_guest_thread_type',
             ),
             models.CheckConstraint(
-                check=(
+                condition=(
                     Q(user__isnull=False, guest__isnull=True)
                     | Q(user__isnull=True, guest__isnull=False)
                 ),
@@ -103,3 +103,45 @@ class SupportMessage(models.Model):
             models.Index(fields=['thread', 'created_at']),
         ]
         ordering = ['created_at']
+
+
+class ChatbotMemory(models.Model):
+    user = models.ForeignKey(
+        'UsersData',
+        on_delete=models.CASCADE,
+        related_name='chatbot_memory',
+        null=True,
+        blank=True,
+    )
+    guest = models.ForeignKey(
+        'GuestUser',
+        on_delete=models.CASCADE,
+        related_name='chatbot_memory',
+        null=True,
+        blank=True,
+    )
+    summary = models.TextField(blank=True, default='')
+    preferences = models.JSONField(default=dict, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True, db_index=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user'],
+                condition=Q(user__isnull=False),
+                name='uniq_chatbotmemory_user',
+            ),
+            models.UniqueConstraint(
+                fields=['guest'],
+                condition=Q(guest__isnull=False),
+                name='uniq_chatbotmemory_guest',
+            ),
+            models.CheckConstraint(
+                condition=(
+                    Q(user__isnull=False, guest__isnull=True)
+                    | Q(user__isnull=True, guest__isnull=False)
+                ),
+                name='chk_chatbotmemory_owner_xor',
+            ),
+        ]

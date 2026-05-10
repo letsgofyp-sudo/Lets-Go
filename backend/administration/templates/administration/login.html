@@ -56,6 +56,7 @@
       <div class="login-form-wrap">
         <form class="login-form" method="post" action="{% url 'administration:login_view' %}">
           {% csrf_token %}
+          <input type="hidden" name="next" value="{{ next|default_if_none:'' }}" />
 
           <div class="login-form-title">Sign in</div>
           <div class="login-form-subtitle">Use your admin credentials to continue.</div>

@@ -1,0 +1,1419 @@
+% ============================================
+% Chapter 5 – Implementation
+% ============================================
+
+\chapter{Implementation}
+
+This chapter describes the practical implementation of the Lets Go Ride Sharing App ride-sharing and recommendation system. It explains how the architectural design and models presented in Chapter 4 were translated into working modules, algorithms, user interfaces, and deployment components. The implementation follows the object-oriented design methodology and agile incremental process model outlined earlier.
+
+% -------------------------------------------------
+% 5.1 Development Environment
+% -------------------------------------------------
+
+\section{Development Environment}
+
+The development environment for the Lets Go Ride Sharing App system was carefully selected to support cross-platform mobile development, robust backend services, and efficient data management.
+
+\textbf{IDE and Tools:}
+\begin{itemize}
+    \item \textbf{Visual Studio Code} – Primary code editor for Flutter (Dart) and Python development, with extensions for Flutter, Django, and PostgreSQL.
+    \item \textbf{Android Studio} – Used for Android emulator testing and Flutter layout debugging.
+    \item \textbf{PyCharm Professional} – Occasionally used for Django backend development and database management.
+    \item \textbf{Figma} – UI/UX design and prototyping.
+    \item \textbf{Postman} – API testing and documentation.
+    \item \textbf{DBeaver} – Database administration and query execution.
+\end{itemize}
+
+\textbf{Programming Languages and Frameworks:}
+\begin{itemize}
+    \item \textbf{Frontend (Mobile):} Dart with Flutter SDK 3.16 – chosen for cross-platform compatibility (Android and iOS) and rich widget library.
+    \item \textbf{Backend:} Python 3.13 with Django 5.0 and Django REST Framework (DRF) – provides robust MVC architecture, ORM, and RESTful API support.
+    \item \textbf{Real-time Communication:} Django Channels 4.0 with WebSockets for live tracking and chat.
+    \item \textbf{Asynchronous Tasks:} Celery with Redis broker for handling notifications, reminders, and email/SMS dispatching.
+    \item \textbf{Database:} PostgreSQL 15 with PostGIS extension for geospatial data.
+    \item \textbf{Machine Learning:} Python scikit-learn for TF-IDF vectorization and cosine similarity; integrated via a separate microservice.
+    \item \textbf{Chatbot:} Integration with a generative AI API (e.g., Gemini or OpenAI) for natural language understanding.
+\end{itemize}
+
+\textbf{Operating System and Hardware:}
+\begin{itemize}
+    \item \textbf{Development OS:} Windows 11 / macOS Ventura (team members used both).
+    \item \textbf{Backend Server:} Ubuntu 22.04 LTS (for production-like staging).
+    \item \textbf{Hardware:} 
+        \begin{itemize}
+            \item Minimum 16 GB RAM, Intel i7 or equivalent.
+            \item For ML model training (offline), a machine with NVIDIA GPU (GTX 1060 or better) was used.
+        \end{itemize}
+    \item \textbf{Mobile Testing Devices:} Google Pixel 6 (Android 13), Samsung Galaxy A52 (Android 12), and iOS simulators.
+\end{itemize}
+
+% -------------------------------------------------
+% 5.2 Core Module Implementation
+% -------------------------------------------------
+
+\section{Core Module Implementation}
+
+This section explains how each major module of the Lets Go Ride Sharing App system was implemented, following the modular architecture described in Chapter 4. Each module was developed as a separate Django app or Flutter feature, ensuring loose coupling and high cohesion.
+
+\subsection{Module 1: Authentication \& Verification Module}
+
+\textbf{Purpose:} Handle user registration, login, OTP verification, and admin-driven document verification.
+
+\textbf{Key Functionalities:}
+\begin{itemize}
+    \item User signup with email, phone, CNIC, and optional license/bank details.
+    \item Document upload (profile photo, CNIC front/back, license, vehicle images) with client-side validation (size <5MB, JPG/PNG).
+    \item OTP generation and sending via email/SMS (using Firebase Cloud Messaging and SMTP).
+    \item JWT-based authentication for subsequent API requests.
+    \item Admin panel for reviewing pending verifications and approving/rejecting users.
+\end{itemize}
+
+\textbf{Important Classes/Functions:}
+\begin{itemize}
+    \item \texttt{User} model (abstract) with \texttt{Passenger} and \texttt{Driver} subclasses.
+    \item \texttt{VerificationDocument} model linked to User.
+    \item \texttt{OTPService} class for generating and validating OTPs.
+    \item \texttt{AuthViewSet} (Django REST) with endpoints: \texttt{/register}, \texttt{/verify-otp}, \texttt{/login}, \texttt{/upload-docs}.
+    \item Flutter screens: \texttt{RegistrationScreen}, \texttt{OTPScreen}, \texttt{DocumentUploadScreen}.
+\end{itemize}
+
+\textbf{Integration:} Communicates with Notification Service (FCM/SMTP) for OTP delivery and with Storage Service for document uploads. Admin actions update user status and trigger notifications.
+
+\subsection{Module 2: Ride Management Module}
+
+\textbf{Purpose:} Enable drivers to create, edit, and cancel rides; manage route stops and ride parameters.
+
+\textbf{Key Functionalities:}
+\begin{itemize}
+    \item Map-based route editor (using Google Maps Flutter plugin) allowing drivers to add start, intermediate, and end stops.
+    \item Automatic fare calculation based on distance, vehicle type, fuel prices, and time-of-day factors.
+    \item Setting ride parameters: date/time, available seats, gender preference, negotiation flag.
+    \item Publishing ride to marketplace; editing/cancelling with rules (blocked if bookings exist).
+\end{itemize}
+
+\textbf{Important Classes/Functions:}
+\begin{itemize}
+    \item \texttt{Ride} model with fields: route\_polyline, stops (JSON), departure\_time, available\_seats, etc.
+    \item \texttt{FareCalculator} class implementing the fare algorithm (Section 5.3.2).
+    \item \texttt{RideViewSet} with endpoints: \texttt{/rides/create}, \texttt{/rides/\{id\}/edit}, \texttt{/rides/\{id\}/cancel}.
+    \item Flutter screens: \texttt{CreateRideScreen} (map editor), \texttt{MyRidesScreen}, \texttt{RideDetailsScreen}.
+\end{itemize}
+
+\textbf{Integration:} Uses Map Service (OSRM) for route calculation and distance estimation; stores ride data in PostgreSQL; publishes ride to passenger discovery feeds.
+
+\subsection{Module 3: Booking \& Payment Module}
+
+\textbf{Purpose:} Allow passengers to search, view, and book rides; manage seat locking, driver acceptance, and manual payment confirmation.
+
+\textbf{Key Functionalities:}
+\begin{itemize}
+    \item Browse available rides with filters (origin, destination, date, gender preference).
+    \item Select pickup/drop stops from driver's route; dynamic fare recalculation.
+    \item Seat locking during booking request to prevent overbooking.
+    \item Driver accepts/rejects booking; if accepted, booking confirmed and seats decremented.
+    \item Manual payment flow: passenger marks "paid" after cash/bank transfer; driver confirms receipt.
+\end{itemize}
+
+\textbf{Important Classes/Functions:}
+\begin{itemize}
+    \item \texttt{Booking} model with status (requested, accepted, rejected, cancelled, completed).
+    \item \texttt{Payment} model linked to booking with fields: amount, method, passenger\_paid, driver\_confirmed.
+    \item \texttt{BookingViewSet} with endpoints: \texttt{/bookings/request}, \texttt{/bookings/\{id\}/accept}, \texttt{/bookings/\{id\}/reject}, \texttt{/bookings/\{id\}/mark-paid}, \texttt{/bookings/\{id\}/confirm-receipt}.
+    \item Flutter screens: \texttt{SearchRidesScreen}, \texttt{BookingScreen}, \texttt{PaymentScreen}.
+\end{itemize}
+
+\textbf{Integration:} Interacts with ML Service for recommendations, Notification Service for alerts, and updates ride seat availability.
+
+\subsection{Module 4: Live Tracking \& Safety Module}
+
+\textbf{Purpose:} Provide real-time GPS tracking, pickup code verification, SOS emergency handling, and ride completion workflows.
+
+\textbf{Key Functionalities:}
+\begin{itemize}
+    \item WebSocket-based live location sharing from driver to passengers.
+    \item Geofenced pickup code generation (6-digit OTP) when driver within 100m of passenger.
+    \item SOS button (with 3-second press) triggering notifications to emergency contacts and admin.
+    \item Escalation timers for unconfirmed arrivals (2h → emergency contact, 12h → admin).
+    \item Ride completion with mutual ratings.
+\end{itemize}
+
+\textbf{Important Classes/Functions:}
+\begin{itemize}
+    \item \texttt{Location} model (temporary) or Redis for live coordinates.
+    \item \texttt{PickupCodeService} for generating and validating OTPs (hashed storage).
+    \item \texttt{SOSRequest} model and \texttt{SOSService} for escalation logic.
+    \item Django Channels consumers: \texttt{TrackingConsumer}, \texttt{ChatConsumer}.
+    \item Flutter screens: \texttt{LiveTrackingScreen} (with SOS button), \texttt{PickupCodeEntryScreen}.
+\end{itemize}
+
+\textbf{Integration:} Uses Map Service for ETA updates; Notification Service for SOS alerts; stores incident logs in database.
+
+\subsection{Module 5: Admin Portal Module}
+
+\textbf{Purpose:} Provide web-based dashboard for administrators to manage users, verify documents, resolve disputes, and monitor system health.
+
+\textbf{Key Functionalities:}
+\begin{itemize}
+    \item Paginated user list with filtering by verification status.
+    \item Document preview and approve/reject/ban actions.
+    \item Dispute list with attached evidence (chat logs, GPS traces, images).
+    \item Resolution workflow with notes and notifications to involved parties.
+    \item Analytics dashboard showing key metrics (active users, rides, cancellations, etc.).
+\end{itemize}
+
+\textbf{Important Classes/Functions:}
+\begin{itemize}
+    \item Django admin customizations and separate React-based SPA (or Django templates with Bootstrap).
+    \item \texttt{AdminUserViewSet}, \texttt{DisputeViewSet}.
+    \item \texttt{VerificationService} for document validation.
+    \item Charts using Chart.js or similar.
+\end{itemize}
+
+\textbf{Integration:} Reads data from all core modules; sends notifications via Notification Service.
+
+% -------------------------------------------------
+% 5.3 Algorithmic Implementation
+% -------------------------------------------------
+
+\section{Algorithmic Implementation}
+
+This section details the formal algorithmic logic for the core modules of the Lets Go Ride Sharing App system. The algorithms cover primary operational flows including user onboarding, ride management, booking constraints, live tracking, safety escalation, and machine learning recommendations.
+
+\subsection{Algorithm 1: User Registration \& Verification}
+
+This algorithm handles the onboarding of new users, ensuring data validity, preventing duplicate accounts, and generating a secure OTP for identity verification before account activation.
+
+\begin{algorithm}[H]
+\caption{User Registration and OTP Generation}
+\textbf{Input:} User Data (Email, Phone, Password, Role) \\
+\textbf{Output:} JWT Token, Verification Status
+\begin{algorithmic}[1]
+\Function{RegisterUser}{$email, phone, pass, role$}
+    \If{\Call{CheckExists}{$email$} \textbf{or} \Call{CheckExists}{$phone$}}
+        \State \Return Error("User already exists")
+    \EndIf
+    \State $hashed\_pass \gets$ \Call{HashPassword}{$pass$}
+    \State $user \gets$ \Call{CreateRecord}{$email, phone, hashed\_pass, role$}
+    \State $otp \gets$ \Call{GenerateOTP}{6}
+    \State \Call{StoreOTP}{$user.id, otp, \text{expiry}=5\text{mins}$}
+    \State \Call{SendOTP}{$phone$} \Comment{Via Twilio/Firebase}
+    \State $token \gets$ \Call{GenerateJWT}{$user.id$}
+    \State \Return Success($token$, "OTP Sent")
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} The system first checks for unique constraints on email and phone number. It then securely hashes the password before creating the database record. A 6-digit OTP is generated, temporarily stored with an expiry, and dispatched via an external SMS provider. Finally, a JWT token is returned for session management pending OTP validation.
+
+\subsection{Algorithm 2: Ride Creation \& Fare Calculation}
+
+This algorithm is executed when a driver publishes a new ride. It calculates the total path distance based on geographical waypoints, and computes the dynamic fare using base rates and vehicle multipliers.
+
+\begin{algorithm}[H]
+\caption{Ride Creation and Fare Calculation}
+\textbf{Input:} Route Polyline, Waypoints list $W$, Vehicle Type $V$ \\
+\textbf{Output:} Ride Object, Total Estimated Fare
+\begin{algorithmic}[1]
+\Function{CreateRide}{$polyline, W, V$}
+    \State $total\_distance \gets 0.0$
+    \For{$i \gets 1 \textbf{ to } \Call{Length}{W}-1$}
+        \State $segment\_dist \gets$ \Call{CalculateDistance}{$W[i], W[i+1]$}
+        \State $total\_distance \gets total\_distance + segment\_dist$
+        \State \Call{SaveSegment}{$W[i], W[i+1], segment\_dist$}
+    \EndFor
+    \State $base\_rate\_per\_km \gets$ \Call{GetBaseRate}{}
+    \State $multiplier \gets$ \Call{GetVehicleMultiplier}{$V$}
+    \State $fare \gets total\_distance \times base\_rate\_per\_km \times multiplier$
+    \State $ride \gets$ \Call{SaveRideRecord}{$polyline, W, fare$}
+    \State \Return $ride, fare$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} The algorithm iterates through the ordered list of waypoints provided by the driver. It calculates the geographical distance for each segment (using OSRM or Haversine formula) and saves it for ETA calculations. The total fare is derived by applying a dynamic base rate multiplied by the specific vehicle category (e.g., standard, premium).
+
+\subsection{Algorithm 3: Ride Booking \& Seat Locking}
+
+This algorithm manages passenger booking requests, handling concurrency, seat availability, and strict gender preference constraints before locking a seat.
+
+\begin{algorithm}[H]
+\caption{Ride Booking and Seat Locking}
+\textbf{Input:} Passenger ID $P$, Ride ID $R$, Seats Requested $S$ \\
+\textbf{Output:} Booking Confirmation Status
+\begin{algorithmic}[1]
+\Function{BookRide}{$P, R, S$}
+    \State \Call{BeginDBTransaction}{}
+    \State $ride \gets$ \Call{FetchRideWithLock}{$R$} \Comment{Prevent race conditions}
+    \If{$ride.available\_seats < S$}
+        \State \Return Error("Not enough seats available")
+    \EndIf
+    \If{$ride.gender\_preference \neq \text{Any}$ \textbf{and} $P.gender \neq ride.gender\_preference$}
+        \State \Return Error("Gender constraint violation")
+    \EndIf
+    \State $ride.available\_seats \gets ride.available\_seats - S$
+    \State $booking \gets$ \Call{CreateBooking}{$P, R, S, \text{Status='Requested'}$}
+    \State \Call{Save}{$ride$}
+    \State \Call{CommitDBTransaction}{}
+    \State \Call{NotifyDriver}{$ride.driver, booking$}
+    \State \Return Success("Booking Requested")
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} To prevent overbooking (race conditions), a database lock is acquired on the ride record. The system validates seat availability and enforces any passenger gender preferences set by the driver. If valid, the seats are decremented, a pending booking record is created, and the driver is notified to accept or reject the request.
+
+\subsection{Algorithm 4: Live Tracking \& Pickup OTP Generation}
+
+This algorithm continuously processes the driver's live GPS coordinates to update passengers and generates a secure pickup code when the driver reaches the pickup zone.
+
+\begin{algorithm}[H]
+\small
+\caption{Live Tracking and Geofenced OTP}
+\textbf{Input:} Driver Location $L_D$, Passenger Pickup Location $L_P$, Ride ID $R$ \\
+\textbf{Output:} Live location broadcast, generated OTP
+\begin{algorithmic}[1]
+\Function{UpdateLiveLocation}{$L\_D, L\_P, R$}
+    \State \Call{BroadcastWebSocket}{$R, L\_D$}
+    \State $distance \gets$ \Call{HaversineDistance}{$L\_D, L\_P$}
+    \If{$distance \leq 100 \text{ meters}$}
+        \If{\textbf{not} \Call{OtpExists}{$R, P$}}
+            \State $pickup\_code \gets$ \Call{GenerateSecureCode}{4}
+            \State \Call{SaveCodeToDB}{$pickup\_code, R$}
+            \State \Call{NotifyPassenger}{$P, pickup\_code$}
+        \EndIf
+    \EndIf
+    \State \Return $distance$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} The driver's location is pushed to all subscribed passengers using WebSockets. Concurrently, the server calculates the spatial distance between the driver and the passenger's designated pickup point using the Haversine formula. When the driver enters a 100-meter geofence, a 4-digit pickup code is generated and securely passed to the passenger.
+
+\subsection{Algorithm 5: SOS Escalation Logic}
+
+This algorithm implements a multi-level automated escalation strategy to ensure rapid response during active ride emergencies.
+
+\begin{algorithm}[H]
+\small
+\caption{SOS Multi-Level Escalation}
+\textbf{Input:} User ID $U$, Ride ID $R$, Current Location $L$ \\
+\textbf{Output:} Triggered escalations and logs
+\begin{algorithmic}[1]
+\Function{HandleSOS}{$U, R, L$}
+    \If{\Call{SOSAlreadyActive}{$R$}}
+        \State \Return
+    \EndIf
+    
+    \State \Call{LogEvent}{$U, R, L, \text{Timestamp}$}
+    \State \Call{NotifyEmergencyContacts}{$U, L$} \Comment{SMS/Email link}
+    \State \Call{NotifyAdminDashboard}{$R, L$} \Comment{Real-time alert}
+    \State \Call{Sleep}{$120 \text{ seconds}$}
+    \If{\textbf{not} \Call{IsAcknowledged}{$R$}}
+        \State \Call{InitiateRoboCall}{$U$}
+        \State \Call{SendLocationSMS}{$U, L$}
+        \State \Call{Sleep}{$43200 \text{ seconds}$} \Comment{12 hours}
+        \If{\textbf{not} \Call{IsResolved}{$R$}}
+            \State \Call{FlagForAdminReview}{$R$}
+        \EndIf
+    \EndIf
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+
+\textbf{Explanation:} When an SOS button is triggered (requiring a 3-second long press to avoid misclicks), emergency contacts and system admins are immediately alerted. If the SOS is not acknowledged (marked safe) within 2 minutes, a secondary escalation triggers automated VoIP calls (via Twilio). A final 12-hour timeout flags the dispute for mandatory manual administrative resolution.
+
+\subsection{Algorithm 6: ML Ride Recommendation (Content-Based Filtering)}
+
+This algorithm personalizes the passenger's home feed by ranking available marketplace rides based on their historic travel profile using Natural Language Processing techniques.
+
+\begin{algorithm}[H]
+\caption{Term Frequency-Inverse Document Frequency (TF-IDF) Ride Matching}
+\textbf{Input:} User ID $U$, list of available rides $A$ \\
+\textbf{Output:} Top-N recommended rides ranked by similarity
+\begin{algorithmic}[1]
+\Function{RecommendRides}{$U, A$}
+    \State $history \gets$ \Call{GetCompletedRides}{$U, \text{limit}=30$}
+    \If{$history$ is empty}
+        \State \Return \Call{GetPopularTrendingRides}{10} \Comment{Cold start fallback}
+    \EndIf
+    \State $H\_texts \gets [ ]$
+    \For{\textbf{each} $r \in history$}
+        \State \Call{Append}{$H\_texts, r.source \oplus r.dest \oplus r.car\_type$}
+    \EndFor
+    \State $A\_texts \gets [ ]$
+    \For{\textbf{each} $r \in A$}
+        \State \Call{Append}{$A\_texts, r.source \oplus r.dest \oplus r.car\_type$}
+    \EndFor
+    \State $M\_tfidf \gets$ \Call{FitTransformTFIDF}{$H\_texts + A\_texts$}
+    \State $H\_vectors \gets$ \Call{Transform}{$H\_texts$}
+    \State $A\_vectors \gets$ \Call{Transform}{$A\_texts$}
+    \State $user\_profile \gets$ \Call{Mean}{$H\_vectors, \text{axis}=0$}
+    \State $similarities \gets$ \Call{CosineSimilarity}{$user\_profile, A\_vectors$}
+    \State $top\_indices \gets$ \Call{SortDescending}{$similarities$}[0 \dots 9]
+    \State \Return $[A[i] \text{ for } i \in top\_indices]$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} The algorithm extracts the textual features (origin, destination, and vehicle class) from the user's past 30 rides. It computes a TF-IDF matrix to weigh the significance of these terms. A composite \texttt{user\_profile\_vector} is created by averaging the historic ride vectors. Cosine similarity is then calculated against all currently active rides, sorting the results to present the 10 most contextually relevant rides.
+
+\subsection{Algorithm 7: Route ETA Calculation}
+
+This algorithm computes the estimated duration and distance between two specific passenger stops along a larger pre-calculated multi-stop ride.
+
+\begin{algorithm}[H]
+\caption{Dynamic Route Segment ETA Calculation}
+\textbf{Input:} Trip ID $T$, Pickup Order Index $O_P$, Drop-off Order Index $O_D$ \\
+\textbf{Output:} Total Duration (mins), Total Distance (km)
+\begin{algorithmic}[1]
+\Function{CalculateRouteDuration}{$T, O\_P, O\_D$}
+    \State $segments \gets$ \Call{QueryDB}{$TripStopBreakdown \text{ where } trip\_id = T$}
+    \State $total\_duration \gets 0$
+    \State $total\_distance \gets 0.0$
+    \For{\textbf{each} $seg \in segments$}
+        \If{$seg.from\_order \geq O\_P$ \textbf{and} $seg.to\_order \leq O\_D$}
+            \State $total\_duration \gets total\_duration + seg.duration\_minutes$
+            \State $total\_distance \gets total\_distance + seg.distance\_km$
+        \EndIf
+    \EndFor
+    \If{$total\_duration = 0$}
+        \State \Return Null \Comment{Invalid stop configuration}
+    \EndIf
+    \State \Return \Call{Ceil}{$total\_duration$}, $total\_distance$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} Instead of pinging external Map APIs during every passenger booking—which incurs high latency and cost—this algorithm queries a database table containing pre-computed individual segment nodes. By iterating and summing only the specific segments between the passenger's desired pickup and drop-off indices, it yields sub-second ETA and distance lookups.
+
+\subsection{Algorithm 8: Automated Trip Archiving \& Data Condensation}
+
+This algorithm runs asynchronously to archive rides completed more than 24 hours ago. It downsamples dense live-tracking GPS coordinates using an algorithm like Ramer-Douglas-Peucker to save storage space without losing geometric fidelity, stores the snapshot in an audit table, and purges operational rows to keep the active database lean.
+
+\begin{algorithm}[H]
+\caption{Automated Trip Archiving and Data Condensation}
+\textbf{Input:} Trip object $T$, Completion Time $t_{end}$, Raw GPS points $P$ \\
+\textbf{Output:} Archived Snapshot, Condensation Status
+\begin{algorithmic}[1]
+\Function{ArchiveTrip}{$T, t_{end}, P$}
+    \If{\Call{CurrentTime}{} - $t_{end} < 24$ hours}
+        \State \Return False \Comment{Wait for 24-hour buffer}
+    \EndIf
+    \If{\Call{HasPendingPayments}{$T$}}
+        \State \Return False
+    \EndIf
+    \State \Call{BeginDBTransaction}{}
+    \State $S \gets$ \Call{CreateTripSnapshot}{$T$}
+    \State $P_{simplified} \gets$ \Call{RamerDouglasPeuckerDownsample}{$P, \epsilon=0.0001$}
+    \State $S_{path} \gets$ \Call{ComputePathStats}{$P_{simplified}$}
+    \State \Call{PersistSnapshotAndPath}{$S, S_{path}$}
+    \State \Call{DeleteOperationalRecords}{$T.points, T.chats, T.events$}
+    \State \Call{DeleteTrip}{$T$}
+    \State \Call{CommitDBTransaction}{}
+    \State \Return True
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} This algorithm cleans up the database efficiently by migrating completed trip data to a historic archive. High-frequency live GPS points from driver broadcasts are simplified to their core geometric shapes before being persisted permanently.
+
+\subsection{Algorithm 9: Polyline Decoding for Route Geometry}
+
+This algorithm decodes the polyline strings returned by mapping services into a dense array of latitude and longitude coordinates, optimizing network payload size when fetching route geometries.
+
+\begin{algorithm}[H]
+\small
+\caption{Route Polyline Decoding (ORS/Google Format)}
+\textbf{Input:} Encoded string $E$ \\
+\textbf{Output:} List of $(lat, lng)$ coordinates
+\begin{algorithmic}[1]
+\Function{DecodePolyline}{$E$}
+    \State $coords \gets [~]$
+    \State $index \gets 0, lat \gets 0, lng \gets 0$
+    \While{$index <$ \Call{Length}{$E$}}
+        \State $dlat \gets$ \Call{DecodeNextVarint}{$E, index$}
+        \State $lat \gets lat + dlat$
+        \State $dlng \gets$ \Call{DecodeNextVarint}{$E, index$}
+        \State $lng \gets lng + dlng$
+        \State \Call{Append}{$coords, (lat / 10^5, lng / 10^5)$}
+    \EndWhile
+    \State \Return $coords$
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} Used within the backend route processing module, reducing large geospatial arrays to a compact single-string variable during API transmissions before reconstructing the line elements on the local server.
+
+\subsection{Algorithm 10: Ride Fare Negotiation Protocol}
+
+Facilitates real-time price bargaining. When a driver receives a passenger's booking request with a proposed lower fare, they can accept, reject, or submit a counteroffer.
+
+\begin{algorithm}[H]
+\caption{Ride Fare Negotiation State Machine}
+\textbf{Input:} Driver ID $D$, Passenger ID $P$, Booking $B$, Action $A$, Counter Fare $F_c$ \\
+\textbf{Output:} Negotiation State Update
+\begin{algorithmic}[1]
+\Function{ProcessNegotiation}{$D, P, B, A, F_c$}
+    \If{$A ==$ 'accept'}
+        \State $B.negotiated\_fare \gets B.passenger\_offer$
+        \State $B.bargaining\_status \gets$ 'ACCEPTED'
+        \State $B.booking\_status \gets$ 'CONFIRMED'
+    \ElsIf{$A ==$ 'counter'}
+        \State $B.negotiated\_fare \gets F_c$
+        \State $B.bargaining\_status \gets$ 'COUNTER\_OFFER'
+    \ElsIf{$A ==$ 'reject' \textbf{or} $A ==$ 'block'}
+        \State $B.bargaining\_status \gets$ 'REJECTED'
+        \State \Call{RestoreAvailableSeats}{$B$}
+    \EndIf
+    \State \Call{LogBargainingHistory}{$B.trip, A, D, P, F_c$}
+    \State \Call{PushNotificationToPassenger}{$P, A$}
+    \State \Call{Save}{$B$}
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} The state machine securely locks seats during active negotiations. This complex interaction logs continuous state transitions to an immutable history, ensuring safe conflict resolution later in dispute management.
+
+\subsection{Algorithm 11: Priority Asynchronous Push Notifications Dispatch}
+
+Decouples notification delivery from the main HTTP request thread, securely streaming outgoing data to Edge components without blocking endpoints.
+
+\begin{algorithm}[H]
+\caption{Asynchronous Push Notification Dispatch}
+\textbf{Input:} User ID $U$, Event Payload $E$, Background Worker Queue $Q$ \\
+\textbf{Output:} Delivery Confirmation
+\begin{algorithmic}[1]
+\Function{DispatchNotification}{$U, E$}
+    \State $fcm\_tokens \gets$ \Call{GetActiveDeviceTokens}{$U$}
+    \If{$fcm\_tokens$ is Empty}
+        \State \Return Null
+    \EndIf
+    \State $message \gets$ \Call{FormatFCMMessage}{$E, fcm\_tokens$}
+    \State \Call{EnqueuePushTask}{$Q, message$} \Comment{Offload to separate process / Edge Function}
+    \State \Return "Queued"
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} The backend queries registered device tokens and delegates the outbound Firebase Cloud Messaging network call to an asynchronous message broker or Supabase Edge Function to minimize API latency for the end user interaction flows.
+
+\subsection{Algorithm 12: Passenger Verification Guard Anti-Fraud Logic}
+
+A middleware-style interceptor that executes before high-privilege operations (like publishing a ride or booking a trip) to protect the community.
+
+\begin{algorithm}[H]
+\small
+\caption{Identity Verification Guard and Anti-Fraud Check}
+\textbf{Input:} User ID $U$, Action Type $A$ \\
+\textbf{Output:} Block Boolean, Reason
+\begin{algorithmic}[1]
+\Function{VerificationGuard}{$U, A$}
+    \State $user \gets$ \Call{FetchUserRecord}{$U$}
+    \If{$user.sys\_status ==$ 'BLOCKED'}
+        \State \Return True, "Account suspended due to policy violation"
+    \EndIf
+    \State $doc\_status \gets$ \Call{CheckDocuments}{$U$}
+    \If{$doc\_status ==$ 'REJECTED'}
+        \State \Return True, "Identity documents were rejected. Re-upload required"
+    \EndIf
+    \If{$A ==$ 'CREATE\_RIDE' \textbf{and} $doc\_status ==$ 'PENDING'}
+        \State \Return True, "Drivers must be fully verified to publish rides"
+    \EndIf
+    \State \Return False, "Authorized"
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} It evaluates the user's system flags and document verification states against the minimum requirements of the requested action, preventing unverified or suspended actors from compromising the platform.
+
+\subsection{Algorithm 13: Passenger Blacklisting Protocol}
+
+Allows a driver to persistently prevent specific passengers from viewing or booking their future rides based on behavioral metrics or previous conflicts.
+
+\begin{algorithm}[H]
+\caption{Driver-Initiated Passenger Blacklisting}
+\textbf{Input:} Driver ID $D$, Passenger ID $P$, Reason $R$ \\
+\textbf{Output:} Blacklist Status
+\begin{algorithmic}[1]
+\Function{BlacklistPassenger}{$D, P, R$}
+    \State \Call{CancelActiveBookings}{$D, P$}
+    \State \Call{CreateBlacklistRecord}{$D, P, R$}
+    \State $B \gets$ \Call{FetchPendingRequests}{$D, P$}
+    \For{\textbf{each} $booking \in B$}
+        \State $booking.status \gets$ 'CANCELLED'
+        \State \Call{ReleaseSeats}{$booking$}
+    \EndFor
+    \State \Call{UpdateDriverFilterPreferences}{$D, P$}
+    \State \Return Success
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} Any active bookings with the given passenger are rescinded, pre-locked inventory (seats) are liberated, and a database-level relationship constraint excludes the driver's listings from the passenger's subsequent searches.
+
+\subsection{Algorithm 14: In-Ride Chat Synchronization and Broadcast}
+
+Manages the distribution of messages securely over asynchronous sockets between verified members sharing an active trip.
+
+\begin{algorithm}[H]
+\caption{Chat Synchronization and Broadcast}
+\textbf{Input:} Sender ID $S$, Trip ID $T$, Message $M$, Recipients $R_{list}$ \\
+\textbf{Output:} Broadcast Output State
+\begin{algorithmic}[1]
+\Function{SyncChatMessage}{$S, T, M, R_{list}$}
+    \State $msg\_record \gets$ \Call{SaveToDatabase}{$S, T, M$}
+    \For{\textbf{each} $recipient \in R_{list}$}
+        \State \Call{PushToWebSocketChannel}{$recipient, msg\_record$}
+        \If{\textbf{not} \Call{IsOnline}{$recipient$}}
+            \State \Call{QueueOfflinePushNotification}{$recipient, M$}
+        \EndIf
+    \EndFor
+    \State \Return Success
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} The text payload is securely recorded into an immutable PostgreSQL ledger, and concurrently dispatched onto active Django Channel WebSockets mapped to corresponding user IDs. If socket connections drop, an offline mobile push notification triggers seamlessly.
+
+\subsection{Algorithm 15: Post-Trip Rating Aggregation \& Reputation Update}
+
+Following a completed ride, arriving passengers submit feedback score metrics. To maintain system performance at scale, the user’s master reputation score is incrementally mathematically evaluated rather than fully retrieved.
+
+\begin{algorithm}[H]
+\small
+\caption{Reputation \text{and} Rating Aggregation}
+\textbf{Input:} Reviewer ID $R_1$, Reviewee $R_2$, Trip $T$, Score $S$ \\
+\textbf{Output:} Updated Profile Rating
+\begin{algorithmic}[1]
+\Function{SubmitRating}{$R_1, R_2, T, S$}
+    \If{\Call{RatingAlreadyExists}{$T, R_1, R_2$}}
+        \State \Return Error("Duplicate Review")
+    \EndIf
+    \State \Call{SaveReview}{$T, R_1, R_2, S$}
+    \State $user\_profile \gets$ \Call{FetchProfile}{$R_2$}
+    \State $N \gets user\_profile.review\_count$
+    \State $C \gets user\_profile.current\_rating$
+    \State $new\_rating \gets \frac{(C \times N) + S}{N + 1}$
+    \State $user\_profile.current\_rating \gets new\_rating$
+    \State $user\_profile.review\_count \gets N + 1$
+    \State \Call{Save}{$user\_profile$}
+    \State \Return Success($new\_rating$)
+\EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\textbf{Explanation:} Implementing an exponential moving average logic updates the base historical reputation dynamically in mathematical amortized $O(1)$ constant time as opposed to demanding database re-summation over every single node metric previously cataloged by the system.
+
+% -------------------------------------------------
+% 5.4 External APIs / SDKs
+% -------------------------------------------------
+
+\section{External APIs / SDKs}
+
+The Lets Go Ride Sharing App system integrates several third-party services to provide core functionalities such as mapping, notifications, and AI assistance.
+
+\textbf{Authentication Mechanisms:} Most integrated APIs utilize securely injected environment variable API keys. FCM operates via service account JSON descriptors. Database connection pools to Supabase are encrypted utilizing TLS strings. Extracted machine learning resources at Hugging Face operate under access tokens.
+
+\begin{table}[H]
+\centering
+\caption{External Services and Technologies Used}
+\begin{tabularx}{\textwidth}{|p{3.5cm}|X|p{4cm}|}
+\hline
+\textbf{Service / Technology Name} & \textbf{Purpose} & \textbf{Used In Module} \\
+\hline
+Vercel & Platform-as-a-service cloud hosting used to deploy and scale the system's Admin Dashboard web portal with optimal content delivery networks (CDN). & Admin Portal, Build Environment \\
+\hline
+Hugging Face Spaces \& APIs & Hosts the Natural Language processing logic and machine learning recommendation inference models externally offloading heavy computation. & Recommendation Engine \\
+\hline
+Supabase (PostgreSQL \& Edge Functions) & Provides managed PostgreSQL database infrastructure along with serverless Edge Functions utilized for dispatching background tasks efficiently. & Backend Database, Push Tasks \\
+\hline
+Firebase Cloud Messaging (FCM) & Facilitates real-time, low-latency device push notifications across Android, iOS, and Web for critical user alerts, matching, and messaging APIs. & Notification Service \\
+\hline
+Google Maps Flutter Plugin & Provides interactive maps for route creation, live tracking, and location picking. Integrates with platform-specific SDKs for Android/iOS. & Ride Management, Live Tracking \\
+\hline
+Open Source Routing Machine (OSRM) & Backend geographic service specifically engineered for distance metrics, shortest-paths, routing topology construction, and ETA. & Fare Calculation, Route Planning \\
+\hline
+Twilio \& SMTP & SMS and SMTP gateways used respectively for high delivery OTP two-factor verification codes, SOS emergency SMS relays, and formal email traces. & Authentication, Account Recovery \\
+\hline
+\end{tabularx}
+\end{table}
+
+% -------------------------------------------------
+% 5.5 User Interface Implementation
+% -------------------------------------------------
+
+\section{User Interface Implementation}
+
+This section presents the implementation of all major user interface screens in the Lets Go Ride Sharing App mobile application (Flutter) and the admin web portal.
+
+\subsection{UI Design Approach}
+
+The UI follows \textbf{Material Design 3} guidelines to ensure a modern, intuitive, and consistent look across both Android and iOS platforms. Key principles include:
+
+\begin{itemize}
+    \item \textbf{Minimalistic design:} Clean layouts with ample white space, focusing on essential information.
+    \item \textbf{Consistent color scheme:} Primary color: teal (\#006064) for buttons and highlights; secondary: amber (\#FFA000) for warnings and alerts.
+    \item \textbf{Typography:} Roboto font family with clear hierarchy (headings, body, captions).
+    \item \textbf{Accessibility:} High contrast text, minimum touch target size 48x48 dp, support for screen readers (TalkBack/VoiceOver).
+    \item \textbf{Responsive design:} Mobile-first approach with adaptive layouts using Flutter's LayoutBuilder and MediaQuery; admin panel uses Bootstrap 5 for desktop responsiveness.
+\end{itemize}
+
+Wireframing was done in Figma, and the final designs were implemented in Flutter using custom widgets and theming.
+
+\subsection{Screen-wise Implementation}
+
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{1pt}
+
+
+
+
+\subsubsection{Screen 1: Signup Personal Info}
+
+\textbf{Purpose:} Initial stage of user registration where basic personal details are collected.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Fields for First Name, Last Name, Email, and Password.
+    \item Profile picture upload interaction.
+    \item Gender selection options.
+\end{itemize}
+
+\textbf{Functional Flow:}
+\begin{enumerate}
+    \item User fills in the required profile information.
+    \item Form validation checks for correct email format and password strength.
+    \item User proceeds to the next registration step.
+\end{enumerate}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/signup_personal_info.jpeg}}
+\caption{Signup Personal Info}
+\end{figure}
+
+\subsubsection{Screen 2: Signup Emergency Contact}
+
+\textbf{Purpose:} Collection of emergency contact information to enhance user safety during rides.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Input fields for Emergency Contact Name and Relationship.
+    \item Phone number field with country code support.
+    \item "Next" button for flow progression.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/signup_emergency_contact.jpeg}}
+\caption{Signup Emergency Contact}
+\end{figure}
+
+\subsubsection{Screen 3: OTP Verification}
+
+\textbf{Purpose:} Security step to verify the user's mobile number via a one-time password.
+
+\textbf{Components:}
+\begin{itemize}
+    \item 6-digit numeric input fields.
+    \item Resend OTP timer and button.
+    \item Verification success/failure feedback.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/signup_otp_verification.jpeg}}
+\caption{OTP Verification}
+\end{figure}
+
+\subsubsection{Screen 4: Login Screen}
+
+\textbf{Purpose:} Primary entry point for existing users to access the platform.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Email and Password input fields.
+    \item Remember Me checkbox.
+    \item "Login" button and navigation to registration/forgot password.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/login_screen.jpeg}}
+\caption{Login Screen}
+\end{figure}
+
+\subsubsection{Screen 5: Account Status (Banned/Rejected)}
+
+\textbf{Purpose:} Informs the user of their account status if access is denied by administrators.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Status illustration and clear warning message.
+    \item Contact Support option for appealing the decision.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/account_banned.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/account_rejected.jpeg}}
+\end{minipage}
+\caption{Account Status (Banned/Rejected)}
+\end{figure}
+
+\subsubsection{Screen 6: Create Route - Search Location}
+
+\textbf{Purpose:} Gateway for drivers to start the ride posting process by searching for locations.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Search bar with Google Maps API integration.
+    \item Suggested locations and history list.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/create_route_search_location.jpeg}}
+\caption{Create Route - Search Location}
+\end{figure}
+
+\subsubsection{Screen 7: Create Route - Map View}
+
+\textbf{Purpose:} Graphical interface for drivers to confirm the path of their proposed ride.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Map display with route polyline and location markers.
+    \item Zoom and re-center controls.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/create_route_map_view.jpeg}}
+\caption{Create Route - Map View}
+\end{figure}
+
+\subsubsection{Screen 8: Create Route - Add/Edit Stops}
+
+\textbf{Purpose:} Allows customization of the route with intermediate pickup and drop-off points.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Stop list with reordering capabilities.
+    \item Map update reflecting new stops.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/create_route_add_stop.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/edit_ride_stops_breakdown.jpeg}}
+\end{minipage}
+\caption{Create Route - Add/Edit Stops}
+\end{figure}
+
+\subsubsection{Screen 9: Create Ride - Select Time \& Date}
+
+\textbf{Purpose:} Setting the operational window for the ride.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Date picker and localized time selector.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/create_ride_select_time.jpeg}}
+\caption{Create Ride - Select Time \& Date}
+\end{figure}
+
+\subsubsection{Screen 10: Create Ride - Select Seats}
+
+\textbf{Purpose:} Drivers specify the maximum passenger capacity for the trip.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Seat count adjuster (1-4 standard).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/create_ride_select_seats.jpeg}}
+\caption{Create Ride - Select Seats}
+\end{figure}
+
+\subsubsection{Screen 11: Create Ride - Gender Preference}
+
+\textbf{Purpose:} Security and comfort feature allowing drivers to filter passenger requests by gender.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Toggle for Male, Female, or Any gender.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/create_ride_gender_preference.jpeg}}
+\caption{Create Ride - Gender Preference}
+\end{figure}
+
+\subsubsection{Screen 12: Create Ride - Fare \& Total Price}
+
+\textbf{Purpose:} Interface for setting and reviewing ride costs.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Base fare entry and total trip value calculator.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/create_ride_total_price.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/create_ride_edit_stop_price.jpeg}}
+\end{minipage}
+\caption{Create Ride - Fare \& Total Price}
+\end{figure}
+
+\subsubsection{Screen 13: Create Ride - Summary \& Final Details}
+
+\textbf{Purpose:} Final confirmation before a ride is published to the network.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Full trip manifest summary.
+    \item "Confirm and Post" action button.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/create_ride_summary.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/create_ride_final_details.jpeg}}
+\end{minipage}
+\caption{Create Ride - Summary \& Final Details}
+\end{figure}
+
+\subsubsection{Screen 14: Find Ride - Select Pickup/Drop}
+
+\textbf{Purpose:} Passenger search interface for finding relevant rides.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Origin and Destination search fields.
+    \item Visual location markers.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/find_ride_select_pickup.jpeg}}
+\caption{Find Ride - Select Pickup/Drop}
+\end{figure}
+
+\subsubsection{Screen 15: Find Ride - Filters}
+
+\textbf{Purpose:} Allows tailoring of search results to match passenger criteria.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Price range, time, and rating filters.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/find_ride_filters.jpeg}}
+\caption{Find Ride - Filters}
+\end{figure}
+
+\subsubsection{Screen 16: Find Ride - Available Rides List}
+
+\textbf{Purpose:} Result display for active ride offerings.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Scrollable list of ride cards.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/find_ride_available_rides.jpeg}}
+\caption{Find Ride - Available Rides List}
+\end{figure}
+
+\subsubsection{Screen 17: Ride Details View}
+
+\textbf{Purpose:} Exhaustive view of all ride parameters for passenger review.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Driver profile, vehicle info, and full timeline.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/ride_details_part1.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/ride_details_part2.jpeg}}
+\end{minipage}
+\caption{Ride Details View}
+\end{figure}
+
+\subsubsection{Screen 18: Booking Details \& Seat Selection}
+
+\textbf{Purpose:} Selection of required seats and confirmation of booking conditions.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Seat count and specific stop selection.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/passenger_book_ride_details.jpeg}}
+\caption{Booking Details \& Seat Selection}
+\end{figure}
+
+\subsubsection{Screen 19: Fare Negotiation}
+
+\textbf{Purpose:} Dynamic pricing module enabling passenger counter-offers.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Price negotiation bar and message input.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/passenger_negotiation_details.jpeg}}
+\caption{Fare Negotiation}
+\end{figure}
+
+\subsubsection{Screen 20: Driver Response / Waiting State}
+
+\textbf{Purpose:} Real-time feedback for passengers during the booking approval process.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Animated waiting indicator and request status.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/driver_response_screen.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/my_bookings_pending.jpeg}}
+\end{minipage}
+\caption{Driver Response / Waiting State}
+\end{figure}
+
+\subsubsection{Screen 21: My Bookings - Confirmed/Active}
+
+\textbf{Purpose:} Dashboard for users to track their upcoming and active trip commitments.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Active ride cards with quick actions (Chat, Tracking).
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/my_bookings_confirmed.jpeg}}
+\caption{My Bookings - Confirmed/Active}
+\end{figure}
+
+\subsubsection{Screen 22: Passenger Live Tracking}
+
+\textbf{Purpose:} Real-time map monitoring of the driver's progress toward the passenger.
+
+\textbf{Components:}
+\begin{itemize}
+    \item GPS markers for vehicle and pickup location.
+    \item Dynamic ETA updates.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/passenger_live_tracking_start.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/live_ride_tracking.jpeg}}
+\end{minipage}
+\caption{Passenger Live Tracking}
+\end{figure}
+
+\subsubsection{Screen 23: Driver Live Ride Tracking}
+
+\textbf{Purpose:} Main operational interface for drivers during trip execution.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Map navigation and passenger manifest.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/driver_live_ride_tracking.jpeg}}
+\caption{Driver Live Ride Tracking}
+\end{figure}
+
+\subsubsection{Screen 24: Driver Pickup QR Code}
+
+\textbf{Purpose:} Secure boarding verification for passengers.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Unique Ride QR code for passenger scanning.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/driver_pickup_qr_code.jpeg}}
+\caption{Driver Pickup QR Code}
+\end{figure}
+
+\subsubsection{Screen 25: Chat Interface (Individual)}
+
+\textbf{Purpose:} Facilitates direct communication between drivers and their passengers.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Messaging thread with timestamped bubbles.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/chat_screen.jpeg}}
+\caption{Chat Interface (Individual)}
+\end{figure}
+
+\subsubsection{Screen 26: Driver Broadcast Messaging}
+
+\textbf{Purpose:} Efficiency tool allowing drivers to update all passengers at once.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Multi-recipient text interface.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/driver_broadcast_message.jpeg}}
+\caption{Driver Broadcast Messaging}
+\end{figure}
+
+\subsubsection{Screen 27: Support Chat - Bot \& Admin}
+
+\textbf{Purpose:} Dedicated channel for platform support and manual resolution.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Bot response options and live admin escalation.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/support_chat_bot.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/support_chat_admin.jpeg}}
+\end{minipage}
+\caption{Support Chat - Bot \& Admin}
+\end{figure}
+
+\subsubsection{Screen 28: Notifications List}
+
+\textbf{Purpose:} Chronological feed of all user-specific system alerts.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Notification cards with deep-link capabilities.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/notifications_list.jpeg}}
+\caption{Notifications List}
+\end{figure}
+
+\subsubsection{Screen 29: Emergency SOS Countdown}
+
+\textbf{Purpose:} Immediate safety intervention tool for users in distress.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Visual countdown and loud alarm toggle.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/emergency_sos_countdown.jpeg}}
+\caption{Emergency SOS Countdown}
+\end{figure}
+
+\subsubsection{Screen 30: SOS Notification List}
+
+\textbf{Purpose:} Platform-side monitoring of active emergency situations.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Urgent incident list with location pins.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/notifications_list_sos.jpeg}}
+\caption{SOS Notification List}
+\end{figure}
+
+\subsubsection{Screen 31: SOS Error/Network States}
+
+\textbf{Purpose:} Fallback messaging for safety features during connection loss.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Offline emergency instructions and local protocols.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/emergency_sos_network_error.jpeg}}
+\caption{SOS Error/Network States}
+\end{figure}
+
+\subsubsection{Screen 32: Profile Overview}
+
+\textbf{Purpose:} Hub for managing personal stats, earnings, and application settings.
+
+\textbf{Components:}
+\begin{itemize}
+    \item User profile card and navigation menu.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/profile_general_info.jpeg}}
+\caption{Profile Overview}
+\end{figure}
+
+\subsubsection{Screen 33: Ride History (Booked/Created)}
+
+\textbf{Purpose:} Allows users to browse and audit their previous trip data.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Detailed history records with route summaries.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/profile_ride_history.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/profile_created_rides_history.jpeg}}
+\end{minipage}
+\caption{Ride History (Booked/Created)}
+\end{figure}
+
+\subsubsection{Screen 34: Ride Details - Completed}
+
+\textbf{Purpose:} Granular summary of a finished trip, including final fares and ratings.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Trip summary card and feedback options.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/my_bookings_completed.jpeg}}
+\caption{Ride Details - Completed}
+\end{figure}
+
+\subsubsection{Screen 35: Driver Verification Documents (Edit)}
+
+\textbf{Purpose:} Documentation portal for maintaining driver and vehicle eligibility.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Image upload and text fields for ID and vehicle registration.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.30\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/driver_license_vehicle_info.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.30\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/edit_driving_license.jpeg}}
+\end{minipage}\hfill
+\begin{minipage}{0.30\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/vehicle_details_card.jpeg}}
+\end{minipage}
+\caption{Driver Verification Documents (Edit)}
+\end{figure}
+
+\subsubsection{Screen 36: Web Live Tracking (External)}
+
+\textbf{Purpose:} Public desktop tracking interface for guest safety monitoring.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Desktop-scale live map and trip status.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\fbox{\includegraphics[width=0.45\textwidth,keepaspectratio,height=0.8\textheight]{assets/app screenshot/web_live_tracking.jpeg}}
+\caption{Web Live Tracking (External)}
+\end{figure}
+
+\subsubsection{Screen 37: Admin Dashboard - SOS \& Disputes}
+
+\textbf{Purpose:} High-level control panel for platform health and safety monitoring.
+
+\textbf{Components:}
+\begin{itemize}
+    \item Multi-pane web view for real-time operations.
+\end{itemize}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/admin_dashboard_sos.png}}
+\end{minipage}\hfill
+\begin{minipage}{0.45\textwidth}
+\centering
+\fbox{\includegraphics[width=\textwidth,keepaspectratio]{assets/app screenshot/dashboard images/maindasboard.jpeg}}
+\end{minipage}
+\caption{Admin Dashboard - SOS \& Disputes}
+\end{figure}
+
+\subsection{Navigation Flow Diagram}
+
+The overall navigation flow of the mobile app is illustrated below:
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth,keepaspectratio,height=0.8\textheight]{assets/db_diagrams/navigation_flow_diagram.png}
+\caption{Application Navigation Flow}
+\end{figure}
+
+\subsection{Responsiveness and Performance}
+
+The Flutter app is designed to be responsive across various screen sizes using:
+\begin{itemize}
+    \item \texttt{LayoutBuilder} and \texttt{MediaQuery} to adapt layouts.
+    \item \texttt{Expanded} and \texttt{Flexible} widgets for dynamic spacing.
+    \item Separate tablet layouts for larger screens (e.g., two-pane view for ride details).
+\end{itemize}
+
+Performance optimizations include:
+\begin{itemize}
+    \item Lazy loading of ride lists with pagination.
+    \item Image caching using \texttt{cached\_network\_image}.
+    \item State management with Provider to avoid unnecessary rebuilds.
+    \item Background location updates throttled to save battery.
+\end{itemize}
+
+% -------------------------------------------------
+% 5.6 Deployment
+% -------------------------------------------------
+
+\section{Deployment}
+
+The Lets Go Ride Sharing App system is deployed using modern cloud platforms to ensure high availability, scalability, and ease of maintenance. The backend services and administrative portal are hosted on Vercel, while the database and storage are managed via Supabase.
+
+\begin{table}[htbp]
+\centering
+\caption{Deployment Details}
+\begin{tabularx}{\textwidth}{|p{3cm}|p{3cm}|X|}
+\hline
+\textbf{Component} & \textbf{Platform} & \textbf{URL/Details} \\
+\hline
+Backend API & Vercel & https://lets-go-bay.vercel.app (Serverless Deployment) \\
+\hline
+Database & Supabase & Managed PostgreSQL with built-in authentication and real-time capabilities \\
+\hline
+ML Service & Hugging Face & Hosted inference endpoints for ride recommendations and AI features \\
+\hline
+Admin Web Panel & Vercel & https://lets-go-bay.vercel.app/administration/ \\
+\hline
+Mobile App (Android) & GitHub Releases & Direct APK download for users and testers \\
+\hline
+Storage & Supabase Storage & Optimized object storage for user documents and media \\
+\hline
+\end{tabularx}
+\end{table}
+
+\textbf{CI/CD:} GitHub Actions and Vercel's native integration are used for:
+\begin{itemize}
+    \item \textbf{Backend \& Admin Panel:} Automatic deployment to Vercel upon merging changes to the \texttt{main} branch.
+    \item \textbf{Mobile App:} Automated build pipelines for generating release-ready APKs, which are then uploaded to GitHub Releases.
+\end{itemize}
+
+\textbf{Security Measures:}
+\begin{itemize}
+    \item \textbf{HTTPS Encryption:} SSL/TLS certificates provided by Vercel and Supabase ensure all data in transit is encrypted.
+    \item \textbf{Authentication:} Secure JWT-based authentication managed by the backend and Supabase Auth.
+    \item \textbf{Environment Security:} All sensitive credentials and API keys are managed through Vercel's environment variables, ensuring they are never exposed in the source code.
+\end{itemize}
+
+
+% -------------------------------------------------
+% Chapter Summary
+% -------------------------------------------------
+
+\section*{Chapter Summary}
+
+This chapter presented the detailed implementation of the Lets Go Ride Sharing App system, covering development environment, core modules, algorithms, external integrations, user interface, and deployment. The implementation followed the object-oriented design and modular architecture established in Chapter 4, resulting in a cohesive, maintainable, and scalable system.
+
+Key achievements include:
+\begin{itemize}
+    \item Successful translation of 25 use cases into working code.
+    \item Integration of ML-based ride recommendations via Hugging Face.
+    \item Robust safety features including SOS escalation and pickup code verification.
+    \item Android mobile app with intuitive UI and responsive design.
+    \item Fully deployed system using Vercel, Supabase, and GitHub Actions.
+
+\end{itemize}
+
+The implemented system is now ready for comprehensive testing and evaluation, as discussed in the next chapter.

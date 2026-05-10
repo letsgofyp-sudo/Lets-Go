@@ -55,21 +55,33 @@ class _SignupEmergencyContactScreenState extends State<SignupEmergencyContactScr
       return;
     }
 
-    if (phone.startsWith('+')) {
-      String? best;
-      for (final code in _countryCodes) {
-        if (phone.startsWith(code) && (best == null || code.length > best.length)) {
-          best = code;
-        }
-      }
-      if (best != null) {
-        _selectedCountryCode = best;
-        _phoneController.text = phone.substring(best.length);
-        return;
+    // Emergency phone is stored as digits-only (no '+'), including country code digits.
+    // Accept legacy values with '+' and normalize both.
+    final digits = phone.replaceAll(RegExp(r'\D'), '');
+    if (digits.isEmpty) {
+      _phoneController.text = '';
+      return;
+    }
+
+    String? bestDigits;
+    String? bestCode;
+    for (final code in _countryCodes) {
+      final ccDigits = code.replaceAll(RegExp(r'\D'), '');
+      if (ccDigits.isEmpty) continue;
+      if (digits.startsWith(ccDigits) && (bestDigits == null || ccDigits.length > bestDigits.length)) {
+        bestDigits = ccDigits;
+        bestCode = code;
       }
     }
 
-    _phoneController.text = phone;
+    if (bestDigits != null && bestCode != null) {
+      _selectedCountryCode = bestCode;
+      _phoneController.text = digits.substring(bestDigits.length);
+      return;
+    }
+
+    // Fallback: keep digits as local part.
+    _phoneController.text = digits;
   }
 
   Future<bool> _handleBack() async {
@@ -177,6 +189,10 @@ class _SignupEmergencyContactScreenState extends State<SignupEmergencyContactScr
     await prefs.remove('signup_cnic');
     await prefs.remove('signup_vehicles');
     await prefs.remove('signup_vehicle_images');
+    await prefs.remove('pending_signup_status');
+    await prefs.remove('signup_username_verified');
+    await prefs.remove('signup_verified_username');
+    await prefs.remove('signup_last_reserved_username');
     await prefs.remove('signup_step');
     await prefs.remove('signup_locked');
     await prefs.remove('pending_signup');
@@ -211,7 +227,13 @@ class _SignupEmergencyContactScreenState extends State<SignupEmergencyContactScr
                     if (val == null) return;
                     setState(() {
                       _selectedCountryCode = val;
-                      _fields['phone_no'] = _selectedCountryCode + _phoneController.text.trim();
+                      final ccDigits = _selectedCountryCode.replaceAll(RegExp(r'\D'), '');
+                      final localDigits = _phoneController.text.trim().replaceAll(RegExp(r'\D'), '');
+                      if (localDigits.isEmpty) {
+                        _fields.remove('phone_no');
+                      } else {
+                        _fields['phone_no'] = ccDigits + localDigits;
+                      }
                     });
                   },
                 ),
@@ -240,13 +262,17 @@ class _SignupEmergencyContactScreenState extends State<SignupEmergencyContactScr
             return 'Only letters and basic punctuation allowed';
           }
         }
-        if (fieldName == 'email' && !RegExp(r'^.+@.+\..+').hasMatch(v)) {
-          return 'Enter a valid email';
+        if (fieldName == 'email') {
+          final ok = RegExp(
+            r'^[^@\s]+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\.([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*\.[A-Za-z]{2,24}$',
+          ).hasMatch(v);
+          if (!ok) return 'Enter a valid email with a valid domain';
         }
         if (isPhone) {
-          final fullNumber = _selectedCountryCode + v;
-          if (!RegExp(r'^\+\d{10,15}$').hasMatch(fullNumber)) {
-            return 'Phone must be in format +923001234567 (10-15 digits total).';
+          final ccDigits = _selectedCountryCode.replaceAll(RegExp(r'\D'), '');
+          final fullDigits = (ccDigits + v).replaceAll(RegExp(r'\D'), '');
+          if (!RegExp(r'^\d{10,15}$').hasMatch(fullDigits)) {
+            return 'Phone must be 10-15 digits (no +).';
           }
         }
         return null;
@@ -257,7 +283,8 @@ class _SignupEmergencyContactScreenState extends State<SignupEmergencyContactScr
           if (v.isEmpty) {
             _fields.remove(fieldName);
           } else {
-            _fields[fieldName] = _selectedCountryCode + v;
+            final ccDigits = _selectedCountryCode.replaceAll(RegExp(r'\D'), '');
+            _fields[fieldName] = (ccDigits + v).replaceAll(RegExp(r'\D'), '');
           }
         } else {
           final v = (value ?? '').trim();
@@ -274,7 +301,8 @@ class _SignupEmergencyContactScreenState extends State<SignupEmergencyContactScr
           if (v.isEmpty) {
             _fields.remove(fieldName);
           } else {
-            _fields[fieldName] = _selectedCountryCode + v;
+            final ccDigits = _selectedCountryCode.replaceAll(RegExp(r'\D'), '');
+            _fields[fieldName] = (ccDigits + v).replaceAll(RegExp(r'\D'), '');
           }
         } else {
           final v = value.trim();

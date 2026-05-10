@@ -4,14 +4,20 @@ from django.views.decorators.http import require_GET
 from django.core.cache import cache
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+from django.db.models import Q, Count, Sum, F, OuterRef, Exists, Subquery, Value, DecimalField, ExpressionWrapper, FloatField, IntegerField
+from django.db.models.functions import Coalesce, TruncDate, Cast
+from django.db.models.fields import DateTimeField
 from django.db.utils import OperationalError
 from django.conf import settings
+from django.utils import timezone
+from datetime import timedelta
+from decimal import Decimal
 import time as pytime
 import logging
 
 from django.shortcuts import redirect
 
-from ..models import UsersData, Vehicle, Trip, EmergencyContact, ChangeRequest
+from ..models import UsersData, Vehicle, Trip, Booking, EmergencyContact, ChangeRequest
 from ..constants import url
 from ..utils.email_otp import send_email_otp
 from ..utils.phone_otp_send import send_phone_otp
@@ -27,6 +33,215 @@ from .views_authentication import (
 
 
 logger = logging.getLogger(__name__)
+
+
+@csrf_exempt
+def user_analytics(request, user_id):
+    if request.method != 'GET':
+        return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=400)
+
+    try:
+        user = UsersData.objects.only('id').get(id=user_id)
+    except UsersData.DoesNotExist:
+        return JsonResponse({'success': False, 'error': 'User not found'}, status=404)
+
+    now = timezone.now()
+    window_days_raw = (request.GET.get('window_days') or '').strip()
+    window_days = None
+    if window_days_raw:
+        try:
+            window_days = int(window_days_raw)
+            if window_days <= 0:
+                window_days = None
+        except Exception:
+            window_days = None
+
+    cutoff = now - timedelta(hours=24)
+    range_start = None
+    if window_days is not None:
+        range_start = cutoff - timedelta(days=window_days)
+
+    revenue_expr = ExpressionWrapper(
+        Cast(F('base_fare'), DecimalField(max_digits=18, decimal_places=2))
+        * Cast(F('booking_count'), DecimalField(max_digits=18, decimal_places=2)),
+        output_field=DecimalField(max_digits=18, decimal_places=2),
+    )
+    zero_decimal = Value(Decimal('0.00'), output_field=DecimalField(max_digits=18, decimal_places=2))
+    zero_float = Value(0.0, output_field=FloatField())
+
+    try:
+        driver_trip_qs = Trip.objects.filter(driver=user)
+        driver_trip_qs = driver_trip_qs.filter(trip_status__in=['COMPLETED', 'CANCELLED'])
+
+        driver_trip_qs = driver_trip_qs.annotate(
+            finalized_at=Coalesce('cancelled_at', 'completed_at', 'updated_at', output_field=DateTimeField()),
+        ).filter(finalized_at__lte=cutoff)
+
+        if range_start is not None:
+            driver_trip_qs = driver_trip_qs.filter(finalized_at__gte=range_start)
+
+    except Exception as e:
+        print(f'exception on analytics [driver_trip_qs] {e}')
+        driver_trip_qs = Trip.objects.none()
+
+    try:
+        # Exclude trips where there is any confirmed/completed booking that is not paid,
+        # unless the trip is cancelled.
+        pending_payment_q = (
+            Booking.objects.filter(
+                trip=OuterRef('pk'),
+                booking_status__in=['CONFIRMED', 'COMPLETED'],
+            )
+            .exclude(payment_status='COMPLETED')
+        )
+
+        booking_count_subq = (
+            Booking.objects.filter(
+                trip=OuterRef('pk'),
+                booking_status__in=['CONFIRMED', 'COMPLETED'],
+            )
+            .values('trip')
+            .annotate(c=Count('id'))
+            .values('c')
+        )
+
+        driver_trip_qs = driver_trip_qs.annotate(
+            booking_count=Coalesce(Subquery(booking_count_subq[:1]), Value(0, output_field=IntegerField())),
+            has_pending_payment=Exists(pending_payment_q),
+        ).filter(Q(trip_status='CANCELLED') | Q(has_pending_payment=False))
+    except Exception:
+        # Fallback: no pending-payment exclusion if annotation fails.
+        driver_trip_qs = driver_trip_qs.annotate(
+            booking_count=Value(0, output_field=IntegerField()),
+        )
+
+    try:
+        created_total = int(driver_trip_qs.count())
+        created_completed = int(driver_trip_qs.filter(trip_status='COMPLETED').count())
+        created_cancelled = int(driver_trip_qs.filter(trip_status='CANCELLED').count())
+
+        agg_driver = driver_trip_qs.aggregate(
+            total_bookings=Coalesce(Sum('booking_count'), 0),
+            distance_km=Coalesce(Sum('total_distance_km', output_field=FloatField()), zero_float),
+            revenue=Coalesce(Sum(revenue_expr), zero_decimal),
+        )
+        created_total_bookings = int(agg_driver.get('total_bookings') or 0)
+        created_distance_km = float(agg_driver.get('distance_km') or 0)
+        revenue_earned = int(agg_driver.get('revenue') or 0)
+    except Exception as e:
+        created_total = 0
+        created_completed = 0
+        created_cancelled = 0
+        created_total_bookings = 0
+        created_distance_km = 0.0
+        revenue_earned = 0
+        print(f'exception on analytics [agg_driver] {e}')
+
+    try:
+        booked_qs = Booking.objects.filter(
+            passenger=user,
+            ride_status='DROPPED_OFF',
+            payment_status='COMPLETED',
+        )
+        booked_qs = booked_qs.annotate(
+            finalized_at=Coalesce('dropoff_at', 'completed_at', 'updated_at', output_field=DateTimeField()),
+        ).filter(finalized_at__lte=cutoff)
+
+        if range_start is not None:
+            booked_qs = booked_qs.filter(finalized_at__gte=range_start)
+
+        booked_total = int(booked_qs.count())
+        booked_completed = int(booked_qs.filter(booking_status='COMPLETED').count())
+        agg_booked = booked_qs.aggregate(
+            spent_total=Coalesce(
+                Sum('total_fare', output_field=IntegerField()),
+                Value(0, output_field=IntegerField()),
+            )
+        )
+        spent_total = int(agg_booked.get('spent_total') or 0)
+    except Exception as e:
+        booked_total = 0
+        booked_completed = 0
+        spent_total = 0
+        print(f'exception on analytics [agg_booked] {e}')
+
+    avg_earning_per_ride = (float(revenue_earned) / float(created_total)) if created_total > 0 else 0.0
+    avg_spend_per_booking = (float(spent_total) / float(booked_total)) if booked_total > 0 else 0.0
+
+    try:
+        driver_by_day_qs = (
+            driver_trip_qs.annotate(day=TruncDate('finalized_at'))
+            .values('day')
+            .annotate(
+                revenue=Coalesce(Sum(revenue_expr), zero_decimal),
+                rides=Count('id'),
+                bookings=Coalesce(Sum('booking_count'), 0),
+            )
+            .order_by('day')
+        )
+        driver_by_day = [
+            {
+                'day': row['day'].isoformat() if row.get('day') else None,
+                'revenue': int(row.get('revenue') or 0),
+                'rides': int(row.get('rides') or 0),
+                'bookings': int(row.get('bookings') or 0),
+            }
+            for row in driver_by_day_qs
+        ]
+    except Exception as e:
+        print(f'exception on analytics [driver_by_day] {e}')
+        driver_by_day = []
+
+    try:
+        passenger_by_day_qs = (
+            booked_qs.annotate(day=TruncDate('finalized_at'))
+            .values('day')
+            .annotate(
+                spent=Coalesce(
+                    Sum('total_fare', output_field=IntegerField()),
+                    Value(0, output_field=IntegerField()),
+                ),
+                bookings=Count('id'),
+            )
+            .order_by('day')
+        )
+        passenger_by_day = [
+            {
+                'day': row['day'].isoformat() if row.get('day') else None,
+                'spent': int(row.get('spent') or 0),
+                'bookings': int(row.get('bookings') or 0),
+            }
+            for row in passenger_by_day_qs
+        ]
+    except Exception as e:
+        print(f'exception on analytics [passenger_by_day] {e}')
+        passenger_by_day = []
+
+    return JsonResponse(
+        {
+            'success': True,
+            'analytics': {
+                'window_days': window_days,
+                'range_end': cutoff.isoformat() if cutoff else None,
+                'range_start': range_start.isoformat() if range_start else None,
+                'created_total': created_total,
+                'created_completed': created_completed,
+                'created_cancelled': created_cancelled,
+                'created_total_bookings': created_total_bookings,
+                'created_distance_km': created_distance_km,
+                'revenue_earned': revenue_earned,
+                'avg_earning_per_ride': avg_earning_per_ride,
+                'booked_total': booked_total,
+                'booked_completed': booked_completed,
+                'spent_total': spent_total,
+                'avg_spend_per_booking': avg_spend_per_booking,
+                'driver_by_day': driver_by_day,
+                'passenger_by_day': passenger_by_day,
+                'sample_size_created': created_total,
+                'sample_size_booked': booked_total,
+            },
+        }
+    )
 
 
 @csrf_exempt
@@ -489,7 +704,7 @@ def upload_vehicle_images(request, user_id):
     try:
         UsersData.objects.only('id').get(id=user_id)
 
-        plate = (request.POST.get('plate_number') or request.POST.get('plate') or '').strip().upper()
+        plate = (request.POST.get('plate_number') or request.POST.get('plate') or '').strip().upper().replace(' ', '')
         if not plate:
             return JsonResponse({'success': False, 'error': 'plate_number is required.'}, status=400)
 
@@ -793,7 +1008,9 @@ def user_emergency_contact(request, user_id):
         if not name or not relation or not email or not phone_no_raw:
             return JsonResponse({'success': False, 'error': 'All fields are required.'}, status=400)
 
-        phone_no = phone_no_raw[1:] if phone_no_raw.startswith('+') else phone_no_raw
+        phone_no = str(phone_no_raw).strip().replace(' ', '')
+        if phone_no.startswith('+'):
+            phone_no = phone_no[1:]
         phone_no = phone_no.strip()
 
         ec, _ = EmergencyContact.objects.update_or_create(

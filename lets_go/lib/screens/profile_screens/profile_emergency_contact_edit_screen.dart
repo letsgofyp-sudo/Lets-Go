@@ -102,8 +102,32 @@ class _ProfileEmergencyContactEditScreenState extends State<ProfileEmergencyCont
       return;
     }
 
-    // Backend validator expects digits only (no '+').
-    _phoneNo.text = phone.replaceAll(RegExp(r'\D'), '');
+    // Emergency phone is stored as digits-only (no '+'), including country code digits.
+    // Accept legacy values with '+' and normalize both.
+    final digits = phone.replaceAll(RegExp(r'\D'), '');
+    if (digits.isEmpty) {
+      _phoneNo.text = '';
+      return;
+    }
+
+    String? bestDigits;
+    String? bestCode;
+    for (final code in _countryCodes) {
+      final ccDigits = code.replaceAll(RegExp(r'\D'), '');
+      if (ccDigits.isEmpty) continue;
+      if (digits.startsWith(ccDigits) && (bestDigits == null || ccDigits.length > bestDigits.length)) {
+        bestDigits = ccDigits;
+        bestCode = code;
+      }
+    }
+
+    if (bestDigits != null && bestCode != null) {
+      _selectedCountryCode = bestCode;
+      _phoneNo.text = digits.substring(bestDigits.length);
+      return;
+    }
+
+    _phoneNo.text = digits;
   }
 
   @override
@@ -163,13 +187,15 @@ class _ProfileEmergencyContactEditScreenState extends State<ProfileEmergencyCont
     setState(() => _loading = true);
 
     final digitsPhone = _phoneNo.text.trim();
+    final ccDigits = _selectedCountryCode.replaceAll(RegExp(r'\D'), '');
+    final fullPhoneDigits = (ccDigits + digitsPhone).replaceAll(RegExp(r'\D'), '');
 
     final res = await ApiService.updateEmergencyContact(
       widget.userId,
       name: _name.text.trim(),
       relation: _selectedRelation!.trim(),
       email: _email.text.trim(),
-      phoneNo: digitsPhone,
+      phoneNo: fullPhoneDigits,
     );
 
     if (!mounted) return;
@@ -259,34 +285,30 @@ class _ProfileEmergencyContactEditScreenState extends State<ProfileEmergencyCont
               const SizedBox(height: 6),
               TextFormField(
                 controller: _email,
-                keyboardType: TextInputType.emailAddress,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
+                keyboardType: TextInputType.emailAddress,
                 validator: (v) {
                   final s = (v ?? '').trim();
                   if (s.isEmpty) return 'Required';
-                  if (!RegExp(r'^.+@.+\\..+').hasMatch(s)) return 'Invalid email';
+                  final ok = RegExp(
+                    r'^[^@\s]+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\.([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*\.[A-Za-z]{2,24}$',
+                  ).hasMatch(s);
+                  if (!ok) return 'Enter a valid email with a valid domain';
                   return null;
                 },
               ),
               const SizedBox(height: 16),
-              const Text('Phone No', style: TextStyle(fontWeight: FontWeight.w600)),
+              const Text('Phone', style: TextStyle(fontWeight: FontWeight.w600)),
               const SizedBox(height: 6),
               TextFormField(
                 controller: _phoneNo,
-                keyboardType: TextInputType.phone,
                 decoration: InputDecoration(
                   border: const OutlineInputBorder(),
-                  hintText: '3001234567',
                   prefixIcon: DropdownButtonHideUnderline(
                     child: DropdownButton<String>(
                       value: _selectedCountryCode,
                       items: _countryCodes
-                          .map(
-                            (code) => DropdownMenuItem(
-                              value: code,
-                              child: Text(code),
-                            ),
-                          )
+                          .map((code) => DropdownMenuItem(value: code, child: Text(code)))
                           .toList(),
                       onChanged: _loading
                           ? null
@@ -297,6 +319,7 @@ class _ProfileEmergencyContactEditScreenState extends State<ProfileEmergencyCont
                     ),
                   ),
                 ),
+                keyboardType: TextInputType.phone,
                 inputFormatters: [
                   FilteringTextInputFormatter.digitsOnly,
                   LengthLimitingTextInputFormatter(15),
@@ -304,8 +327,10 @@ class _ProfileEmergencyContactEditScreenState extends State<ProfileEmergencyCont
                 validator: (v) {
                   final s = (v ?? '').trim();
                   if (s.isEmpty) return 'Required';
-                  if (!RegExp(r'^\d{10,15}$').hasMatch(s)) {
-                    return 'Phone must be 10-15 digits.';
+                  final ccDigits = _selectedCountryCode.replaceAll(RegExp(r'\D'), '');
+                  final fullDigits = (ccDigits + s).replaceAll(RegExp(r'\D'), '');
+                  if (!RegExp(r'^\d{10,15}$').hasMatch(fullDigits)) {
+                    return 'Phone must be 10-15 digits (no +).';
                   }
                   return null;
                 },

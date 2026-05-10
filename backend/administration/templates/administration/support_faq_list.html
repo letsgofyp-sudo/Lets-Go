@@ -1,0 +1,85 @@
+{% extends 'administration/base.html' %}
+{% load static %}
+
+{% block title %}Support FAQs{% endblock %}
+
+{% block content %}
+  <main class="user-main">
+    <div class="mb-12">
+      <a class="btn btn-primary" href="{% url 'administration:support_faq_add' %}"><i class="fa-solid fa-plus"></i> Add FAQ</a>
+    </div>
+
+    <h1 class="page-title">Support FAQs</h1>
+
+    {% if error %}
+      <div class="alert mb-12">{{ error }}</div>
+    {% endif %}
+
+    <form method="get" class="mb-12" style="display:flex; gap: 8px; flex-wrap: wrap; align-items: center;">
+      <input class="admin-input" type="text" name="q" value="{{ q|default_if_none:'' }}" placeholder="Search question/answer" style="min-width: 260px;" />
+      <input class="admin-input" type="text" name="category" value="{{ category|default_if_none:'' }}" placeholder="Category" style="min-width: 180px;" />
+      <select class="admin-input" name="active">
+        <option value="" {% if active == '' or active is None %}selected{% endif %}>All</option>
+        <option value="1" {% if active == '1' %}selected{% endif %}>Active</option>
+        <option value="0" {% if active == '0' %}selected{% endif %}>Inactive</option>
+      </select>
+      <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-filter"></i> Filter</button>
+      <a class="btn btn-outline btn-sm" href="{% url 'administration:support_faq_list' %}"><i class="fa-solid fa-rotate-left"></i> Reset</a>
+    </form>
+
+    <div class="table-container">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Priority</th>
+            <th>Category</th>
+            <th>Question</th>
+            <th>Active</th>
+            <th>Updated</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for faq in faqs %}
+            <tr>
+              <td>{{ faq.id }}</td>
+              <td>{{ faq.priority }}</td>
+              <td>{{ faq.category|default_if_none:'' }}</td>
+              <td style="max-width: 520px; white-space: normal;">{{ faq.question }}</td>
+              <td>{% if faq.is_active %}Yes{% else %}No{% endif %}</td>
+              <td>{{ faq.updated_at }}</td>
+              <td>
+                <a class="btn btn-outline btn-sm" href="{% url 'administration:support_faq_edit' faq_id=faq.id %}"><i class="fa-solid fa-pen"></i> Edit</a>
+
+                <form method="post" action="{% url 'administration:support_faq_toggle_active' faq_id=faq.id %}" style="display:inline;">
+                  {% csrf_token %}
+                  {% if faq.is_active %}
+                    <button class="btn btn-outline btn-sm" type="submit" onclick="return confirm('Deactivate this FAQ?');">
+                      <i class="fa-solid fa-toggle-off"></i> Deactivate
+                    </button>
+                  {% else %}
+                    <button class="btn btn-primary btn-sm" type="submit" onclick="return confirm('Activate this FAQ?');">
+                      <i class="fa-solid fa-toggle-on"></i> Activate
+                    </button>
+                  {% endif %}
+                </form>
+
+                <form method="post" action="{% url 'administration:support_faq_delete' faq_id=faq.id %}" style="display:inline;">
+                  {% csrf_token %}
+                  <button class="btn btn-danger btn-sm" type="submit" onclick="return confirm('Delete this FAQ?');">
+                    <i class="fa-solid fa-trash"></i> Delete
+                  </button>
+                </form>
+              </td>
+            </tr>
+          {% empty %}
+            <tr>
+              <td colspan="7" style="text-align:center;">No FAQs found.</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </main>
+{% endblock %}

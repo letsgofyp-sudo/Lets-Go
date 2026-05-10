@@ -1,0 +1,364 @@
+timestamp: 2026-05-01T06:54:13
+users: -1
+extensive: NO
+story_mode: YES
+
+============================================================
+user_id: -1
+user_name: Guest
+
+--- story: profile_story ---
+You: hi
+Bot: Hi Guest. What would you like to do today—book a ride or create a ride?
+
+You: profile
+Bot: Guests cannot access this feature.
+
+
+--- story: vehicles_story ---
+You: show my vehicles
+Bot: Guests cannot access this feature.
+
+You: list my vehicles
+Bot: Guests cannot access this feature.
+
+
+--- story: bookings_story ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: payment details
+Bot: Guests cannot access this feature.
+
+
+--- story: trip_detail_story_missing_id ---
+You: trip details
+Bot: Guests cannot access this feature.
+
+
+--- story: chat_story_missing_id ---
+You: chat list
+Bot: Guests cannot access this feature.
+
+
+--- story: manual_help_story ---
+You: manual
+Bot: User manual topics:
+- Booking a ride
+- Creating a ride
+- Selecting a route and stops
+- Fare calculation and breakdown
+- Payments and payment confirmation
+- Messaging and chat
+- Fare negotiation
+- Cancel booking / cancel trip
+- Deleting a trip
+- Guest mode limitations
+- Profile and verification requests
+- SOS and safety
+
+Ask a question like: 'How do I book a ride?'
+
+You: help
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: capabilities
+Bot: I can help you with:
+- book a ride (find trips and reserve seats)
+- create/post a ride (if you're a driver)
+- list your vehicles, bookings, and rides
+- delete your created ride (if allowed)
+- cancel your created ride (if allowed)
+- cancel your booking
+- view/send trip chat messages (only if authorized)
+
+Try: 'book a ride from X to Y tomorrow 6pm' or 'create a ride'.
+
+
+--- story: suggest_story_1 ---
+You: suggest stops q=vehari
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: cancel
+Bot: Cancelled. What would you like to do next?
+
+
+--- story: suggest_story_2 ---
+You: suggest stops q=multan
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: cancel
+Bot: Your trip has been cancelled. What would you like to do next?
+
+
+--- story: suggest_story_3 ---
+You: suggest stops q=lahore
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: cancel
+Bot: Your trip has been cancelled. What would you like to do next?
+
+
+--- story: suggest_story_4 ---
+You: suggest stops q=islamabad
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: cancel
+Bot: Your trip has been cancelled. What would you like to do next?
+
+
+--- story: suggest_story_5 ---
+You: suggest stops q=karachi
+Bot: You can talk naturally. Examples:
+- book a ride from Saddar to DHA tomorrow at 6pm
+- I need 2 seats
+- make it 450 fare
+- yes (to confirm)
+- cancel (to stop current action)
+- ask business rules/questions like: can I chat without booking?
+
+You: cancel
+Bot: Cancelled. What would you like to do next?
+
+
+--- story: route_story_6 ---
+You: from zoo road to khizra mosque
+Bot: I found multiple matches for 'Khizra Mosque'. Please reply with the location number you mean:
+1) Khizra Mosque, Vehari, PB, Pakistan
+2) Khizra Mosque Ground, Vehari, PB, Pakistan
+3) Mosque
+You can also say 'cancel' to stop.
+
+You: 1
+Bot: Route: Zoo Road → Khizra Mosque, Vehari, Pb, Pakistan
+Distance: 1.90 km
+Estimated time: 3 min
+Estimated fare: PKR 100
+Segments: 1
+Distance: 1.90 km
+Duration: 3 min
+Fare (sum of segments): PKR 100
+
+You: cancel
+Bot: Cancelled. What would you like to do next?
+
+
+--- story: route_story_7 ---
+You: from vehari to peoples colony
+Bot: I found multiple matches for 'Vehari'. Please reply with the location number you mean:
+1) Vehari, Pakistan
+2) Vehari, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: 1
+Bot: I found multiple matches for 'Peoples Colony'. Please reply with the location number you mean:
+1) Peoples Colony, Vehari
+2) Peoples Colony, PB, Pakistan
+3) Peoples Colony, Pakistan
+You can also say 'cancel' to stop.
+
+You: cancel
+Bot: Your trip has been cancelled. What would you like to do next?
+
+
+--- story: route_story_8 ---
+You: from comsats vehari to multan
+Bot: I found multiple matches for 'Multan'. Please reply with the location number you mean:
+1) Multan Institute Of Kidney Disease
+2) Multan, Pakistan
+3) Multan, PB, Pakistan
+You can also say 'cancel' to stop.
+
+You: 1
+Bot: Route: Comsats Vehari → Multan Institute Of Kidney Disease
+Distance: 90.57 km
+Estimated time: 77 min
+Estimated fare: PKR 1694
+Segments: 1
+Distance: 90.57 km
+Duration: 77 min
+Fare (sum of segments): PKR 1694
+
+You: cancel
+Bot: Cancelled. What would you like to do next?
+
+
+--- story: route_story_9 ---
+You: from railway station to bus stand
+Bot: I found multiple matches for 'Railway Station'. Please reply with the location number you mean:
+1) Padidan Railway Station
+2) Railway Station, Dera Ghazi Khan, PB, Pakistan
+3) Samasata Railway Station, PB, Pakistan
+4) Samasata Railway Station, PB, Pakistan
+5) Railway Station, KP, Pakistan
+You can also say 'cancel' to stop.
+
+You: 1
+Bot: I found multiple matches for 'Bus Stand'. Please reply with the location number you mean:
+1) chashma bus stand Masque
+2) Khipro-Sanghar Bus Stand, SD, Pakistan
+3) Bus station, Bannu, KP, Pakistan
+4) Bus washing, Karachi, SD, Pakistan
+You can also say 'cancel' to stop.
+
+You: cancel
+Bot: Cancelled. What would you like to do next?
+
+
+--- story: route_story_10 ---
+You: from islamabad to islamabad
+Bot: I couldn't understand the locations. Could you please provide more details about your trip, such as 'From Islamabad to a specific location in Islamabad' or 'From one location in Islamabad to another'? This will help me better understand your request.
+
+You: 1
+Bot: To assist you with your trip, could you please provide the exact pickup and drop-off locations in Islamabad, or use the command "list my rides" to view your previous trips?
+
+You: cancel
+Bot: Cancelled. What would you like to do next?
+
+
+--- story: id_dependent_story_11 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_12 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_13 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_14 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_15 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_16 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_17 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_18 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_19 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_20 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_21 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_22 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_23 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+--- story: id_dependent_story_24 ---
+You: list my bookings
+Bot: Guests cannot access this feature.
+
+You: list my rides
+Bot: Guests cannot access this feature.
+
+
+[summary] ok=64 fail=0 trip_id=- booking_id=-
+
+============================================================
+TOTAL ok=64 fail=0

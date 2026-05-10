@@ -24,25 +24,25 @@
       <div class="admin-form-grid">
         <div class="admin-field" data-field>
           <label class="admin-label" for="plate_number">Plate Number</label>
-          <input class="admin-control" id="plate_number" type="text" name="plate_number" value="{{ vehicle.plate_number|default_if_none:'' }}" required data-validate="required platePk" placeholder="ABC-1234" />
+          <input class="admin-control" id="plate_number" type="text" name="plate_number" value="{{ vehicle.plate_number|default_if_none:'' }}" required data-validate="required platePk" placeholder="ABC-1234" pattern="^[A-Z]{2,5}-\d{1,4}(-[A-Z])?$" maxlength="10" autocapitalize="characters" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="company_name">Company Name</label>
-          <input class="admin-control" id="company_name" type="text" name="company_name" value="{{ vehicle.company_name|default_if_none:'' }}" required data-validate="required" placeholder="e.g. Honda" />
+          <input class="admin-control" id="company_name" type="text" name="company_name" value="{{ vehicle.company_name|default_if_none:'' }}" required data-validate="required" placeholder="e.g. Honda" maxlength="50" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="model_number">Model Number</label>
-          <input class="admin-control" id="model_number" type="text" name="model_number" value="{{ vehicle.model_number|default_if_none:'' }}" required data-validate="required" placeholder="e.g. 2024" />
+          <input class="admin-control" id="model_number" type="text" name="model_number" value="{{ vehicle.model_number|default_if_none:'' }}" required data-validate="required" placeholder="e.g. 2024" maxlength="50" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="variant">Variant</label>
-          <input class="admin-control" id="variant" type="text" name="variant" value="{{ vehicle.variant|default_if_none:'' }}" placeholder="Optional" />
+          <input class="admin-control" id="variant" type="text" name="variant" value="{{ vehicle.variant|default_if_none:'' }}" placeholder="Optional" maxlength="50" />
           <div class="admin-field-error"></div>
         </div>
 
@@ -84,7 +84,7 @@
           <label class="admin-label" for="photo_front">Front Photo</label>
           <div>
             {% if vehicle and vehicle.photo_front_url %}
-              <img src="{{ vehicle.photo_front_url }}" class="user-img" alt="Front Photo">
+              <img id="photo_front_img" src="{{ vehicle.photo_front_url }}?v={{ vehicle.updated_at|date:'U' }}" class="user-img" alt="Front Photo">
             {% else %}
               <span class="text-muted">No image</span>
             {% endif %}
@@ -97,7 +97,7 @@
           <label class="admin-label" for="photo_back">Back Photo</label>
           <div>
             {% if vehicle and vehicle.photo_back_url %}
-              <img src="{{ vehicle.photo_back_url }}" class="user-img" alt="Back Photo">
+              <img id="photo_back_img" src="{{ vehicle.photo_back_url }}?v={{ vehicle.updated_at|date:'U' }}" class="user-img" alt="Back Photo">
             {% else %}
               <span class="text-muted">No image</span>
             {% endif %}
@@ -110,7 +110,7 @@
           <label class="admin-label" for="documents_image">Documents Image</label>
           <div>
             {% if vehicle and vehicle.documents_image_url %}
-              <img src="{{ vehicle.documents_image_url }}" class="user-img" alt="Documents Image">
+              <img id="documents_image_img" src="{{ vehicle.documents_image_url }}?v={{ vehicle.updated_at|date:'U' }}" class="user-img" alt="Documents Image">
             {% else %}
               <span class="text-muted">No image</span>
             {% endif %}
@@ -121,25 +121,25 @@
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="engine_number">Engine Number</label>
-          <input class="admin-control" id="engine_number" type="text" name="engine_number" value="{{ vehicle.engine_number|default_if_none:'' }}" />
+          <input class="admin-control" id="engine_number" type="text" name="engine_number" value="{{ vehicle.engine_number|default_if_none:'' }}" data-validate="engineChassis" pattern="^[A-Za-z0-9\-]{0,50}$" maxlength="50" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="chassis_number">Chassis Number</label>
-          <input class="admin-control" id="chassis_number" type="text" name="chassis_number" value="{{ vehicle.chassis_number|default_if_none:'' }}" />
+          <input class="admin-control" id="chassis_number" type="text" name="chassis_number" value="{{ vehicle.chassis_number|default_if_none:'' }}" data-validate="engineChassis" pattern="^[A-Za-z0-9\-]{0,50}$" maxlength="50" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="registration_date">Registration Date</label>
-          <input class="admin-control" id="registration_date" type="date" name="registration_date" value="{{ vehicle.registration_date|date:'Y-m-d'|default_if_none:'' }}" />
+          <input class="admin-control" id="registration_date" type="date" name="registration_date" value="{{ vehicle.registration_date|date:'Y-m-d'|default_if_none:'' }}" data-validate="registrationBeforeToday" max="{% now 'Y-m-d' %}" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="insurance_expiry">Insurance Expiry</label>
-          <input class="admin-control" id="insurance_expiry" type="date" name="insurance_expiry" value="{{ vehicle.insurance_expiry|date:'Y-m-d'|default_if_none:'' }}" />
+          <input class="admin-control" id="insurance_expiry" type="date" name="insurance_expiry" value="{{ vehicle.insurance_expiry|date:'Y-m-d'|default_if_none:'' }}" data-validate="insuranceAfterToday" min="{% now 'Y-m-d' %}" />
           <div class="admin-field-error"></div>
         </div>
       </div>
@@ -153,6 +153,39 @@
 
 {% block scripts %}
   <script>
+    (function () {
+      const pairs = [
+        { inputId: 'photo_front', imgId: 'photo_front_img' },
+        { inputId: 'photo_back', imgId: 'photo_back_img' },
+        { inputId: 'documents_image', imgId: 'documents_image_img' },
+      ];
+
+      for (const p of pairs) {
+        const input = document.getElementById(p.inputId);
+        if (!input) continue;
+        input.addEventListener('change', () => {
+          const file = input.files && input.files[0];
+          if (!file) return;
+
+          let img = document.getElementById(p.imgId);
+          if (!img) {
+            const container = input.previousElementSibling;
+            if (container) {
+              container.innerHTML = '';
+              img = document.createElement('img');
+              img.id = p.imgId;
+              img.className = 'user-img';
+              img.alt = 'Preview';
+              container.appendChild(img);
+            }
+          }
+          if (!img) return;
+          const url = URL.createObjectURL(file);
+          img.src = url;
+        });
+      }
+    })();
+
     (function () {
       const typeEl = document.getElementById('vehicle_type');
       const seatsEl = document.getElementById('seats');

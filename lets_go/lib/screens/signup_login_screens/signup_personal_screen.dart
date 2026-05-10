@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 
 import '../../constants.dart';
+import '../../utils/pk_bank_list.dart';
 
 class SignupPersonalScreen extends StatefulWidget {
   const SignupPersonalScreen({super.key});
@@ -29,6 +30,7 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
   final TextEditingController _accountNoController = TextEditingController();
   final TextEditingController _bankNameController = TextEditingController();
   final TextEditingController _ibanController = TextEditingController();
+  String? _selectedBank;
   bool _isUsernameVerified = false;
   bool _isVerifyingUsername = false;
   String? _lastReservedUsername;
@@ -38,6 +40,7 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
   bool _obscureConfirmPassword = true;
   bool _isLoading = false;
   String? _errorMessage;
+  String? _usernameErrorMessage;
   String? _gender;
 
   // Add a comprehensive list of country codes
@@ -172,6 +175,28 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
         _ibanController.text = _fields['iban'] ?? '';
         _gender = _fields['gender'];
 
+        final existingBank = _bankNameController.text.trim();
+        const legacyMap = <String, String>{
+          'HBL': 'Habib Bank Limited (HBL)',
+          'UBL': 'United Bank Limited (UBL)',
+          'MCB': 'MCB Bank Limited',
+          'Allied Bank': 'Allied Bank Limited',
+          'Bank Alfalah': 'Bank Alfalah Limited',
+          'Meezan Bank': 'Meezan Bank Limited',
+          'Faysal Bank': 'Faysal Bank Limited',
+          'Standard Chartered': 'Standard Chartered Bank (Pakistan) Limited',
+          'NBP': 'National Bank of Pakistan (NBP)',
+        };
+        final normalizedExisting = legacyMap[existingBank] ?? existingBank;
+        if (normalizedExisting.isNotEmpty && pkBankOptions.contains(normalizedExisting)) {
+          _selectedBank = normalizedExisting;
+          _bankNameController.text = normalizedExisting;
+        } else if (normalizedExisting.isNotEmpty) {
+          _selectedBank = 'Other';
+        } else {
+          _selectedBank = null;
+        }
+
         final currentUsername = _normalizeUsername(_fields['username'] ?? '');
         if (wasVerified && _verifiedUsername != null && currentUsername == _verifiedUsername) {
           _isUsernameVerified = true;
@@ -188,7 +213,7 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
       _fields['username'] = _normalizeUsername(_usernameController.text);
       if (!_isUsernameVerified) {
         setState(() {
-          _errorMessage = 'Please verify your username before continuing.';
+          _usernameErrorMessage = 'Please verify your username before continuing.';
         });
         return;
       }
@@ -212,14 +237,23 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
     debugPrint('[SignupPersonal] _verifyUsername: username="$username" lastReserved="$_lastReservedUsername"');
     if (username.isEmpty) {
       setState(() {
-        _errorMessage = 'Username is required before verification.';
+        _usernameErrorMessage = 'Username is required before verification.';
+      });
+      return;
+    }
+
+    if (!RegExp(r'^(?=.*[A-Za-z])[A-Za-z0-9._]{3,32}$').hasMatch(username)) {
+      setState(() {
+        _usernameErrorMessage =
+            "Username must be 3-32 chars, contain at least one letter, and only use letters, numbers, '.' or '_'.";
+        _isUsernameVerified = false;
       });
       return;
     }
 
     setState(() {
       _isVerifyingUsername = true;
-      _errorMessage = null;
+      _usernameErrorMessage = null;
     });
 
     try {
@@ -249,9 +283,9 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
           _verifiedUsername = username;
         }
         if (!available) {
-          _errorMessage = (data['error'] as String?) ?? 'Username already taken.';
+          _usernameErrorMessage = (data['error'] as String?) ?? 'Username already taken.';
         } else {
-          _errorMessage = null;
+          _usernameErrorMessage = null;
         }
       });
 
@@ -274,7 +308,7 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
       setState(() {
         _isVerifyingUsername = false;
         _isUsernameVerified = false;
-        _errorMessage = 'Failed to verify username. Please try again.';
+        _usernameErrorMessage = 'Failed to verify username. Please try again.';
       });
     }
   }
@@ -286,6 +320,10 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
     await prefs.remove('signup_cnic');
     await prefs.remove('signup_vehicles');
     await prefs.remove('signup_vehicle_images');
+    await prefs.remove('pending_signup_status');
+    await prefs.remove('signup_username_verified');
+    await prefs.remove('signup_verified_username');
+    await prefs.remove('signup_last_reserved_username');
     await prefs.remove('signup_step');
     await prefs.remove('signup_locked');
     await prefs.remove('pending_signup');
@@ -332,6 +370,7 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
     bool isCnic = fieldName == 'cnic_no';
     bool isPhone = fieldName == 'phone_no';
     bool isUsername = fieldName == 'username';
+    bool isDrivingLicense = fieldName == 'driving_license_no';
     final effectiveController = controller ??
         (isUsername
             ? _usernameController
@@ -415,25 +454,47 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
               })
             ]
           : isPhone
-              ? [FilteringTextInputFormatter.allow(RegExp(r'[0-9]')), LengthLimitingTextInputFormatter(15)]
-              : isUsername
-                  ? [
-                      FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9._]')),
-                      LengthLimitingTextInputFormatter(32),
-                      _UsernameLtrFormatter(_lrm),
-                    ]
+              ? [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(15),
+                ]
+          : isDrivingLicense
+              ? [
+                  FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-/]')),
+                  LengthLimitingTextInputFormatter(20),
+                ]
+          : fieldName == 'accountno'
+              ? [
+                  FilteringTextInputFormatter.digitsOnly,
+                  LengthLimitingTextInputFormatter(20),
+                ]
+          : fieldName == 'iban'
+              ? [
+                  FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9 ]')),
+                  LengthLimitingTextInputFormatter(34),
+                ]
+          : isUsername
+              ? [
+                  FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9._]')),
+                  LengthLimitingTextInputFormatter(32),
+                  _UsernameLtrFormatter(_lrm),
+                ]
               : null,
       validator: (value) {
         if (!optional && (value == null || value.isEmpty)) return 'Required';
         if (isUsername) {
           final normalized = _normalizeUsername(value ?? '');
           if (normalized.isEmpty) return 'Required';
-          if (!RegExp(r'^[A-Za-z0-9._]+$').hasMatch(normalized)) {
-            return 'Only letters, numbers, . and _ are allowed.';
+          if (!RegExp(r'^(?=.*[A-Za-z])[A-Za-z0-9._]{3,32}$').hasMatch(normalized)) {
+            return "Username must be 3-32 chars, contain at least one letter, and only use letters, numbers, '.' or '_'.";
           }
         }
-        if (fieldName == 'email' && value != null && !RegExp(r'^.+@.+\..+').hasMatch(value)) {
-          return 'Enter a valid email';
+        if (fieldName == 'email' && value != null) {
+          final v = value.trim();
+          final ok = RegExp(
+            r'^[^@\s]+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\.([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*\.[A-Za-z]{2,24}$',
+          ).hasMatch(v);
+          if (!ok) return 'Enter a valid email with a valid domain';
         }
         if (isCnic && value != null && !RegExp(r'^\d{5}-\d{7}-\d{1}$').hasMatch(value)) {
           return 'Enter CNIC in format 36603-0269853-9';
@@ -443,6 +504,30 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
           final fullNumber = _selectedCountryCode + value.trim();
           if (!RegExp(r'^\+\d{10,15}$').hasMatch(fullNumber)) {
             return 'Phone must be in format +923001234567 (10-15 digits total).';
+          }
+        }
+        if (fieldName == 'driving_license_no') {
+          final raw = (value ?? '').trim();
+          if (raw.isNotEmpty) {
+            final normalized = raw.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+            if (!RegExp(r'^[A-Z0-9][A-Z0-9\-/]{4,19}$').hasMatch(normalized)) {
+              return "Driving license number must be 5-20 characters and contain only letters, digits, '-' or '/'.";
+            }
+          }
+        }
+        if (fieldName == 'accountno') {
+          final raw = (value ?? '').trim().replaceAll(' ', '');
+          if (raw.isNotEmpty && !RegExp(r'^\d{10,20}$').hasMatch(raw)) {
+            return 'Account number must be 10-20 digits.';
+          }
+        }
+        if (fieldName == 'iban') {
+          final raw = (value ?? '').trim();
+          if (raw.isNotEmpty) {
+            final normalized = raw.toUpperCase().replaceAll(' ', '');
+            if (!RegExp(r'^PK\d{2}[A-Z]{4}\d{16}$').hasMatch(normalized)) {
+              return 'Enter IBAN like PK12ABCD1234567890123456';
+            }
           }
         }
         if (isPassword && value != null) {
@@ -464,6 +549,13 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
           _fields[fieldName] = _selectedCountryCode + (value ?? '');
         } else if (isUsername) {
           _fields[fieldName] = _normalizeUsername(value ?? '');
+        } else if (isDrivingLicense) {
+          final raw = (value ?? '').trim();
+          _fields[fieldName] = raw.isEmpty ? '' : raw.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+        } else if (fieldName == 'accountno') {
+          _fields[fieldName] = (value ?? '').trim().replaceAll(' ', '');
+        } else if (fieldName == 'iban') {
+          _fields[fieldName] = (value ?? '').trim().toUpperCase().replaceAll(' ', '');
         } else {
           _fields[fieldName] = value ?? '';
         }
@@ -473,10 +565,22 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
           _fields[fieldName] = _selectedCountryCode + value;
         } else if (isUsername) {
           _fields[fieldName] = _normalizeUsername(value);
+        } else if (isDrivingLicense) {
+          final raw = value.trim();
+          _fields[fieldName] = raw.isEmpty ? '' : raw.toUpperCase().replaceAll(RegExp(r'\s+'), '');
+        } else if (fieldName == 'accountno') {
+          _fields[fieldName] = value.trim().replaceAll(' ', '');
+        } else if (fieldName == 'iban') {
+          _fields[fieldName] = value.trim().toUpperCase().replaceAll(' ', '');
         } else {
           _fields[fieldName] = value;
         }
         if (fieldName == 'username') {
+          if (_usernameErrorMessage != null) {
+            setState(() {
+              _usernameErrorMessage = null;
+            });
+          }
           final normalized = _normalizeUsername(value);
           final matchesVerified =
               _verifiedUsername != null && normalized == _verifiedUsername;
@@ -573,6 +677,13 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
                           ),
                   ),
                 ),
+                if (_usernameErrorMessage != null) ...[
+                  const SizedBox(height: 6),
+                  Text(
+                    _usernameErrorMessage!,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                ],
                 _buildTextInput('Email', 'email', controller: _emailController),
                 _buildTextInput(
                   'Password',
@@ -608,12 +719,84 @@ class _SignupPersonalScreenState extends State<SignupPersonalScreen> {
                   controller: _ibanController,
                   optional: true,
                 ),
-                _buildTextInput(
-                  'Bank Name (optional)',
-                  'bankname',
-                  controller: _bankNameController,
-                  optional: true,
+                const SizedBox(height: 16),
+                DropdownButtonFormField<String>(
+                  initialValue: _selectedBank,
+                  items: [
+                    const DropdownMenuItem<String>(value: null, child: Text('--')),
+                    ...pkBankOptions.map((b) => DropdownMenuItem<String>(value: b, child: Text(b))),
+                  ],
+                  decoration: const InputDecoration(
+                    labelText: 'Bank Name (optional)',
+                    border: OutlineInputBorder(),
+                  ),
+                  onChanged: (v) {
+                    setState(() {
+                      _selectedBank = v;
+                      if (v != null && v != 'Other') {
+                        _bankNameController.text = v;
+                        _fields['bankname'] = v;
+                      } else if (v == null) {
+                        _bankNameController.text = '';
+                        _fields['bankname'] = '';
+                      }
+                    });
+                  },
+                  validator: (v) {
+                    final acc = _accountNoController.text.trim().replaceAll(' ', '');
+                    final iban = _ibanController.text.trim().toUpperCase().replaceAll(' ', '');
+                    final any = acc.isNotEmpty || iban.isNotEmpty;
+                    if (!any) return null;
+                    if (v == null || v.trim().isEmpty) {
+                      return 'Bank name is required when providing bank details';
+                    }
+                    return null;
+                  },
+                  onSaved: (v) {
+                    final selected = (v ?? '').trim();
+                    if (selected.isNotEmpty && selected != 'Other') {
+                      _fields['bankname'] = selected;
+                    } else {
+                      _fields['bankname'] = _bankNameController.text.trim();
+                    }
+                  },
                 ),
+                if ((_selectedBank ?? '') == 'Other') ...[
+                  const SizedBox(height: 10),
+                  TextFormField(
+                    controller: _bankNameController,
+                    decoration: const InputDecoration(
+                      labelText: 'Bank (if Other)',
+                      border: OutlineInputBorder(),
+                    ),
+                    textCapitalization: TextCapitalization.words,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.allow(RegExp(r"[A-Za-z .&\-]")),
+                      LengthLimitingTextInputFormatter(120),
+                    ],
+                    validator: (value) {
+                      final s = (value ?? '').trim();
+                      final acc = _accountNoController.text.trim().replaceAll(' ', '');
+                      final iban = _ibanController.text.trim().toUpperCase().replaceAll(' ', '');
+                      final any = acc.isNotEmpty || iban.isNotEmpty;
+                      if (!any) return null;
+                      if (s.isEmpty) return 'Bank name is required when providing bank details';
+                      final ok = RegExp(r'^[A-Za-z][A-Za-z .&\-]{1,118}[A-Za-z.]$').hasMatch(s);
+                      if (!ok) return 'Enter a valid bank name';
+                      return null;
+                    },
+                    onSaved: (value) {
+                      if ((_selectedBank ?? '') == 'Other') {
+                        _fields['bankname'] = (value ?? '').trim();
+                      }
+                    },
+                    onChanged: (value) {
+                      if ((_selectedBank ?? '') == 'Other') {
+                        _fields['bankname'] = value;
+                      }
+                    },
+                  ),
+                ],
                 const SizedBox(height: 20),
                 if (_errorMessage != null)
                   Text(_errorMessage!, style: const TextStyle(color: Colors.red)),

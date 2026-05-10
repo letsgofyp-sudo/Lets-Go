@@ -1,0 +1,2933 @@
+Run started:2026-05-08 06:31:07.190366+00:00
+
+Test results:
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:434:12
+433	                send_ride_notification_async(payload)
+434	            except Exception:
+435	                pass
+436	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:559:12
+558	                    user.delete()
+559	            except Exception:
+560	                pass
+561	            return render(
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:653:12
+652	                send_ride_notification_async(payload)
+653	            except Exception:
+654	                pass
+655	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:680:4
+679	        auto_archive_global(limit=10)
+680	    except Exception:
+681	        pass
+682	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:793:8
+792	                ])
+793	        except Exception:
+794	            pass
+795	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:828:16
+827	                        route_geometry_data.append({'lat': float(p['lat']), 'lng': float(p['lng'])})
+828	                except Exception:
+829	                    pass
+830	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:848:12
+847	                    from_lng = float(b.from_stop.longitude)
+848	            except Exception:
+849	                pass
+850	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:854:12
+853	                    to_lng = float(b.to_stop.longitude)
+854	            except Exception:
+855	                pass
+856	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:874:8
+873	            })
+874	        except Exception:
+875	            pass
+876	        try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:884:8
+883	                })
+884	        except Exception:
+885	            pass
+886	        try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:894:8
+893	                })
+894	        except Exception:
+895	            pass
+896	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:932:8
+931	            })
+932	        except Exception:
+933	            pass
+934	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:1068:20
+1067	                        send_ride_notification_async(payload)
+1068	                    except Exception:
+1069	                        pass
+1070	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:1098:20
+1097	                        send_ride_notification_async(payload)
+1098	                    except Exception:
+1099	                        pass
+1100	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:1168:8
+1167	                segments_path_coords_data.append([float(s.to_latitude), float(s.to_longitude)])
+1168	        except Exception:
+1169	            pass
+1170	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:1211:16
+1210	                        route_geometry_data.append({'lat': float(p['lat']), 'lng': float(p['lng'])})
+1211	                except Exception:
+1212	                    pass
+1213	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:1255:8
+1254	            })
+1255	        except Exception:
+1256	            pass
+1257	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:1518:8
+1517	            by_hour[idx] += int(c)
+1518	        except Exception:
+1519	            pass
+1520	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:1864:12
+1863	                send_ride_notification_async(payload)
+1864	            except Exception:
+1865	                pass
+1866	    return redirect('administration:user_detail', user_id=user_id)
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./administration/views.py:1976:12
+1975	                )
+1976	            except Exception:
+1977	                continue
+1978	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./administration/views.py:2005:12
+2004	                    todo.reopen()
+2005	            except Exception:
+2006	                continue
+2007	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./administration/views.py:2404:4
+2403	        vehicle.full_clean()
+2404	    except Exception:
+2405	        pass
+2406	    vehicle.save(update_fields=['status', 'updated_at'])
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./backend/settings.py:23:0
+22	    load_dotenv(BASE_DIR / '.env')
+23	except Exception:
+24	    pass
+25	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:21:11
+20	def pick_route():
+21	    a, b = random.sample(STOPS, 2)
+22	    return a, b
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:30:18
+29	    fav_from, fav_to = pick_route()
+30	    fav_vehicle = random.choice(VEHICLES)
+31	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:34:34
+33	    for i in range(n):
+34	        dt = now - timedelta(days=random.randint(1, 30), hours=random.randint(0, 23))
+35	        if random.random() < 0.7:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:34:63
+33	    for i in range(n):
+34	        dt = now - timedelta(days=random.randint(1, 30), hours=random.randint(0, 23))
+35	        if random.random() < 0.7:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:35:11
+34	        dt = now - timedelta(days=random.randint(1, 30), hours=random.randint(0, 23))
+35	        if random.random() < 0.7:
+36	            fr, to = fav_from, fav_to
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:40:18
+39	            fr, to = pick_route()
+40	            veh = random.choice(VEHICLES)
+41	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:46:26
+45	            "to_stop_name": to,
+46	            "total_fare": random.randint(200, 800),
+47	            "number_of_seats": random.choice([1, 1, 1, 2]),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:47:31
+46	            "total_fare": random.randint(200, 800),
+47	            "number_of_seats": random.choice([1, 1, 1, 2]),
+48	            "finalized_at": iso(dt),
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:67:19
+66	        if ug:
+67	            return random.choices(["Any", ug], weights=[0.85, 0.15])[0]
+68	        return "Any"
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:71:11
+70	    # Negatives can be anything; include some restricted trips
+71	    return random.choices(["Any", "Male", "Female"], weights=[0.80, 0.10, 0.10])[0]
+72	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:86:32
+85	):
+86	    dep = now + timedelta(hours=random.randint(1, 12))
+87	    base_price = random.randint(250, 750)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:87:17
+86	    dep = now + timedelta(hours=random.randint(1, 12))
+87	    base_price = random.randint(250, 750)
+88	    if good:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:89:30
+88	    if good:
+89	        driver_rating = round(random.uniform(4.2, 5.0), 1)
+90	        price = base_price
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:91:46
+90	        price = base_price
+91	        veh = fav_vehicle if fav_vehicle else random.choice(VEHICLES)
+92	    else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:93:30
+92	    else:
+93	        driver_rating = round(random.uniform(2.5, 4.8), 1)
+94	        price = base_price + random.randint(-200, 250)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:94:29
+93	        driver_rating = round(random.uniform(2.5, 4.8), 1)
+94	        price = base_price + random.randint(-200, 250)
+95	        veh = random.choice(VEHICLES)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:95:14
+94	        price = base_price + random.randint(-200, 250)
+95	        veh = random.choice(VEHICLES)
+96	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:98:22
+97	        if same_route_negative:
+98	            penalty = random.choice(["rating", "late", "price"])
+99	            if penalty == "rating":
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:102:44
+101	            elif penalty == "late":
+102	                dep = now + timedelta(hours=random.randint(8, 18))
+103	            else:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:104:32
+103	            else:
+104	                price = price + random.randint(120, 260)
+105	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:107:85
+106	    gender_pref = _pick_gender_preference_for_user(user_gender, positive=positive)
+107	    is_negotiable = fixed_is_negotiable if fixed_is_negotiable is not None else bool(random.getrandbits(1))
+108	    cand = {
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:114:27
+113	        "price_per_seat": max(100, int(price)),
+114	        "available_seats": random.randint(1, 4),
+115	        "gender_preference": gender_pref,
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:132:18
+131	        event_id = f"E{e}"
+132	        user_id = random.randint(1, 400)  # reuse users to create stronger preferences
+133	        user_gender = random.choice(["Male", "Female"])
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:133:22
+132	        user_id = random.randint(1, 400)  # reuse users to create stronger preferences
+133	        user_gender = random.choice(["Male", "Female"])
+134	        passenger_rating = round(random.uniform(3.0, 5.0), 1)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:134:33
+133	        user_gender = random.choice(["Male", "Female"])
+134	        passenger_rating = round(random.uniform(3.0, 5.0), 1)
+135	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:136:58
+135	
+136	        now = datetime.now(timezone.utc) - timedelta(days=random.randint(0, 60))
+137	        history, (fav_from, fav_to), fav_vehicle = make_history(user_id, now, n=history_len)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:144:35
+143	        # - Lock is_negotiable per-event so negatives cannot beat the positive purely via negotiable bonus.
+144	        event_is_negotiable = bool(random.getrandbits(1))
+145	        pos = make_candidate(
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/Lets Go ml model evaluation code/Datasetgeneratorscript.py:160:15
+159	        for i in range(candidates_per_event - 1):
+160	            if random.random() < 0.3:
+161	                fr, to = fav_from, fav_to  # same route but worse other attributes
+
+--------------------------------------------------
+>> Issue: [B104:hardcoded_bind_all_interfaces] Possible binding to all interfaces.
+   Severity: Medium   Confidence: Medium
+   CWE: CWE-605 (https://cwe.mitre.org/data/definitions/605.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b104_hardcoded_bind_all_interfaces.html
+   Location: ./lets_go/Letsgo-ride-ranker-gradio/app.py:19:28
+18	if __name__ == "__main__":
+19	    demo.launch(server_name="0.0.0.0", server_port=7860)
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/management/commands/chatbot_regression_audit.py:66:8
+65	                violations.append(label)
+66	        except Exception:
+67	            continue
+68	    return violations
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/management/commands/chatbot_regression_audit.py:441:16
+440	                    user_ids.append(int(part))
+441	                except Exception:
+442	                    continue
+443	        if not user_ids:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/management/commands/chatbot_regression_audit.py:490:16
+489	                    st0.active_flow = None
+490	                except Exception:
+491	                    pass
+492	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/management/commands/chatbot_regression_audit.py:571:36
+570	                                            break
+571	                                    except Exception:
+572	                                        continue
+573	                                if not matched and _is_access_restricted_reply(reply):
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/management/commands/cleanup_archived_trips.py:68:8
+67	            d = _haversine_m(float(last['lat']), float(last['lng']), float(p['lat']), float(p['lng']))
+68	        except Exception:
+69	            continue
+70	        if d >= min_dist_m:
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/management/commands/cleanup_archived_trips.py:90:8
+89	            dist_m += _haversine_m(float(a['lat']), float(a['lng']), float(b['lat']), float(b['lng']))
+90	        except Exception:
+91	            continue
+92	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/management/commands/cleanup_archived_trips.py:335:16
+334	                    snap_has_actual_path = isinstance(snap.actual_path, list) and len(snap.actual_path) >= 2
+335	                except Exception:
+336	                    pass
+337	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/management/commands/cleanup_archived_trips.py:377:16
+376	                        TripActualPathPoint.objects.bulk_create(bulk, batch_size=2000)
+377	                except Exception:
+378	                    pass
+379	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/management/commands/cleanup_archived_trips.py:389:24
+388	                            TripActualPathPoint.objects.filter(summary=path).delete()
+389	                        except Exception:
+390	                            pass
+391	                        try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/management/commands/cleanup_archived_trips.py:393:24
+392	                            TripActualPathSummary.objects.filter(id=path.id).delete()
+393	                        except Exception:
+394	                            pass
+395	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/models/models_booking.py:301:16
+300	                    self.trip.chat_group.send_system_message(f"👋 {self.passenger.name} joined the trip!")
+301	                except:
+302	                    pass  # Chat group might not exist yet
+303	        
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/models/models_booking.py:329:12
+328	                self.trip.chat_group.send_system_message(f"❌ {self.passenger.name} cancelled their booking")
+329	            except:
+330	                pass
+331	    
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/models/models_trip.py:209:8
+208	            self.chat_group.send_system_message("🚌 Trip has started!")
+209	        except:
+210	            pass  # Chat group might not exist yet
+211	    
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/models/models_trip.py:226:8
+225	            self.chat_group.send_system_message("✅ Trip completed! This chat will be archived.")
+226	        except:
+227	            pass
+228	    
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/models/models_trip.py:242:8
+241	            self.chat_group.send_system_message(f"❌ Trip cancelled: {reason or 'No reason provided'}")
+242	        except:
+243	            pass
+244	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:187:24
+186	                            any_dist = True
+187	                        except Exception:
+188	                            pass
+189	                    if total_min is None and getattr(sb, 'duration_minutes', None) is not None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:193:24
+192	                            any_dur = True
+193	                        except Exception:
+194	                            pass
+195	                if total_km is None and any_dist:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:199:12
+198	                    total_min = dur_sum
+199	            except Exception:
+200	                pass
+201	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:297:20
+296	                        trip.driver.save(update_fields=['driver_rating'])
+297	                    except Exception:
+298	                        pass
+299	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:317:20
+316	                        UsersData.objects.filter(id=pid).update(passenger_rating=float(passenger_avg))
+317	                    except Exception:
+318	                        pass
+319	        except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:319:8
+318	                        pass
+319	        except Exception:
+320	            # Rating update must never block archiving.
+321	            pass
+322	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:345:8
+344	            snap_has_actual_path = isinstance(snap.actual_path, list) and len(snap.actual_path) >= 2
+345	        except Exception:
+346	            pass
+347	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:388:8
+387	                TripActualPathPoint.objects.bulk_create(bulk, batch_size=2000)
+388	        except Exception:
+389	            pass
+390	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:401:16
+400	                    TripActualPathPoint.objects.filter(summary=path).delete()
+401	                except Exception:
+402	                    pass
+403	                try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/auto_archive.py:405:16
+404	                    TripActualPathSummary.objects.filter(id=path.id).delete()
+405	                except Exception:
+406	                    pass
+407	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/auto_archive.py:432:8
+431	                processed += 1
+432	        except Exception:
+433	            # Never fail the caller (UI load). This is best-effort archiving.
+434	            continue
+435	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/auto_archive.py:455:8
+454	                processed += 1
+455	        except Exception:
+456	            continue
+457	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/common/extractors.py:100:8
+99	                out.append((lat, lon))
+100	        except Exception:
+101	            pass
+102	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/common/extractors.py:108:8
+107	            lon = float(b)
+108	        except Exception:
+109	            continue
+110	        if -90.0 <= lat <= 90.0 and -180.0 <= lon <= 180.0:
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/common/stops_geo.py:65:8
+64	            )
+65	        except Exception:
+66	            continue
+67	        if not name:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/engine_impl/core.py:229:12
+228	                    _save_persistent_memory(st)
+229	            except Exception:
+230	                pass
+231	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/engine_impl/core.py:387:20
+386	                                    st.create_ride.estimated_price_per_seat = int(est)
+387	                    except Exception:
+388	                        pass
+389	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/engine_impl/core.py:704:12
+703	                    break
+704	            except Exception:
+705	                continue
+706	        if chosen is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/engine_impl/core.py:715:8
+714	            d.vehicle_id = int((chosen or {}).get('id') or 0) or d.vehicle_id
+715	        except Exception:
+716	            pass
+717	        d.vehicle_candidates = None
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/engine_impl/core.py:890:8
+889	                return _finalize(str(snaps[0]))
+890	        except Exception:
+891	            pass
+892	        return _finalize(capabilities_text())
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/engine_impl/core.py:911:8
+910	                return _finalize("\n\n".join(snaps))
+911	        except Exception:
+912	            pass
+913	        return _finalize(help_text())
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/flows_impl/listing.py:116:16
+115	                        filtered.append(r)
+116	                except Exception:
+117	                    continue
+118	            rides = filtered
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/flows_impl/listing.py:138:8
+137	                st.last_trip_id = trip_id
+138	        except Exception:
+139	            pass
+140	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/flows_impl/listing.py:263:8
+262	                st.last_trip_id = tid
+263	        except Exception:
+264	            pass
+265	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/flows_impl/routing.py:34:4
+33	                return str(name).strip() or None
+34	    except Exception:
+35	        pass
+36	    return nearest_stop_name(float(lat), float(lng))
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/flows_impl/updates.py:44:4
+43	                return str(name).strip() or None
+44	    except Exception:
+45	        pass
+46	    return nearest_stop_name(float(lat), float(lng))
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/flows_impl/updates.py:75:8
+74	            d.trip_date = datetime.strptime(str(llm.get('date')), '%Y-%m-%d').date()
+75	        except Exception:
+76	            pass
+77	    if d.trip_date is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/flows_impl/updates.py:137:12
+136	                d.trip_date = datetime.strptime(str(llm.get('date')), '%Y-%m-%d').date()
+137	            except Exception:
+138	                pass
+139	        if llm.get('time') and d.departure_time is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/integrations/api.py:49:8
+48	            del _API_CACHE[key]
+49	        except Exception:
+50	            pass
+51	        return None
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/integrations/api.py:404:8
+403	                break
+404	        except Exception:
+405	            continue
+406	    if found is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/integrations/api.py:551:8
+550	            base |= set(dir(_legacy_api))
+551	        except Exception:
+552	            pass
+553	    return sorted(base)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/integrations/http_client.py:35:4
+34	        _GET_CACHE.clear()
+35	    except Exception:
+36	        pass
+37	    try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/integrations/http_client.py:39:4
+38	        _COOKIE_JAR.clear()
+39	    except Exception:
+40	        pass
+41	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/integrations/http_client.py:69:8
+68	            del _GET_CACHE[key]
+69	        except Exception:
+70	            pass
+71	        return None
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/llm/client.py:85:4
+84	            return
+85	    except Exception:
+86	        pass
+87	    logger.debug("[chatbot][llm][%s][ERROR] %s", where, repr(e))
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:210:13
+209	        )
+210	        with urllib.request.urlopen(req, timeout=10.0) as resp:
+211	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:349:13
+348	        )
+349	        with urllib.request.urlopen(req, timeout=12.0) as resp:
+350	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:383:13
+382	        )
+383	        with urllib.request.urlopen(req, timeout=2.5) as resp:
+384	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:425:13
+424	        )
+425	        with urllib.request.urlopen(req, timeout=10.0) as resp:
+426	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:534:17
+533	            )
+534	            with urllib.request.urlopen(req, timeout=3.5) as resp:
+535	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:574:17
+573	            )
+574	            with urllib.request.urlopen(req, timeout=10.0) as resp:
+575	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:650:17
+649	            )
+650	            with urllib.request.urlopen(req, timeout=3.5) as resp:
+651	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot/llm/client.py:690:17
+689	            )
+690	            with urllib.request.urlopen(req, timeout=10.0) as resp:
+691	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/routing/osm_client.py:246:16
+245	                    )
+246	                except Exception:
+247	                    continue
+248	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/routing/osm_client.py:248:4
+247	                    continue
+248	    except Exception:
+249	        pass
+250	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/routing/osm_client.py:261:8
+260	            )
+261	        except Exception:
+262	            continue
+263	        if k in seen:
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot/routing/route_helpers.py:36:8
+35	            coords.append((float(lat), float(lng)))
+36	        except Exception:
+37	            continue
+38	        nm = str(s.get('stop_name') or s.get('name') or '').strip()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/routing/route_helpers.py:228:4
+227	            return simplified
+228	    except Exception:
+229	        pass
+230	    return []
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot/routing/route_helpers.py:366:12
+365	                    return result
+366	            except Exception:
+367	                pass
+368	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/api.py:47:8
+46	            del _API_CACHE[key]
+47	        except Exception:
+48	            pass
+49	        return None
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/api.py:423:8
+422	                break
+423	        except Exception:
+424	            continue
+425	    if found is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/engine.py:472:20
+471	                                    st.create_ride.estimated_price_per_seat = int(est)
+472	                    except Exception:
+473	                        pass
+474	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/engine.py:521:20
+520	                                        return _finalize(summary + "\n" + f"Created route_id={rid_new}." + ("\n" + nxt if nxt else ''))
+521	                    except Exception:
+522	                        pass
+523	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/engine.py:1001:12
+1000	                    break
+1001	            except Exception:
+1002	                continue
+1003	        if chosen is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/engine.py:1010:8
+1009	            d.vehicle_id = int((chosen or {}).get('id') or 0) or d.vehicle_id
+1010	        except Exception:
+1011	            pass
+1012	        d.vehicle_candidates = None
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/engine.py:1131:8
+1130	                return _finalize(str(snaps[0]))
+1131	        except Exception:
+1132	            pass
+1133	        return _finalize(capabilities_text())
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/engine.py:1152:8
+1151	                return _finalize("\n\n".join(snaps))
+1152	        except Exception:
+1153	            pass
+1154	        return _finalize(help_text())
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/flows.py:57:4
+56	                return str(name).strip() or None
+57	    except Exception:
+58	        pass
+59	    return nearest_stop_name(float(lat), float(lng))
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/flows.py:250:16
+249	                        filtered.append(r)
+250	                except Exception:
+251	                    continue
+252	            rides = filtered
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/flows.py:272:8
+271	                st.last_trip_id = trip_id
+272	        except Exception:
+273	            pass
+274	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/flows.py:398:8
+397	                st.last_trip_id = tid
+398	        except Exception:
+399	            pass
+400	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/flows.py:903:8
+902	            d.trip_date = datetime.strptime(str(llm.get('date')), '%Y-%m-%d').date()
+903	        except Exception:
+904	            pass
+905	    if d.trip_date is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/flows.py:965:12
+964	                d.trip_date = datetime.strptime(str(llm.get('date')), '%Y-%m-%d').date()
+965	            except Exception:
+966	                pass
+967	        if llm.get('time') and d.departure_time is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/helpers.py:226:8
+225	                out.append((lat, lon))
+226	        except Exception:
+227	            pass
+228	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/helpers.py:234:8
+233	            lon = float(b)
+234	        except Exception:
+235	            continue
+236	        if -90.0 <= lat <= 90.0 and -180.0 <= lon <= 180.0:
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/helpers.py:297:8
+296	            slon = float(s.get('lon') if s.get('lon') is not None else (s.get('lng') if s.get('lng') is not None else s.get('longitude')))
+297	        except Exception:
+298	            continue
+299	        if not name:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/http_client.py:31:4
+30	        _GET_CACHE.clear()
+31	    except Exception:
+32	        pass
+33	    try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/http_client.py:35:4
+34	        _COOKIE_JAR.clear()
+35	    except Exception:
+36	        pass
+37	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/http_client.py:67:8
+66	            del _GET_CACHE[key]
+67	        except Exception:
+68	            pass
+69	        return None
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:84:4
+83	            return
+84	    except Exception:
+85	        pass
+86	    logger.debug("[chatbot][llm][%s][ERROR] %s", where, repr(e))
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:245:13
+244	        )
+245	        with urllib.request.urlopen(req, timeout=12.0) as resp:
+246	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:279:13
+278	        )
+279	        with urllib.request.urlopen(req, timeout=2.5) as resp:
+280	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:321:13
+320	        )
+321	        with urllib.request.urlopen(req, timeout=10.0) as resp:
+322	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:427:17
+426	            )
+427	            with urllib.request.urlopen(req, timeout=3.5) as resp:
+428	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:467:17
+466	            )
+467	            with urllib.request.urlopen(req, timeout=10.0) as resp:
+468	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:541:17
+540	            )
+541	            with urllib.request.urlopen(req, timeout=3.5) as resp:
+542	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/utils/chatbot_lagacy/llm.py:581:17
+580	            )
+581	            with urllib.request.urlopen(req, timeout=10.0) as resp:
+582	                raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/osm_client.py:215:16
+214	                    })
+215	                except Exception:
+216	                    continue
+217	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/osm_client.py:217:4
+216	                    continue
+217	    except Exception:
+218	        pass
+219	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/osm_client.py:226:8
+225	            k = (round(float(c.get('lat')), 6), round(float(c.get('lon')), 6), normalize_text(str(c.get('display_name') or '')))
+226	        except Exception:
+227	            continue
+228	        if k in seen:
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/chatbot_lagacy/route_helpers.py:36:8
+35	            coords.append((float(lat), float(lng)))
+36	        except Exception:
+37	            continue
+38	        nm = str(s.get('stop_name') or s.get('name') or '').strip()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/route_helpers.py:265:4
+264	            return simplified
+265	    except Exception:
+266	        pass
+267	    return []
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/chatbot_lagacy/route_helpers.py:379:12
+378	                    return result
+379	            except Exception:
+380	                pass
+381	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/route_geometry.py:114:16
+113	                    line.append({"lat": float(lat), "lng": float(lng)})
+114	                except Exception:
+115	                    continue
+116	            logger.debug("[ROUTE_GEOMETRY][OSM] extracted points from GeoJSON: %s", len(line))
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/utils/route_geometry.py:126:16
+125	                    line.append({"lat": float(lat), "lng": float(lng)})
+126	                except Exception:
+127	                    continue
+128	            logger.debug("[ROUTE_GEOMETRY][OSM] extracted points from encoded polyline: %s", len(line))
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/verification_guard.py:134:4
+133	            )
+134	    except Exception:
+135	        pass
+136	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/utils/verification_guard.py:245:4
+244	            )
+245	    except Exception:
+246	        pass
+247	
+
+--------------------------------------------------
+>> Issue: [B113:request_without_timeout] Call to requests without timeout
+   Severity: Medium   Confidence: Low
+   CWE: CWE-400 (https://cwe.mitre.org/data/definitions/400.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b113_request_without_timeout.html
+   Location: ./lets_go/views/views_authentication.py:50:15
+49	
+50	    response = requests.post(upload_url, headers=headers, data=file_obj.read())
+51	    if response.status_code not in (200, 201):
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_authentication.py:259:8
+258	            UsernameRegistry.objects.filter(username__iexact=user.username).delete()
+259	        except Exception:
+260	            pass
+261	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_authentication.py:267:8
+266	            request.session.flush()
+267	        except Exception:
+268	            pass
+269	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_authentication.py:343:8
+342	            request.session.flush()
+343	        except Exception:
+344	            # If there is no valid session, ignore
+345	            pass
+346	        return JsonResponse({'success': True, 'message': 'Logout successful'})
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_authentication.py:660:12
+659	                UsernameRegistry.objects.filter(username__iexact=username_norm).delete()
+660	            except Exception:
+661	                pass
+662	            return JsonResponse({'success': True, 'message': 'Registration successful.'})
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/views/views_authentication.py:669:19
+668	def generate_otp(length=6):
+669	    return ''.join(random.choices(string.digits, k=length))
+670	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/views/views_authentication.py:762:24
+761	        # Generate OTPs as needed
+762	        email_otp = str(random.randint(100000, 999999)) if email else None
+763	        phone_otp = str(random.randint(100000, 999999)) if phone else None
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/views/views_authentication.py:763:24
+762	        email_otp = str(random.randint(100000, 999999)) if email else None
+763	        phone_otp = str(random.randint(100000, 999999)) if phone else None
+764	        email_expiry = now + 300 if email else None
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/views/views_homescreen.py:127:13
+126	
+127	        with urllib.request.urlopen(req, timeout=timeout_seconds) as resp:
+128	            raw = resp.read().decode('utf-8')
+
+--------------------------------------------------
+>> Issue: [B310:blacklist] Audit url open for permitted schemes. Allowing use of file:/ or custom schemes is often unexpected.
+   Severity: Medium   Confidence: High
+   CWE: CWE-22 (https://cwe.mitre.org/data/definitions/22.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b310-urllib-urlopen
+   Location: ./lets_go/views/views_homescreen.py:179:13
+178	
+179	        with urllib.request.urlopen(req, timeout=timeout_seconds) as resp:
+180	            chunks = []
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_homescreen.py:455:8
+454	                vehicle_fuel_type = getattr(hist, 'fuel_type', None)
+455	        except Exception:
+456	            pass
+457	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_homescreen.py:467:12
+466	                    vehicle_fuel_type = getattr(v, 'fuel_type', None)
+467	            except Exception:
+468	                pass
+469	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_homescreen.py:502:8
+501	                vehicle_fuel_type = getattr(v, 'fuel_type', None)
+502	        except Exception:
+503	            pass
+504	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_homescreen.py:726:12
+725	                meta['ml_raw_preview'] = str(g_res)[:1200]
+726	            except Exception:
+727	                pass
+728	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_homescreen.py:738:12
+737	                meta['ml_ranked_preview'] = str(ranked)[:1200]
+738	            except Exception:
+739	                pass
+740	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_homescreen.py:1053:16
+1052	                        destination_name = stops[-1].stop_name or destination_name
+1053	                except Exception:
+1054	                    pass
+1055	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_homescreen.py:1290:12
+1289	                            continue
+1290	            except Exception:
+1291	                pass
+1292	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_incidents.py:382:4
+381	            trip_public_data['vehicle']['plate_masked'] = (plate[:3] + '***' + plate[-3:]) if len(plate) > 6 else ('***' + plate[-3:])
+382	    except Exception:
+383	        pass
+384	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_incidents.py:410:24
+409	                                route_geometry_data.append({'lat': float(p['lat']), 'lng': float(p['lng'])})
+410	                        except Exception:
+411	                            pass
+412	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_incidents.py:576:4
+575	            trip_public_data['vehicle']['plate_masked'] = (plate[:3] + '***' + plate[-3:]) if len(plate) > 6 else ('***' + plate[-3:])
+576	    except Exception:
+577	        pass
+578	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_incidents.py:604:24
+603	                                route_geometry_data.append({'lat': float(p['lat']), 'lng': float(p['lng'])})
+604	                        except Exception:
+605	                            pass
+606	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:79:12
+78	                    return JsonResponse({'success': False, 'error': 'You are blocked from requesting this ride.'}, status=403)
+79	            except Exception:
+80	                pass
+81	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:84:12
+83	                    return JsonResponse({'success': False, 'error': 'You are blocked by this driver.'}, status=403)
+84	            except Exception:
+85	                pass
+86	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/views/views_negotiation.py:183:35
+182	                booking = Booking.objects.create(
+183	                    booking_id=f"B{random.randint(100, 999)}-{datetime.now().strftime('%Y-%m-%d-%H:%M')}-{passenger_id}",
+184	                    trip=trip,
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:289:8
+288	            connection.close_if_unusable_or_obsolete()
+289	        except Exception:
+290	            pass
+291	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:468:8
+467	            connection.close_if_unusable_or_obsolete()
+468	        except Exception:
+469	            pass
+470	        trip = (
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:528:12
+527	                booking.negotiated_fare = int(final_per_seat) if final_per_seat is not None else booking.negotiated_fare
+528	            except Exception:
+529	                pass
+530	            # Only set total_fare if the model has that field
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:533:12
+532	                setattr(booking, 'total_fare', final_total)
+533	            except Exception:
+534	                pass
+535	            booking.booking_status = 'CONFIRMED'
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:545:12
+544	                    booking.save(update_fields=['seats_locked', 'updated_at'])
+545	            except Exception:
+546	                pass
+547	            # store event
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:553:12
+552	                trip.save(update_fields=['bargaining_history'])
+553	            except Exception:
+554	                pass
+555	            logger.debug(
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:607:12
+606	                    booking.save(update_fields=['seats_locked', 'updated_at'])
+607	            except Exception:
+608	                pass
+609	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:614:12
+613	                trip.save(update_fields=['bargaining_history'])
+614	            except Exception:
+615	                pass
+616	            logger.debug("[respond_booking_request] REJECT branch completed in %.1fms", (pytime.time() - t3) * 1000.0)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:665:12
+664	                trip.save(update_fields=['bargaining_history'])
+665	            except Exception:
+666	                pass
+667	            # Notify passenger of counter offer
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:708:12
+707	                booking.blocked = True
+708	            except Exception:
+709	                pass
+710	            booking.save(update_fields=['bargaining_status', 'booking_status', 'driver_response', 'blocked'])
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:718:12
+717	                    booking.save(update_fields=['seats_locked', 'updated_at'])
+718	            except Exception:
+719	                pass
+720	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:725:12
+724	                trip.save(update_fields=['bargaining_history'])
+725	            except Exception:
+726	                pass
+727	            return JsonResponse({'success': True, 'message': 'Passenger blocked for this ride', 'booking': {
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:739:12
+738	                booking.blocked = True
+739	            except Exception:
+740	                pass
+741	            booking.save(update_fields=['bargaining_status', 'booking_status', 'driver_response', 'blocked'])
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:748:12
+747	                )
+748	            except Exception:
+749	                pass
+750	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:757:12
+756	                    booking.save(update_fields=['seats_locked', 'updated_at'])
+757	            except Exception:
+758	                pass
+759	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:764:12
+763	                trip.save(update_fields=['bargaining_history'])
+764	            except Exception:
+765	                pass
+766	            return JsonResponse({'success': True, 'message': 'Passenger added to blacklist', 'booking': {
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:839:8
+838	            connection.close_if_unusable_or_obsolete()
+839	        except Exception:
+840	            pass
+841	        trip = Trip.objects.only('id', 'trip_id', 'driver_id', 'bargaining_history').get(trip_id=trip_id)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:889:12
+888	                setattr(booking, 'total_fare', final_total)
+889	            except Exception:
+890	                pass
+891	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:893:12
+892	                booking.negotiated_fare = int(final_per_seat) if final_per_seat is not None else booking.negotiated_fare
+893	            except Exception:
+894	                pass
+895	            booking.booking_status = 'CONFIRMED'
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:1026:12
+1025	                    booking.save(update_fields=['seats_locked', 'updated_at'])
+1026	            except Exception:
+1027	                pass
+1028	            try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:1260:16
+1259	                        return JsonResponse({'success': False, 'error': 'You are blocked from requesting this ride.'}, status=403)
+1260	                except Exception:
+1261	                    pass
+1262	                try:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_negotiation.py:1265:16
+1264	                        return JsonResponse({'success': False, 'error': 'You are blocked by this driver.'}, status=403)
+1265	                except Exception:
+1266	                    pass
+1267	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'NO_FCM_TOKEN'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./lets_go/views/views_notifications.py:43:24
+42	        # Special case: placeholder value from client when no real device token is available
+43	        if fcm_token == 'NO_FCM_TOKEN':
+44	            logger.debug('[update_fcm_token] Received NO_FCM_TOKEN placeholder; skipping DB update')
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_notifications.py:215:16
+214	                        guest_user_id = int(recipient_key.split(':', 1)[1])
+215	                except Exception:
+216	                    pass
+217	                summary_payload = {
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/views/views_notifications.py:323:8
+322	            safe_key = str(k)
+323	        except Exception:
+324	            continue
+325	        safe_data[safe_key] = _to_str(v)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_notifications.py:407:12
+406	                            normalized_payload['recipient_key'] = f'guest:{guest_user_id}'
+407	            except Exception:
+408	                pass
+409	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_notifications.py:434:12
+433	                _queue_offline_notification(normalized_payload)
+434	            except Exception:
+435	                pass
+436	        finally:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:163:4
+162	        trip.save(update_fields=['live_tracking_state'])
+163	    except Exception:
+164	        pass
+165	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:298:16
+297	                    sent_driver += 1
+298	                except Exception:
+299	                    pass
+300	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:324:12
+323	                                _send_sms_cron(drv_contact.phone_no, body)
+324	            except Exception:
+325	                pass
+326	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:360:12
+359	                sent_passengers += 1
+360	            except Exception:
+361	                pass
+362	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:386:12
+385	                                _send_sms_cron(p_contact.phone_no, body)
+386	            except Exception:
+387	                pass
+388	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:557:4
+556	        )
+557	    except Exception:
+558	        pass
+559	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:579:8
+578	            send_ride_notification_async(payload)
+579	        except Exception:
+580	            pass
+581	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:601:8
+600	            send_ride_notification_async(payload_driver)
+601	        except Exception:
+602	            pass
+603	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:664:4
+663	        )
+664	    except Exception:
+665	        pass
+666	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:681:4
+680	        send_ride_notification_async(payload)
+681	    except Exception:
+682	        pass
+683	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:728:4
+727	        )
+728	    except Exception:
+729	        pass
+730	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:777:4
+776	        )
+777	    except Exception:
+778	        pass
+779	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:794:4
+793	        send_ride_notification_async(payload)
+794	    except Exception:
+795	        pass
+796	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:828:4
+827	        )
+828	    except Exception:
+829	        pass
+830	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:845:4
+844	        send_ride_notification_async(payload)
+845	    except Exception:
+846	        pass
+847	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:878:4
+877	        booking.save(update_fields=['booking_status', 'ride_status', 'dropoff_at', 'completed_at', 'updated_at'])
+878	    except Exception:
+879	        pass
+880	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:891:4
+890	        )
+891	    except Exception:
+892	        pass
+893	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:908:4
+907	        send_ride_notification_async(payload_passenger)
+908	    except Exception:
+909	        pass
+910	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:924:4
+923	        send_ride_notification_async(payload_driver)
+924	    except Exception:
+925	        pass
+926	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1084:4
+1083	        send_ride_notification_async(payload)
+1084	    except Exception:
+1085	        pass
+1086	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1166:4
+1165	        send_ride_notification_async(payload)
+1166	    except Exception:
+1167	        pass
+1168	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1304:8
+1303	            state['driver_path'] = driver_path
+1304	        except Exception:
+1305	            pass
+1306	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1326:8
+1325	            )
+1326	        except Exception:
+1327	            pass
+1328	    else:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1380:8
+1379	            )
+1380	        except Exception:
+1381	            pass
+1382	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1477:8
+1476	                    ]
+1477	        except Exception:
+1478	            pass
+1479	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1528:28
+1527	                                p2['dropoff_lng'] = float(getattr(getattr(b, 'to_stop', None), 'longitude', None)) if getattr(getattr(b, 'to_stop', None), 'longitude', None) is not None else None
+1528	                            except Exception:
+1529	                                pass
+1530	                        updated.append(p2)
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1533:8
+1532	                    live_state['passengers'] = updated
+1533	        except Exception:
+1534	            pass
+1535	    now = timezone.now()
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1596:8
+1595	                                driver_speed_mps = float(d_m) / float(dt_s)
+1596	        except Exception:
+1597	            pass
+1598	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1649:4
+1648	                driver_meta['is_deviating'] = min_d > 300
+1649	    except Exception:
+1650	        pass
+1651	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1670:4
+1669	                        driver_eta_at = (now + timedelta(seconds=driver_eta_seconds_to_final)).isoformat()
+1670	    except Exception:
+1671	        pass
+1672	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1683:4
+1682	                        passenger_eta_at = (now + timedelta(seconds=passenger_eta_seconds_to_dropoff)).isoformat()
+1683	    except Exception:
+1684	        pass
+1685	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1714:28
+1713	                                send_ride_notification_async(payload)
+1714	                            except Exception:
+1715	                                pass
+1716	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1734:24
+1733	                            send_ride_notification_async(payload)
+1734	                        except Exception:
+1735	                            pass
+1736	    except Exception:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1736:4
+1735	                            pass
+1736	    except Exception:
+1737	        pass
+1738	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1762:4
+1761	                    live_state['passengers'] = enriched
+1762	    except Exception:
+1763	        pass
+1764	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1818:4
+1817	            return JsonResponse({'success': False, 'error': 'Pickup code generation limit reached. Please contact support if needed.'}, status=429)
+1818	    except Exception:
+1819	        pass
+1820	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1838:8
+1837	                driver_lng = latest_driver.longitude
+1838	        except Exception:
+1839	            pass
+1840	
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/views/views_post_booking.py:1853:14
+1852	    import random
+1853	    code = f"{random.randint(0, 999999):06d}"
+1854	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1886:4
+1885	        )
+1886	    except Exception:
+1887	        pass
+1888	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1948:8
+1947	            )
+1948	        except Exception:
+1949	            pass
+1950	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1967:8
+1966	            )
+1967	        except Exception:
+1968	            pass
+1969	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:1988:4
+1987	                dist = _haversine_meters(driver_lat, driver_lng, pickup_lat, pickup_lng)
+1988	    except Exception:
+1989	        pass
+1990	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:2015:8
+2014	            )
+2015	        except Exception:
+2016	            pass
+2017	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:2040:4
+2039	        )
+2040	    except Exception:
+2041	        pass
+2042	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:2069:4
+2068	        send_ride_notification_async(payload_passenger)
+2069	    except Exception:
+2070	        pass
+2071	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:2089:4
+2088	        send_ride_notification_async(payload_task)
+2089	    except Exception:
+2090	        pass
+2091	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_post_booking.py:2146:4
+2145	            return trigger_at
+2146	    except Exception:
+2147	        pass
+2148	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_profile.py:290:12
+289	                qs = qs.filter(vehicle_id=vehicle_id)
+290	            except Exception:
+291	                pass
+292	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_rideposting.py:130:16
+129	                    connection.close_if_unusable_or_obsolete()
+130	                except Exception:
+131	                    pass
+132	                logger.debug("Looking for route with route_id: %s", route_id)
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/views/views_rideposting.py:245:32
+244	                trip = Trip.objects.create(
+245	                    trip_id=f"T{random.randint(100, 999)}-{datetime.now().strftime('%Y-%m-%d-%H:%M')}",
+246	                    route=route,
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_rideposting.py:1055:36
+1054	                                        any_dist = True
+1055	                                    except Exception:
+1056	                                        pass
+1057	                            if duration is None:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_rideposting.py:1063:36
+1062	                                        any_dur = True
+1063	                                    except Exception:
+1064	                                        pass
+1065	                    if distance is None and any_dist:
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_rideposting.py:1069:16
+1068	                        duration = dur_sum
+1069	                except Exception:
+1070	                    pass
+1071	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/views/views_rideposting.py:1232:12
+1231	                    snap_trip_ids.append(obj.trip_id)
+1232	            except Exception:
+1233	                continue
+1234	    trip_info = {}
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_rideposting.py:1335:12
+1334	                auto_archive_for_driver(driver_id=int(user_id), limit=5)
+1335	            except Exception:
+1336	                pass
+1337	
+
+--------------------------------------------------
+>> Issue: [B112:try_except_continue] Try, Except, Continue detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b112_try_except_continue.html
+   Location: ./lets_go/views/views_rideposting.py:1813:24
+1812	                            total += float(v)
+1813	                        except Exception:
+1814	                            continue
+1815	                    if not any_val:
+
+--------------------------------------------------
+>> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
+   Severity: Low   Confidence: High
+   CWE: CWE-330 (https://cwe.mitre.org/data/definitions/330.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b311-random
+   Location: ./lets_go/views/views_rideposting.py:2381:34
+2380	            booking_data = {
+2381	                'booking_id': f"B{random.randint(100, 999)}-{datetime.now().strftime('%Y-%m-%d-%H%M')}",
+2382	                'success': True,
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'NO_FCM_TOKEN'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./lets_go/views/views_support_chat.py:102:29
+101	    token = (fcm_token or '').strip()
+102	    if not token or token == 'NO_FCM_TOKEN':
+103	        return
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_support_chat.py:108:4
+107	        register_fcm_token_with_supabase_async(f'guest:{guest.id}', token)
+108	    except Exception:
+109	        pass
+110	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_support_chat.py:113:4
+112	        flush_offline_notification_queue_async(f'guest:{guest.id}')
+113	    except Exception:
+114	        pass
+115	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'NO_FCM_TOKEN'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./lets_go/views/views_support_chat.py:144:62
+143	            username=username,
+144	            fcm_token=fcm_token if fcm_token and fcm_token != 'NO_FCM_TOKEN' else None,
+145	        )
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_support_chat.py:190:8
+189	                _SESSIONS.pop(int(session_user_id), None)
+190	        except Exception:
+191	            pass
+192	
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./lets_go/views/views_support_chat.py:200:8
+199	                ChatbotMemory.objects.filter(guest_id=gid).update(summary='', preferences={})
+200	        except Exception:
+201	            pass
+202	
+
+--------------------------------------------------
+>> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'testpassword123'
+   Severity: Low   Confidence: Medium
+   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
+   Location: ./test_fare_calculation.py:32:12
+31	            'email': 'test@example.com',
+32	            'password': 'testpassword123',
+33	            'address': 'Test Address',
+34	            'phone_no': '+923001234567',
+35	            'cnic_no': '12345-1234567-1',
+36	            'gender': 'male',
+37	            'status': 'VERIFIED'
+38	        }
+39	    )
+40	    
+41	    # Create a test vehicle
+42	    vehicle, created = Vehicle.objects.get_or_create(
+
+--------------------------------------------------
+
+Code scanned:
+	Total lines of code: 32180
+	Total lines skipped (#nosec): 0
+	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
+
+Run metrics:
+	Total issues (by severity):
+		Undefined: 0
+		Low: 250
+		Medium: 19
+		High: 0
+	Total issues (by confidence):
+		Undefined: 0
+		Low: 1
+		Medium: 5
+		High: 263
+Files skipped (0):

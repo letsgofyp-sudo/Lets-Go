@@ -38,6 +38,9 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
   int bookedOffset = 0;
   String? errorMessage;
 
+  bool _loadedCreated = false;
+  bool _loadedBooked = false;
+
   @override
   bool get wantKeepAlive => true;
 
@@ -47,6 +50,9 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       if (!mounted) return;
+      if (!_tabController.indexIsChanging) {
+        _maybeLoadActiveTab();
+      }
       setState(() {});
     });
     () async {
@@ -60,6 +66,49 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
       }
     }();
     _loadRideHistory();
+  }
+
+  Future<void> _maybeLoadActiveTab() async {
+    if (_tabController.index == 0) {
+      if (_loadedCreated) return;
+      _loadedCreated = true;
+      await _reloadCreated();
+      return;
+    }
+    if (_loadedBooked) return;
+    _loadedBooked = true;
+    if (mounted) {
+      setState(() => isLoading = true);
+    }
+    try {
+      await _reloadBooked();
+    } finally {
+      if (mounted) {
+        setState(() => isLoading = false);
+      }
+    }
+  }
+
+  Future<void> _reloadCreated() async {
+    if (!mounted) return;
+    setState(() {
+      errorMessage = null;
+      createdRides = [];
+      createdOffset = 0;
+      hasMoreCreated = true;
+    });
+    await _loadMoreCreated(initial: true);
+  }
+
+  Future<void> _reloadBooked() async {
+    if (!mounted) return;
+    setState(() {
+      errorMessage = null;
+      bookedRides = [];
+      bookedOffset = 0;
+      hasMoreBooked = true;
+    });
+    await _loadMoreBooked(initial: true);
   }
 
   @override
@@ -217,10 +266,9 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
         }
       }();
 
-      await Future.wait([
-        _loadMoreCreated(initial: true),
-        _loadMoreBooked(initial: true),
-      ]);
+      // Load created first; booked loads only when Bookings tab is opened.
+      _loadedCreated = true;
+      await _loadMoreCreated(initial: true);
 
       if (!mounted) return;
       setState(() {
@@ -389,7 +437,7 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
 
   Widget _buildCreatedTab() {
     return RefreshIndicator(
-      onRefresh: _loadRideHistory,
+      onRefresh: _reloadCreated,
       child: isLoading
           ? ListView(children: const [SizedBox(height: 240), Center(child: CircularProgressIndicator())])
           : createdRides.isEmpty
@@ -440,7 +488,7 @@ class _ProfileRideHistoryScreenState extends State<ProfileRideHistoryScreen>
 
   Widget _buildBookedTab() {
     return RefreshIndicator(
-      onRefresh: _loadRideHistory,
+      onRefresh: _reloadBooked,
       child: isLoading
           ? ListView(children: const [SizedBox(height: 240), Center(child: CircularProgressIndicator())])
           : bookedRides.isEmpty

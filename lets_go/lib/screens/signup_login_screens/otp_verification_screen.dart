@@ -15,6 +15,51 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   String? _previousEmail;
   String? _previousPhone;
 
+  String? _routeForServerField(String? field) {
+    final f = (field ?? '').trim();
+    if (f.isEmpty) return null;
+
+    const personalFields = {
+      'name',
+      'username',
+      'email',
+      'password',
+      'confirm_password',
+      'address',
+      'phone_no',
+      'cnic_no',
+      'gender',
+      'driving_license_no',
+      'accountno',
+      'bankname',
+      'iban',
+    };
+
+    const cnicFields = {
+      'profile_photo',
+      'live_photo',
+      'cnic_front_image',
+      'cnic_back_image',
+      'driving_license_front',
+      'driving_license_back',
+    };
+
+    const emergencyFields = {
+      'emergency_name',
+      'emergency_relation',
+      'emergency_email',
+      'emergency_phone_no',
+    };
+
+    if (personalFields.contains(f)) return '/signup_personal';
+    if (cnicFields.contains(f)) return '/signup_cnic';
+    if (emergencyFields.contains(f)) return '/signup_emergency';
+    if (f == 'vehicles' || f.startsWith('photo_front_') || f.startsWith('photo_back_') || f.startsWith('documents_image_')) {
+      return '/signup_vehicle';
+    }
+    return '/signup_personal';
+  }
+
   @override
   void initState() {
     super.initState();
@@ -55,6 +100,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     await prefs.remove('signup_cnic');
     await prefs.remove('signup_vehicles');
     await prefs.remove('signup_vehicle_images');
+    await prefs.remove('pending_signup_status');
     await prefs.remove('signup_username_verified');
     await prefs.remove('signup_verified_username');
     await prefs.remove('signup_last_reserved_username');
@@ -82,6 +128,33 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
     } else {
       Navigator.pushReplacementNamed(context, '/signup_personal');
     }
+  }
+
+  Future<void> _goBackAndFix() async {
+    final target = _routeForServerField(_controller.lastServerErrorField);
+    if (target == null) return;
+
+    await _unlockSignup();
+    final prefs = await SharedPreferences.getInstance();
+
+    if (target == '/signup_vehicle') {
+      await prefs.setString('signup_step', 'vehicle');
+    } else if (target == '/signup_cnic') {
+      await prefs.setString('signup_step', 'cnic');
+    } else if (target == '/signup_emergency') {
+      await prefs.setString('signup_step', 'emergency');
+    } else {
+      await prefs.setString('signup_step', 'personal');
+    }
+
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(context, target);
+  }
+
+  Future<void> _resignup() async {
+    await _controller.loadSignupData();
+    if (!mounted) return;
+    await _controller.submitFinalRegistration(context);
   }
 
   Future<void> _checkAndResendOtpIfChanged() async {
@@ -130,7 +203,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
           automaticallyImplyLeading: false,
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: _handleBack,
+            onPressed: _controller.isSubmittingRegistration ? null : _handleBack,
           ),
         ),
         body: SafeArea(
@@ -143,12 +216,29 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     children: [
                       Text('Enter the OTPs sent to your email and mobile number.'),
                       SizedBox(height: 24),
+                      if (_controller.isSubmittingRegistration) ...[
+                        const Center(
+                          child: SizedBox(
+                            height: 28,
+                            width: 28,
+                            child: CircularProgressIndicator(),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        const Text(
+                          'Submitting your registration…',
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 24),
+                      ],
                       Row(
                         children: [
                           Expanded(
                             child: TextFormField(
                               controller: _controller.emailOtpController,
-                              enabled: !_controller.emailVerified && _controller.emailSecondsLeft > 0,
+                              enabled: !_controller.isSubmittingRegistration &&
+                                  !_controller.emailVerified &&
+                                  _controller.emailSecondsLeft > 0,
                               decoration: InputDecoration(
                                 labelText: 'Email OTP',
                               ),
@@ -171,7 +261,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       Row(
                         children: [
                           ElevatedButton(
-                            onPressed: _controller.isLoading || _controller.emailVerified || _controller.emailSecondsLeft == 0
+                            onPressed: _controller.isLoading ||
+                                    _controller.isSubmittingRegistration ||
+                                    _controller.emailVerified ||
+                                    _controller.emailSecondsLeft == 0
                                 ? null
                                 : () async {
                                     if (!mounted) return;
@@ -185,7 +278,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           ),
                           SizedBox(width: 8),
                           TextButton(
-                            onPressed: _controller.isLoading || _controller.emailVerified || _controller.emailSecondsLeft > 0
+                            onPressed: _controller.isLoading ||
+                                    _controller.isSubmittingRegistration ||
+                                    _controller.emailVerified ||
+                                    _controller.emailSecondsLeft > 0
                                 ? null
                                 : () => _controller.resendOtp('email'),
                             child: Text('Resend Email OTP'),
@@ -209,7 +305,9 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           Expanded(
                             child: TextFormField(
                               controller: _controller.mobileOtpController,
-                              enabled: !_controller.phoneVerified && _controller.phoneSecondsLeft > 0,
+                              enabled: !_controller.isSubmittingRegistration &&
+                                  !_controller.phoneVerified &&
+                                  _controller.phoneSecondsLeft > 0,
                               decoration: InputDecoration(
                                 labelText: 'Mobile OTP',
                               ),
@@ -232,7 +330,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       Row(
                         children: [
                           ElevatedButton(
-                            onPressed: _controller.isLoading || _controller.phoneVerified || _controller.phoneSecondsLeft == 0
+                            onPressed: _controller.isLoading ||
+                                    _controller.isSubmittingRegistration ||
+                                    _controller.phoneVerified ||
+                                    _controller.phoneSecondsLeft == 0
                                 ? null
                                 : () async {
                                     if (!mounted) return;
@@ -246,7 +347,10 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                           ),
                           SizedBox(width: 8),
                           TextButton(
-                            onPressed: _controller.isLoading || _controller.phoneVerified || _controller.phoneSecondsLeft > 0
+                            onPressed: _controller.isLoading ||
+                                    _controller.isSubmittingRegistration ||
+                                    _controller.phoneVerified ||
+                                    _controller.phoneSecondsLeft > 0
                                 ? null
                                 : () => _controller.resendOtp('phone'),
                             child: Text('Resend Phone OTP'),
@@ -266,7 +370,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                         ),
                       if (!_controller.emailVerified || !_controller.phoneVerified)
                         SizedBox.shrink(),
-                      if (_controller.emailSecondsLeft == 0)
+                      if (_controller.emailSecondsLeft == 0 &&
+                          (!_controller.emailVerified || !_controller.phoneVerified))
                         Padding(
                           padding: const EdgeInsets.only(top: 8.0),
                           child: Text('OTP expired. Please request a new OTP.', style: TextStyle(color: Colors.red)),
@@ -274,10 +379,29 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       SizedBox(height: 24),
                       if (_controller.errorMessage != null)
                         Text(_controller.errorMessage!, style: TextStyle(color: Colors.red)),
+                      if ((_controller.errorMessage != null || _controller.needsResubmit) &&
+                          !_controller.isSubmittingRegistration &&
+                          _controller.emailVerified &&
+                          _controller.phoneVerified) ...[
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: _resignup,
+                          child: const Text('Resignup'),
+                        ),
+                      ],
+                      if (_controller.errorMessage != null &&
+                          !_controller.isSubmittingRegistration &&
+                          _routeForServerField(_controller.lastServerErrorField) != null) ...[
+                        const SizedBox(height: 10),
+                        OutlinedButton(
+                          onPressed: _goBackAndFix,
+                          child: const Text('Go Back & Fix'),
+                        ),
+                      ],
                       SizedBox.shrink(),
                       const SizedBox(height: 10),
                       OutlinedButton(
-                        onPressed: _cancelSignup,
+                        onPressed: _controller.isSubmittingRegistration ? null : _cancelSignup,
                         child: const Text('Cancel Signup'),
                       ),
                     ],

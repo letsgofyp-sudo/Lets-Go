@@ -201,7 +201,10 @@ class _ProfileContactChangeScreenState extends State<ProfileContactChangeScreen>
                   final s = (v ?? '').trim();
                   if (s.isEmpty) return 'Required';
                   if (widget.which == ContactChangeWhich.email) {
-                    if (!RegExp(r'^.+@.+\..+').hasMatch(s)) return 'Invalid email';
+                    final ok = RegExp(
+                      r'^[^@\s]+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\.([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*\.[A-Za-z]{2,24}$',
+                    ).hasMatch(s);
+                    if (!ok) return 'Enter a valid email with a valid domain';
                     return null;
                   }
                   final full = _selectedCountryCode + s;

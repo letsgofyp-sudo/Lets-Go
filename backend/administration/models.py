@@ -97,3 +97,28 @@ class AdminTodoItem(models.Model):
         self.done_by = None
         self.manual_done = False
         self.save(update_fields=['status', 'done_at', 'done_by', 'manual_done', 'updated_at'])
+
+
+class SupportFAQ(models.Model):
+    category = models.CharField(max_length=64, null=True, blank=True)
+    question = models.TextField()
+    answer = models.TextField()
+
+    is_active = models.BooleanField(default=True)
+    priority = models.IntegerField(default=100)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=['is_active', 'priority', 'created_at']),
+            models.Index(fields=['category', 'is_active']),
+        ]
+        ordering = ['priority', 'id']
+
+    def __str__(self):
+        q = (self.question or '').strip().replace('\n', ' ')
+        if len(q) > 80:
+            q = q[:77] + '...'
+        return q

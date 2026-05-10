@@ -25,31 +25,31 @@
       <div class="admin-form-grid">
         <div class="admin-field" data-field>
           <label class="admin-label" for="name">Name</label>
-          <input class="admin-control" id="name" type="text" name="name" required data-validate="required" placeholder="Full name" />
+          <input class="admin-control" id="name" type="text" name="name" value="{{ form.name|default_if_none:'' }}" required data-validate="required" placeholder="Full name" maxlength="100" autocomplete="name" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="username">Username</label>
-          <input class="admin-control" id="username" type="text" name="username" required data-validate="required username" placeholder="e.g. fawad.saqlain" />
+          <input class="admin-control" id="username" type="text" name="username" value="{{ form.username|default_if_none:'' }}" required data-validate="required username" placeholder="e.g. fawad.saqlain" maxlength="100" autocomplete="username" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="email">Email</label>
-          <input class="admin-control" id="email" type="email" name="email" required data-validate="required email" placeholder="name@example.com" />
+          <input class="admin-control" id="email" type="email" name="email" value="{{ form.email|default_if_none:'' }}" required data-validate="required email" placeholder="name@example.com" autocomplete="email" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="password">Password</label>
-          <input class="admin-control" id="password" type="password" name="password" required data-validate="required passwordStrong" placeholder="Min 8 chars, strong" />
+          <input class="admin-control" id="password" type="password" name="password" required data-validate="required passwordStrong" placeholder="Min 8 chars, strong" autocomplete="new-password" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field admin-field--full" data-field>
           <label class="admin-label" for="address">Address</label>
-          <input class="admin-control" id="address" type="text" name="address" placeholder="Address" />
+          <input class="admin-control" id="address" type="text" name="address" value="{{ form.address|default_if_none:'' }}" placeholder="Address" autocomplete="street-address" />
           <div class="admin-field-error"></div>
         </div>
 
@@ -63,23 +63,23 @@
               <option value="+971">+971</option>
               <option value="+966">+966</option>
             </select>
-            <input class="admin-control" id="phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" />
+            <input class="admin-control" id="phone_no_local" type="text" inputmode="numeric" placeholder="Local number" pattern="^\d{4,15}$" maxlength="15" autocomplete="tel-national" data-validate="digitsOnly" />
           </div>
-          <input class="admin-control" id="phone_no" type="hidden" name="phone_no" data-validate="phoneIntl" />
+          <input class="admin-control" id="phone_no" type="hidden" name="phone_no" value="{{ form.phone_no|default_if_none:'' }}" data-validate="phoneIntl" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="cnic_no">CNIC</label>
-          <input class="admin-control" id="cnic_no" type="text" name="cnic_no" data-validate="cnic" placeholder="36603-0269853-9" />
+          <input class="admin-control" id="cnic_no" type="text" name="cnic_no" value="{{ form.cnic_no|default_if_none:'' }}" data-validate="cnic" placeholder="36603-0269853-9" pattern="^\d{5}-\d{7}-\d{1}$" maxlength="15" inputmode="numeric" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="gender">Gender</label>
           <select class="admin-control" id="gender" name="gender">
-            <option value="male">Male</option>
-            <option value="female">Female</option>
+            <option value="male" {% if form.gender == 'male' or not form.gender %}selected{% endif %}>Male</option>
+            <option value="female" {% if form.gender == 'female' %}selected{% endif %}>Female</option>
           </select>
           <div class="admin-field-error"></div>
         </div>
@@ -87,59 +87,109 @@
         <div class="admin-field" data-field>
           <label class="admin-label" for="status">Status</label>
           <select class="admin-control" id="status" name="status">
-            <option value="PENDING">PENDING</option>
-            <option value="VERIFIED">VERIFIED</option>
-            <option value="REJECTED">REJECTED</option>
-            <option value="BANNED">BANNED</option>
+            <option value="PENDING" {% if form.status == 'PENDING' or not form.status %}selected{% endif %}>PENDING</option>
+            <option value="VERIFIED" {% if form.status == 'VERIFIED' %}selected{% endif %}>VERIFIED</option>
+            <option value="REJECTED" {% if form.status == 'REJECTED' %}selected{% endif %}>REJECTED</option>
+            <option value="BANNED" {% if form.status == 'BANNED' %}selected{% endif %}>BANNED</option>
           </select>
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="driver_rating">Driver Rating</label>
-          <input class="admin-control" id="driver_rating" type="number" step="0.01" name="driver_rating" placeholder="0.00" />
+          <input class="admin-control" id="driver_rating" type="number" step="0.01" name="driver_rating" value="{{ form.driver_rating|default_if_none:'' }}" placeholder="0.00" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="passenger_rating">Passenger Rating</label>
-          <input class="admin-control" id="passenger_rating" type="number" step="0.01" name="passenger_rating" placeholder="0.00" />
+          <input class="admin-control" id="passenger_rating" type="number" step="0.01" name="passenger_rating" value="{{ form.passenger_rating|default_if_none:'' }}" placeholder="0.00" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="driving_license_no">Driving License No</label>
-          <input class="admin-control" id="driving_license_no" type="text" name="driving_license_no" placeholder="License number" />
+          <input class="admin-control" id="driving_license_no" type="text" name="driving_license_no" value="{{ form.driving_license_no|default_if_none:'' }}" placeholder="License number" pattern="^[A-Za-z0-9][A-Za-z0-9\-/]{4,19}$" maxlength="20" data-validate="drivingLicenseNo" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="accountno">Account No</label>
-          <input class="admin-control" id="accountno" type="text" name="accountno" placeholder="Account number" />
+          <input class="admin-control" id="accountno" type="text" name="accountno" value="{{ form.accountno|default_if_none:'' }}" placeholder="Account number" inputmode="numeric" pattern="^\d{10,20}$" maxlength="20" data-validate="digitsOnly" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="iban">IBAN</label>
-          <input class="admin-control" id="iban" type="text" name="iban" placeholder="IBAN" />
+          <input class="admin-control" id="iban" type="text" name="iban" value="{{ form.iban|default_if_none:'' }}" placeholder="IBAN" pattern="^PK\d{2}[A-Za-z]{4}\d{16}$" maxlength="34" autocapitalize="characters" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
-          <label class="admin-label" for="bankname">Bank Name</label>
-          <input class="admin-control" id="bankname" type="text" name="bankname" placeholder="Bank" />
+          <label class="admin-label" for="bankname_select">Bank Name</label>
+          <select class="admin-control" id="bankname_select" name="bankname_select">
+            <option value="" {% if not form.bankname %}selected{% endif %}>--</option>
+            <option value="Al Baraka Bank (Pakistan) Limited">Al Baraka Bank (Pakistan) Limited</option>
+            <option value="Allied Bank Limited">Allied Bank Limited</option>
+            <option value="Askari Bank Limited">Askari Bank Limited</option>
+            <option value="Bank Alfalah Limited">Bank Alfalah Limited</option>
+            <option value="Bank Al Habib Limited">Bank Al Habib Limited</option>
+            <option value="BankIslami Pakistan Limited">BankIslami Pakistan Limited</option>
+            <option value="Citi Bank N.A. Pakistan">Citi Bank N.A. Pakistan</option>
+            <option value="Deutsche Bank A.G. Pakistan">Deutsche Bank A.G. Pakistan</option>
+            <option value="Dubai Islamic Bank Pakistan Limited">Dubai Islamic Bank Pakistan Limited</option>
+            <option value="Faysal Bank Limited">Faysal Bank Limited</option>
+            <option value="First Women Bank Limited">First Women Bank Limited</option>
+            <option value="Habib Bank Limited (HBL)">Habib Bank Limited (HBL)</option>
+            <option value="Habib Metropolitan Bank Limited">Habib Metropolitan Bank Limited</option>
+            <option value="Industrial and Commercial Bank of China (ICBC) Pakistan">Industrial and Commercial Bank of China (ICBC) Pakistan</option>
+            <option value="JS Bank Limited">JS Bank Limited</option>
+            <option value="MCB Bank Limited">MCB Bank Limited</option>
+            <option value="MCB Islamic Bank Limited">MCB Islamic Bank Limited</option>
+            <option value="Meezan Bank Limited">Meezan Bank Limited</option>
+            <option value="National Bank of Pakistan (NBP)">National Bank of Pakistan (NBP)</option>
+            <option value="Samba Bank Limited">Samba Bank Limited</option>
+            <option value="Silkbank Limited">Silkbank Limited</option>
+            <option value="Sindh Bank Limited">Sindh Bank Limited</option>
+            <option value="Soneri Bank Limited">Soneri Bank Limited</option>
+            <option value="Standard Chartered Bank (Pakistan) Limited">Standard Chartered Bank (Pakistan) Limited</option>
+            <option value="Summit Bank Limited">Summit Bank Limited</option>
+            <option value="The Bank of Khyber">The Bank of Khyber</option>
+            <option value="The Bank of Punjab">The Bank of Punjab</option>
+            <option value="United Bank Limited (UBL)">United Bank Limited (UBL)</option>
+            <option value="Advans Pakistan Microfinance Bank Limited">Advans Pakistan Microfinance Bank Limited</option>
+            <option value="APNA Microfinance Bank Limited">APNA Microfinance Bank Limited</option>
+            <option value="FINCA Microfinance Bank Limited">FINCA Microfinance Bank Limited</option>
+            <option value="First MicroFinanceBank Limited">First MicroFinanceBank Limited</option>
+            <option value="Khushhali Microfinance Bank Limited">Khushhali Microfinance Bank Limited</option>
+            <option value="Mobilink Microfinance Bank Limited">Mobilink Microfinance Bank Limited</option>
+            <option value="National Rural Support Programme (NRSP) Microfinance Bank Limited">National Rural Support Programme (NRSP) Microfinance Bank Limited</option>
+            <option value="Pak Oman Microfinance Bank Limited">Pak Oman Microfinance Bank Limited</option>
+            <option value="Telenor Microfinance Bank Limited">Telenor Microfinance Bank Limited</option>
+            <option value="U Microfinance Bank Limited">U Microfinance Bank Limited</option>
+            <option value="House Building Finance Company Limited (HBFC)">House Building Finance Company Limited (HBFC)</option>
+            <option value="Pakistan Kuwait Investment Company (Private) Limited">Pakistan Kuwait Investment Company (Private) Limited</option>
+            <option value="Pak-Brunei Investment Company Limited">Pak-Brunei Investment Company Limited</option>
+            <option value="Pak-China Investment Company Limited">Pak-China Investment Company Limited</option>
+            <option value="Pak Libya Holding Company (Private) Limited">Pak Libya Holding Company (Private) Limited</option>
+            <option value="Pak Oman Investment Company Limited">Pak Oman Investment Company Limited</option>
+            <option value="Saudi Pak Industrial and Agricultural Investment Company Limited">Saudi Pak Industrial and Agricultural Investment Company Limited</option>
+            <option value="Sindh Modaraba">Sindh Modaraba</option>
+            <option value="Other">Other</option>
+          </select>
+          <input class="admin-control" id="bankname" type="text" name="bankname" value="{{ form.bankname|default_if_none:'' }}" placeholder="Bank (if Other)" pattern="^[A-Za-z][A-Za-z .&\-]{1,118}[A-Za-z.]$" maxlength="120" style="margin-top:8px; display:none;" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="cnic_front_image">CNIC Front Image</label>
-          <input class="admin-control" id="cnic_front_image" type="file" name="cnic_front_image" accept="image/*" />
+          <input class="admin-control" id="cnic_front_image" type="file" name="cnic_front_image" accept="image/*" required />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="cnic_back_image">CNIC Back Image</label>
-          <input class="admin-control" id="cnic_back_image" type="file" name="cnic_back_image" accept="image/*" />
+          <input class="admin-control" id="cnic_back_image" type="file" name="cnic_back_image" accept="image/*" required />
           <div class="admin-field-error"></div>
         </div>
 
@@ -163,19 +213,19 @@
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="profile_photo">Profile Photo</label>
-          <input class="admin-control" id="profile_photo" type="file" name="profile_photo" accept="image/*" />
+          <input class="admin-control" id="profile_photo" type="file" name="profile_photo" accept="image/*" required />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="live_photo">Live Photo</label>
-          <input class="admin-control" id="live_photo" type="file" name="live_photo" accept="image/*" />
+          <input class="admin-control" id="live_photo" type="file" name="live_photo" accept="image/*" required />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field admin-field--full" data-field>
           <label class="admin-label" for="emergency_name">Emergency Contact Name</label>
-          <input class="admin-control" id="emergency_name" type="text" name="emergency_name" placeholder="Name" required data-validate="required" />
+          <input class="admin-control" id="emergency_name" type="text" name="emergency_name" value="{{ form.emergency_name|default_if_none:'' }}" placeholder="Name" required data-validate="required" maxlength="100" />
           <div class="admin-field-error"></div>
         </div>
 
@@ -183,25 +233,25 @@
           <label class="admin-label" for="emergency_relation">Emergency Relation</label>
           <select class="admin-control" id="emergency_relation" name="emergency_relation" required data-validate="required">
             <option value="">--</option>
-            <option value="Father">Father</option>
-            <option value="Mother">Mother</option>
-            <option value="Brother">Brother</option>
-            <option value="Sister">Sister</option>
-            <option value="Husband">Husband</option>
-            <option value="Wife">Wife</option>
-            <option value="Son">Son</option>
-            <option value="Daughter">Daughter</option>
-            <option value="Uncle">Uncle</option>
-            <option value="Aunty">Aunty</option>
-            <option value="Friend">Friend</option>
-            <option value="Other">Other</option>
+            <option value="Father" {% if form.emergency_relation == 'Father' %}selected{% endif %}>Father</option>
+            <option value="Mother" {% if form.emergency_relation == 'Mother' %}selected{% endif %}>Mother</option>
+            <option value="Brother" {% if form.emergency_relation == 'Brother' %}selected{% endif %}>Brother</option>
+            <option value="Sister" {% if form.emergency_relation == 'Sister' %}selected{% endif %}>Sister</option>
+            <option value="Husband" {% if form.emergency_relation == 'Husband' %}selected{% endif %}>Husband</option>
+            <option value="Wife" {% if form.emergency_relation == 'Wife' %}selected{% endif %}>Wife</option>
+            <option value="Son" {% if form.emergency_relation == 'Son' %}selected{% endif %}>Son</option>
+            <option value="Daughter" {% if form.emergency_relation == 'Daughter' %}selected{% endif %}>Daughter</option>
+            <option value="Uncle" {% if form.emergency_relation == 'Uncle' %}selected{% endif %}>Uncle</option>
+            <option value="Aunty" {% if form.emergency_relation == 'Aunty' %}selected{% endif %}>Aunty</option>
+            <option value="Friend" {% if form.emergency_relation == 'Friend' %}selected{% endif %}>Friend</option>
+            <option value="Other" {% if form.emergency_relation == 'Other' %}selected{% endif %}>Other</option>
           </select>
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="emergency_email">Emergency Email</label>
-          <input class="admin-control" id="emergency_email" type="email" name="emergency_email" data-validate="required email" placeholder="email@example.com" required />
+          <input class="admin-control" id="emergency_email" type="email" name="emergency_email" value="{{ form.emergency_email|default_if_none:'' }}" data-validate="required email" placeholder="email@example.com" required />
           <div class="admin-field-error"></div>
         </div>
 
@@ -215,9 +265,9 @@
               <option value="+971">+971</option>
               <option value="+966">+966</option>
             </select>
-            <input class="admin-control" id="emergency_phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" required />
+            <input class="admin-control" id="emergency_phone_no_local" type="text" inputmode="numeric" placeholder="Local number" required pattern="^\d{4,15}$" maxlength="15" autocomplete="tel" data-validate="digitsOnly" />
           </div>
-          <input class="admin-control" id="emergency_phone_no" type="hidden" name="emergency_phone_no" data-validate="required emergencyPhoneDigits" required />
+          <input class="admin-control" id="emergency_phone_no" type="hidden" name="emergency_phone_no" value="{{ form.emergency_phone_no|default_if_none:'' }}" data-validate="required emergencyPhoneDigits" required />
           <div class="admin-field-error"></div>
         </div>
       </div>
@@ -239,6 +289,10 @@
       const hidden = document.getElementById('phone_no');
       if (!country || !local || !hidden) return;
 
+      if (window.AdminCountryDialCodes) {
+        window.AdminCountryDialCodes.populate(country, '+92');
+      }
+
       const sync = () => {
         const cc = (country.value || '').trim();
         const digits = (local.value || '').replace(/\D/g, '');
@@ -256,6 +310,10 @@
       const hidden = document.getElementById('emergency_phone_no');
       if (!country || !local || !hidden) return;
 
+      if (window.AdminCountryDialCodes) {
+        window.AdminCountryDialCodes.populate(country, '+92');
+      }
+
       const sync = () => {
         const cc = String(country.value || '').trim();
         const ccDigits = cc.replace(/\D/g, '');
@@ -270,6 +328,26 @@
     AdminFormValidator.wire(document.getElementById('userAddForm'), {
       extraValidate: (form) => {
         const errors = [];
+        const phone = (form.phone_no?.value || '').trim();
+        if (phone && !/^\+\d{10,15}$/.test(phone)) {
+          errors.push('Phone must be in international format like +923001234567 (10-15 digits total).');
+        }
+        const ePhone = (form.emergency_phone_no?.value || '').trim();
+        if (ePhone && !/^\d{10,15}$/.test(ePhone)) {
+          errors.push('Emergency phone must be 10-15 digits (no +).');
+        }
+        const bankSelect = document.getElementById('bankname_select');
+        const bankInput = document.getElementById('bankname');
+        if (bankSelect && bankInput) {
+          const selected = (bankSelect.value || '').trim();
+          if (selected && selected !== 'Other') {
+            bankInput.value = selected;
+          } else if (selected === 'Other') {
+            bankInput.value = (bankInput.value || '').trim();
+          } else {
+            bankInput.value = (bankInput.value || '').trim();
+          }
+        }
         const licenseNo = (form.driving_license_no?.value || '').trim();
         const licenseFront = form.driving_license_front?.files?.[0];
         const licenseBack = form.driving_license_back?.files?.[0];
@@ -279,5 +357,22 @@
         return errors;
       }
     });
+
+    (function () {
+      const sel = document.getElementById('bankname_select');
+      const input = document.getElementById('bankname');
+      if (!sel || !input) return;
+      const sync = () => {
+        const v = (sel.value || '').trim();
+        if (v === 'Other') {
+          input.style.display = '';
+        } else {
+          input.style.display = 'none';
+          if (v) input.value = v;
+        }
+      };
+      sel.addEventListener('change', sync);
+      sync();
+    })();
   </script>
 {% endblock %}

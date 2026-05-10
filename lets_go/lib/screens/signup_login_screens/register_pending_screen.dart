@@ -124,7 +124,11 @@ class _RegisterPendingScreenState extends State<RegisterPendingScreen> {
       putEmergency('name', ec['name']);
       putEmergency('relation', ec['relation']);
       putEmergency('email', ec['email']);
-      putEmergency('phone_no', ec['phone_no']);
+      final rawPhone = (ec['phone_no'] ?? '').toString();
+      final digitsPhone = rawPhone.replaceAll(RegExp(r'\D'), '');
+      if (digitsPhone.isNotEmpty) {
+        emergency['phone_no'] = digitsPhone;
+      }
 
       if (emergency.isNotEmpty) {
         await prefs.setString('signup_emergency', jsonEncode(emergency));

@@ -21,7 +21,6 @@ import base64
 import requests
 from ..models import UsersData, Vehicle, Trip, Route, RouteStop, TripStopBreakdown, Booking, EmergencyContact, UsernameRegistry, ChangeRequest
 from django.views.decorators.http import require_GET
-# from .utils.fare_calculator import is_peak_hour, get_fare_matrix_for_route
 from ..utils.email_otp import send_email_otp, send_email_otp_for_reset
 from ..utils.phone_otp_send import send_phone_otp, send_phone_otp_for_reset
 from ..constants import url

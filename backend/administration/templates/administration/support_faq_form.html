@@ -1,0 +1,58 @@
+{% extends 'administration/base.html' %}
+{% load static %}
+
+{% block title %}{% if faq %}Edit FAQ{% else %}Add FAQ{% endif %}{% endblock %}
+
+{% block content %}
+  <main class="user-main">
+    <h1 class="page-title">{% if faq %}Edit FAQ{% else %}Add FAQ{% endif %}</h1>
+
+    {% if error %}
+      <div class="alert mb-12">{{ error }}</div>
+    {% endif %}
+
+    <form method="post" class="admin-form">
+      {% csrf_token %}
+
+      <div class="admin-form-grid">
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="category">Category</label>
+          <input class="admin-control" id="category" type="text" name="category" value="{{ form.category|default_if_none:'' }}" maxlength="64" placeholder="e.g. Payments" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="priority">Priority</label>
+          <input class="admin-control" id="priority" type="number" name="priority" value="{{ form.priority|default_if_none:'100' }}" />
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field" data-field>
+          <label class="admin-label" for="is_active">Active</label>
+          <select class="admin-control" id="is_active" name="is_active">
+            <option value="1" {% if form.is_active %}selected{% endif %}>Active</option>
+            <option value="0" {% if not form.is_active %}selected{% endif %}>Inactive</option>
+          </select>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="question">Question</label>
+          <textarea class="admin-textarea" id="question" name="question" rows="3" required>{{ form.question|default_if_none:'' }}</textarea>
+          <div class="admin-field-error"></div>
+        </div>
+
+        <div class="admin-field admin-field--full" data-field>
+          <label class="admin-label" for="answer">Answer</label>
+          <textarea class="admin-textarea" id="answer" name="answer" rows="6" required>{{ form.answer|default_if_none:'' }}</textarea>
+          <div class="admin-field-error"></div>
+        </div>
+      </div>
+
+      <div class="admin-form-actions">
+        <button class="btn btn-primary" type="submit"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+        <a class="btn btn-outline" href="{% url 'administration:support_faq_list' %}"><i class="fa-solid fa-arrow-left"></i> Back</a>
+      </div>
+    </form>
+  </main>
+{% endblock %}

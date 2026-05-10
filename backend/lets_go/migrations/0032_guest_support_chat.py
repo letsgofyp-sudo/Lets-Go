@@ -57,6 +57,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='supportthread',
-            constraint=models.CheckConstraint(check=Q(Q(('user__isnull', False), ('guest__isnull', True)), Q(('user__isnull', True), ('guest__isnull', False)), _connector='OR'), name='chk_supportthread_owner_xor'),
+            constraint=models.CheckConstraint(condition=Q(Q(('user__isnull', False), ('guest__isnull', True)), Q(('user__isnull', True), ('guest__isnull', False)), _connector='OR'), name='chk_supportthread_owner_xor'),
         ),
     ]

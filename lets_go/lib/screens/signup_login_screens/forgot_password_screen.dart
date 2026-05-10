@@ -139,21 +139,28 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   : () {
                       final value = _controller.valueController.text.trim();
                       if (_controller.method == 'email') {
-                        if (value.isEmpty || !RegExp(r'^.+@.+\..+').hasMatch(value)) {
-                          setState(() => _inputError = 'Enter a valid email');
+                        final ok = RegExp(
+                          r'^[^@\s]+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\.([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*\.[A-Za-z]{2,24}$',
+                        ).hasMatch(value);
+                        if (value.isEmpty || !ok) {
+                          setState(() => _inputError = 'Enter a valid email with a valid domain');
                           return;
                         }
                       } else {
-                        if (value.isEmpty || !RegExp(r'^\d{10}').hasMatch(value)) {
-                          setState(() => _inputError = 'Enter 10-15 digit phone number');
+                        final full = (_selectedCountryCode + value).trim();
+                        if (value.isEmpty || !RegExp(r'^\+\d{10,15}$').hasMatch(full)) {
+                          setState(() => _inputError = 'Phone must be in format +923001234567 (10-15 digits total).');
                           return;
                         }
                       }
                       setState(() => _inputError = null);
+
+                      final original = _controller.valueController.text;
                       if (_controller.method == 'phone') {
                         _controller.valueController.text = _selectedCountryCode + value;
                       }
                       _controller.sendOtp(context);
+                      _controller.valueController.text = original;
                     },
               child: _controller.isLoading ? CircularProgressIndicator(color: Colors.white) : Text('Send OTP'),
             ),

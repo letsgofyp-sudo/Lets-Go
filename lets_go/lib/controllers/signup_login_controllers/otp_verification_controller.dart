@@ -11,7 +11,10 @@ class OTPVerificationController {
   TextEditingController mobileOtpController = TextEditingController();
 
   bool isLoading = false;
+  bool isSubmittingRegistration = false;
+  bool needsResubmit = false;
   String? errorMessage;
+  String? lastServerErrorField;
   Map<String, dynamic>? signupData;
   bool emailVerified = false;
   bool phoneVerified = false;
@@ -38,6 +41,7 @@ class OTPVerificationController {
     final prefs = await SharedPreferences.getInstance();
     final data = prefs.getString('pending_signup');
     final status = prefs.getString('pending_signup_status');
+    final resubmit = prefs.getBool('signup_needs_resubmit');
     if (data != null) {
       signupData = jsonDecode(data);
     }
@@ -46,6 +50,14 @@ class OTPVerificationController {
       emailVerified = statusMap['email_verified'] == true;
       phoneVerified = statusMap['phone_verified'] == true;
     }
+    needsResubmit = resubmit == true;
+    onStateChanged?.call();
+  }
+
+  Future<void> _setNeedsResubmit(bool v) async {
+    final prefs = await SharedPreferences.getInstance();
+    needsResubmit = v;
+    await prefs.setBool('signup_needs_resubmit', v);
     onStateChanged?.call();
   }
 
@@ -289,11 +301,15 @@ class OTPVerificationController {
     await prefs.remove('signup_username_verified');
     await prefs.remove('signup_verified_username');
     await prefs.remove('signup_last_reserved_username');
+    await prefs.remove('signup_needs_resubmit');
   }
 
   Future<void> submitFinalRegistration(BuildContext context) async {
     isLoading = true;
+    isSubmittingRegistration = true;
     errorMessage = null;
+    lastServerErrorField = null;
+    await _setNeedsResubmit(false);
     onStateChanged?.call();
     try {
       final prefs = await SharedPreferences.getInstance();
@@ -301,6 +317,8 @@ class OTPVerificationController {
       if (data == null) {
         errorMessage = 'No registration data found.';
         isLoading = false;
+        isSubmittingRegistration = false;
+        await _setNeedsResubmit(true);
         onStateChanged?.call();
         return;
       }
@@ -310,6 +328,25 @@ class OTPVerificationController {
       // print('All fields in pending_signup: ${allFields.keys}');
       final Map<String, String> fields = {};
       final Map<String, File> images = {};
+
+      bool isKnownImageKey(String k) {
+        if (k == 'profile_photo' ||
+            k == 'live_photo' ||
+            k == 'cnic_front_image' ||
+            k == 'cnic_back_image' ||
+            k == 'driving_license_front' ||
+            k == 'driving_license_back' ||
+            k == 'accountqr') {
+          return true;
+        }
+        if (k.startsWith('photo_front_') ||
+            k.startsWith('photo_back_') ||
+            k.startsWith('documents_image_')) {
+          return true;
+        }
+        return false;
+      }
+
       bool isImagePath(String v) {
         final s = v.trim().toLowerCase();
         return s.endsWith('.jpg') ||
@@ -324,9 +361,11 @@ class OTPVerificationController {
         if (s.isEmpty) return;
         if (s.toLowerCase() == 'null') return;
 
-        if (isImagePath(s)) {
-          final file = File(s);
-          if (file.existsSync()) {
+        final file = File(s);
+        final exists = file.existsSync();
+        final shouldAttachAsImage = isImagePath(s) || (exists && isKnownImageKey(k));
+        if (shouldAttachAsImage) {
+          if (exists) {
             images[k] = file;
           }
           return;
@@ -350,6 +389,7 @@ class OTPVerificationController {
       final responseData = await response.stream.bytesToString();
       final dataResp = jsonDecode(responseData);
       isLoading = false;
+      isSubmittingRegistration = false;
       if (response.statusCode == 200 &&
           (dataResp['success'] == true ||
               dataResp['success'] == 'true' ||
@@ -361,11 +401,29 @@ class OTPVerificationController {
           return; // Prevent further UI updates after navigation
         }
       } else {
-        errorMessage = dataResp['error'] ?? 'Registration failed.';
+        await _setNeedsResubmit(true);
+        final base = (dataResp['error'] ?? 'Registration failed.').toString();
+        final fieldsErr = dataResp['fields'];
+        if (fieldsErr is Map && fieldsErr.isNotEmpty) {
+          final firstKey = fieldsErr.keys.first.toString();
+          lastServerErrorField = firstKey;
+          final val = fieldsErr[firstKey];
+          String firstMsg = '';
+          if (val is List && val.isNotEmpty) {
+            firstMsg = val.first.toString();
+          } else if (val != null) {
+            firstMsg = val.toString();
+          }
+          errorMessage = firstMsg.isNotEmpty ? '$base ($firstKey: $firstMsg)' : base;
+        } else {
+          errorMessage = base;
+        }
         onStateChanged?.call();
       }
     } catch (e) {
       isLoading = false;
+      isSubmittingRegistration = false;
+      await _setNeedsResubmit(true);
       errorMessage = 'Registration failed. Try again. Error: $e';
       onStateChanged?.call();
     }

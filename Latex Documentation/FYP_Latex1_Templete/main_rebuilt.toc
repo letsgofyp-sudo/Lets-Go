@@ -1,0 +1,313 @@
+\contentsline {section}{Executive Summary}{v}{Doc-Start}%
+\contentsline {section}{List of Tables}{xvii}{Doc-Start}%
+\contentsline {section}{List of Figures}{xx}{Doc-Start}%
+\contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Introduction}{1}{section.2}%
+\contentsline {section}{\numberline {1.2}Vision Statement}{1}{section.3}%
+\contentsline {section}{\numberline {1.3}Tools and Technologies}{5}{section.16}%
+\contentsline {subsection}{\numberline {1.3.1}Programming Fundamentals}{6}{subsection.19}%
+\contentsline {subsection}{\numberline {1.3.2}Data Structures and Algorithms}{7}{subsection.20}%
+\contentsline {subsection}{\numberline {1.3.3}Database Management Systems}{7}{subsection.21}%
+\contentsline {subsection}{\numberline {1.3.4}Software Engineering}{7}{subsection.22}%
+\contentsline {subsection}{\numberline {1.3.5}Other Relevant Courses}{7}{subsection.23}%
+\contentsline {chapter}{\numberline {2}Problem Definition}{9}{chapter.24}%
+\contentsline {section}{\numberline {2.1}Problem Statement}{9}{section.25}%
+\contentsline {section}{\numberline {2.2}Proposed Solution Overview}{9}{section.26}%
+\contentsline {section}{\numberline {2.3}Objectives of the Proposed System}{10}{section.27}%
+\contentsline {section}{\numberline {2.4}Scope of the System}{11}{section.28}%
+\contentsline {section}{\numberline {2.5}System Architecture and Modules}{11}{section.29}%
+\contentsline {subsection}{\numberline {2.5.1}Module 1: Profile Management (Registration \& Verification)}{12}{subsection.30}%
+\contentsline {subsection}{\numberline {2.5.2}Module 2: Communication Module (Chat \& Notifications)}{13}{subsection.31}%
+\contentsline {subsection}{\numberline {2.5.3}Module 3: Core Functional Module (Ride Management \& Booking)}{13}{subsection.32}%
+\contentsline {subsection}{\numberline {2.5.4}Module 4: Management / Admin Module}{14}{subsection.33}%
+\contentsline {subsection}{\numberline {2.5.5}Module 5: Advanced / Additional Features (ML \& Chatbot)}{14}{subsection.34}%
+\contentsline {section}{\numberline {2.6}Assumptions and Dependencies}{15}{section.35}%
+\contentsline {section}{\numberline {2.7}Chapter Summary}{16}{section.36}%
+\contentsline {chapter}{\numberline {3}Requirement Analysis}{17}{chapter.37}%
+\contentsline {section}{\numberline {3.1}Introduction to Requirement Analysis}{17}{section.38}%
+\contentsline {section}{\numberline {3.2}Requirement Elicitation Techniques}{17}{section.39}%
+\contentsline {section}{\numberline {3.3}User Classes and Characteristics}{17}{section.40}%
+\contentsline {section}{\numberline {3.4}System Overview}{18}{section.43}%
+\contentsline {section}{\numberline {3.5}Use Case Model}{18}{section.44}%
+\contentsline {subsection}{\numberline {3.5.1}Use Case Diagram}{18}{subsection.45}%
+\contentsline {subsection}{\numberline {3.5.2}Use Case Descriptions}{24}{subsection.64}%
+\contentsline {subsubsection}{\numberline {3.5.2.1}Registration \& Verification (UC-1 to UC-4)}{24}{subsubsection.65}%
+\contentsline {subsubsection}{\numberline {3.5.2.2}Vehicle Management (UC-5 to UC-6)}{32}{subsubsection.66}%
+\contentsline {subsubsection}{\numberline {3.5.2.3}Ride Management (UC-7 to UC-9)}{37}{subsubsection.67}%
+\contentsline {section}{\numberline {3.6}Functional Requirements}{74}{section.68}%
+\contentsline {subsection}{\numberline {3.6.1}FR-1: User Registration \& Authentication}{74}{subsection.69}%
+\contentsline {subsubsection}{\numberline {3.6.1.1}FR-1.1: Registration Fields}{74}{subsubsection.70}%
+\contentsline {subsubsection}{\numberline {3.6.1.2}FR-1.2: Document/Image Uploads}{75}{subsubsection.71}%
+\contentsline {subsubsection}{\numberline {3.6.1.3}FR-1.3: OTP Verification}{75}{subsubsection.72}%
+\contentsline {subsubsection}{\numberline {3.6.1.4}FR-1.4: Post-OTP State and Login}{76}{subsubsection.73}%
+\contentsline {subsection}{\numberline {3.6.2}FR-2: Admin Verification \& Management}{76}{subsection.74}%
+\contentsline {subsubsection}{\numberline {3.6.2.1}FR-2.1: Admin User List \& Details}{76}{subsubsection.75}%
+\contentsline {subsubsection}{\numberline {3.6.2.2}FR-2.2: Verify/Reject/Ban/Create}{77}{subsubsection.76}%
+\contentsline {subsubsection}{\numberline {3.6.2.3}FR-2.3: Verification SLA}{77}{subsubsection.77}%
+\contentsline {subsubsection}{\numberline {3.6.2.4}FR-2.4: Dispute Resolution}{77}{subsubsection.78}%
+\contentsline {subsection}{\numberline {3.6.3}FR-3: Vehicle Management (Drivers)}{78}{subsection.79}%
+\contentsline {subsubsection}{\numberline {3.6.3.1}FR-3.1: Vehicle Creation}{78}{subsubsection.80}%
+\contentsline {subsubsection}{\numberline {3.6.3.2}FR-3.2: Multiple Vehicles \& Edit/Delete}{78}{subsubsection.81}%
+\contentsline {subsection}{\numberline {3.6.4}FR-4: Ride Creation (Driver)}{79}{subsection.82}%
+\contentsline {subsubsection}{\numberline {3.6.4.1}FR-4.1: Map-based Route Editor}{79}{subsubsection.83}%
+\contentsline {subsubsection}{\numberline {3.6.4.2}FR-4.2: Ride Parameters}{80}{subsubsection.84}%
+\contentsline {subsubsection}{\numberline {3.6.4.3}FR-4.3: Ride Editing/Cancel Rules}{80}{subsubsection.85}%
+\contentsline {subsection}{\numberline {3.6.5}FR-5: Ride Browsing \& Booking (Passengers)}{80}{subsection.86}%
+\contentsline {subsubsection}{\numberline {3.6.5.1}FR-5.1: Browse \& Ride Card}{81}{subsubsection.87}%
+\contentsline {subsubsection}{\numberline {3.6.5.2}FR-5.2: Booking Flow}{81}{subsubsection.88}%
+\contentsline {subsection}{\numberline {3.6.6}FR-6: Fare Negotiation}{81}{subsection.89}%
+\contentsline {subsubsection}{\numberline {3.6.6.1}FR-6.1: Negotiation Messaging \& Recording}{82}{subsubsection.90}%
+\contentsline {subsection}{\numberline {3.6.7}FR-7: Booking Confirmation \& Notifications}{82}{subsection.91}%
+\contentsline {subsubsection}{\numberline {3.6.7.1}FR-7.1: Notifications for Booking Events}{83}{subsubsection.92}%
+\contentsline {subsubsection}{\numberline {3.6.7.2}FR-7.2: Booking Summaries}{83}{subsubsection.93}%
+\contentsline {subsection}{\numberline {3.6.8}FR-8: Profile Management}{83}{subsection.94}%
+\contentsline {subsubsection}{\numberline {3.6.8.1}FR-8.1: Profile CRUD}{84}{subsubsection.95}%
+\contentsline {subsection}{\numberline {3.6.9}FR-9: Admin \& System Notifications}{84}{subsection.96}%
+\contentsline {subsection}{\numberline {3.6.10}FR-10: Dispute Management}{84}{subsection.97}%
+\contentsline {subsection}{\numberline {3.6.11}FR-11: Machine Learning Recommendation Module}{85}{subsection.98}%
+\contentsline {subsection}{\numberline {3.6.12}FR-12: Chatbot Support}{85}{subsection.99}%
+\contentsline {subsection}{\numberline {3.6.13}FR-13: Payment System}{85}{subsection.100}%
+\contentsline {subsubsection}{\numberline {3.6.13.1}FR-13.1: Payment Methods \& Validation Rules}{86}{subsubsection.101}%
+\contentsline {subsubsection}{\numberline {3.6.13.2}FR-13.2: Manual Payment Confirmation}{86}{subsubsection.102}%
+\contentsline {subsection}{\numberline {3.6.14}FR-14: Safety \& Verification}{87}{subsection.103}%
+\contentsline {subsection}{\numberline {3.6.15}FR-15: Scalability \& Modular Architecture}{87}{subsection.104}%
+\contentsline {subsection}{\numberline {3.6.16}FR-16: Post-Booking, Live-Tracking, Pickup Verification}{87}{subsection.105}%
+\contentsline {subsubsection}{\numberline {3.6.16.1}FR-16.1: Post-booking Chat (1:1 \& Broadcast)}{88}{subsubsection.106}%
+\contentsline {subsubsection}{\numberline {3.6.16.2}FR-16.2: Pre-Ride Reminder \& Location Permission}{88}{subsubsection.107}%
+\contentsline {subsubsection}{\numberline {3.6.16.3}FR-16.3: Live Map \& SOS UI}{89}{subsubsection.108}%
+\contentsline {subsubsection}{\numberline {3.6.16.4}FR-16.4: Pickup Code Generation \& Verification}{89}{subsubsection.109}%
+\contentsline {subsubsection}{\numberline {3.6.16.5}FR-16.5: Mark as Reached, Payment \& Ratings}{89}{subsubsection.110}%
+\contentsline {subsubsection}{\numberline {3.6.16.6}FR-16.6: Ride Completion Rules \& Driver Constraint}{90}{subsubsection.111}%
+\contentsline {subsubsection}{\numberline {3.6.16.7}FR-16.7: SOS \& Emergency Workflows}{90}{subsubsection.112}%
+\contentsline {subsubsection}{\numberline {3.6.16.8}FR-16.8: Escalation Timers \& Notifications}{91}{subsubsection.113}%
+\contentsline {subsubsection}{\numberline {3.6.16.9}FR-16.9: Audit, Logging \& Anti-Fraud}{91}{subsubsection.114}%
+\contentsline {subsubsection}{\numberline {3.6.16.10}FR-16.10: UX \& Accessibility Requirements}{91}{subsubsection.115}%
+\contentsline {section}{\numberline {3.7}Non-Functional Requirements}{92}{section.116}%
+\contentsline {subsection}{\numberline {3.7.1}Performance Requirements}{92}{subsection.117}%
+\contentsline {subsection}{\numberline {3.7.2}Security Requirements}{92}{subsection.118}%
+\contentsline {subsection}{\numberline {3.7.3}Reliability Requirements}{93}{subsection.119}%
+\contentsline {subsection}{\numberline {3.7.4}Usability Requirements}{93}{subsection.120}%
+\contentsline {subsection}{\numberline {3.7.5}Scalability Requirements}{93}{subsection.121}%
+\contentsline {subsection}{\numberline {3.7.6}Maintainability Requirements}{94}{subsection.122}%
+\contentsline {section}{\numberline {3.8}External Interface Requirements}{94}{section.123}%
+\contentsline {subsection}{\numberline {3.8.1}User Interface Requirements}{94}{subsection.124}%
+\contentsline {subsection}{\numberline {3.8.2}Hardware Interface Requirements}{94}{subsection.125}%
+\contentsline {subsection}{\numberline {3.8.3}Software Interface Requirements}{94}{subsection.126}%
+\contentsline {subsection}{\numberline {3.8.4}Communication Interface Requirements}{95}{subsection.127}%
+\contentsline {section}{\numberline {3.9}Assumptions and Dependencies}{95}{section.128}%
+\contentsline {section}{\numberline {3.10}Requirement Traceability Matrix}{96}{section.129}%
+\contentsline {chapter}{\numberline {4}Software Design}{98}{chapter.130}%
+\contentsline {section}{\numberline {4.1}Introduction to Software Design}{98}{section.131}%
+\contentsline {section}{\numberline {4.2}Design Methodology and Software Process Model}{98}{section.132}%
+\contentsline {subsection}{\numberline {4.2.1}Design Methodology}{98}{subsection.133}%
+\contentsline {subsubsection}{\numberline {4.2.1.1}Reasons behind the use of Object-Oriented Design (OOD)}{98}{subsubsection.134}%
+\contentsline {subsection}{\numberline {4.2.2}Software Process Model}{99}{subsection.135}%
+\contentsline {subsubsection}{\numberline {4.2.2.1}Justification for Using Agile/Scrum}{99}{subsubsection.136}%
+\contentsline {section}{\numberline {4.3}System Overview}{100}{section.137}%
+\contentsline {subsection}{\numberline {4.3.1}External Actors}{100}{subsection.138}%
+\contentsline {subsection}{\numberline {4.3.2}External Services}{100}{subsection.139}%
+\contentsline {subsection}{\numberline {4.3.3}Backend (Django MVC + DRF + Channels)}{100}{subsection.140}%
+\contentsline {subsection}{\numberline {4.3.4}Database (PostgreSQL)}{101}{subsection.141}%
+\contentsline {subsection}{\numberline {4.3.5}Context Diagram}{101}{subsection.142}%
+\contentsline {section}{\numberline {4.4}Architectural Design}{102}{section.145}%
+\contentsline {subsection}{\numberline {4.4.1}Architecture Style (MVC + Multi-tier)}{102}{subsection.146}%
+\contentsline {subsubsection}{\numberline {4.4.1.1}MVC Architecture (within Django backend servers)}{102}{subsubsection.147}%
+\contentsline {subsection}{\numberline {4.4.2}High-Level System Components}{102}{subsection.150}%
+\contentsline {subsection}{\numberline {4.4.3}Multi-Tier Deployment Architecture}{103}{subsection.151}%
+\contentsline {subsubsection}{\numberline {4.4.3.1}Tier 1 - Client Layer}{103}{subsubsection.152}%
+\contentsline {subsubsection}{\numberline {4.4.3.2}Tier 2 - Application Layer}{103}{subsubsection.153}%
+\contentsline {subsubsection}{\numberline {4.4.3.3}Tier 3 - External Services Layer}{103}{subsubsection.154}%
+\contentsline {subsubsection}{\numberline {4.4.3.4}Tier 4 - Data Layer}{103}{subsubsection.155}%
+\contentsline {subsection}{\numberline {4.4.4}External Services Integration}{103}{subsection.156}%
+\contentsline {subsubsection}{\numberline {4.4.4.1}Map Service}{104}{subsubsection.157}%
+\contentsline {subsubsection}{\numberline {4.4.4.2}Notification Service}{104}{subsubsection.158}%
+\contentsline {subsubsection}{\numberline {4.4.4.3}ML Recommendation Service}{104}{subsubsection.159}%
+\contentsline {subsubsection}{\numberline {4.4.4.4}Chatbot Service}{104}{subsubsection.160}%
+\contentsline {subsubsection}{\numberline {4.4.4.5}Storage Service}{104}{subsubsection.161}%
+\contentsline {subsection}{\numberline {4.4.5}Architecture Diagram}{104}{subsection.162}%
+\contentsline {section}{\numberline {4.5}Design Models}{105}{section.165}%
+\contentsline {subsection}{\numberline {4.5.1}Activity Diagrams}{105}{subsection.166}%
+\contentsline {subsubsection}{\numberline {4.5.1.1}Authentication \& Onboarding (Register, OTP, Admin verify)}{106}{subsubsection.167}%
+\contentsline {subsubsection}{\numberline {4.5.1.2}Document Management (uploads \& verification)}{107}{subsubsection.170}%
+\contentsline {subsubsection}{\numberline {4.5.1.3}Vehicle Management (add/edit/delete vehicles)}{108}{subsubsection.173}%
+\contentsline {subsubsection}{\numberline {4.5.1.4}Ride Management (create/edit/cancel, route \& stops)}{109}{subsubsection.176}%
+\contentsline {subsubsection}{\numberline {4.5.1.5}Marketplace / Browse \& Search / Ride Details}{110}{subsubsection.179}%
+\contentsline {subsubsection}{\numberline {4.5.1.6}Booking \& Seat Management (select seats, lock seats)}{111}{subsubsection.182}%
+\contentsline {subsubsection}{\numberline {4.5.1.7}Post-Booking Chat / Messaging \& Broadcast}{112}{subsubsection.185}%
+\contentsline {subsubsection}{\numberline {4.5.1.8}Scheduler / Pre-Ride Reminders \& Permission Prompt}{113}{subsubsection.188}%
+\contentsline {subsubsection}{\numberline {4.5.1.9}Live Tracking \& Pickup Code (Start Ride / geofence)}{114}{subsubsection.191}%
+\contentsline {subsubsection}{\numberline {4.5.1.10}Payment \& Manual Payment Confirmation (cash / QR / bank transfer)}{115}{subsubsection.194}%
+\contentsline {subsubsection}{\numberline {4.5.1.11}Ratings \& Completion Workflow (mark reached, complete, rating)}{116}{subsubsection.197}%
+\contentsline {subsubsection}{\numberline {4.5.1.12}SOS / Emergency \& Incident Management}{117}{subsubsection.200}%
+\contentsline {subsubsection}{\numberline {4.5.1.13}Dispute Management \& Admin Dashboard (view \& resolve disputes)}{118}{subsubsection.203}%
+\contentsline {subsection}{\numberline {4.5.2}Class Diagram}{119}{subsection.206}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}Key Classes and Responsibilities}{120}{subsubsection.209}%
+\contentsline {subsubsection}{\numberline {4.5.2.2}Relationships}{120}{subsubsection.210}%
+\contentsline {subsection}{\numberline {4.5.3}Sequence Diagrams}{121}{subsection.211}%
+\contentsline {subsubsection}{\numberline {4.5.3.1}Sequence Diagram – Authentication (Login/Signup)}{121}{subsubsection.212}%
+\contentsline {subsubsection}{\numberline {4.5.3.2}Sequence Diagram – Ride Posting}{122}{subsubsection.215}%
+\contentsline {subsubsection}{\numberline {4.5.3.3}Sequence Diagram – Booking + Driver Acceptance}{123}{subsubsection.218}%
+\contentsline {subsubsection}{\numberline {4.5.3.4}Sequence Diagram – Live Tracking + Ride Completion + Payment}{124}{subsubsection.221}%
+\contentsline {subsection}{\numberline {4.5.4}State Transition Diagrams}{125}{subsection.224}%
+\contentsline {subsubsection}{\numberline {4.5.4.1}State Transition Diagram – Ride Request and Booking}{125}{subsubsection.225}%
+\contentsline {subsubsection}{\numberline {4.5.4.2}State Transition Diagram – Driver States}{126}{subsubsection.228}%
+\contentsline {subsubsection}{\numberline {4.5.4.3}State Transition Diagram – Passenger States}{127}{subsubsection.231}%
+\contentsline {subsubsection}{\numberline {4.5.4.4}State Transition Diagram – SOS States}{128}{subsubsection.234}%
+\contentsline {subsubsection}{\numberline {4.5.4.5}Complaint and Dispute States Machine}{129}{subsubsection.237}%
+\contentsline {section}{\numberline {4.6}Data Flow Diagrams}{130}{section.240}%
+\contentsline {subsection}{\numberline {4.6.1}Level 1 Data Flow Diagrams}{130}{subsection.241}%
+\contentsline {subsubsection}{\numberline {4.6.1.1}Authentication \& Onboarding (Register, OTP, Admin verify)}{130}{subsubsection.242}%
+\contentsline {subsubsection}{\numberline {4.6.1.2}Document Management (uploads \& verification)}{131}{subsubsection.245}%
+\contentsline {subsubsection}{\numberline {4.6.1.3}Vehicle Management (add/edit/delete vehicles)}{132}{subsubsection.248}%
+\contentsline {subsubsection}{\numberline {4.6.1.4}Ride Management (create/edit/cancel, route \& stops)}{132}{subsubsection.251}%
+\contentsline {subsubsection}{\numberline {4.6.1.5}Marketplace / Browse \& Search / Ride Details}{133}{subsubsection.254}%
+\contentsline {subsubsection}{\numberline {4.6.1.6}Booking \& Seat Management (select seats, lock seats)}{134}{subsubsection.257}%
+\contentsline {subsubsection}{\numberline {4.6.1.7}Post-Booking Chat / Messaging \& Broadcast}{135}{subsubsection.260}%
+\contentsline {subsubsection}{\numberline {4.6.1.8}Scheduler / Pre-Ride Reminders \& Permission Prompt}{136}{subsubsection.263}%
+\contentsline {subsubsection}{\numberline {4.6.1.9}Live Tracking \& Pickup Code (Start Ride / geofence)}{137}{subsubsection.266}%
+\contentsline {subsubsection}{\numberline {4.6.1.10}Payment \& Manual Payment Confirmation}{138}{subsubsection.269}%
+\contentsline {subsubsection}{\numberline {4.6.1.11}Ratings \& Completion Workflow}{139}{subsubsection.272}%
+\contentsline {subsubsection}{\numberline {4.6.1.12}SOS / Emergency \& Incident Management}{140}{subsubsection.275}%
+\contentsline {subsubsection}{\numberline {4.6.1.13}Dispute Management \& Admin Dashboard}{141}{subsubsection.278}%
+\contentsline {subsubsection}{\numberline {4.6.1.14}Notification Service}{142}{subsubsection.281}%
+\contentsline {subsubsection}{\numberline {4.6.1.15}Recommendation (ML) Service}{143}{subsubsection.284}%
+\contentsline {subsubsection}{\numberline {4.6.1.16}Smart Chatbot Support}{144}{subsubsection.287}%
+\contentsline {subsubsection}{\numberline {4.6.1.17}Audit / Logging / Analytics}{145}{subsubsection.290}%
+\contentsline {section}{\numberline {4.7}Data Design}{145}{section.293}%
+\contentsline {subsection}{\numberline {4.7.1}Entity Relationship Diagram (ERD)}{146}{subsection.294}%
+\contentsline {subsection}{\numberline {4.7.2}Database Architecture}{148}{subsection.297}%
+\contentsline {section}{\numberline {4.8}Database Schema Diagram}{148}{section.298}%
+\contentsline {subsection}{\numberline {4.8.1}Data Dictionary}{149}{subsection.301}%
+\contentsline {section}{\numberline {4.9}Database Tables / Collections}{155}{section.328}%
+\contentsline {subsection}{\numberline {4.9.1}User Collection / Table}{155}{subsection.329}%
+\contentsline {subsection}{\numberline {4.9.2}Core Data Collection}{156}{subsection.332}%
+\contentsline {subsubsection}{\numberline {4.9.2.1}Passenger Data (UsersData)}{156}{subsubsection.333}%
+\contentsline {subsubsection}{\numberline {4.9.2.2}Driver Data (UsersData)}{157}{subsubsection.336}%
+\contentsline {subsubsection}{\numberline {4.9.2.3}Vehicle Table}{157}{subsubsection.339}%
+\contentsline {subsubsection}{\numberline {4.9.2.4}Route Table}{158}{subsubsection.342}%
+\contentsline {subsubsection}{\numberline {4.9.2.5}Booking Table}{158}{subsubsection.345}%
+\contentsline {subsubsection}{\numberline {4.9.2.6}Trip Table}{159}{subsubsection.348}%
+\contentsline {subsubsection}{\numberline {4.9.2.7}TripPayment Table}{159}{subsubsection.351}%
+\contentsline {subsubsection}{\numberline {4.9.2.8}SosIncident Table}{160}{subsubsection.354}%
+\contentsline {subsubsection}{\numberline {4.9.2.9}EmergencyContact Table}{160}{subsubsection.357}%
+\contentsline {subsubsection}{\numberline {4.9.2.10}ChatMessage Table}{160}{subsubsection.360}%
+\contentsline {subsection}{\numberline {4.9.3}Relationships Between Tables}{161}{subsection.363}%
+\contentsline {subsection}{\numberline {4.9.4}Security and Data Integrity}{161}{subsection.364}%
+\contentsline {subsection}{\numberline {4.9.5}Scalability Considerations}{161}{subsection.365}%
+\contentsline {section}{\numberline {4.10}Chapter Summary}{162}{section.366}%
+\contentsline {chapter}{\numberline {5}Implementation}{163}{chapter.367}%
+\contentsline {section}{\numberline {5.1}Development Environment}{163}{section.368}%
+\contentsline {section}{\numberline {5.2}Core Module Implementation}{164}{section.369}%
+\contentsline {subsection}{\numberline {5.2.1}Module 1: Authentication \& Verification Module}{164}{subsection.370}%
+\contentsline {subsection}{\numberline {5.2.2}Module 2: Ride Management Module}{165}{subsection.371}%
+\contentsline {subsection}{\numberline {5.2.3}Module 3: Booking \& Payment Module}{165}{subsection.372}%
+\contentsline {subsection}{\numberline {5.2.4}Module 4: Live Tracking \& Safety Module}{166}{subsection.373}%
+\contentsline {subsection}{\numberline {5.2.5}Module 5: Admin Portal Module}{167}{subsection.374}%
+\contentsline {section}{\numberline {5.3}Algorithmic Implementation}{167}{section.375}%
+\contentsline {subsection}{\numberline {5.3.1}Algorithm 1: User Registration \& Verification}{167}{subsection.376}%
+\contentsline {subsection}{\numberline {5.3.2}Algorithm 2: Ride Creation \& Fare Calculation}{168}{subsection.378}%
+\contentsline {subsection}{\numberline {5.3.3}Algorithm 3: Ride Booking \& Seat Locking}{169}{subsection.380}%
+\contentsline {subsection}{\numberline {5.3.4}Algorithm 4: Live Tracking \& Pickup OTP Generation}{169}{subsection.382}%
+\contentsline {subsection}{\numberline {5.3.5}Algorithm 5: SOS Escalation Logic}{170}{subsection.384}%
+\contentsline {subsection}{\numberline {5.3.6}Algorithm 6: ML Ride Recommendation (Content-Based Filtering)}{171}{subsection.386}%
+\contentsline {subsection}{\numberline {5.3.7}Algorithm 7: Route ETA Calculation}{172}{subsection.388}%
+\contentsline {subsection}{\numberline {5.3.8}Algorithm 8: Automated Trip Archiving \& Data Condensation}{172}{subsection.390}%
+\contentsline {subsection}{\numberline {5.3.9}Algorithm 9: Polyline Decoding for Route Geometry}{173}{subsection.392}%
+\contentsline {subsection}{\numberline {5.3.10}Algorithm 10: Ride Fare Negotiation Protocol}{174}{subsection.394}%
+\contentsline {subsection}{\numberline {5.3.11}Algorithm 11: Priority Asynchronous Push Notifications Dispatch}{174}{subsection.396}%
+\contentsline {subsection}{\numberline {5.3.12}Algorithm 12: Passenger Verification Guard Anti-Fraud Logic}{175}{subsection.398}%
+\contentsline {subsection}{\numberline {5.3.13}Algorithm 13: Passenger Blacklisting Protocol}{176}{subsection.400}%
+\contentsline {subsection}{\numberline {5.3.14}Algorithm 14: In-Ride Chat Synchronization and Broadcast}{176}{subsection.402}%
+\contentsline {subsection}{\numberline {5.3.15}Algorithm 15: Post-Trip Rating Aggregation \& Reputation Update}{177}{subsection.404}%
+\contentsline {section}{\numberline {5.4}External APIs / SDKs}{177}{section.406}%
+\contentsline {section}{\numberline {5.5}User Interface Implementation}{178}{section.409}%
+\contentsline {subsection}{\numberline {5.5.1}UI Design Approach}{178}{subsection.410}%
+\contentsline {subsection}{\numberline {5.5.2}Screen-wise Implementation}{179}{subsection.411}%
+\contentsline {subsubsection}{\numberline {5.5.2.1}Screen 1: Signup Personal Info}{179}{subsubsection.412}%
+\contentsline {subsubsection}{\numberline {5.5.2.2}Screen 2: Signup Emergency Contact}{180}{subsubsection.417}%
+\contentsline {subsubsection}{\numberline {5.5.2.3}Screen 3: Otp Verification}{181}{subsubsection.422}%
+\contentsline {subsubsection}{\numberline {5.5.2.4}Screen 4: Driver License Vehicle Info}{182}{subsubsection.427}%
+\contentsline {subsubsection}{\numberline {5.5.2.5}Screen 5: Edit Driving License}{183}{subsubsection.432}%
+\contentsline {subsubsection}{\numberline {5.5.2.6}Screen 6: Vehicle Details Card}{184}{subsubsection.437}%
+\contentsline {subsubsection}{\numberline {5.5.2.7}Screen 7: Login Screen}{185}{subsubsection.442}%
+\contentsline {subsubsection}{\numberline {5.5.2.8}Screen 8: Create Route Search Location}{187}{subsubsection.450}%
+\contentsline {subsubsection}{\numberline {5.5.2.9}Screen 9: Create Route Map View}{188}{subsubsection.455}%
+\contentsline {subsubsection}{\numberline {5.5.2.10}Screen 10: Create Route Add Stop}{189}{subsubsection.460}%
+\contentsline {subsubsection}{\numberline {5.5.2.11}Screen 11: Create Ride Select Time}{190}{subsubsection.465}%
+\contentsline {subsubsection}{\numberline {5.5.2.12}Screen 12: Create Ride Select Seats}{191}{subsubsection.470}%
+\contentsline {subsubsection}{\numberline {5.5.2.13}Screen 13: Create Ride Gender Preference}{192}{subsubsection.475}%
+\contentsline {subsubsection}{\numberline {5.5.2.14}Screen 14: Create Ride Edit Stop Price}{193}{subsubsection.480}%
+\contentsline {subsubsection}{\numberline {5.5.2.15}Screen 15: Create Ride Total Price}{194}{subsubsection.485}%
+\contentsline {subsubsection}{\numberline {5.5.2.16}Screen 16: Create Ride Final Details}{195}{subsubsection.490}%
+\contentsline {subsubsection}{\numberline {5.5.2.17}Screen 17: Create Ride Summary}{196}{subsubsection.495}%
+\contentsline {subsubsection}{\numberline {5.5.2.18}Screen 18: Edit Ride Stops Breakdown}{197}{subsubsection.500}%
+\contentsline {subsubsection}{\numberline {5.5.2.19}Screen 19: Find Ride Select Pickup}{198}{subsubsection.505}%
+\contentsline {subsubsection}{\numberline {5.5.2.20}Screen 20: Find Ride Filters}{199}{subsubsection.510}%
+\contentsline {subsubsection}{\numberline {5.5.2.21}Screen 21: Find Ride Available Rides}{200}{subsubsection.515}%
+\contentsline {subsubsection}{\numberline {5.5.2.22}Screen 22: Ride Details Screen}{201}{subsubsection.520}%
+\contentsline {subsubsection}{\numberline {5.5.2.23}Screen 23: Passenger Book Ride Details}{204}{subsubsection.526}%
+\contentsline {subsubsection}{\numberline {5.5.2.24}Screen 24: Passenger Negotiation Details}{204}{subsubsection.531}%
+\contentsline {subsubsection}{\numberline {5.5.2.25}Screen 25: Driver Response Screen}{205}{subsubsection.536}%
+\contentsline {subsubsection}{\numberline {5.5.2.26}Screen 26: My Bookings Confirmed}{207}{subsubsection.541}%
+\contentsline {subsubsection}{\numberline {5.5.2.27}Screen 27: Passenger Live Tracking Start}{208}{subsubsection.546}%
+\contentsline {subsubsection}{\numberline {5.5.2.28}Screen 28: Live Tracking Screen}{209}{subsubsection.551}%
+\contentsline {subsubsection}{\numberline {5.5.2.29}Screen 29: Driver Live Ride Tracking}{210}{subsubsection.558}%
+\contentsline {subsubsection}{\numberline {5.5.2.30}Screen 30: Driver Pickup Qr Code}{211}{subsubsection.563}%
+\contentsline {subsubsection}{\numberline {5.5.2.31}Screen 31: Web Live Tracking}{212}{subsubsection.568}%
+\contentsline {subsubsection}{\numberline {5.5.2.32}Screen 32: Chat Screen}{213}{subsubsection.573}%
+\contentsline {subsubsection}{\numberline {5.5.2.33}Screen 33: Driver Broadcast Message}{214}{subsubsection.579}%
+\contentsline {subsubsection}{\numberline {5.5.2.34}Screen 34: Emergency Sos Countdown}{215}{subsubsection.584}%
+\contentsline {subsubsection}{\numberline {5.5.2.35}Screen 35: Notifications List Sos}{216}{subsubsection.589}%
+\contentsline {subsubsection}{\numberline {5.5.2.36}Screen 36: Ride Completion}{217}{subsubsection.594}%
+\contentsline {subsubsection}{\numberline {5.5.2.37}Screen 37: Payment Screen Cash}{218}{subsubsection.599}%
+\contentsline {subsubsection}{\numberline {5.5.2.38}Screen 38: Driver Confirm Payments}{219}{subsubsection.604}%
+\contentsline {subsubsection}{\numberline {5.5.2.39}Screen 39: Profile Ride History}{220}{subsubsection.609}%
+\contentsline {subsubsection}{\numberline {5.5.2.40}Screen 40: Profile Created Rides History}{221}{subsubsection.614}%
+\contentsline {subsubsection}{\numberline {5.5.2.41}Screen 41: My Profile Verified Driver}{222}{subsubsection.619}%
+\contentsline {subsubsection}{\numberline {5.5.2.42}Screen 42: Support Chat Bot}{223}{subsubsection.624}%
+\contentsline {subsubsection}{\numberline {5.5.2.43}Screen 43: SOS Live Tracking Dashboard}{224}{subsubsection.629}%
+\contentsline {subsubsection}{\numberline {5.5.2.44}Screen 44: Admin Dashboard Overview}{225}{subsubsection.636}%
+\contentsline {subsubsection}{\numberline {5.5.2.45}Screen 45: Admin Reached Pending Trips}{226}{subsubsection.641}%
+\contentsline {subsubsection}{\numberline {5.5.2.46}Screen 46: Admin SOS Incidents List}{227}{subsubsection.646}%
+\contentsline {subsubsection}{\numberline {5.5.2.47}Screen 47: Account Banned}{228}{subsubsection.651}%
+\contentsline {subsubsection}{\numberline {5.5.2.48}Screen 48: Account Rejected}{229}{subsubsection.656}%
+\contentsline {subsubsection}{\numberline {5.5.2.49}Screen 49: Blocked Users List}{230}{subsubsection.661}%
+\contentsline {subsection}{\numberline {5.5.3}Navigation Flow Diagram}{231}{subsection.666}%
+\contentsline {subsection}{\numberline {5.5.4}Responsiveness and Performance}{232}{subsection.669}%
+\contentsline {section}{\numberline {5.6}Deployment}{232}{section.670}%
+\contentsline {chapter}{\numberline {6}Testing and Evaluation}{235}{chapter.673}%
+\contentsline {section}{\numberline {6.1}Testing Strategy}{235}{section.674}%
+\contentsline {section}{\numberline {6.2}Unit Testing}{236}{section.675}%
+\contentsline {subsection}{\numberline {6.2.1}UT-01: Authentication Module}{236}{subsection.676}%
+\contentsline {subsection}{\numberline {6.2.2}UT-02: Vehicle Management Module}{236}{subsection.679}%
+\contentsline {subsection}{\numberline {6.2.3}UT-03: Ride Posting and Fare Module}{237}{subsection.682}%
+\contentsline {subsection}{\numberline {6.2.4}UT-04: Trip Mapping and Formatting}{237}{subsection.685}%
+\contentsline {subsection}{\numberline {6.2.5}UT-05: Administrative Views}{238}{subsection.688}%
+\contentsline {subsection}{\numberline {6.2.6}UT-06: SOS and Incident Tracking}{238}{subsection.691}%
+\contentsline {subsection}{\numberline {6.2.7}UT-07: WebSocket and Real-time Communication}{238}{subsection.694}%
+\contentsline {subsection}{\numberline {6.2.8}UT-08: Content-Based Recommendation Logic}{239}{subsection.697}%
+\contentsline {section}{\numberline {6.3}Integration Testing}{239}{section.700}%
+\contentsline {section}{\numberline {6.4}API Endpoint Validation via Postman}{240}{section.703}%
+\contentsline {subsection}{\numberline {6.4.1}Core Lifecycle APIs}{240}{subsection.704}%
+\contentsline {subsection}{\numberline {6.4.2}Trip Execution and Real-time Updates}{241}{subsection.711}%
+\contentsline {subsection}{\numberline {6.4.3}Infrastructure and Safety Services}{243}{subsection.718}%
+\contentsline {section}{\numberline {6.5}System Testing}{244}{section.725}%
+\contentsline {section}{\numberline {6.6}Performance Testing}{245}{section.726}%
+\contentsline {section}{\numberline {6.7}Security Testing}{245}{section.729}%
+\contentsline {section}{\numberline {6.8}Machine Learning Model Evaluation}{245}{section.730}%
+\contentsline {subsection}{\numberline {6.8.1}Ranking Logic Factors}{245}{subsection.731}%
+\contentsline {subsection}{\numberline {6.8.2}Evaluation Performance Metrics}{245}{subsection.732}%
+\contentsline {subsection}{\numberline {6.8.3}Error Analysis (Worst Cases)}{246}{subsection.735}%
+\contentsline {section}{\numberline {6.9}User Acceptance Testing}{247}{section.738}%
+\contentsline {section}{\numberline {6.10}Automated Test Execution Results (Proofs)}{247}{section.739}%
+\contentsline {subsection}{\numberline {6.10.1}Frontend Unit and Widget Tests}{247}{subsection.740}%
+\contentsline {subsection}{\numberline {6.10.2}Backend Logic and View Tests}{248}{subsection.745}%
+\contentsline {section}{\numberline {6.11}Testing Summary}{249}{section.748}%
+\contentsline {chapter}{\numberline {7}Conclusion and Future Work}{250}{chapter.749}%
+\contentsline {section}{\numberline {7.1}Conclusion}{250}{section.750}%
+\contentsline {section}{\numberline {7.2}Future Work}{250}{section.751}%
+\contentsline {section}{\numberline {7.3}Limitations}{251}{section.752}%
+\contentsline {chapter}{Appendices}{253}{appendix*.754}%
+\contentsline {section}{Appendix A – Turnitin Similarity Report}{253}{section*.755}%
+\contentsline {section}{Appendix B – AI Writing Detection Report}{254}{section*.755}%
+\contentsline {section}{Appendix C – Source Code}{255}{section*.755}%

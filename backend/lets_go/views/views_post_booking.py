@@ -118,7 +118,7 @@ def _record_system_notification_if_due(trip: Trip, key: str, cooldown_seconds: i
                 if (now - last_dt).total_seconds() < float(cooldown_seconds):
                     return False
             except Exception:
-                pass
+                return False
 
         sent[key] = now.isoformat()
         state['system_notifications'] = sent
@@ -126,7 +126,21 @@ def _record_system_notification_if_due(trip: Trip, key: str, cooldown_seconds: i
         trip.save(update_fields=['live_tracking_state'])
         return True
     except Exception:
-        return True
+        return False
+
+
+def _get_system_notification_sent_at(trip: Trip, key: str):
+    """Return the timestamp (as aware datetime) when a system-notification key was last recorded."""
+    try:
+        state = trip.live_tracking_state
+        if not isinstance(state, dict):
+            return None
+        sent = state.get('system_notifications')
+        if not isinstance(sent, dict):
+            return None
+        return _parse_iso_dt(sent.get(key))
+    except Exception:
+        return None
 
 
 def _set_trip_booking_flag(trip: Trip, booking_id: int, flag: str, value) -> None:
@@ -257,9 +271,14 @@ def cron_post_booking_reached_reminders(request):
         if dep_dt is not None and now < dep_dt:
             continue
 
+        # Only send reached reminders for rides that have actually started.
+        # Scheduled trips or cancelled/completed trips should never get a reached reminder.
+        if trip.trip_status != 'IN_PROGRESS':
+            continue
+
         processed += 1
 
-        if trip.trip_status != 'COMPLETED':
+        if trip.trip_status == 'IN_PROGRESS':
             key = f"reached_reminder_driver_{trip.trip_id}"
             if _record_system_notification_if_due(trip, key, cooldown_seconds=86400 * 7):
                 share_url = _mint_share_url(request, trip, role='driver', booking=None)
@@ -279,31 +298,40 @@ def cron_post_booking_reached_reminders(request):
                 except Exception:
                     pass
 
-                emergency_attempts += 1
-                try:
-                    drv_contact = EmergencyContact.objects.filter(user_id=trip.driver_id).first()
-                    if drv_contact is not None:
-                        subject = f"Reach status pending: driver for trip {trip.trip_id}"
-                        lines = [
-                            'REACHED REMINDER',
-                            f"Trip: {trip.trip_id}",
-                            f"Reason: Driver has not marked reached.",
-                            f"Dynamic delay hours: {delay_hours}",
-                            f"Tracking page: {share_url or '-'}",
-                        ]
-                        body = "\n".join(lines)
-                        if getattr(drv_contact, 'email', None):
-                            _send_email(subject, body, [drv_contact.email])
-                        if getattr(drv_contact, 'phone_no', None):
-                            _send_sms_cron(drv_contact.phone_no, body)
-                except Exception:
-                    pass
+            # Emergency escalation (email/SMS) must be delayed by 30 minutes after push is recorded.
+            try:
+                push_sent_at = _get_system_notification_sent_at(trip, key)
+                if push_sent_at is not None and (now - push_sent_at).total_seconds() >= 30 * 60:
+                    emergency_key = f"reached_reminder_driver_emergency_{trip.trip_id}"
+                    if _record_system_notification_if_due(trip, emergency_key, cooldown_seconds=86400 * 7):
+                        emergency_attempts += 1
+                        share_url = _mint_share_url(request, trip, role='driver', booking=None)
+                        drv_contact = EmergencyContact.objects.filter(user_id=trip.driver_id).first()
+                        if drv_contact is not None:
+                            subject = f"Reach status pending: driver for trip {trip.trip_id}"
+                            lines = [
+                                'REACHED REMINDER',
+                                f"Trip: {trip.trip_id}",
+                                f"Reason: Driver has not marked reached.",
+                                f"Dynamic delay hours: {delay_hours}",
+                                f"Tracking page: {share_url or '-'}",
+                            ]
+                            body = "\n".join(lines)
+                            if getattr(drv_contact, 'email', None):
+                                _send_email(subject, body, [drv_contact.email])
+                            if getattr(drv_contact, 'phone_no', None):
+                                _send_sms_cron(drv_contact.phone_no, body)
+            except Exception:
+                pass
 
         bookings = (
             Booking.objects
             .filter(trip=trip, booking_status='CONFIRMED')
+            # Passenger must have started the ride AND have pickup verified (QR/pickup code).
+            .filter(ride_status='RIDE_STARTED')
+            .exclude(pickup_verified_at__isnull=True)
             .select_related('passenger')
-            .only('id', 'passenger_id', 'ride_status', 'booking_status', 'completed_at')
+            .only('id', 'passenger_id', 'ride_status', 'booking_status', 'completed_at', 'pickup_verified_at')
         )
         for b in bookings:
             ride_status = getattr(b, 'ride_status', None)
@@ -332,24 +360,29 @@ def cron_post_booking_reached_reminders(request):
             except Exception:
                 pass
 
-            emergency_attempts += 1
+            # Emergency escalation (email/SMS) must be delayed by 30 minutes after push is recorded.
             try:
-                p_contact = EmergencyContact.objects.filter(user_id=b.passenger_id).first()
-                if p_contact is not None:
-                    subject = f"Reach status pending: passenger for trip {trip.trip_id}"
-                    lines = [
-                        'REACHED REMINDER',
-                        f"Trip: {trip.trip_id}",
-                        f"Booking: {b.id}",
-                        f"Reason: Passenger has not marked reached.",
-                        f"Dynamic delay hours: {delay_hours}",
-                        f"Tracking page: {share_url or '-'}",
-                    ]
-                    body = "\n".join(lines)
-                    if getattr(p_contact, 'email', None):
-                        _send_email(subject, body, [p_contact.email])
-                    if getattr(p_contact, 'phone_no', None):
-                        _send_sms_cron(p_contact.phone_no, body)
+                push_sent_at = _get_system_notification_sent_at(trip, key)
+                if push_sent_at is not None and (now - push_sent_at).total_seconds() >= 30 * 60:
+                    emergency_key = f"reached_reminder_passenger_emergency_{b.id}"
+                    if _record_system_notification_if_due(trip, emergency_key, cooldown_seconds=86400 * 7):
+                        emergency_attempts += 1
+                        p_contact = EmergencyContact.objects.filter(user_id=b.passenger_id).first()
+                        if p_contact is not None:
+                            subject = f"Reach status pending: passenger for trip {trip.trip_id}"
+                            lines = [
+                                'REACHED REMINDER',
+                                f"Trip: {trip.trip_id}",
+                                f"Booking: {b.id}",
+                                f"Reason: Passenger has not marked reached.",
+                                f"Dynamic delay hours: {delay_hours}",
+                                f"Tracking page: {share_url or '-'}",
+                            ]
+                            body = "\n".join(lines)
+                            if getattr(p_contact, 'email', None):
+                                _send_email(subject, body, [p_contact.email])
+                            if getattr(p_contact, 'phone_no', None):
+                                _send_sms_cron(p_contact.phone_no, body)
             except Exception:
                 pass
 

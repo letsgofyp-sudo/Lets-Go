@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../controllers/ride_posting_controllers/my_rides_controller.dart';
 import '../../services/api_service.dart';
+import '../../utils/time_format.dart';
+import '../../controllers/ride_posting_controllers/my_rides_controller.dart';
 import '../../services/live_tracking_session_manager.dart';
 import 'booking_detail_screen.dart';
 import '../ride_booking_screens/driver_requests_screen.dart';
@@ -36,6 +37,9 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
   bool _isCheckingCreateRideEligibility = false;
   String? _createRideBlockMessage;
 
+  bool _loadedCreated = false;
+  bool _loadedBooked = false;
+
   @override
   void initState() {
     super.initState();
@@ -43,11 +47,32 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
     // Ensure FAB and other tab-dependent UI update when tab changes
     _tabController.addListener(() {
       if (!mounted) return;
+      if (!_tabController.indexIsChanging) {
+        _maybeLoadActiveTab();
+      }
       setState(() {});
     });
     _initializeController();
     _loadPersistedLiveTrackingSession();
     _refreshCreateRideEligibility();
+  }
+
+  Future<void> _maybeLoadActiveTab() async {
+    final userId = _extractUserId();
+    if (userId <= 0) return;
+
+    // Tab 0: Created rides
+    if (_tabController.index == 0) {
+      if (_loadedCreated) return;
+      _loadedCreated = true;
+      await _controller.loadCreatedRides(userId);
+      return;
+    }
+
+    // Tab 1: Bookings
+    if (_loadedBooked) return;
+    _loadedBooked = true;
+    await _controller.loadBookedRides(userId);
   }
 
   bool _hasDrivingLicense(Map<String, dynamic> user) {
@@ -387,10 +412,11 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
       },
     );
 
-    // Load user's rides
+    // Load ONLY created rides initially (bookings will load when tab is opened)
     final userId = _extractUserId();
     if (userId > 0) {
-      _controller.loadUserRides(userId);
+      _loadedCreated = true;
+      _controller.loadCreatedRides(userId);
     }
     
     // Add listener to update ride lists when data changes
@@ -764,7 +790,9 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
                       ),
                       _buildInfoRow(
                         Icons.access_time,
-                        ride['departure_time'] ?? ride['trip']?['departure_time'] ?? 'N/A',
+                        TimeFormat.amPmCompactFrom24hString(
+                          (ride['departure_time'] ?? ride['trip']?['departure_time'])?.toString(),
+                        ),
                       ),
                       _buildInfoRow(
                         Icons.straighten,
@@ -1411,7 +1439,13 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
       onRefresh: () async {
         final userId = _extractUserId();
         if (userId > 0) {
-          await _controller.loadUserRides(userId);
+          if (isCreatedRides) {
+            _loadedCreated = true;
+            await _controller.loadCreatedRides(userId);
+          } else {
+            _loadedBooked = true;
+            await _controller.loadBookedRides(userId);
+          }
         }
       },
       child: ListView.builder(
@@ -1446,7 +1480,13 @@ class _MyRidesScreenState extends State<MyRidesScreen> with SingleTickerProvider
                   ?? int.tryParse(widget.userData['user_id']?.toString() ?? '')
                   ?? 0;
               if (userId > 0) {
-                _controller.loadUserRides(userId);
+                if (_tabController.index == 0) {
+                  _loadedCreated = true;
+                  _controller.loadCreatedRides(userId);
+                } else {
+                  _loadedBooked = true;
+                  _controller.loadBookedRides(userId);
+                }
               }
             },
             tooltip: 'Refresh',

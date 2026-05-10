@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import '../../models/chat_models.dart';
 import '../../services/chat_service.dart';
 import '../../utils/image_utils.dart';
+import '../../utils/time_format.dart';
 
 class DriverIndividualChatScreen extends StatefulWidget {
   final Map<String, dynamic> userData;
@@ -607,7 +608,7 @@ class _DriverIndividualChatScreenState
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  DateFormat('hh:mm a').format(message.createdAt.toLocal()),
+                  TimeFormat.amPmCompactFromDateTime(message.createdAt),
                   style: TextStyle(
                     color: isMe ? Colors.white70 : Colors.grey[600],
                     fontSize: 11,

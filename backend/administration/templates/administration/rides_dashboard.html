@@ -57,7 +57,7 @@
                     <a href="{% url 'administration:admin_trip_detail' trip_pk=t.id %}">{{ t.trip_id }}</a>
                   </td>
                   <td>{{ t.trip_date|date:'Y-m-d' }}</td>
-                  <td>{{ t.departure_time|time:'H:i' }}</td>
+                  <td>{{ t.departure_time|time:'g:iA' }}</td>
                   <td>{{ t.route.route_name }}</td>
                   <td>
                     <a href="{% url 'administration:user_detail' user_id=t.driver.id %}">{{ t.driver.name }}</a>

@@ -40,7 +40,7 @@ from lets_go.views.views_authentication import upload_to_supabase
 
 from datetime import datetime
 
-from .models import AdminTodoItem
+from .models import AdminTodoItem, SupportFAQ
 
 
 def _build_resolved_sos_snapshot_payload(incident: SosIncident) -> dict:
@@ -184,6 +184,179 @@ def guest_list_view(request):
     return render(request, 'administration/guests_list.html')
 
 
+@require_http_methods(['GET'])
+@login_required
+def support_faq_list_view(request):
+    q = (request.GET.get('q') or '').strip()
+    category = (request.GET.get('category') or '').strip()
+    active = (request.GET.get('active') or '').strip()
+
+    qs = SupportFAQ.objects.all()
+    if q:
+        qs = qs.filter(Q(question__icontains=q) | Q(answer__icontains=q))
+    if category:
+        qs = qs.filter(category__icontains=category)
+    if active in {'0', '1'}:
+        qs = qs.filter(is_active=(active == '1'))
+
+    qs = qs.order_by('priority', 'id')
+    return render(
+        request,
+        'administration/support_faq_list.html',
+        {
+            'faqs': qs,
+            'q': q,
+            'category': category,
+            'active': active,
+        },
+    )
+
+
+@csrf_protect
+@login_required
+def support_faq_add_view(request):
+    if request.method == 'POST':
+        category = (request.POST.get('category') or '').strip() or None
+        question = (request.POST.get('question') or '').strip()
+        answer = (request.POST.get('answer') or '').strip()
+        priority_raw = (request.POST.get('priority') or '').strip()
+        is_active_raw = (request.POST.get('is_active') or '1').strip()
+
+        try:
+            priority = int(priority_raw) if priority_raw else 100
+        except Exception:
+            priority = 100
+
+        is_active = is_active_raw in {'1', 'true', 'True', 'yes', 'on'}
+
+        faq = SupportFAQ(
+            category=category,
+            question=question,
+            answer=answer,
+            priority=priority,
+            is_active=is_active,
+        )
+        try:
+            faq.full_clean()
+            faq.save()
+            return redirect('administration:support_faq_list')
+        except Exception as e:
+            return render(
+                request,
+                'administration/support_faq_form.html',
+                {
+                    'faq': None,
+                    'error': str(e),
+                    'form': {
+                        'category': category or '',
+                        'question': question,
+                        'answer': answer,
+                        'priority': priority,
+                        'is_active': is_active,
+                    },
+                },
+            )
+
+    return render(
+        request,
+        'administration/support_faq_form.html',
+        {
+            'faq': None,
+            'form': {
+                'category': '',
+                'question': '',
+                'answer': '',
+                'priority': 100,
+                'is_active': True,
+            },
+        },
+    )
+
+
+@csrf_protect
+@login_required
+def support_faq_edit_view(request, faq_id):
+    faq = get_object_or_404(SupportFAQ, pk=faq_id)
+
+    if request.method == 'POST':
+        category = (request.POST.get('category') or '').strip() or None
+        question = (request.POST.get('question') or '').strip()
+        answer = (request.POST.get('answer') or '').strip()
+        priority_raw = (request.POST.get('priority') or '').strip()
+        is_active_raw = (request.POST.get('is_active') or '1').strip()
+
+        try:
+            priority = int(priority_raw) if priority_raw else faq.priority
+        except Exception:
+            priority = faq.priority
+
+        is_active = is_active_raw in {'1', 'true', 'True', 'yes', 'on'}
+
+        faq.category = category
+        faq.question = question
+        faq.answer = answer
+        faq.priority = priority
+        faq.is_active = is_active
+
+        try:
+            faq.full_clean()
+            faq.save()
+            return redirect('administration:support_faq_list')
+        except Exception as e:
+            return render(
+                request,
+                'administration/support_faq_form.html',
+                {
+                    'faq': faq,
+                    'error': str(e),
+                    'form': {
+                        'category': category or '',
+                        'question': question,
+                        'answer': answer,
+                        'priority': priority,
+                        'is_active': is_active,
+                    },
+                },
+            )
+
+    return render(
+        request,
+        'administration/support_faq_form.html',
+        {
+            'faq': faq,
+            'form': {
+                'category': faq.category or '',
+                'question': faq.question,
+                'answer': faq.answer,
+                'priority': faq.priority,
+                'is_active': faq.is_active,
+            },
+        },
+    )
+
+
+@require_http_methods(['POST'])
+@csrf_protect
+@login_required
+def support_faq_toggle_active_view(request, faq_id):
+    faq = get_object_or_404(SupportFAQ, pk=faq_id)
+    faq.is_active = not bool(faq.is_active)
+    faq.save(update_fields=['is_active', 'updated_at'])
+    back = request.META.get('HTTP_REFERER')
+    if back:
+        return redirect(back)
+    return redirect('administration:support_faq_list')
+
+
+@require_http_methods(['POST'])
+@csrf_protect
+@login_required
+def support_faq_delete_view(request, faq_id):
+    faq = get_object_or_404(SupportFAQ, pk=faq_id)
+    faq.delete()
+    return redirect('administration:support_faq_list')
+
+
 @login_required
 def api_guests(request):
     qs = GuestUser.objects.all().values(
@@ -278,6 +451,12 @@ def guest_support_chat_view(request, guest_id):
 @csrf_protect
 @login_required
 def user_add_view(request):
+    def _post_to_form_data(post):
+        try:
+            return {k: post.get(k) for k in post.keys()}
+        except Exception:
+            return {}
+
     if request.method == 'POST':
         user = UsersData()
         user.name = request.POST.get('name')
@@ -292,7 +471,7 @@ def user_add_view(request):
             phone_no = '+' + phone_no
         user.phone_no = phone_no
         user.gender = request.POST.get('gender')
-        user.status = request.POST.get('status') or 'PENDING'
+        user.status = 'VERIFIED'
         user.driver_rating = request.POST.get('driver_rating') or None
         user.passenger_rating = request.POST.get('passenger_rating') or None
         user.cnic_no = request.POST.get('cnic_no')
@@ -379,8 +558,12 @@ def user_add_view(request):
                     user.delete()
             except Exception:
                 pass
-            return render(request, 'administration/user_add.html', {'error': str(e)})
-    return render(request, 'administration/user_add.html')
+            return render(
+                request,
+                'administration/user_add.html',
+                {'error': str(e), 'form': _post_to_form_data(request.POST)},
+            )
+    return render(request, 'administration/user_add.html', {'form': {}})
 # Create your views here.
 @login_required
 def admin_view(request):
@@ -2090,7 +2273,7 @@ def vehicle_add_view(request, user_id):
             if front or back or docs:
                 vehicle_bucket = getattr(settings, 'SUPABASE_VEHICLE_BUCKET', 'vehicle-images')
                 stamp = int(pytime.time())
-                plate = (v.plate_number or '').strip().upper()
+                plate = (v.plate_number or '').strip().upper().replace(' ', '')
 
                 if front:
                     ext = (getattr(front, 'name', '') or 'jpg').rsplit('.', 1)[-1].lower()
@@ -2107,7 +2290,7 @@ def vehicle_add_view(request, user_id):
 
             v.full_clean()
             v.save()
-            return redirect('administration:user_detail', user_id=user_id)
+            return redirect('administration:vehicle_detail', user_id=user_id)
         except Exception as e:
             return render(
                 request,
@@ -2163,7 +2346,7 @@ def vehicle_edit_view(request, user_id, vehicle_id):
             if front or back or docs:
                 vehicle_bucket = getattr(settings, 'SUPABASE_VEHICLE_BUCKET', 'vehicle-images')
                 stamp = int(pytime.time())
-                plate = (vehicle.plate_number or '').strip().upper()
+                plate = (vehicle.plate_number or '').strip().upper().replace(' ', '')
 
                 if front:
                     ext = (getattr(front, 'name', '') or 'jpg').rsplit('.', 1)[-1].lower()
@@ -2180,7 +2363,7 @@ def vehicle_edit_view(request, user_id, vehicle_id):
 
             vehicle.full_clean()
             vehicle.save()
-            return redirect('administration:user_detail', user_id=user_id)
+            return redirect('administration:vehicle_detail', user_id=user_id)
         except Exception as e:
             return render(
                 request,
@@ -2235,10 +2418,16 @@ def login_view(request):
         user_admin = authenticate(request, username=username, password=password)
         if user_admin is not None:
             login(request, user_admin)
+            next_url = (request.POST.get('next') or request.GET.get('next') or '').strip()
+            if next_url.startswith('/') and not next_url.startswith('//'):
+                return redirect(next_url)
             return redirect('administration:admin_view')
         else:
             error_message = 'Invalid credentials'
-    return render(request, 'administration/login.html', {'error_message': error_message})
+    next_url = (request.GET.get('next') or '').strip()
+    if not (next_url.startswith('/') and not next_url.startswith('//')):
+        next_url = ''
+    return render(request, 'administration/login.html', {'error_message': error_message, 'next': next_url})
 
 
 @login_required

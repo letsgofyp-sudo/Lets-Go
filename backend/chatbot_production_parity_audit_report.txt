@@ -1,0 +1,122 @@
+Chatbot Parity Audit Report (Production Paths)
+Generated: 2026-04-26
+
+Scope
+- This report focuses on production code paths NOT covered by the deterministic parity regression harness.
+- The harness already validated output parity for 2000+ prompts under stateless mode and with DB/network/LLM mocked or disabled.
+- This report therefore concentrates on integration points and side-effecting behavior (DB-backed FAQ, real network calls, production statefulness), plus any remaining refactor risks.
+
+1) Warnings / Framework Compatibility
+1.1 RemovedInDjango60Warning (resolved)
+- Location (previous): lets_go/models/models_support_chat.py
+- Warning: CheckConstraint.check is deprecated in favor of .condition
+- Fix: Replaced models.CheckConstraint(check=...) with models.CheckConstraint(condition=...)
+- Expected runtime impact: none (constraint SQL semantics unchanged).
+
+2) Entry Points Used by the Mobile App
+2.1 Django support chat endpoint
+- File: lets_go/views/views_support_chat.py
+- Bot endpoint: view_bot
+- Bot reply path:
+  - view_bot -> _chatbot_reply_text -> lets_go.utils.chatbot.engine_impl.handle_message
+- Important note:
+  - Production uses the NEW engine only. Legacy engine is not used by the live endpoint.
+
+2.2 Guest vs user identity mapping
+- File: lets_go/views/views_support_chat.py
+- Users: ctx.user_id = user.id
+- Guests: ctx.user_id = -guest.id
+- Risk area:
+  - State storage is keyed by ctx.user_id; negative IDs intentionally partition guest sessions away from user sessions.
+
+3) Production Statefulness (Not Covered by Stateless Parity Harness)
+3.1 In-memory session store
+- File: lets_go/utils/chatbot/core.py
+- Mechanism: module-global _SESSIONS: dict[int, ConversationState]
+- Behavior:
+  - Conversation state persists per-process by user_id.
+- Risks / operational notes:
+  - Multi-worker deployments: each worker has its own memory; state is not shared across workers.
+  - Restarts clear state.
+  - Thread safety: dict access is not explicitly locked; typical WSGI usage is usually OK but still a consideration under high concurrency.
+
+3.2 Stateless testing mode
+- File: lets_go/utils/chatbot/engine_impl/core.py
+- Env: LETS_GO_BOT_STATELESS
+- This mode resets flow for most intents and was used to make regression tests deterministic.
+- Production implication:
+  - Ensure LETS_GO_BOT_STATELESS is NOT enabled in production unless intentionally desired.
+
+4) DB-Backed FAQ Content (Not Covered by Test Harness)
+4.1 FAQ model
+- File: administration/models.py
+- Model: SupportFAQ(question, answer, is_active, priority, category)
+
+4.2 FAQ listing behavior
+- File: lets_go/utils/chatbot/bots/help_bot.py
+- Behavior when user asks for "faq" list:
+  - Tries to query SupportFAQ.objects.filter(is_active=True).order_by('priority','id')
+  - If DB/model import fails, falls back to a local static list (fallback questions).
+- Risk / parity note:
+  - The parity harness stubbed SupportFAQ to avoid DB access. That validates the fallback path, not the real DB query path.
+- Recommendation:
+  - Run one live/manual check in a dev DB with real SupportFAQ rows to confirm:
+    - ordering matches expectation
+    - max items displayed (currently 12)
+    - formatting is stable for the mobile UI.
+
+5) Network / API Calls (Not Covered by Test Harness)
+5.1 API integration boundary
+- File: lets_go/utils/chatbot/integrations/api.py
+- Mechanism:
+  - Uses call_view/call_view_form to hit internal Django endpoints (or configured base URL)
+  - Supports optional caching via LETS_GO_BOT_API_CACHE*
+- Risks / notes:
+  - Behavior depends on LETS_GO_API_BASE_URL, auth/session semantics, and endpoint availability.
+  - Caching can change perceived behavior (stale results) if enabled.
+
+5.2 Routing / external services
+- File: lets_go/utils/chatbot/engine_impl/core.py (routing branch)
+- Calls into routing helpers which may call:
+  - OSM / ORS routing
+  - DB route search
+- Recommendation:
+  - Run a small “online integration smoke test” (not parity) with real ORS key and API base URL.
+
+6) Legacy-only / New-only CLI and Scripts
+- New CLI:
+  - lets_go/utils/chatbot/scripts/cli.py
+  - lets_go/utils/chatbot/scripts/regression_checklist.py
+- Legacy CLI:
+  - lets_go/utils/chatbot_lagacy/cli.py
+  - lets_go/utils/chatbot_lagacy/regression_checklist.py
+- Production impact:
+  - None unless invoked manually.
+
+7) Management Command Dependency (Potentially Removed Code Path)
+- Both new and legacy engines contain guarded imports of:
+  - from lets_go.management.commands import support_bot_cli as cli
+  - Used for manual snippets and FAQ snippet search.
+- Current behavior:
+  - Wrapped in try/except; if command is absent, engine falls back to help_text/capabilities_text.
+- Risk:
+  - If support_bot_cli was deleted, those guarded imports will silently disable snippet retrieval.
+- Recommendation:
+  - If the intended final state is to delete support_bot_cli permanently, consider fully removing this branch in BOTH engines later (after parity sign-off), or moving snippet logic into a non-command module.
+
+8) Tree-Level Refactor Summary (Expected Differences)
+The refactor is primarily structural; files were split into subpackages.
+A quick file-level comparison (diff -qr) shows "Only in" differences consistent with packaging changes (bots/common/engine_impl/flows_impl/integrations/routing/tools vs monolith legacy modules).
+
+9) Conclusion
+- Deterministic parity regression tests passed (2000+ prompts) indicating no observed reply-text regressions for the tested surfaces.
+- The remaining risk is confined to:
+  - DB-backed FAQ content path (real ORM query path)
+  - Real network/API behavior (LETS_GO_API_BASE_URL, ORS/OSM)
+  - Production statefulness across processes/workers
+- Recommended next step:
+  - Run a short, targeted manual smoke test on a dev-like environment with:
+    - real SupportFAQ rows
+    - real API base URL
+    - statefulness enabled (LETS_GO_BOT_STATELESS off)
+    - a multi-turn flow (book/create with follow-up numeric selection)

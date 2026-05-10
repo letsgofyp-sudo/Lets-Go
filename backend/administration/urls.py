@@ -38,6 +38,13 @@ urlpatterns = [
     path('guests/api/', views.api_guests, name='api_guests'),
     path('guests/<int:guest_id>/support-chat/', views.guest_support_chat_view, name='guest_support_chat'),
 
+    # Support FAQs
+    path('support/faqs/', views.support_faq_list_view, name='support_faq_list'),
+    path('support/faqs/add/', views.support_faq_add_view, name='support_faq_add'),
+    path('support/faqs/<int:faq_id>/edit/', views.support_faq_edit_view, name='support_faq_edit'),
+    path('support/faqs/<int:faq_id>/toggle-active/', views.support_faq_toggle_active_view, name='support_faq_toggle_active'),
+    path('support/faqs/<int:faq_id>/delete/', views.support_faq_delete_view, name='support_faq_delete'),
+
     # User add
     path('users/add/', views.user_add_view, name='user_add'),
 

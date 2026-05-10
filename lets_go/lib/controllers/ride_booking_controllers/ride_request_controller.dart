@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../services/api_service.dart';
 import '../../utils/road_polyline_service.dart';
 import '../../utils/map_util.dart';
+import '../../utils/time_format.dart';
 
 class RideRequestController {
   // Ride data
@@ -494,7 +495,7 @@ class RideRequestController {
       final estimatedDeparture = departureTime.add(Duration(minutes: stopOffset));
       
       final formatter = DateFormat('HH:mm');
-      return formatter.format(estimatedDeparture);
+      return TimeFormat.amPmCompactFrom24hString(formatter.format(estimatedDeparture));
     } catch (e) {
       developer.log('Error calculating departure time', name: 'RideRequestController', error: e);
       return 'N/A';
@@ -521,7 +522,7 @@ class RideRequestController {
       final estimatedArrival = estimatedDeparture.add(Duration(minutes: selectedRouteDuration));
       
       final formatter = DateFormat('HH:mm');
-      return formatter.format(estimatedArrival);
+      return TimeFormat.amPmCompactFrom24hString(formatter.format(estimatedArrival));
     } catch (e) {
       developer.log('Error calculating arrival time', name: 'RideRequestController', error: e);
       return 'N/A';

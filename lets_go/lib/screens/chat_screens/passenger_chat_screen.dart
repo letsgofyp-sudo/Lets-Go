@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../utils/time_format.dart';
 import '../../models/chat_models.dart';
 import '../../services/chat_service.dart';
 import '../../utils/image_utils.dart';
@@ -55,8 +56,12 @@ class _PassengerChatScreenState extends State<PassengerChatScreen> {
     setState(() => isLoading = true);
 
     try {
-      final userId = int.tryParse(widget.userData['id']?.toString() ?? '') ?? 0;
-      final driverId = int.tryParse(widget.driverInfo['id']?.toString() ?? '') ?? 0;
+      final userId = int.tryParse(widget.userData['id']?.toString() ?? '') ??
+          int.tryParse(widget.userData['user_id']?.toString() ?? '') ??
+          0;
+      final driverId = int.tryParse(widget.driverInfo['id']?.toString() ?? '') ??
+          int.tryParse(widget.driverInfo['user_id']?.toString() ?? '') ??
+          0;
 
       final allMessages = await ChatService.getMessages(
         chatRoomId: widget.chatRoomId,
@@ -96,8 +101,12 @@ class _PassengerChatScreenState extends State<PassengerChatScreen> {
   }
 
   void _subscribeToMessages() {
-    final userId = int.tryParse(widget.userData['id']?.toString() ?? '') ?? 0;
-    final driverId = int.tryParse(widget.driverInfo['id']?.toString() ?? '') ?? 0;
+    final userId = int.tryParse(widget.userData['id']?.toString() ?? '') ??
+        int.tryParse(widget.userData['user_id']?.toString() ?? '') ??
+        0;
+    final driverId = int.tryParse(widget.driverInfo['id']?.toString() ?? '') ??
+        int.tryParse(widget.driverInfo['user_id']?.toString() ?? '') ??
+        0;
 
     _subscription = ChatService.subscribeToMessages(
       chatRoomId: widget.chatRoomId,
@@ -559,7 +568,7 @@ class _PassengerChatScreenState extends State<PassengerChatScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  DateFormat('hh:mm a').format(message.createdAt.toLocal()),
+                  TimeFormat.amPmCompactFromDateTime(message.createdAt),
                   style: TextStyle(
                     color: isMe ? Colors.white70 : Colors.grey[600],
                     fontSize: 11,

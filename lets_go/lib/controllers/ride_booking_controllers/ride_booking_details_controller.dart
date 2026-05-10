@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
-import 'dart:convert';
+
 import '../../services/api_service.dart';
+import '../../utils/time_format.dart';
 import '../../utils/image_utils.dart';
 import '../../utils/road_polyline_service.dart';
 import '../../utils/map_util.dart';
@@ -544,14 +547,14 @@ class RideBookingDetailsController {
       if (departureDateTime.isAfter(now)) {
         final difference = departureDateTime.difference(now);
         if (difference.inDays > 0) {
-          return '${DateFormat('MMM dd, HH:mm').format(departureDateTime)} (in ${difference.inDays} day${difference.inDays > 1 ? 's' : ''})';
+          return '${TimeFormat.dateWithTimeAmPm(departureDateTime)} (in ${difference.inDays} day${difference.inDays > 1 ? 's' : ''})';
         } else if (difference.inHours > 0) {
-          return '${DateFormat('HH:mm').format(departureDateTime)} (in ${difference.inHours} hour${difference.inHours > 1 ? 's' : ''})';
+          return '${TimeFormat.amPmCompactFromDateTime(departureDateTime)} (in ${difference.inHours} hour${difference.inHours > 1 ? 's' : ''})';
         } else {
-          return '${DateFormat('HH:mm').format(departureDateTime)} (in ${difference.inMinutes} minute${difference.inMinutes > 1 ? 's' : ''})';
+          return '${TimeFormat.amPmCompactFromDateTime(departureDateTime)} (in ${difference.inMinutes} minute${difference.inMinutes > 1 ? 's' : ''})';
         }
       } else {
-        return DateFormat('MMM dd, HH:mm').format(departureDateTime);
+        return TimeFormat.dateWithTimeAmPm(departureDateTime);
       }
     } catch (e) {
       return departureTime;

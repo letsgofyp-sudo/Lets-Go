@@ -117,8 +117,8 @@
       <div class="user-fields">
         <div class="user-text-field"><strong>Trip ID:</strong><br>{{ trip.trip_id }}</div>
         <div class="user-text-field"><strong>Date:</strong><br>{{ trip.trip_date|date:'Y-m-d' }}</div>
-        <div class="user-text-field"><strong>Departure:</strong><br>{{ trip.departure_time|time:'H:i' }}</div>
-        <div class="user-text-field"><strong>Estimated Arrival:</strong><br>{{ trip.estimated_arrival_time|time:'H:i' }}</div>
+        <div class="user-text-field"><strong>Departure:</strong><br>{{ trip.departure_time|time:'g:iA' }}</div>
+        <div class="user-text-field"><strong>Estimated Arrival:</strong><br>{{ trip.estimated_arrival_time|time:'g:iA' }}</div>
         <div class="user-text-field"><strong>Status:</strong><br>{{ trip.trip_status }}</div>
         <div class="user-text-field"><strong>Route:</strong><br>{{ trip.route.route_name }}</div>
         <div class="user-text-field"><strong>Driver:</strong><br>

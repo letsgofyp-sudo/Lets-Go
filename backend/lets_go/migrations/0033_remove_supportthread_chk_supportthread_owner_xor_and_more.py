@@ -31,6 +31,6 @@ class Migration(migrations.Migration):
         ),
         migrations.AddConstraint(
             model_name='supportthread',
-            constraint=models.CheckConstraint(check=models.Q(models.Q(('guest__isnull', True), ('user__isnull', False)), models.Q(('guest__isnull', False), ('user__isnull', True)), _connector='OR'), name='chk_supportthread_owner_xor'),
+            constraint=models.CheckConstraint(condition=models.Q(models.Q(('guest__isnull', True), ('user__isnull', False)), models.Q(('guest__isnull', False), ('user__isnull', True)), _connector='OR'), name='chk_supportthread_owner_xor'),
         ),
     ]

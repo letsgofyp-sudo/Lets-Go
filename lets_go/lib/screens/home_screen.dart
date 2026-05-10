@@ -10,6 +10,7 @@ import '../services/api_service.dart';
 import '../services/live_tracking_session_manager.dart';
 import '../utils/image_utils.dart';
 import '../utils/map_util.dart';
+import '../utils/time_format.dart';
 import 'post_booking_screens/driver_live_tracking_screen.dart';
 import 'post_booking_screens/driver_payment_confirmation_screen.dart';
 import 'post_booking_screens/passenger_live_tracking_screen.dart';
@@ -34,7 +35,13 @@ class _HomeScreenState extends State<HomeScreen> {
   int _pendingNewRidesCount = 0;
   Timer? _newRidesPollTimer;
   bool isLoading = true;
+  bool _isLoadingMore = false;
+  bool _hasMore = true;
+  int _offset = 0;
+  static const int _pageSize = 10;
   String? errorMessage;
+
+  final ScrollController _scrollController = ScrollController();
 
   final AppLinks _appLinks = AppLinks();
 
@@ -62,6 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _scrollController.addListener(_onScroll);
     _maybeResumeLiveTracking();
     _loadRides();
     _listenForTripShareLinks();
@@ -82,10 +90,20 @@ class _HomeScreenState extends State<HomeScreen> {
     _tripShareLinkSub?.cancel();
     _notificationPollTimer?.cancel();
     _newRidesPollTimer?.cancel();
+    _scrollController.dispose();
     _fromController.dispose();
     _toController.dispose();
     _minSeatsController.dispose();
     super.dispose();
+  }
+
+  void _onScroll() {
+    if (!_scrollController.hasClients) return;
+    if (isLoading || _isLoadingMore || !_hasMore) return;
+    final pos = _scrollController.position;
+    if (pos.pixels >= (pos.maxScrollExtent - 320)) {
+      _loadMoreRides();
+    }
   }
 
   String _rideKey(Map<String, dynamic> ride) {
@@ -100,6 +118,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       final userId = _extractUserId();
       final hasAnyCriteria = _hasAnySearchCriteria();
+      // Fetch a larger "latest" window to detect new rides, independent of paging.
       final latest = hasAnyCriteria
           ? await ApiService.searchTrips(
               userId: userId,
@@ -115,8 +134,10 @@ class _HomeScreenState extends State<HomeScreen> {
               timeFrom: _timeFrom,
               timeTo: _timeTo,
               sort: _sort,
+              limit: 60,
+              offset: 0,
             )
-          : await ApiService.getAllTrips(userId: userId);
+          : await ApiService.getAllTrips(userId: userId, limit: 60, offset: 0);
 
       final currentKeys = rides.map(_rideKey).where((e) => e.isNotEmpty).toSet();
       final newOnes = latest.where((r) {
@@ -688,11 +709,21 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Future<void> _loadRides() async {
+    // Load first page (Instagram-style)
+    await _loadFirstPage();
+  }
+
+  Future<void> _loadFirstPage() async {
     try {
       if (!mounted) return;
       setState(() {
         isLoading = true;
         errorMessage = null;
+        rides = [];
+        _pendingNewRides = [];
+        _pendingNewRidesCount = 0;
+        _offset = 0;
+        _hasMore = true;
       });
 
       final userId = _extractUserId();
@@ -713,14 +744,16 @@ class _HomeScreenState extends State<HomeScreen> {
               timeFrom: _timeFrom,
               timeTo: _timeTo,
               sort: _sort,
+              limit: _pageSize,
+              offset: 0,
             )
-          : await ApiService.getAllTrips(userId: userId);
-      
+          : await ApiService.getAllTrips(userId: userId, limit: _pageSize, offset: 0);
+
       if (!mounted) return;
       setState(() {
         rides = ridesData;
-        _pendingNewRides = [];
-        _pendingNewRidesCount = 0;
+        _offset = ridesData.length;
+        _hasMore = ridesData.length >= _pageSize;
         isLoading = false;
       });
     } catch (e) {
@@ -728,6 +761,66 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         errorMessage = 'Failed to load rides: $e';
         isLoading = false;
+      });
+    }
+  }
+
+  Future<void> _loadMoreRides() async {
+    if (_isLoadingMore || !_hasMore) return;
+    try {
+      if (!mounted) return;
+      setState(() {
+        _isLoadingMore = true;
+      });
+
+      final userId = _extractUserId();
+      final hasAnyCriteria = _hasAnySearchCriteria();
+
+      final next = hasAnyCriteria
+          ? await ApiService.searchTrips(
+              userId: userId,
+              fromStopId: _selectedFromStopId(),
+              toStopId: _selectedToStopId(),
+              from: _fromController.text,
+              to: _toController.text,
+              minSeats: int.tryParse(_minSeatsController.text.trim()),
+              genderPreference: _genderPreference,
+              negotiable: _negotiableFilter == null
+                  ? null
+                  : (_negotiableFilter == 'negotiable' ? true : false),
+              timeFrom: _timeFrom,
+              timeTo: _timeTo,
+              sort: _sort,
+              limit: _pageSize,
+              offset: _offset,
+            )
+          : await ApiService.getAllTrips(userId: userId, limit: _pageSize, offset: _offset);
+
+      if (!mounted) return;
+      if (next.isEmpty) {
+        setState(() {
+          _hasMore = false;
+          _isLoadingMore = false;
+        });
+        return;
+      }
+
+      final existingKeys = rides.map(_rideKey).where((e) => e.isNotEmpty).toSet();
+      final deduped = next.where((r) {
+        final k = _rideKey(r);
+        return k.isEmpty || !existingKeys.contains(k);
+      }).toList();
+
+      setState(() {
+        rides = [...rides, ...deduped];
+        _offset += next.length;
+        _hasMore = next.length >= _pageSize;
+        _isLoadingMore = false;
+      });
+    } catch (_) {
+      if (!mounted) return;
+      setState(() {
+        _isLoadingMore = false;
       });
     }
   }
@@ -1125,9 +1218,22 @@ class _HomeScreenState extends State<HomeScreen> {
     }
 
     return ListView.builder(
+      controller: _scrollController,
       padding: const EdgeInsets.all(16),
-      itemCount: rides.length,
+      itemCount: rides.length + (_isLoadingMore ? 1 : 0),
       itemBuilder: (context, index) {
+        if (index >= rides.length) {
+          return const Padding(
+            padding: EdgeInsets.symmetric(vertical: 18),
+            child: Center(
+              child: SizedBox(
+                width: 22,
+                height: 22,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+          );
+        }
         final ride = rides[index];
         return _buildRideCard(ride);
       },
@@ -1209,7 +1315,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       const SizedBox(width: 4),
                       Text(
-                        DateFormat('MMM dd, HH:mm').format(departureTime),
+                        TimeFormat.dateWithTimeAmPm(departureTime),
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,

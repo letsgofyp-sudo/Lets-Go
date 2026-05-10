@@ -1,0 +1,122 @@
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {1.1}{\ignorespaces Comparative Analysis of Existing Systems}}{3}{table.5}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Tools and Technologies Used in the Project}}{6}{table.18}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {3.1}{\ignorespaces User Classes and Characteristics}}{18}{table.42}%
+\contentsline {table}{\numberline {3.2}{UC-1: Register Account}}{24}{table.3.2}%
+\contentsline {table}{\numberline {3.3}{UC-2: Upload Documents}}{26}{table.3.3}%
+\contentsline {table}{\numberline {3.4}{UC-3: OTP Verification}}{28}{table.3.4}%
+\contentsline {table}{\numberline {3.5}{UC-4: Admin Verify / Reject / Ban User}}{30}{table.3.5}%
+\contentsline {table}{\numberline {3.6}{UC-5: Add Vehicle}}{32}{table.3.6}%
+\contentsline {table}{\numberline {3.7}{UC-6: Edit / Delete Vehicle}}{35}{table.3.7}%
+\contentsline {table}{\numberline {3.8}{UC-7: Create Ride (map + stops)}}{37}{table.3.8}%
+\contentsline {table}{\numberline {3.9}{UC-8: Edit / Cancel Ride}}{40}{table.3.9}%
+\contentsline {table}{\numberline {3.10}{UC-9: Mark Ride as Complete}}{42}{table.3.10}%
+\contentsline {table}{\numberline {3.11}{UC-10: Browse Rides}}{43}{table.3.11}%
+\contentsline {table}{\numberline {3.12}{UC-11: View Ride Details}}{45}{table.3.12}%
+\contentsline {table}{\numberline {3.13}{UC-12: Book Ride}}{47}{table.3.13}%
+\contentsline {table}{\numberline {3.14}{UC-13: Post-Booking Chat}}{50}{table.3.14}%
+\contentsline {table}{\numberline {3.15}{UC-14: Pre-Ride Reminders \& Permission Prompt}}{52}{table.3.15}%
+\contentsline {table}{\numberline {3.16}{UC-15: Live Ride Tracking \& Status Updates}}{55}{table.3.16}%
+\contentsline {table}{\numberline {3.17}{UC-16: Pickup Code Generation \& Verification (Start Ride)}}{57}{table.3.17}%
+\contentsline {table}{\numberline {3.18}{UC-17: Mark as Reached \& Payment Process}}{60}{table.3.18}%
+\contentsline {table}{\numberline {3.19}{UC-18: Ride Completion Confirmation (Driver Side)}}{61}{table.3.19}%
+\contentsline {table}{\numberline {3.20}{UC-19: SOS / Emergency}}{63}{table.3.20}%
+\contentsline {table}{\numberline {3.21}{UC-20: View Disputes \& Evidence}}{65}{table.3.21}%
+\contentsline {table}{\numberline {3.22}{UC-21: Resolve Dispute}}{67}{table.3.22}%
+\contentsline {table}{\numberline {3.23}{UC-22: Admin Communication with Users}}{68}{table.3.23}%
+\contentsline {table}{\numberline {3.24}{UC-23: Recommend Rides}}{70}{table.3.24}%
+\contentsline {table}{\numberline {3.25}{UC-24: Intelligent Chatbot Support}}{71}{table.3.25}%
+\contentsline {table}{\numberline {3.26}{UC-25: Manual Payment Confirmation}}{73}{table.3.26}%
+\contentsline {table}{\numberline {3.27}{FR-1: User Registration \& Authentication}}{74}{table.3.27}%
+\contentsline {table}{\numberline {3.28}{FR-1.1: Registration Fields}}{74}{table.3.28}%
+\contentsline {table}{\numberline {3.29}{FR-1.2: Document \& Image Uploads}}{75}{table.3.29}%
+\contentsline {table}{\numberline {3.30}{FR-1.3: OTP Verification}}{75}{table.3.30}%
+\contentsline {table}{\numberline {3.31}{FR-1.4: Post-OTP State \& Login}}{76}{table.3.31}%
+\contentsline {table}{\numberline {3.32}{FR-2: Admin Verification \& Management}}{76}{table.3.32}%
+\contentsline {table}{\numberline {3.33}{FR-2.1: Admin User List \& Details}}{76}{table.3.33}%
+\contentsline {table}{\numberline {3.34}{FR-2.2: Verify / Reject / Ban / Create Users}}{77}{table.3.34}%
+\contentsline {table}{\numberline {3.35}{FR-2.3: Verification SLA (24 hours)}}{77}{table.3.35}%
+\contentsline {table}{\numberline {3.36}{FR-2.4: Dispute Resolution}}{77}{table.3.36}%
+\contentsline {table}{\numberline {3.37}{FR-3: Vehicle Management (Drivers)}}{78}{table.3.37}%
+\contentsline {table}{\numberline {3.38}{FR-3.1: Vehicle Creation}}{78}{table.3.38}%
+\contentsline {table}{\numberline {3.39}{FR-3.2: Multiple Vehicles CRUD}}{78}{table.3.39}%
+\contentsline {table}{\numberline {3.40}{FR-4: Ride Creation (Driver)}}{79}{table.3.40}%
+\contentsline {table}{\numberline {3.41}{FR-4.1: Map-based Route Editor}}{79}{table.3.41}%
+\contentsline {table}{\numberline {3.42}{FR-4.2: Ride Parameters}}{80}{table.3.42}%
+\contentsline {table}{\numberline {3.43}{FR-4.3: Ride Editing \& Cancel Rules}}{80}{table.3.43}%
+\contentsline {table}{\numberline {3.44}{FR-5: Ride Browsing \& Booking (Passengers)}}{80}{table.3.44}%
+\contentsline {table}{\numberline {3.45}{FR-5.1: Browse \& Ride Card}}{81}{table.3.45}%
+\contentsline {table}{\numberline {3.46}{FR-5.2: Booking Flow}}{81}{table.3.46}%
+\contentsline {table}{\numberline {3.47}{FR-6: Fare Negotiation}}{82}{table.3.47}%
+\contentsline {table}{\numberline {3.48}{FR-6.1: Negotiation Messaging \& Recording}}{82}{table.3.48}%
+\contentsline {table}{\numberline {3.49}{FR-7: Booking Confirmation \& Notifications}}{82}{table.3.49}%
+\contentsline {table}{\numberline {3.50}{FR-7.1: Notifications for Booking Events}}{83}{table.3.50}%
+\contentsline {table}{\numberline {3.51}{FR-7.2: Booking Summaries}}{83}{table.3.51}%
+\contentsline {table}{\numberline {3.52}{FR-8: Profile Management}}{83}{table.3.52}%
+\contentsline {table}{\numberline {3.53}{FR-8.1: Profile CRUD}}{84}{table.3.53}%
+\contentsline {table}{\numberline {3.54}{FR-9: Admin \& System Notifications (Extended)}}{84}{table.3.54}%
+\contentsline {table}{\numberline {3.55}{FR-10: Dispute Management}}{84}{table.3.55}%
+\contentsline {table}{\numberline {3.56}{FR-11: Machine Learning – Ride Recommendations}}{85}{table.3.56}%
+\contentsline {table}{\numberline {3.57}{FR-12: Chatbot Support}}{85}{table.3.57}%
+\contentsline {table}{\numberline {3.58}{FR-13: Payment System}}{86}{table.3.58}%
+\contentsline {table}{\numberline {3.59}{FR-13.1: Payment Methods \& Validation Rules}}{86}{table.3.59}%
+\contentsline {table}{\numberline {3.60}{FR-13.2: Manual Payment Confirmation}}{86}{table.3.60}%
+\contentsline {table}{\numberline {3.61}{FR-14: Safety \& Verification}}{87}{table.3.61}%
+\contentsline {table}{\numberline {3.62}{FR-15: Scalability \& Modular Architecture}}{87}{table.3.62}%
+\contentsline {table}{\numberline {3.63}{FR-16: Post-Booking, Live-Tracking}}{87}{table.3.63}%
+\contentsline {table}{\numberline {3.64}{FR-16.1: Post-booking Chat (1:1 \& Broadcast)}}{88}{table.3.64}%
+\contentsline {table}{\numberline {3.65}{FR-16.2: Pre-ride Reminder \& Location Permission}}{88}{table.3.65}%
+\contentsline {table}{\numberline {3.66}{FR-16.3: Live Map Screen \& SOS UI}}{89}{table.3.66}%
+\contentsline {table}{\numberline {3.67}{FR-16.4: Pickup Code Generation \& Verification}}{89}{table.3.67}%
+\contentsline {table}{\numberline {3.68}{FR-16.5: Mark as Reached / Payment / Ratings}}{89}{table.3.68}%
+\contentsline {table}{\numberline {3.69}{FR-16.6: Ride Completion Rules \& Driver Constraint}}{90}{table.3.69}%
+\contentsline {table}{\numberline {3.70}{FR-16.7: SOS \& Emergency Workflows}}{90}{table.3.70}%
+\contentsline {table}{\numberline {3.71}{FR-16.8: Escalation Timers \& Notifications}}{91}{table.3.71}%
+\contentsline {table}{\numberline {3.72}{FR-16.9: Audit Trail, Logging \& Anti-Fraud}}{91}{table.3.72}%
+\contentsline {table}{\numberline {3.73}{FR-16.10: UX \& Accessibility Requirements}}{91}{table.3.73}%
+\contentsline {table}{\numberline {3.74}{Requirement Traceability Matrix}}{96}{table.3.74}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {4.1}{\ignorespaces Backend MVC Structure}}{102}{table.149}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Data Dictionary – Booking Table}}{150}{table.303}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Data Dictionary – ChatMessage Table}}{150}{table.305}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Data Dictionary – SosIncident Table}}{151}{table.307}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Data Dictionary – Driver Fields in UsersData}}{151}{table.309}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Data Dictionary – TripLiveLocationUpdate Table}}{152}{table.311}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Data Dictionary – Passenger Fields in UsersData}}{152}{table.313}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Data Dictionary – TripPayment Table}}{152}{table.315}%
+\contentsline {table}{\numberline {4.9}{\ignorespaces Data Dictionary – Trip Table}}{153}{table.317}%
+\contentsline {table}{\numberline {4.10}{\ignorespaces Data Dictionary – Route Table}}{153}{table.319}%
+\contentsline {table}{\numberline {4.11}{\ignorespaces Data Dictionary – EmergencyContact Table}}{154}{table.321}%
+\contentsline {table}{\numberline {4.12}{\ignorespaces Data Dictionary – UsersData Table}}{154}{table.323}%
+\contentsline {table}{\numberline {4.13}{\ignorespaces Data Dictionary – Vehicle Table}}{155}{table.325}%
+\contentsline {table}{\numberline {4.14}{\ignorespaces Data Dictionary – RouteStop Table}}{155}{table.327}%
+\contentsline {table}{\numberline {4.15}{\ignorespaces UsersData Table Structure}}{156}{table.331}%
+\contentsline {table}{\numberline {4.16}{\ignorespaces Passenger-Specific Table Fields}}{156}{table.335}%
+\contentsline {table}{\numberline {4.17}{\ignorespaces Driver-Specific Table Fields}}{157}{table.338}%
+\contentsline {table}{\numberline {4.18}{\ignorespaces Vehicle Table}}{157}{table.341}%
+\contentsline {table}{\numberline {4.19}{\ignorespaces Route Table}}{158}{table.344}%
+\contentsline {table}{\numberline {4.20}{\ignorespaces Booking Table}}{158}{table.347}%
+\contentsline {table}{\numberline {4.21}{\ignorespaces Trip Table}}{159}{table.350}%
+\contentsline {table}{\numberline {4.22}{\ignorespaces TripPayment Table}}{159}{table.353}%
+\contentsline {table}{\numberline {4.23}{\ignorespaces SosIncident Table}}{160}{table.356}%
+\contentsline {table}{\numberline {4.24}{\ignorespaces EmergencyContact Table}}{160}{table.359}%
+\contentsline {table}{\numberline {4.25}{\ignorespaces ChatMessage Table}}{160}{table.362}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {5.1}{\ignorespaces External Services and Technologies Used}}{178}{table.408}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Deployment Details}}{233}{table.672}%
+\addvspace {10\p@ }
+\contentsline {table}{\numberline {6.1}{\ignorespaces Unit Test Cases – User Registration and Login}}{236}{table.678}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Unit Test Cases – Vehicle Addition and Editing}}{236}{table.681}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Unit Test Cases – Ride Posting and Fare Calculation}}{237}{table.684}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Unit Test Cases – Trip Data Normalization (Frontend)}}{237}{table.687}%
+\contentsline {table}{\numberline {6.5}{\ignorespaces Unit Test Cases – Admin Dashboard Logic}}{238}{table.690}%
+\contentsline {table}{\numberline {6.6}{\ignorespaces Unit Test Cases – Safety and Incident Management}}{238}{table.693}%
+\contentsline {table}{\numberline {6.7}{\ignorespaces Unit Test Cases – WebSocket Integration}}{238}{table.696}%
+\contentsline {table}{\numberline {6.8}{\ignorespaces Unit Test Cases – Ride Recommendation Ranking}}{239}{table.699}%
+\contentsline {table}{\numberline {6.9}{\ignorespaces Integration Testing Summary}}{239}{table.702}%
+\contentsline {table}{\numberline {6.10}{\ignorespaces API Response Time (p95)}}{245}{table.728}%
+\contentsline {table}{\numberline {6.11}{\ignorespaces ML Model Evaluation - Accuracy and Ranking Metrics}}{246}{table.734}%
+\contentsline {table}{\numberline {6.12}{\ignorespaces Worst 10 Events by Booked Rank (Out of 50 Candidates)}}{246}{table.737}%
+\addvspace {10\p@ }

@@ -20,54 +20,65 @@ class MyRidesController {
     this.onInfo,
   });
 
-  // Load user's rides and bookings
-  Future<void> loadUserRides(int userId) async {
-    debugPrint('DEBUG: loadUserRides called for userId: $userId');
+  Future<void> loadCreatedRides(int userId) async {
+    debugPrint('DEBUG: loadCreatedRides called for userId: $userId');
     isLoading = true;
     onStateChanged?.call();
 
     try {
-      debugPrint('DEBUG: Starting API calls...');
-      
-      // Load both created rides and booking requests in parallel
-      final futures = await Future.wait([
-        ApiService.getUserRides(userId.toString()),
-        ApiService.getUserBookings(userId),
-      ]);
-      
-      debugPrint('DEBUG: API calls completed');
-      debugPrint('DEBUG: getUserRides returned: ${futures[0].length} rides');
-      debugPrint('DEBUG: getUserBookings returned: ${futures[1].length} bookings');
-      
-      userRides = futures[0];
-      userBookings = futures[1];
-      
-      debugPrint('DEBUG: userRides assigned: ${userRides.length} items');
-      debugPrint('DEBUG: userBookings assigned: ${userBookings.length} items');
-      
+      final rides = await ApiService.getUserRides(userId.toString());
+      userRides = rides;
       onStateChanged?.call();
-      
-      final totalCount = userRides.length + userBookings.length;
-      if (totalCount == 0) {
-        onInfo?.call('No rides or bookings found');
+      if (userRides.isEmpty) {
+        onInfo?.call('No created rides found');
       } else {
-        onSuccess?.call('Loaded ${userRides.length} rides and ${userBookings.length} bookings');
+        onSuccess?.call('Loaded ${userRides.length} rides');
       }
     } catch (e) {
-      debugPrint('DEBUG: Exception in loadUserRides: $e');
-      debugPrint('DEBUG: Exception type: ${e.runtimeType}');
+      debugPrint('DEBUG: Exception in loadCreatedRides: $e');
       onError?.call('Failed to load rides: $e');
-      
-      // For local testing, create some mock data
-      debugPrint('DEBUG: Falling back to mock data');
+      debugPrint('DEBUG: Falling back to mock rides');
       userRides = _createMockRides();
-      userBookings = _createMockBookings();
-      debugPrint('DEBUG: Mock data created - rides: ${userRides.length}, bookings: ${userBookings.length}');
       onStateChanged?.call();
     } finally {
       isLoading = false;
       onStateChanged?.call();
     }
+  }
+
+  Future<void> loadBookedRides(int userId) async {
+    debugPrint('DEBUG: loadBookedRides called for userId: $userId');
+    isLoading = true;
+    onStateChanged?.call();
+
+    try {
+      final bookings = await ApiService.getUserBookings(userId);
+      userBookings = bookings;
+      onStateChanged?.call();
+      if (userBookings.isEmpty) {
+        onInfo?.call('No bookings found');
+      } else {
+        onSuccess?.call('Loaded ${userBookings.length} bookings');
+      }
+    } catch (e) {
+      debugPrint('DEBUG: Exception in loadBookedRides: $e');
+      onError?.call('Failed to load bookings: $e');
+      debugPrint('DEBUG: Falling back to mock bookings');
+      userBookings = _createMockBookings();
+      onStateChanged?.call();
+    } finally {
+      isLoading = false;
+      onStateChanged?.call();
+    }
+  }
+
+  // Backwards compatible method (loads BOTH). Prefer per-tab methods.
+  Future<void> loadUserRides(int userId) async {
+    debugPrint('DEBUG: loadUserRides called for userId: $userId');
+    await Future.wait([
+      loadCreatedRides(userId),
+      loadBookedRides(userId),
+    ]);
   }
 
   // Delete a ride

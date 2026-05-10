@@ -29,9 +29,13 @@
 
     <div class="admin-header-right">
       <button type="button" class="admin-toplink" id="admin-todos-panel-open">
-        <i class="fa-regular fa-square-check"></i> Todos
+        <i class="fa-regular fa-square-check"></i>
+        <span class="admin-toplink-text">Todos</span>
       </button>
-      <a class="admin-toplink" href="{% url 'administration:logout_view' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
+      <a class="admin-toplink" href="{% url 'administration:logout_view' %}" aria-label="Logout">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="admin-toplink-text">Logout</span>
+      </a>
     </div>
   </header>
 
@@ -44,6 +48,7 @@
       <a class="admin-nav-link" href="{% url 'administration:user_list' %}"><i class="fa-solid fa-users"></i> Users</a>
       <a class="admin-nav-link" href="{% url 'administration:change_requests_list' %}"><i class="fa-solid fa-code-pull-request"></i> Change Requests</a>
       <a class="admin-nav-link" href="{% url 'administration:guest_list' %}"><i class="fa-regular fa-comments"></i> Guest Support</a>
+      <a class="admin-nav-link" href="{% url 'administration:support_faq_list' %}"><i class="fa-regular fa-circle-question"></i> Support FAQs</a>
       <!-- <a class="admin-nav-link" href="{% url 'administration:analytics_view' %}"><i class="fa-solid fa-chart-line"></i> Analytics</a> -->
       <!-- <a class="admin-nav-link" href="{% url 'administration:settings_view' %}"><i class="fa-solid fa-gear"></i> Settings</a> -->
     </nav>

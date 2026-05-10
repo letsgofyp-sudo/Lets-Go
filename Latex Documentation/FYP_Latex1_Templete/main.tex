@@ -1,0 +1,173 @@
+\documentclass[12pt]{report}
+\usepackage[a4paper,
+    left=0.7in,
+    right=0.7in,
+    top=1.5in,
+    bottom=1in,
+    headheight=15pt,
+    headsep=0.5in,
+    footskip=0.5in
+]{geometry}
+\usepackage{fancyhdr}
+\usepackage{tabularx}
+\usepackage{enumitem}
+\usepackage{tocloft}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{ragged2e}
+\usepackage[table]{xcolor}
+\usepackage[plainpages=false,pdfpagelabels,hypertexnames=false,colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue]{hyperref}
+\hypersetup{
+    pdfborderstyle={/S/U/W 1},
+    allbordercolors=blue
+}
+\usepackage{tikz}
+\usepackage{dashrule}
+\usepackage{setspace}
+\usepackage{titling}
+% Format chapter heading
+\usepackage{titlesec}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{amsmath}
+\usepackage{longtable}             % For longtable environment
+\usepackage{textcomp}
+\usepackage{float}                 % For [H] float placement
+\usepackage{rotating}              % For landscape/sideways figures
+\usepackage[strings]{underscore}   % Handle underscores in text
+\DeclareUnicodeCharacter{2212}{-}                         % minus sign
+\DeclareUnicodeCharacter{2264}{\ensuremath{\leq}}         % ≤
+\DeclareUnicodeCharacter{2194}{\ensuremath{\leftrightarrow}}
+
+\makeatletter
+\newenvironment{breakablealgorithm}
+   {\begin{center}
+     \refstepcounter{algorithm}
+     \hrule height.8pt depth0pt \kern2pt
+     \renewcommand{\caption}[2][\relax]{%
+       {\raggedright\textbf{Algorithm \thealgorithm} ##2\par}%
+       \ifx\relax##1\relax
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##2}%
+       \else
+         \addcontentsline{loa}{algorithm}{\protect\numberline{\thealgorithm}##1}%
+       \fi
+       \kern2pt\hrule\kern2pt
+     }
+   }
+   {\kern2pt\hrule\relax
+    \end{center}}
+ \makeatother
+% Chapter Formatting
+\titleformat{\chapter}[display]
+  {\centering\bfseries\fontsize{18}{20}\selectfont}
+  {Chapter \thechapter}
+  {0pt}
+  {}
+
+\titlespacing*{\chapter}
+  {0pt}
+  {0pt}
+  {12pt}
+
+
+
+% Enable deep numbering
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+
+% Header & Footer Setup
+\pagestyle{fancy}
+\fancyhf{} % clear all header and footer fields
+
+% Header
+\fancyhead[L]{\small COMSATS University Islamabad}
+\fancyhead[R]{\small Final Year Project}
+
+% Footer
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Suppress overfull/underfull hbox warnings for table content
+\tolerance=1000
+\hbadness=10000
+\emergencystretch=3em
+\hfuzz=2pt
+
+\begin{document}
+\hypersetup{pageanchor=false}
+\input{title.tex}
+\newpage
+% ---------- Roman numbering ----------
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\setcounter{page}{1}
+\pagestyle{plain}
+\input{dedication}  
+\input{acknowledgement} 
+\input{certificate}
+\input{plagiarism}
+\input{executive_summary}
+\input{abbreviations}
+\newpage
+
+\renewcommand*\contentsname{Table of Contents}
+\tableofcontents
+\newpage
+\addcontentsline{toc}{section}{List of Tables}
+\listoftables
+
+\newpage
+\addcontentsline{toc}{section}{List of Figures}
+\listoffigures
+
+\clearpage
+% ---------- Arabic numbering ----------
+\pagenumbering{arabic}
+\input{ch_1_introduction}  
+\input{ch_2_problem_definition} 
+\input{ch_3_requirements}
+\input{ch_4_SDD}
+\input{ch_5_implementation}
+\input{ch_6_testing}
+\input{ch_7_conclusion}
+\nocite{*}
+\bibliographystyle{IEEEtran}
+\bibliography{ref}
+
+% ======================================
+% Appendices Section
+% ======================================
+
+\clearpage
+\appendix
+
+% Main Appendices Title (NO page break after this)
+\chapter*{Appendices}
+\addcontentsline{toc}{chapter}{Appendices}
+
+% Remove extra vertical space
+\vspace{-0.1em}
+
+% Appendix A (no page break before)
+\section*{Appendix A - Turnitin Similarity Report}
+\addcontentsline{toc}{section}{Appendix A – Turnitin Similarity Report}
+\input{ch_8_plagiarismreport}
+
+% Appendix B
+\clearpage
+\section*{Appendix B - AI Writing Detection Report}
+\addcontentsline{toc}{section}{Appendix B – AI Writing Detection Report}
+\input{ch_8.1_AI_report}
+
+% Source Code
+\clearpage
+\section*{Appendix C – Source Code}
+\addcontentsline{toc}{section}{Appendix C – Source Code}
+\input{ch_9_appendix_source_code}
+
+\end{document}

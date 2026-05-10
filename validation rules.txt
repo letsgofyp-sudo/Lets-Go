@@ -1,0 +1,375 @@
+I’ll read the full [models_vehicle.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:0:0-0:0), [models_userdata.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_userdata.py:0:0-0:0), and [models_emergency.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_emergency.py:0:0-0:0), extract every validation rule (field validators + [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_userdata.py:127:4-167:112) cross-field rules + implicit constraints like `unique`, `choices`, required/blank/null). Then I’ll produce a Pakistan-specific validation ruleset (backend as source of truth) and a mirroring plan for Flutter + Administration UI, including exact regexes, normalization, and error messaging guidance.
+
+# Validation Rules (Backend Source of Truth) + Detailed Plan to Mirror (Pakistan-focused)
+
+Below is the **complete validation ruleset** extracted from:
+
+- [backend/lets_go/models/models_vehicle.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:0:0-0:0)
+- [backend/lets_go/models/models_userdata.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_userdata.py:0:0-0:0)
+- [backend/lets_go/models/models_emergency.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_emergency.py:0:0-0:0)
+
+Then I provide a **detailed plan** to mirror these rules in:
+
+- Flutter mobile app
+- Administration portal
+
+I’m treating the backend as the *authoritative* truth and designing the frontends to **match exactly** (same regex, same normalization, same cross-field logic), because evaluators are sensitive to consistency.
+
+---
+
+## 1) [UsersData](cci:2://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_userdata.py:46:0-170:24) ([models_userdata.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_userdata.py:0:0-0:0)) — Validation Rules
+
+### A) Field-level constraints (type/required/unique/choices)
+- **`name`**
+  - **Required**
+  - Type: `CharField(max_length=100)`
+  - No regex validator in model (so only non-null/blank depends on how you create it; at DB/model level it’s required).
+
+- **`username`**
+  - **Required**
+  - **Unique** (`unique=True`)
+  - Type: `CharField(max_length=100)`
+  - Validator: `_USERNAME_VALIDATOR`
+    - **Regex**: `^(?=.*[A-Za-z])[A-Za-z0-9._]{3,32}$`
+    - Meaning:
+      - length 3–32
+      - must contain **at least one letter**
+      - allowed chars: letters, digits, dot `.`, underscore `_`
+
+- **`email`**
+  - **Required**
+  - **Unique**
+  - Type: `EmailField(unique=True)`
+  - Extra strict validation in [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90) (see below)
+
+- **`password`**
+  - **Required**
+  - Type: `CharField(max_length=128)`
+  - Validators:
+    - `MinLengthValidator(8)` => minimum length **8**
+  - Extra complexity rules in [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90) (see below)
+
+- **`address`**
+  - **Required**
+  - Type: `TextField()`
+
+- **`phone_no`**
+  - **Required**
+  - Type: `CharField(max_length=16)`
+  - Regex validator:
+    - **Regex**: `^\+\d{10,15}$`
+    - Must be international format with `+` and 10–15 digits
+    - Example: `+923001234567` (Pakistan)
+
+- **`cnic_no`**
+  - **Required**
+  - Type: `CharField(max_length=15)`
+  - Regex validator:
+    - **Regex**: `^\d{5}-\d{7}-\d{1}$`
+    - Format: `36603-0269853-9`
+
+- **`gender`**
+  - **Required**
+  - Choices: `male` or `female` (lowercase)
+  - Type: `CharField(max_length=10, choices=[('male','Male'),('female','Female')])`
+
+- **`driving_license_no`** (optional)
+  - `null=True`, `blank=True`
+  - Type: `CharField(max_length=20)`
+  - Regex `_DL_NO_VALIDATOR`:
+    - **Regex**: `^[A-Z0-9][A-Z0-9\-/]{4,19}$`
+    - Meaning:
+      - length 5–20
+      - allowed: letters A-Z, digits, `-`, `/`
+      - must start with `[A-Z0-9]`
+
+- **Banking (optional but with cross-field rules)**
+  - **`accountno`**
+    - optional (`null=True`, `blank=True`)
+    - Regex: `^\d{10,20}$` (10–20 digits)
+  - **`bankname`**
+    - optional (`null=True`, `blank=True`)
+    - Regex: `^[A-Za-z][A-Za-z .&\-]{1,48}[A-Za-z.]$`
+    - Meaning:
+      - 2–50 chars
+      - letters/spaces/`.`/`&`/`-`
+      - must start with letter, end with letter or `.`
+  - **`iban`**
+    - optional (`null=True`, `blank=True`)
+    - Regex: `^PK\d{2}[A-Z]{4}\d{16}$`
+    - Pakistan IBAN format, **24 chars** like `PK36SCBL0000001123456702`
+
+- **Image URL fields** (optional)
+  - `profile_photo_url`, `live_photo_url`, `cnic_front_image_url`, `cnic_back_image_url`,
+  - `driving_license_front_url`, `driving_license_back_url`, `accountqr_url`
+  - All are `URLField(null=True, blank=True)` (so they must be valid URLs if provided)
+
+- **`status`**
+  - Choices: `PENDING`, `VERIFIED`, `REJECTED`, `BANNED`
+  - Default: `PENDING`
+
+### B) [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90) cross-field rules + normalization (critical)
+These rules run on `full_clean()`.
+
+- **Normalization**
+  - `username = username.strip()`
+  - `email` is stripped (but not lowercased here; in views you lower it)
+  - `driving_license_no`:
+    - strip
+    - uppercase
+    - remove spaces
+  - `accountno`: strip and remove spaces
+  - `iban`: strip, uppercase, remove spaces
+  - `bankname`: strip
+
+- **Email extra strict validation**
+  - Regex used (domain + TLD strict):
+    - `^[^@\s]+@([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)(?:\.([A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?))*\.[A-Za-z]{2,24}$`
+  - Rejects emails like `a@b` or invalid domains.
+
+- **Password complexity**
+  Password must contain:
+  - at least one uppercase: `[A-Z]`
+  - at least one lowercase: `[a-z]`
+  - at least one digit: `\d`
+  - at least one special char from:
+    - `[!@#$%^&*()_+\-=\[\]{};':\"\\|,.<>\/?]`
+
+- **Driving license images requirement (Pakistan-specific KYC)**
+  - If `driving_license_no` is provided:
+    - **both** `driving_license_front_url` and `driving_license_back_url` must be present
+  - Note: this is a *hard requirement* currently.
+
+- **Bank name required when bank details present**
+  - If either `accountno` **or** `iban` is provided:
+    - `bankname` is required
+
+---
+
+## 2) [Vehicle](cci:2://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:10:0-92:73) ([models_vehicle.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:0:0-0:0)) — Validation Rules
+
+### A) Field-level constraints
+- **`owner`**
+  - Required FK to [UsersData](cci:2://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_userdata.py:46:0-170:24)
+
+- **`model_number`**
+  - Required, `max_length=50`
+
+- **`company_name`**
+  - Required, `max_length=50`
+
+- **`variant`**
+  - Optional (`blank=True`), `max_length=50`
+
+- **`plate_number`** (Pakistan registration)
+  - Required, `max_length=10`
+  - **Unique**
+  - Regex validator `plate_validator`:
+    - **Regex**: `^[A-Z]{2,5}-\d{1,4}(-[A-Z])?$`
+    - Examples accepted:
+      - `ABC-1234`
+      - `AB-123`
+      - `ABC-12-D` (because `(-[A-Z])?`)
+
+- **`vehicle_type`**
+  - Choices:
+    - `TW` (Two Wheeler)
+    - `FW` (Four Wheeler)
+  - Default: `TW`
+
+- **`color`**
+  - Optional (`blank=True`), `max_length=30`
+
+- **Image URLs** (optional)
+  - `photo_front_url`, `photo_back_url`, `documents_image_url`
+  - `URLField(null=True, blank=True)`
+
+- **`seats`**
+  - Optional (`null=True, blank=True`)
+  - Type: `PositiveIntegerField`
+  - Validator: `MinValueValidator(1)` (so if provided must be >= 1)
+  - Cross-field rule in [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90) decides if it’s allowed/required.
+
+- **`engine_number`, `chassis_number`**
+  - Optional, `max_length=50` (no regex yet)
+
+- **`fuel_type`**
+  - Optional (`blank=True`)
+  - Choices:
+    - `Petrol`, `Diesel`, `CNG`, `Electric`, `Hybrid`
+  - If provided, must match one of these choices exactly.
+
+- **`registration_date`, `insurance_expiry`**
+  - Optional dates (`null=True, blank=True`)
+
+- **`status`**
+  - Choices: `PENDING`, `VERIFIED`, `REJECTED`
+  - Default: `PENDING`
+
+### B) [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90) cross-field rules (critical)
+- If `vehicle_type == FW`:
+  - `seats` is **required**
+- Else (TW):
+  - `seats` must be **null** (not allowed)
+
+This means the frontend must not allow sending seats for TW.
+
+---
+
+## 3) [EmergencyContact](cci:2://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_emergency.py:7:0-38:68) ([models_emergency.py](cci:7://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_emergency.py:0:0-0:0)) — Validation Rules
+
+### A) Field-level constraints
+- **`user`**
+  - One-to-one with [UsersData](cci:2://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_userdata.py:46:0-170:24) (each user has at most one emergency contact)
+
+- **`name`**
+  - Required, `max_length=100`
+
+- **`relation`**
+  - Required, `max_length=50`
+
+- **`email`**
+  - Required, `EmailField()`
+  - Extra strict validation in [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90) (same strict domain regex as UsersData)
+
+- **`phone_no`**
+  - Required, `max_length=16`
+  - Regex:
+    - `^\+\d{10,15}$`
+    - Same pattern as user phone; example `+923001234567`
+
+### B) [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90) rules
+- Extra strict email validation using the same domain/TLD regex as UsersData.
+
+---
+
+# Detailed Plain Plan (Mirror Backend Rules to Frontends)
+
+## Guiding principles (for sensitive evaluators)
+- **Single source of truth**: backend regex/logic must be copied *exactly*.
+- **Same normalization**: if backend uppercases / strips spaces, frontends should do the same before submit.
+- **Same cross-field constraints**: show the error *before submit* when possible.
+- **Do not invent new rules** unless you also add them backend-side (otherwise mismatch).
+
+---
+
+## Phase 1 — Create a “Validation Spec” document (internal checklist)
+Create a structured spec (even if only in your head / prompt.txt) with:
+- **Field name**
+- **Required/optional**
+- **Regex**
+- **Normalization**
+- **Cross-field dependencies**
+- **Error message text**
+
+This spec will be implemented in:
+- Flutter validators
+- Admin portal validators
+
+(We won’t change backend yet unless we find missing Pakistan requirements.)
+
+---
+
+## Phase 2 — Mirror in Flutter Mobile App
+
+### A) Common reusable validators (recommended)
+Implement a shared Dart validation utility (central place) for:
+- `validatePkPhone("+923...")` using `^\+\d{10,15}$`
+- `validateCnic("12345-1234567-1")`
+- `validateUsername()` using `^(?=.*[A-Za-z])[A-Za-z0-9._]{3,32}$`
+- `validateDrivingLicense()` using `^[A-Z0-9][A-Z0-9\-/]{4,19}$`
+- `validatePkIban()` using `^PK\d{2}[A-Z]{4}\d{16}$`
+- `validateBankName()` using `^[A-Za-z][A-Za-z .&\-]{1,48}[A-Za-z.]$`
+- `validateVehiclePlate()` using `^[A-Z]{2,5}-\d{1,4}(-[A-Z])?$`
+- `validatePasswordComplexity()` with:
+  - min length 8
+  - uppercase/lowercase/digit/special
+
+### B) Normalization on input change / before submit
+Match backend [clean()](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/models/models_vehicle.py:81:4-89:90):
+- username: `trim`
+- phone: `trim` (do **not** remove `+`)
+- CNIC: `trim`
+- license: `trim`, `uppercase`, remove spaces
+- IBAN: `trim`, `uppercase`, remove spaces
+- accountno: remove spaces
+- plate: `trim`, `uppercase`
+- vehicle_type: `TW` or `FW` only
+- fuel_type: force to one of allowed choices
+
+### C) Cross-field rules in UI
+- If user enters `driving_license_no`:
+  - require both license images before allowing submit (front/back)
+- If user enters `accountno` OR `iban`:
+  - require `bankname`
+- Vehicle:
+  - if `FW`: require seats and ensure integer >= 1
+  - if `TW`: seats must be hidden/disabled and forced null (or fixed in UI but do not send)
+
+### D) Where to apply in existing screens (from your codebase)
+- Signup:
+  - personal screen: username, email, phone, password
+  - CNIC screen: CNIC format + images present
+  - driving license screen: DL format + both images if DL entered
+  - bank info screen: account/iban/bankname dependencies
+  - vehicle screen: plate regex + type/seats logic + required images
+- Profile editing screens: same validators for update flows
+
+---
+
+## Phase 3 — Mirror in Administration Portal
+
+Even though admin is “trusted”, evaluators often expect:
+- **No invalid data can be entered** anywhere.
+
+So add validations on:
+- User add/edit forms:
+  - username/email/phone/cnic/gender/password rules
+  - driving license + images rule (if admin can edit these)
+  - bank detail dependency
+- Vehicle add/edit forms:
+  - plate regex + uniqueness errors shown nicely
+  - seats logic based on vehicle_type
+  - fuel type must be one of the choices
+
+**Important**: Admin portal should match backend **exactly**; don’t allow “Pakistani phone without +” unless backend also allows it.
+
+---
+
+## Phase 4 — Error messaging consistency
+Backend currently returns:
+- field errors via `ValidationError.message_dict` in many endpoints.
+
+Frontends should:
+- display field-level error next to input
+- and also show a summary toast/snackbar
+
+Use backend wording where possible:
+- `Phone number must be in international format, e.g. +923001234567`
+- `CNIC must be in the format 36603-0269853-9`
+- `Enter a valid Pakistani vehicle plate, e.g. "ABC-1234" or "AB-123".`
+- Password rules lines (uppercase/lowercase/digit/special)
+
+---
+
+# Pakistan-specific notes (aligned with your backend)
+- **Phone**: your rule requires E.164-like `+92...` (good for Pakistan).
+- **CNIC**: format enforced (good).
+- **IBAN**: strict Pakistan IBAN (good).
+- **Vehicle plate**: regex is a simplified Pakistan plate pattern; it’s acceptable for evaluator demos because it clearly says “Pakistani plate” and enforces a national-style format.
+
+---
+
+# Two critical flags (potential evaluator issues to watch)
+- **Driving license rule**: backend requires *both* license images if license number present. Your Flutter must enforce this; otherwise backend will reject.
+- **EmergencyContact phone**: model requires `+` format. In [views_profile.user_emergency_contact](cci:1://file:///home/fawad/Downloads/FYP-LETS-GO/Lets-Go/backend/lets_go/views/views_profile.py:945:0-1027:76) you currently strip `+` before saving (I saw this earlier). That can **conflict** with model validation.  
+  - This is a likely bug/mismatch you’ll want to fix when we start implementation, because it can cause random failures or “invalid phone” saves.
+
+If you want, next I can:
+- produce a **field-by-field validation matrix** (table) for Users / Vehicle / EmergencyContact that you can hand to evaluators, and then we’ll implement Flutter + admin portal validators one by one.
+
+---
+
+# Status
+- Reviewed all three model files and extracted the complete validation rules + normalization + cross-field logic.
+- Produced a detailed plan to mirror these rules to Flutter and Administration portal, with Pakistan-specific focus.

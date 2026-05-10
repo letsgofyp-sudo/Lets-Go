@@ -23,6 +23,19 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
   final picker = ImagePicker();
   static const int _maxVehicleImageSizeBytes = 1024 * 1024;
 
+  String _normalizeEngineChassis(String v) {
+    return v.trim().toUpperCase().replaceAll(RegExp(r'\s+'), '');
+  }
+
+  String? _validateEngineChassis(String? v, {required String label}) {
+    final s = _normalizeEngineChassis(v ?? '');
+    if (s.isEmpty) return null;
+    if (!RegExp(r'^[A-Z0-9\-]{1,50}$').hasMatch(s)) {
+      return "$label can contain only letters, digits, and '-' (max 50).";
+    }
+    return null;
+  }
+
   List<Map<String, String>> _serializeVehicleImagePaths() {
     return _vehicleImages
         .map(
@@ -63,6 +76,18 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
         final f = File(docPath);
         if (await f.exists()) _vehicleImages[i]['documents_image'] = f;
       }
+    }
+  }
+
+  Future<bool> _otpsAlreadyVerified() async {
+    final prefs = await SharedPreferences.getInstance();
+    final statusRaw = prefs.getString('pending_signup_status');
+    if (statusRaw == null || statusRaw.trim().isEmpty) return false;
+    try {
+      final m = Map<String, dynamic>.from(jsonDecode(statusRaw));
+      return m['email_verified'] == true && m['phone_verified'] == true;
+    } catch (_) {
+      return false;
     }
   }
 
@@ -197,6 +222,7 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
   }
 
   Future<void> _saveAndContinue() async {
+    if (!_formKey.currentState!.validate()) return;
     if (_vehicles.isNotEmpty && !_validateVehicles()) return;
     setState(() => _isLoading = true);
     final prefs = await SharedPreferences.getInstance();
@@ -217,7 +243,8 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
       if (name.isNotEmpty) allFields['emergency_name'] = name;
       if (relation.isNotEmpty) allFields['emergency_relation'] = relation;
       if (email.isNotEmpty) allFields['emergency_email'] = email;
-      if (phone.isNotEmpty) allFields['emergency_phone_no'] = phone;
+      final digitsPhone = phone.replaceAll(RegExp(r'\D'), '');
+      if (digitsPhone.isNotEmpty) allFields['emergency_phone_no'] = digitsPhone;
     }
     if (cnicData != null) {
       final cnicMap = Map<String, dynamic>.from(jsonDecode(cnicData));
@@ -251,6 +278,20 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
     await prefs.setString('signup_vehicles', jsonEncode(_vehicles));
     await prefs.setString('signup_vehicle_images', jsonEncode(_serializeVehicleImagePaths()));
     await prefs.setString('signup_step', 'vehicle');
+
+    // Always keep the latest payload ready for final registration.
+    await prefs.setString('pending_signup', jsonEncode(allFields));
+
+    final alreadyVerified = await _otpsAlreadyVerified();
+    if (alreadyVerified) {
+      // OTPs are already verified; don't call /send_otp/ again.
+      await prefs.setString('signup_step', 'otp');
+      setState(() => _isLoading = false);
+      if (!mounted) return;
+      Navigator.pushReplacementNamed(context, '/otp_verification');
+      return;
+    }
+
     // Call backend to request OTPs and get expiry times
     final result = await SignupController.signup(
       allFields.map((k, v) => MapEntry(k, v.toString())),
@@ -259,7 +300,6 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
     setState(() => _isLoading = false);
     if (!mounted) return;
     if (result['success'] == true) {
-      await prefs.setString('pending_signup', jsonEncode(allFields));
       await prefs.setString('signup_step', 'otp');
       if (!mounted) return;
       Navigator.pushReplacementNamed(
@@ -282,6 +322,10 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
     await prefs.remove('signup_cnic');
     await prefs.remove('signup_vehicles');
     await prefs.remove('signup_vehicle_images');
+    await prefs.remove('pending_signup_status');
+    await prefs.remove('signup_username_verified');
+    await prefs.remove('signup_verified_username');
+    await prefs.remove('signup_last_reserved_username');
     await prefs.remove('signup_step');
     await prefs.remove('signup_locked');
     await prefs.remove('pending_signup');
@@ -293,16 +337,17 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
       initialValue: v['plate_number'],
       decoration: const InputDecoration(labelText: 'Plate Number (ABC-1234)'),
       inputFormatters: [
-        FilteringTextInputFormatter.allow(RegExp(r'[A-Z0-9-]')),
+        FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9-]')),
         LengthLimitingTextInputFormatter(10),
       ],
       validator: (value) {
-        if (value == null || !RegExp(r'^[A-Z]{2,5}-\d{1,4}(-[A-Z])?$').hasMatch(value)) {
+        final s = (value ?? '').trim().toUpperCase().replaceAll(' ', '');
+        if (s.isEmpty || !RegExp(r'^[A-Z]{2,5}-\d{1,4}(-[A-Z])?$').hasMatch(s)) {
           return 'Enter a valid plate number (e.g. ABC-1234)';
         }
         return null;
       },
-      onChanged: (val) => v['plate_number'] = val,
+      onChanged: (val) => v['plate_number'] = val.trim().toUpperCase().replaceAll(' ', ''),
     );
   }
   Widget _buildSeatsField(Map<String, dynamic> v) {
@@ -341,18 +386,59 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
       ),
       readOnly: true,
       onTap: () async {
-        DateTime? picked = await showDatePicker(
-          context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(1900),
-          lastDate: DateTime.now().add(Duration(days: 3650)),
-        );
-        if (picked != null) {
-          setState(() {
-            v[field] = DateFormat('yyyy-MM-dd').format(picked);
-            controller.text = v[field];
-          });
+        try {
+          DateTime initial = DateTime.now();
+          final current = (v[field] ?? '').toString().trim();
+          if (current.isNotEmpty) {
+            final parsed = DateTime.tryParse(current);
+            if (parsed != null) initial = parsed;
+          }
+          final now = DateTime.now();
+          final today = DateTime(now.year, now.month, now.day);
+
+          DateTime firstDate = DateTime(1900);
+          DateTime lastDate = DateTime.now().add(const Duration(days: 3650));
+          DateTime initialDate = initial;
+
+          if (field == 'registration_date') {
+            lastDate = today.subtract(const Duration(days: 1));
+            initialDate = initial.isBefore(today) ? initial : lastDate;
+          }
+          if (field == 'insurance_expiry') {
+            firstDate = today.add(const Duration(days: 1));
+            initialDate = initial.isAfter(today) ? initial : firstDate;
+          }
+
+          final picked = await showDatePicker(
+            context: context,
+            initialDate: initialDate,
+            firstDate: firstDate,
+            lastDate: lastDate,
+          );
+          if (picked != null) {
+            setState(() {
+              v[field] = DateFormat('yyyy-MM-dd').format(picked);
+              controller.text = v[field];
+            });
+          }
+        } catch (_) {
+          // ignore
         }
+      },
+      validator: (value) {
+        final s = (value ?? '').trim();
+        if (s.isEmpty) return null;
+        final d = DateTime.tryParse(s);
+        if (d == null) return 'Enter a valid date';
+        final now = DateTime.now();
+        final today = DateTime(now.year, now.month, now.day);
+        if (field == 'registration_date') {
+          return d.isBefore(today) ? null : 'Registration date must be before today.';
+        }
+        if (field == 'insurance_expiry') {
+          return d.isAfter(today) ? null : 'Insurance expiry must be after today.';
+        }
+        return null;
       },
     );
   }
@@ -453,12 +539,22 @@ class _SignupVehicleScreenState extends State<SignupVehicleScreen> {
             TextFormField(
               initialValue: v['engine_number'],
               decoration: const InputDecoration(labelText: 'Engine Number (optional)'),
-              onChanged: (val) => v['engine_number'] = val,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-\s]')),
+                LengthLimitingTextInputFormatter(50),
+              ],
+              validator: (val) => _validateEngineChassis(val, label: 'Engine number'),
+              onChanged: (val) => v['engine_number'] = _normalizeEngineChassis(val),
             ),
             TextFormField(
               initialValue: v['chassis_number'],
               decoration: const InputDecoration(labelText: 'Chassis Number (optional)'),
-              onChanged: (val) => v['chassis_number'] = val,
+              inputFormatters: [
+                FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-\s]')),
+                LengthLimitingTextInputFormatter(50),
+              ],
+              validator: (val) => _validateEngineChassis(val, label: 'Chassis number'),
+              onChanged: (val) => v['chassis_number'] = _normalizeEngineChassis(val),
             ),
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(labelText: 'Fuel Type'),

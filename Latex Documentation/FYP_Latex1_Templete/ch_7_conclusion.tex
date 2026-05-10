@@ -1,0 +1,47 @@
+% ============================================
+% Chapter 7 – Conclusion and Future Work
+% ============================================
+
+\chapter{Conclusion and Future Work}
+
+% -------------------------------------------------
+% 7.1 Conclusion
+% -------------------------------------------------
+
+\section{Conclusion}
+
+The development of the "Lets Go Ride Sharing App" ride-sharing platform successfully addresses the critical challenges of urban commuting in Pakistan, specifically focusing on cost-efficiency, safety, and community-driven trust. By implementing a many-to-many ride-sharing model, the system bridges the gap between private vehicle owners and daily commuters, providing a sustainable alternative to traditional ride-hailing services.
+
+From a technical perspective, the project achieved its core objectives through a robust stack involving Flutter for the cross-platform frontend and Django for a secure, scalable backend. The integration of a content-based recommendation engine ensures that users are matched with rides that align with their historical preferences and gender comfort, while the application of geospatial geofencing for OTP verification provides a tangible layer of security during ride execution.
+
+The evaluation phase proved the system's reliability, with 480 automated test cases (281 in the frontend and 199 in the backend) achieving a 100\% passing rate. User acceptance testing further validated that the interface is intuitive and the social features—such as transparent negotiation and SOS networking—are highly valued by the target community. In conclusion, "Lets Go Ride Sharing App" represents a scalable solution that leverages modern AI and mobile technologies to create a more connected and safer commuting environment.
+
+% -------------------------------------------------
+% 7.2 Future Work
+% -------------------------------------------------
+
+\section{Future Work}
+
+While the current version of "Lets Go Ride Sharing App" provides a comprehensive foundation for community ride-sharing, several avenues exist for future expansion:
+
+\begin{itemize}
+    \item \textbf{Integrated Payment Gateways:} Future iterations will transition from manual payment verification to automated gateways such as EasyPaisa, JazzCash, and Stripe to provide a seamless cashless experience.
+    \item \textbf{Ladies-Only Mode:} To further enhance social safety, a dedicated "Ladies-Only" filter can be implemented, ensuring that female drivers and passengers can opt for gender-exclusive journeys.
+    \item \textbf{Advanced Routing Algorithms:} Integrating real-time traffic data from OSRM or Google Maps APIs into the custom ranking engine would allow for dynamic ETA adjustments based on congestion levels.
+    \item \textbf{Carbon Footprint Tracking:} Implementing a module to calculate the CO$_2$ emissions saved through ride-sharing would promote environmental awareness and incentivize users through "Green Points."
+    \item \textbf{Fleet Management for Corporate Use:} Scaling the platform to support corporate fleets would allow organizations to manage employee commutes more efficiently.
+\end{itemize}
+
+% -------------------------------------------------
+% 7.3 Limitations
+% -------------------------------------------------
+
+\section{Limitations}
+
+Despite its successes, the project currently faces the following limitations:
+
+\begin{itemize}
+    \item \textbf{Data Connectivity:} The system relies on a stable internet connection for real-time tracking and periodic HTTP updates; offline map support is currently not implemented.
+    \item \textbf{Manual Verification Overhead:} The current manual review process for driver documents (CNIC, License) via the Admin Dashboard poses a scalability bottleneck that requires automation via OCR in future phases.
+    \item \textbf{Cold-Start Problem:} The recommendation engine requires a baseline of user history to deliver highly personalized results; new users initially receive popularity-based suggestions.
+\end{itemize}

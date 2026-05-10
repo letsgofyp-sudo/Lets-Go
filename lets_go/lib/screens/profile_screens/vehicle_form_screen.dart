@@ -34,11 +34,11 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
   late TextEditingController _companyName;
   late TextEditingController _modelNumber;
   late TextEditingController _variant;
+  final TextEditingController _engineNumber = TextEditingController();
+  final TextEditingController _chassisNumber = TextEditingController();
   late TextEditingController _plateNumber;
   late TextEditingController _color;
   late TextEditingController _seats;
-  late TextEditingController _engineNumber;
-  late TextEditingController _chassisNumber;
   late TextEditingController _registrationDate;
   late TextEditingController _insuranceExpiry;
 
@@ -71,8 +71,8 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
     _plateNumber = TextEditingController(text: _safeText(v['plate_number'] ?? v['registration_no']));
     _color = TextEditingController(text: _safeText(v['color']));
     _seats = TextEditingController(text: _safeText(v['seats']));
-    _engineNumber = TextEditingController(text: _safeText(v['engine_number']));
-    _chassisNumber = TextEditingController(text: _safeText(v['chassis_number']));
+    _engineNumber.text = _safeText(v['engine_number']);
+    _chassisNumber.text = _safeText(v['chassis_number']);
     _registrationDate = TextEditingController(text: _safeText(v['registration_date']));
     _insuranceExpiry = TextEditingController(text: _safeText(v['insurance_expiry']));
 
@@ -129,6 +129,10 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
     return 'Petrol';
   }
 
+  String _normalizeEngineChassis(String v) {
+    return v.trim().toUpperCase().replaceAll(RegExp(r'\s+'), '');
+  }
+
   String? _validatePlate(String? value) {
     final v = (value ?? '').trim();
     if (v.isEmpty) return 'Required';
@@ -138,28 +142,33 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
     return null;
   }
 
-  Future<void> _pickDate(TextEditingController controller) async {
-    try {
-      DateTime initial = DateTime.now();
-      final current = controller.text.trim();
-      if (current.isNotEmpty) {
-        final parsed = DateTime.tryParse(current);
-        if (parsed != null) initial = parsed;
-      }
-      final picked = await showDatePicker(
-        context: context,
-        initialDate: initial,
-        firstDate: DateTime(1900),
-        lastDate: DateTime.now().add(const Duration(days: 3650)),
-      );
-      if (picked != null) {
-        setState(() {
-          controller.text = DateFormat('yyyy-MM-dd').format(picked);
-        });
-      }
-    } catch (_) {
-      // ignore
+  String? _validateRegistrationDate(String? value) {
+    final s = (value ?? '').trim();
+    if (s.isEmpty) return null;
+    final d = DateTime.tryParse(s);
+    if (d == null) return 'Enter a valid date';
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    return d.isBefore(today) ? null : 'Registration date must be before today.';
+  }
+
+  String? _validateInsuranceExpiry(String? value) {
+    final s = (value ?? '').trim();
+    if (s.isEmpty) return null;
+    final d = DateTime.tryParse(s);
+    if (d == null) return 'Enter a valid date';
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    return d.isAfter(today) ? null : 'Insurance expiry must be after today.';
+  }
+
+  String? _validateEngineChassis(String? v, {required String label}) {
+    final s = _normalizeEngineChassis(v ?? '');
+    if (s.isEmpty) return null;
+    if (!RegExp(r'^[A-Z0-9\-]{1,50}$').hasMatch(s)) {
+      return "$label can contain only letters, digits, and '-' (max 50).";
     }
+    return null;
   }
 
   int? _parseSeats(String raw) {
@@ -434,6 +443,19 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
               TextFormField(
                 controller: _engineNumber,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-\s]')),
+                  LengthLimitingTextInputFormatter(50),
+                ],
+                validator: (v) => _validateEngineChassis(v, label: 'Engine number'),
+                onChanged: (v) {
+                  final n = _normalizeEngineChassis(v);
+                  if (n == _engineNumber.text) return;
+                  _engineNumber.value = _engineNumber.value.copyWith(
+                    text: n,
+                    selection: TextSelection.collapsed(offset: n.length),
+                  );
+                },
               ),
               const SizedBox(height: 12),
 
@@ -441,6 +463,19 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
               TextFormField(
                 controller: _chassisNumber,
                 decoration: const InputDecoration(border: OutlineInputBorder()),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-\s]')),
+                  LengthLimitingTextInputFormatter(50),
+                ],
+                validator: (v) => _validateEngineChassis(v, label: 'Chassis number'),
+                onChanged: (v) {
+                  final n = _normalizeEngineChassis(v);
+                  if (n == _chassisNumber.text) return;
+                  _chassisNumber.value = _chassisNumber.value.copyWith(
+                    text: n,
+                    selection: TextSelection.collapsed(offset: n.length),
+                  );
+                },
               ),
               const SizedBox(height: 12),
 
@@ -448,11 +483,38 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
               TextFormField(
                 controller: _registrationDate,
                 readOnly: true,
-                onTap: _controller.isSaving ? null : () => _pickDate(_registrationDate),
+                onTap: _controller.isSaving
+                    ? null
+                    : () async {
+                        try {
+                          DateTime initial = DateTime.now();
+                          final current = _registrationDate.text.trim();
+                          if (current.isNotEmpty) {
+                            final parsed = DateTime.tryParse(current);
+                            if (parsed != null) initial = parsed;
+                          }
+                          final now = DateTime.now();
+                          final today = DateTime(now.year, now.month, now.day);
+                          final picked = await showDatePicker(
+                            context: context,
+                            initialDate: initial.isBefore(today) ? initial : today.subtract(const Duration(days: 1)),
+                            firstDate: DateTime(1900),
+                            lastDate: today.subtract(const Duration(days: 1)),
+                          );
+                          if (picked != null) {
+                            setState(() {
+                              _registrationDate.text = DateFormat('yyyy-MM-dd').format(picked);
+                            });
+                          }
+                        } catch (_) {
+                          // ignore
+                        }
+                      },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   suffixIcon: Icon(Icons.calendar_today),
                 ),
+                validator: _validateRegistrationDate,
               ),
               const SizedBox(height: 12),
 
@@ -460,11 +522,38 @@ class _VehicleFormScreenState extends State<VehicleFormScreen> {
               TextFormField(
                 controller: _insuranceExpiry,
                 readOnly: true,
-                onTap: _controller.isSaving ? null : () => _pickDate(_insuranceExpiry),
+                onTap: _controller.isSaving
+                    ? null
+                    : () async {
+                        try {
+                          DateTime initial = DateTime.now();
+                          final current = _insuranceExpiry.text.trim();
+                          if (current.isNotEmpty) {
+                            final parsed = DateTime.tryParse(current);
+                            if (parsed != null) initial = parsed;
+                          }
+                          final now = DateTime.now();
+                          final today = DateTime(now.year, now.month, now.day);
+                          final picked = await showDatePicker(
+                            context: context,
+                            initialDate: initial.isAfter(today) ? initial : today.add(const Duration(days: 1)),
+                            firstDate: today.add(const Duration(days: 1)),
+                            lastDate: DateTime.now().add(const Duration(days: 3650)),
+                          );
+                          if (picked != null) {
+                            setState(() {
+                              _insuranceExpiry.text = DateFormat('yyyy-MM-dd').format(picked);
+                            });
+                          }
+                        } catch (_) {
+                          // ignore
+                        }
+                      },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   suffixIcon: Icon(Icons.calendar_today),
                 ),
+                validator: _validateInsuranceExpiry,
               ),
               const SizedBox(height: 12),
 

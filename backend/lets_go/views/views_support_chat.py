@@ -1,5 +1,7 @@
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+import os
+from datetime import datetime
 from django.utils import timezone
 from django.db import transaction
 from django.db.models import Max
@@ -8,6 +10,9 @@ import json
 from ..models import GuestUser, UsersData, SupportThread, SupportMessage
 from .views_notifications import send_ride_notification_async, register_fcm_token_with_supabase_async
 from .views_notifications import flush_offline_notification_queue_async
+from ..utils.chatbot.engine_impl import handle_message
+from ..utils.chatbot.common.helpers import normalize_text
+from ..utils.chatbot.core import BotContext, set_current_user
 
 
 def _to_int(value):
@@ -147,6 +152,57 @@ def support_guest(request):
     }, status=201)
 
 
+@csrf_exempt
+def clear_support_chat(request):
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
+
+    data = _parse_json_body(request)
+    user, guest, err = _resolve_owner_from_body(data)
+    if err is not None:
+        return err
+
+    thread_type = (data.get('thread_type') or 'BOT').strip().upper()
+    if thread_type not in {'BOT', 'ADMIN', 'ALL'}:
+        thread_type = 'BOT'
+
+    uid = int(getattr(user, 'id', 0) or 0)
+    gid = int(getattr(guest, 'id', 0) or 0)
+    session_user_id = uid if uid > 0 else (-gid if gid > 0 else 0)
+
+    with transaction.atomic():
+        types = ['BOT', 'ADMIN'] if thread_type == 'ALL' else [thread_type]
+        for t in types:
+            th = SupportThread.objects.filter(user=user, guest=guest, thread_type=t).first()
+            if th is None:
+                continue
+            SupportMessage.objects.filter(thread=th).delete()
+            th.user_last_seen_id = 0
+            th.admin_last_seen_id = 0
+            th.last_message_at = timezone.now()
+            th.save(update_fields=['user_last_seen_id', 'admin_last_seen_id', 'last_message_at', 'updated_at'])
+
+        try:
+            from ..utils.chatbot.core import _SESSIONS
+
+            if session_user_id:
+                _SESSIONS.pop(int(session_user_id), None)
+        except Exception:
+            pass
+
+        try:
+            from ..models import ChatbotMemory
+
+            if uid > 0:
+                ChatbotMemory.objects.filter(user_id=uid).update(summary='', preferences={})
+            elif gid > 0:
+                ChatbotMemory.objects.filter(guest_id=gid).update(summary='', preferences={})
+        except Exception:
+            pass
+
+    return JsonResponse({'success': True})
+
+
 def _bot_reply_text(user_text: str) -> str:
     t = (user_text or '').strip()
     if not t:
@@ -159,6 +215,46 @@ def _bot_reply_text(user_text: str) -> str:
     if 'blocked' in low:
         return 'If you are blocked by a driver, you won’t be able to request that ride. You can also manage blocklist in your profile.'
     return "Thanks! I understood your message. If you need human help, switch to the Admin chat tab."
+
+
+def _chatbot_reply_text(user: UsersData | None, guest: GuestUser | None, message_text: str) -> str:
+    t = normalize_text(message_text)
+    debug_enabled = str(os.getenv('LETS_GO_BOT_DEBUG', '') or '').strip().lower() in {'1', 'true', 'yes', 'on'}
+    def _dbg(event: str, payload: dict | None = None) -> None:
+        if not debug_enabled:
+            return
+        try:
+            ts = datetime.now().strftime('%H:%M:%S')
+            base = f"[support-bot {ts}] {event}"
+            if payload:
+                print(base + " | " + ", ".join(f"{k}={payload[k]!r}" for k in sorted(payload.keys())), flush=True)
+            else:
+                print(base, flush=True)
+        except Exception:
+            return
+
+    if user is not None:
+        try:
+            set_current_user({'name': getattr(user, 'name', '')})
+        except Exception:
+            set_current_user({})
+        ctx = BotContext(user_id=int(user.id))
+    else:
+        set_current_user({})
+        gid = int(getattr(guest, 'id', 0) or 0)
+        ctx = BotContext(user_id=(-gid if gid > 0 else 0))
+    _dbg('ctx', {
+        'user_id': getattr(user, 'id', None) if user is not None else None,
+        'guest_id': getattr(guest, 'id', None) if guest is not None else None,
+        'ctx_user_id': getattr(ctx, 'user_id', None),
+        'text': (message_text or '')[:240],
+    })
+    out = handle_message(ctx, message_text)
+    _dbg('reply', {
+        'reply_len': len(out or ''),
+        'reply_preview': (out or '')[:240],
+    })
+    return out
 
 
 @csrf_exempt
@@ -197,10 +293,30 @@ def view_bot(request):
         if not message_text:
             return JsonResponse({'success': False, 'error': 'message_text is required'}, status=400)
 
+        debug_enabled = str(os.getenv('LETS_GO_BOT_DEBUG', '') or '').strip().lower() in {'1', 'true', 'yes', 'on'}
+        def _dbg(event: str, payload: dict | None = None) -> None:
+            if not debug_enabled:
+                return
+            try:
+                ts = datetime.now().strftime('%H:%M:%S')
+                base = f"[support-bot {ts}] {event}"
+                if payload:
+                    print(base + " | " + ", ".join(f"{k}={payload[k]!r}" for k in sorted(payload.keys())), flush=True)
+                else:
+                    print(base, flush=True)
+            except Exception:
+                return
+
         user, guest, err = _resolve_owner_from_body(data)
         if err is not None:
             return err
         _sync_guest_fcm(guest, (data.get('fcm_token') or '').strip())
+
+        _dbg('post', {
+            'user_id': getattr(user, 'id', None) if user is not None else None,
+            'guest_id': getattr(guest, 'id', None) if guest is not None else None,
+            'message_text': message_text[:240],
+        })
 
         thread = _ensure_thread(user, guest, 'BOT')
 
@@ -215,7 +331,7 @@ def view_bot(request):
             thread=thread,
             sender_type='BOT',
             sender_user=None,
-            message_text=_bot_reply_text(message_text),
+            message_text=_chatbot_reply_text(user, guest, message_text),
         )
 
         thread.last_message_at = timezone.now()

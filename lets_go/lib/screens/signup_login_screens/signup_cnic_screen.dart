@@ -161,7 +161,13 @@ class _SignupCnicScreenState extends State<SignupCnicScreen> {
         if (em['name'] != null) allFields['emergency_name'] = em['name'].toString();
         if (em['relation'] != null) allFields['emergency_relation'] = em['relation'].toString();
         if (em['email'] != null) allFields['emergency_email'] = em['email'].toString();
-        if (em['phone_no'] != null) allFields['emergency_phone_no'] = em['phone_no'].toString();
+        if (em['phone_no'] != null) {
+          final raw = em['phone_no'].toString();
+          final digits = raw.replaceAll(RegExp(r'\D'), '');
+          if (digits.isNotEmpty) {
+            allFields['emergency_phone_no'] = digits;
+          }
+        }
       }
       imagePaths.forEach((k, v) {
         if (v.isNotEmpty) allImages[k] = File(v);
@@ -200,6 +206,10 @@ class _SignupCnicScreenState extends State<SignupCnicScreen> {
     await prefs.remove('signup_cnic');
     await prefs.remove('signup_vehicles');
     await prefs.remove('signup_vehicle_images');
+    await prefs.remove('pending_signup_status');
+    await prefs.remove('signup_username_verified');
+    await prefs.remove('signup_verified_username');
+    await prefs.remove('signup_last_reserved_username');
     await prefs.remove('signup_step');
     await prefs.remove('signup_locked');
     await prefs.remove('pending_signup');

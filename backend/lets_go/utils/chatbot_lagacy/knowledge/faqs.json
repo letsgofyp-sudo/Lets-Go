@@ -1,0 +1,120 @@
+{
+  "version": 2,
+  "faqs": [
+    {
+      "id": "faq_account_1",
+      "question": "How do I create an account?",
+      "answer": "Open the app, choose Sign Up, enter your details, and complete verification if required. If you are using Guest mode, switch to Sign Up to access bookings and profile features."
+    },
+    {
+      "id": "faq_account_2",
+      "question": "What does account status (Verified/Pending/Rejected/Banned) mean?",
+      "answer": "Verified means you can use the main features. Pending/Under review means you must wait for admin verification. Rejected means your verification was rejected and you may need to resubmit documents. Banned/Suspended means your account is blocked from operations."
+    },
+    {
+      "id": "faq_login_1",
+      "question": "I can't log in. What should I do?",
+      "answer": "Check your email/phone and password. If you forgot your password, use the reset flow (if available). If your account is banned/inactive, contact admin support."
+    },
+    {
+      "id": "faq_guest_1",
+      "question": "Can I use LetsGo without logging in?",
+      "answer": "You can use Guest mode for limited browsing and support chat. To book rides, create rides, view your bookings, rides, vehicles, payments, and trip chat, you need to log in."
+    },
+    {
+      "id": "faq_verify_1",
+      "question": "Why does it say my verification is pending?",
+      "answer": "It means your profile data/documents are awaiting admin approval. Complete required items in Profile (CNIC, photos, gender/profile details, and for drivers: driving license and vehicle verification) and then wait for verification."
+    },
+    {
+      "id": "faq_booking_gate_1",
+      "question": "Why can't I book a ride?",
+      "answer": "Common reasons: your account is not Verified, your CNIC/photos/profile data are incomplete, you have pending profile verification change requests, or your account is banned. Open Profile to complete verification and try again after approval."
+    },
+    {
+      "id": "faq_booking_1",
+      "question": "How do I book a ride?",
+      "answer": "Search a trip (From → To), pick a trip, then tap Book/Request. You can view status anytime from My Bookings."
+    },
+    {
+      "id": "faq_booking_3",
+      "question": "What information do I need to request a booking?",
+      "answer": "You typically select pickup and drop (stop order on the route) and choose number of seats. If negotiation is enabled you may also enter an offer per seat."
+    },
+    {
+      "id": "faq_negotiation_1",
+      "question": "How does fare negotiation work?",
+      "answer": "If a trip is negotiable, passengers can send an offer per seat. The driver can accept, reject, or counter. The app shows negotiation history and the final fare per seat once finalized."
+    },
+    {
+      "id": "faq_booking_2",
+      "question": "How can I see my bookings?",
+      "answer": "Open My Bookings to see your booking history and current booking statuses."
+    },
+    {
+      "id": "faq_trip_detail_1",
+      "question": "Where do I find trip_id or booking_id?",
+      "answer": "Open a booking details screen in My Bookings. The details view shows identifiers such as booking_id and trip_id."
+    },
+    {
+      "id": "faq_trip_1",
+      "question": "How do I see my rides/trips?",
+      "answer": "Drivers can open My Rides/My Trips to see trips they posted. Passengers can view trip details through their bookings."
+    },
+    {
+      "id": "faq_create_gate_1",
+      "question": "Why can't I create/post a ride?",
+      "answer": "Common reasons: your account is not Verified, your driver verification data is incomplete (CNIC/photos/driving license), driving license verification is pending, or the selected vehicle is pending/not verified. Complete verification and use a verified vehicle."
+    },
+    {
+      "id": "faq_cancel_1",
+      "question": "Can you cancel my booking or trip?",
+      "answer": "Support bot can’t perform cancellations/updates. Please use the app UI to cancel/edit if allowed, or contact admin support if you’re blocked by status rules."
+    },
+    {
+      "id": "faq_chat_1",
+      "question": "How do I chat with the driver/passenger?",
+      "answer": "Use the trip chat associated with the trip_id. After a booking is active/confirmed, you can open chat from the relevant trip/booking screens and messages will appear in the trip chat thread."
+    },
+    {
+      "id": "faq_pickup_1",
+      "question": "What is the pickup code and when is it used?",
+      "answer": "Pickup code is a verification step used at pickup to help confirm the correct passenger/booking. The app can generate and verify a pickup code during ride execution."
+    },
+    {
+      "id": "faq_payment_1",
+      "question": "How do payments work in LetsGo?",
+      "answer": "Payments are handled manually after the ride. Passengers can pay by cash or by bank transfer/QR. For bank transfer, the passenger can upload a receipt. Passengers rate drivers, and drivers confirm payment received and can rate passengers."
+    },
+    {
+      "id": "faq_payment_2",
+      "question": "Do I need to upload a receipt for payment?",
+      "answer": "A receipt is typically required for bank transfer/QR payments. If you pay by cash, a receipt upload may not be required."
+    },
+    {
+      "id": "faq_sos_1",
+      "question": "What is SOS / Emergency?",
+      "answer": "SOS is a safety feature to report an emergency during a trip. It creates an incident and may generate shareable links/tokens for live status (depending on configuration)."
+    },
+    {
+      "id": "faq_vehicle_1",
+      "question": "Why can't I post a ride?",
+      "answer": "Common reasons: you are not logged in as a driver, you have no verified vehicle, or required trip fields are missing. Check Vehicles and make sure your vehicle is verified/approved if required."
+    },
+    {
+      "id": "faq_notifications_1",
+      "question": "How do notifications work?",
+      "answer": "The app can send notifications for booking/trip/payment events. You can view notifications, see unread counts, and mark them as read or dismiss them."
+    },
+    {
+      "id": "faq_server_1",
+      "question": "The server is not reachable. What does that mean?",
+      "answer": "It usually means the backend could not be contacted (network/server down). Try again later or check your internet connection."
+    },
+    {
+      "id": "faq_support_1",
+      "question": "What is the difference between Support Bot and Admin chat?",
+      "answer": "Support Bot provides instant automated help and can answer FAQs/manual questions. Admin chat is for human support and account issues that need manual help (verification, disputes, and problems blocked by rules)."
+    }
+  ]
+}

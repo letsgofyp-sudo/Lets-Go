@@ -1,0 +1,61 @@
+CHATBOT PARITY REGRESSION REPORT
+SECTION: multiturn_scenarios
+total_scenarios=8
+
+SCENARIO #0
+user_id=300000
+turns=['hi']
+expected_legacy=['Hi Test User. What would you like to do today—book a ride or create a ride?']
+actual_new=['Hi Test User. What would you like to do today—book a ride or create a ride?']
+status=PASS
+
+SCENARIO #1
+user_id=300001
+turns=['create a ride', 'from zoo road to khizra mosque', 'show my vehicles', '1', 'tomorrow 10 am', '2 seats', 'fare 70', 'no']
+expected_legacy=['Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'API server not reachable.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+actual_new=['Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'API server not reachable.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+status=PASS
+
+SCENARIO #2
+user_id=300002
+turns=['book a ride', 'from zoo road to khizra mosque', 'tomorrow 10 am', '2', 'no']
+expected_legacy=['I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+actual_new=['I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+status=PASS
+
+SCENARIO #3
+user_id=300003
+turns=['cancel booking', 'booking_id=123', 'no']
+expected_legacy=["I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.", 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+actual_new=["I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.", 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+status=PASS
+
+SCENARIO #4
+user_id=300004
+turns=['delete trip', 'trip_id=ABC123', 'no']
+expected_legacy=["I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.", 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+actual_new=["I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.", 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+status=PASS
+
+SCENARIO #5
+user_id=300005
+turns=['cancel trip', 'trip_id=ABC123', 'no']
+expected_legacy=["I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.", 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+actual_new=["I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action.", 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+status=PASS
+
+SCENARIO #6
+user_id=300006
+turns=['negotiate', 'trip_id=ABC123 booking_id=123', 'no']
+expected_legacy=['I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+actual_new=['I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+status=PASS
+
+SCENARIO #7
+user_id=300007
+turns=['send message', 'trip_id=ABC123', 'hello', 'no']
+expected_legacy=['I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Hi Test User. What would you like to do today—book a ride or create a ride?', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+actual_new=['I can help with FAQs, the user manual, and general guidance.\nFor bookings, rides, payments, profile changes, or trip chat, please use the app UI.', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).', 'Hi Test User. What would you like to do today—book a ride or create a ride?', 'Tell me what you want to do (for example: book a ride from X to Y, or create a ride).']
+status=PASS
+
+END_SECTION: multiturn_scenarios

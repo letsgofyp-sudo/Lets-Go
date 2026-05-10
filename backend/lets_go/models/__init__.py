@@ -8,7 +8,7 @@ from .models_booking import Booking
 from .models_history import TripHistorySnapshot, BookingHistorySnapshot, TripActualPathSummary, TripActualPathPoint, ResolvedSosAuditSnapshot
 from .models_blocking import BlockedUser
 from .models_chat import TripChatGroup, ChatGroupMember, ChatMessage, MessageReadStatus
-from .models_support_chat import GuestUser, SupportThread, SupportMessage
+from .models_support_chat import GuestUser, SupportThread, SupportMessage, ChatbotMemory
 from .models_payment import TripPayment
 from .models_incident import SosIncident, SosShareToken, TripShareToken
 from .models_notifications import NotificationInbox, OfflineNotificationQueue

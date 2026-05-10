@@ -25,25 +25,25 @@
       <div class="admin-form-grid">
         <div class="admin-field" data-field>
           <label class="admin-label" for="password">Password (optional)</label>
-          <input class="admin-control" type="password" name="password" id="password" data-validate="passwordStrong" placeholder="Leave blank to keep current password" />
+          <input class="admin-control" type="password" name="password" id="password" data-validate="passwordStrong" placeholder="Leave blank to keep current password" autocomplete="new-password" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="name">Name</label>
-          <input class="admin-control" type="text" name="name" id="name" value="{{ user.name }}" required data-validate="required" />
+          <input class="admin-control" type="text" name="name" id="name" value="{{ user.name }}" required data-validate="required" maxlength="100" autocomplete="name" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="username">Username</label>
-          <input class="admin-control" type="text" name="username" id="username" value="{{ user.username }}" required data-validate="required username" />
+          <input class="admin-control" type="text" name="username" id="username" value="{{ user.username }}" required data-validate="required username" maxlength="100" autocomplete="username" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="email">Email</label>
-          <input class="admin-control" type="email" name="email" id="email" value="{{ user.email }}" required data-validate="required email" />
+          <input class="admin-control" type="email" name="email" id="email" value="{{ user.email }}" required data-validate="required email" autocomplete="email" />
           <div class="admin-field-error"></div>
         </div>
 
@@ -63,7 +63,7 @@
               <option value="+971">+971</option>
               <option value="+966">+966</option>
             </select>
-            <input class="admin-control" id="phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" />
+            <input class="admin-control" id="phone_no_local" type="text" inputmode="numeric" placeholder="Local number" pattern="^\d{4,15}$" maxlength="15" autocomplete="tel-national" data-validate="digitsOnly" />
           </div>
           <input class="admin-control" type="hidden" name="phone_no" id="phone_no" value="{{ user.phone_no }}" data-validate="phoneIntl" />
           <div class="admin-field-error"></div>
@@ -103,37 +103,87 @@
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="cnic_no">CNIC</label>
-          <input class="admin-control" type="text" name="cnic_no" id="cnic_no" value="{{ user.cnic_no }}" data-validate="cnic" placeholder="36603-0269853-9" />
+          <input class="admin-control" type="text" name="cnic_no" id="cnic_no" value="{{ user.cnic_no }}" data-validate="cnic" placeholder="36603-0269853-9" pattern="^\d{5}-\d{7}-\d{1}$" maxlength="15" inputmode="numeric" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="driving_license_no">Driving License No</label>
-          <input class="admin-control" type="text" name="driving_license_no" id="driving_license_no" value="{{ user.driving_license_no }}" />
+          <input class="admin-control" type="text" name="driving_license_no" id="driving_license_no" value="{{ user.driving_license_no|default_if_none:'' }}" pattern="^[A-Za-z0-9][A-Za-z0-9\-/]{4,19}$" maxlength="20" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="accountno">Account No</label>
-          <input class="admin-control" type="text" name="accountno" id="accountno" value="{{ user.accountno }}" />
+          <input class="admin-control" type="text" name="accountno" id="accountno" value="{{ user.accountno }}" inputmode="numeric" pattern="^\d{10,20}$" maxlength="20" data-validate="digitsOnly" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
           <label class="admin-label" for="iban">IBAN</label>
-          <input class="admin-control" type="text" name="iban" id="iban" value="{{ user.iban }}" />
+          <input class="admin-control" type="text" name="iban" id="iban" value="{{ user.iban }}" pattern="^PK\d{2}[A-Za-z]{4}\d{16}$" maxlength="34" autocapitalize="characters" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field" data-field>
-          <label class="admin-label" for="bankname">Bank Name</label>
-          <input class="admin-control" type="text" name="bankname" id="bankname" value="{{ user.bankname }}" />
+          <label class="admin-label" for="bankname_select">Bank Name</label>
+          <select class="admin-control" id="bankname_select" name="bankname_select">
+            <option value="" {% if not user.bankname %}selected{% endif %}>--</option>
+            <option value="Al Baraka Bank (Pakistan) Limited">Al Baraka Bank (Pakistan) Limited</option>
+            <option value="Allied Bank Limited">Allied Bank Limited</option>
+            <option value="Askari Bank Limited">Askari Bank Limited</option>
+            <option value="Bank Alfalah Limited">Bank Alfalah Limited</option>
+            <option value="Bank Al Habib Limited">Bank Al Habib Limited</option>
+            <option value="BankIslami Pakistan Limited">BankIslami Pakistan Limited</option>
+            <option value="Citi Bank N.A. Pakistan">Citi Bank N.A. Pakistan</option>
+            <option value="Deutsche Bank A.G. Pakistan">Deutsche Bank A.G. Pakistan</option>
+            <option value="Dubai Islamic Bank Pakistan Limited">Dubai Islamic Bank Pakistan Limited</option>
+            <option value="Faysal Bank Limited">Faysal Bank Limited</option>
+            <option value="First Women Bank Limited">First Women Bank Limited</option>
+            <option value="Habib Bank Limited (HBL)">Habib Bank Limited (HBL)</option>
+            <option value="Habib Metropolitan Bank Limited">Habib Metropolitan Bank Limited</option>
+            <option value="Industrial and Commercial Bank of China (ICBC) Pakistan">Industrial and Commercial Bank of China (ICBC) Pakistan</option>
+            <option value="JS Bank Limited">JS Bank Limited</option>
+            <option value="MCB Bank Limited">MCB Bank Limited</option>
+            <option value="MCB Islamic Bank Limited">MCB Islamic Bank Limited</option>
+            <option value="Meezan Bank Limited">Meezan Bank Limited</option>
+            <option value="National Bank of Pakistan (NBP)">National Bank of Pakistan (NBP)</option>
+            <option value="Samba Bank Limited">Samba Bank Limited</option>
+            <option value="Silkbank Limited">Silkbank Limited</option>
+            <option value="Sindh Bank Limited">Sindh Bank Limited</option>
+            <option value="Soneri Bank Limited">Soneri Bank Limited</option>
+            <option value="Standard Chartered Bank (Pakistan) Limited">Standard Chartered Bank (Pakistan) Limited</option>
+            <option value="Summit Bank Limited">Summit Bank Limited</option>
+            <option value="The Bank of Khyber">The Bank of Khyber</option>
+            <option value="The Bank of Punjab">The Bank of Punjab</option>
+            <option value="United Bank Limited (UBL)">United Bank Limited (UBL)</option>
+            <option value="Advans Pakistan Microfinance Bank Limited">Advans Pakistan Microfinance Bank Limited</option>
+            <option value="APNA Microfinance Bank Limited">APNA Microfinance Bank Limited</option>
+            <option value="FINCA Microfinance Bank Limited">FINCA Microfinance Bank Limited</option>
+            <option value="First MicroFinanceBank Limited">First MicroFinanceBank Limited</option>
+            <option value="Khushhali Microfinance Bank Limited">Khushhali Microfinance Bank Limited</option>
+            <option value="Mobilink Microfinance Bank Limited">Mobilink Microfinance Bank Limited</option>
+            <option value="National Rural Support Programme (NRSP) Microfinance Bank Limited">National Rural Support Programme (NRSP) Microfinance Bank Limited</option>
+            <option value="Pak Oman Microfinance Bank Limited">Pak Oman Microfinance Bank Limited</option>
+            <option value="Telenor Microfinance Bank Limited">Telenor Microfinance Bank Limited</option>
+            <option value="U Microfinance Bank Limited">U Microfinance Bank Limited</option>
+            <option value="House Building Finance Company Limited (HBFC)">House Building Finance Company Limited (HBFC)</option>
+            <option value="Pakistan Kuwait Investment Company (Private) Limited">Pakistan Kuwait Investment Company (Private) Limited</option>
+            <option value="Pak-Brunei Investment Company Limited">Pak-Brunei Investment Company Limited</option>
+            <option value="Pak-China Investment Company Limited">Pak-China Investment Company Limited</option>
+            <option value="Pak Libya Holding Company (Private) Limited">Pak Libya Holding Company (Private) Limited</option>
+            <option value="Pak Oman Investment Company Limited">Pak Oman Investment Company Limited</option>
+            <option value="Saudi Pak Industrial and Agricultural Investment Company Limited">Saudi Pak Industrial and Agricultural Investment Company Limited</option>
+            <option value="Sindh Modaraba">Sindh Modaraba</option>
+            <option value="Other">Other</option>
+          </select>
+          <input class="admin-control" type="text" name="bankname" id="bankname" value="{{ user.bankname|default_if_none:'' }}" placeholder="Bank (if Other)" pattern="^[A-Za-z][A-Za-z .&\-]{1,118}[A-Za-z.]$" maxlength="120" style="margin-top:8px; display:none;" />
           <div class="admin-field-error"></div>
         </div>
 
         <div class="admin-field admin-field--full" data-field>
           <label class="admin-label" for="emergency_name">Emergency Contact Name</label>
-          <input class="admin-control" id="emergency_name" type="text" name="emergency_name" value="{{ emergency_contact.name|default_if_none:'' }}" />
+          <input class="admin-control" id="emergency_name" type="text" name="emergency_name" value="{{ emergency_contact.name|default_if_none:'' }}" maxlength="100" />
           <div class="admin-field-error"></div>
         </div>
 
@@ -173,7 +223,7 @@
               <option value="+971">+971</option>
               <option value="+966">+966</option>
             </select>
-            <input class="admin-control" id="emergency_phone_no_local" type="text" inputmode="numeric" placeholder="3001234567" />
+            <input class="admin-control" id="emergency_phone_no_local" type="text" inputmode="numeric" placeholder="Local number" pattern="^\d{4,15}$" maxlength="15" autocomplete="tel" data-validate="digitsOnly" />
           </div>
           <input class="admin-control" id="emergency_phone_no" type="hidden" name="emergency_phone_no" value="{{ emergency_contact.phone_no|default_if_none:'' }}" data-validate="emergencyPhoneDigits" />
           <div class="admin-field-error"></div>
@@ -193,7 +243,7 @@
           <div>
             <img id="profile_photo_img" src="" alt="Profile Photo" class="user-img is-hidden-soft">
           </div>
-          <input class="admin-control" type="file" name="profile_photo" id="profile_photo" accept="image/*" />
+          <input class="admin-control" type="file" name="profile_photo" id="profile_photo" accept="image/*" {% if not user.profile_photo_url %}required{% endif %} />
           <div class="admin-field-error"></div>
         </div>
 
@@ -202,7 +252,7 @@
           <div>
             <img id="live_photo_img" src="" alt="Live Photo" class="user-img is-hidden-soft">
           </div>
-          <input class="admin-control" type="file" name="live_photo" id="live_photo" accept="image/*" />
+          <input class="admin-control" type="file" name="live_photo" id="live_photo" accept="image/*" {% if not user.live_photo_url %}required{% endif %} />
           <div class="admin-field-error"></div>
         </div>
 
@@ -211,7 +261,7 @@
           <div>
             <img id="cnic_front_image_img" src="" alt="CNIC Front" class="user-img is-hidden-soft">
           </div>
-          <input class="admin-control" type="file" name="cnic_front_image" id="cnic_front_image" accept="image/*" />
+          <input class="admin-control" id="cnic_front_image" type="file" name="cnic_front_image" accept="image/*" {% if not user.cnic_front_image_url %}required{% endif %} />
           <div class="admin-field-error"></div>
         </div>
 
@@ -220,7 +270,7 @@
           <div>
             <img id="cnic_back_image_img" src="" alt="CNIC Back" class="user-img is-hidden-soft">
           </div>
-          <input class="admin-control" type="file" name="cnic_back_image" id="cnic_back_image" accept="image/*" />
+          <input class="admin-control" type="file" name="cnic_back_image" id="cnic_back_image" accept="image/*" {% if not user.cnic_back_image_url %}required{% endif %} />
           <div class="admin-field-error"></div>
         </div>
 
@@ -311,6 +361,10 @@
       const hidden = document.getElementById('phone_no');
       if (!country || !local || !hidden) return;
 
+      if (window.AdminCountryDialCodes) {
+        window.AdminCountryDialCodes.populate(country, '+92');
+      }
+
       const parse = (full) => {
         const s = String(full || '').trim();
         if (!s.startsWith('+')) return null;
@@ -346,9 +400,14 @@
       const hidden = document.getElementById('emergency_phone_no');
       if (!country || !local || !hidden) return;
 
+      if (window.AdminCountryDialCodes) {
+        window.AdminCountryDialCodes.populate(country, '+92');
+      }
+
       const initDigits = String(hidden.value || '').replace(/\D/g, '');
       if (initDigits) {
-        const ccDigits = String(country.value || '').replace(/\D/g, '');
+        const cc = String(country.value || '').trim();
+        const ccDigits = cc.replace(/\D/g, '');
         if (ccDigits && initDigits.startsWith(ccDigits)) {
           local.value = initDigits.slice(ccDigits.length);
         } else {
@@ -371,6 +430,26 @@
     AdminFormValidator.wire(document.getElementById('userEditForm'), {
       extraValidate: (form) => {
         const errors = [];
+        const phone = (form.phone_no?.value || '').trim();
+        if (phone && !/^\+\d{10,15}$/.test(phone)) {
+          errors.push('Phone must be in international format like +923001234567 (10-15 digits total).');
+        }
+        const ePhone = (form.emergency_phone_no?.value || '').trim();
+        if (ePhone && !/^\d{10,15}$/.test(ePhone)) {
+          errors.push('Emergency phone must be 10-15 digits (no +).');
+        }
+        const bankSelect = document.getElementById('bankname_select');
+        const bankInput = document.getElementById('bankname');
+        if (bankSelect && bankInput) {
+          const selected = (bankSelect.value || '').trim();
+          if (selected && selected !== 'Other') {
+            bankInput.value = selected;
+          } else if (selected === 'Other') {
+            bankInput.value = (bankInput.value || '').trim();
+          } else {
+            bankInput.value = (bankInput.value || '').trim();
+          }
+        }
         const licenseNo = (form.driving_license_no?.value || '').trim();
         const licenseFront = form.driving_license_front?.files?.[0];
         const licenseBack = form.driving_license_back?.files?.[0];
@@ -384,5 +463,78 @@
         return errors;
       }
     });
+
+    (function () {
+      const sel = document.getElementById('bankname_select');
+      const input = document.getElementById('bankname');
+      if (!sel || !input) return;
+
+      const known = new Set([
+        'Al Baraka Bank (Pakistan) Limited',
+        'Allied Bank Limited',
+        'Askari Bank Limited',
+        'Bank Alfalah Limited',
+        'Bank Al Habib Limited',
+        'BankIslami Pakistan Limited',
+        'Citi Bank N.A. Pakistan',
+        'Deutsche Bank A.G. Pakistan',
+        'Dubai Islamic Bank Pakistan Limited',
+        'Faysal Bank Limited',
+        'First Women Bank Limited',
+        'Habib Bank Limited (HBL)',
+        'Habib Metropolitan Bank Limited',
+        'Industrial and Commercial Bank of China (ICBC) Pakistan',
+        'JS Bank Limited',
+        'MCB Bank Limited',
+        'MCB Islamic Bank Limited',
+        'Meezan Bank Limited',
+        'National Bank of Pakistan (NBP)',
+        'Samba Bank Limited',
+        'Silkbank Limited',
+        'Sindh Bank Limited',
+        'Soneri Bank Limited',
+        'Standard Chartered Bank (Pakistan) Limited',
+        'Summit Bank Limited',
+        'The Bank of Khyber',
+        'The Bank of Punjab',
+        'United Bank Limited (UBL)',
+        'Advans Pakistan Microfinance Bank Limited',
+        'APNA Microfinance Bank Limited',
+        'FINCA Microfinance Bank Limited',
+        'First MicroFinanceBank Limited',
+        'Khushhali Microfinance Bank Limited',
+        'Mobilink Microfinance Bank Limited',
+        'National Rural Support Programme (NRSP) Microfinance Bank Limited',
+        'Pak Oman Microfinance Bank Limited',
+        'Telenor Microfinance Bank Limited',
+        'U Microfinance Bank Limited',
+        'House Building Finance Company Limited (HBFC)',
+        'Pakistan Kuwait Investment Company (Private) Limited',
+        'Pak-Brunei Investment Company Limited',
+        'Pak-China Investment Company Limited',
+        'Pak Libya Holding Company (Private) Limited',
+        'Pak Oman Investment Company Limited',
+        'Saudi Pak Industrial and Agricultural Investment Company Limited',
+        'Sindh Modaraba',
+      ]);
+      const init = (input.value || '').trim();
+      if (known.has(init)) {
+        sel.value = init;
+      } else if (init) {
+        sel.value = 'Other';
+      }
+
+      const sync = () => {
+        const v = (sel.value || '').trim();
+        if (v === 'Other') {
+          input.style.display = '';
+        } else {
+          input.style.display = 'none';
+          if (v) input.value = v;
+        }
+      };
+      sel.addEventListener('change', sync);
+      sync();
+    })();
   </script>
 {% endblock %}

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../services/api_service.dart';
@@ -103,7 +104,7 @@ class _ProfileDrivingLicenseEditScreenState extends State<ProfileDrivingLicenseE
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
 
-    final licenseNoTrim = _licenseNo.text.trim();
+    final licenseNoTrim = _licenseNo.text.trim().toUpperCase().replaceAll(' ', '');
     final initialLicenseNo = (widget.initialUser['driving_license_no'] ?? widget.initialUser['driving_license_number'] ?? '').toString().trim();
     final effectiveLicenseNo = licenseNoTrim.isNotEmpty ? licenseNoTrim : initialLicenseNo;
 
@@ -261,6 +262,18 @@ class _ProfileDrivingLicenseEditScreenState extends State<ProfileDrivingLicenseE
               TextFormField(
                 controller: _licenseNo,
                 decoration: const InputDecoration(border: OutlineInputBorder(), hintText: 'Enter license number'),
+                textCapitalization: TextCapitalization.characters,
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'[A-Za-z0-9\-/ ]')),
+                  LengthLimitingTextInputFormatter(20),
+                ],
+                validator: (v) {
+                  final s = (v ?? '').trim().toUpperCase().replaceAll(' ', '');
+                  if (s.isEmpty) return null;
+                  final ok = RegExp(r'^[A-Z0-9][A-Z0-9\-/]{4,19}$').hasMatch(s);
+                  if (!ok) return 'Enter a valid driving license number';
+                  return null;
+                },
               ),
               const SizedBox(height: 16),
               const Text('License Images', style: TextStyle(fontWeight: FontWeight.w600)),

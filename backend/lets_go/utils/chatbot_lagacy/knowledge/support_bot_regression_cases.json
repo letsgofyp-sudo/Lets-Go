@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "id": "about_app",
+      "owner": "guest",
+      "prompt": "what is this app about",
+      "expect_any": ["ride", "trip", "book", "create"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should describe LetsGo at a high level."
+    },
+    {
+      "id": "list_faqs",
+      "owner": "guest",
+      "prompt": "show faqs",
+      "expect_any": ["faq"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should list FAQ questions or mention FAQs."
+    },
+    {
+      "id": "manual_topics",
+      "owner": "guest",
+      "prompt": "user manual topics",
+      "expect_any": ["manual"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should list headings from user_manual.md."
+    },
+    {
+      "id": "guest_limits",
+      "owner": "guest",
+      "prompt": "can i use letsgo without login",
+      "expect_any": ["guest", "log"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should explain guest vs logged-in limitations."
+    },
+    {
+      "id": "booking_blocked",
+      "owner": "guest",
+      "prompt": "why can't i book a ride",
+      "expect_any": ["verified", "verification", "cnic", "profile"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should mention verification gating and steps."
+    },
+    {
+      "id": "create_ride_blocked",
+      "owner": "guest",
+      "prompt": "why can't i create a ride",
+      "expect_any": ["verified", "vehicle", "driving", "license", "verification"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should mention driver verification + vehicle verification gating."
+    },
+    {
+      "id": "negotiation",
+      "owner": "guest",
+      "prompt": "how does fare negotiation work",
+      "expect_any": ["offer", "counter", "accept", "reject"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should explain offer/counter flow."
+    },
+    {
+      "id": "pickup_code",
+      "owner": "guest",
+      "prompt": "what is pickup code",
+      "expect_any": ["pickup", "verify", "verification"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should describe pickup verification."
+    },
+    {
+      "id": "payments",
+      "owner": "guest",
+      "prompt": "how do payments work",
+      "expect_any": ["cash", "bank", "receipt", "qr"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should describe manual payment: CASH vs bank transfer/QR and receipt."
+    },
+    {
+      "id": "sos",
+      "owner": "guest",
+      "prompt": "what is sos",
+      "expect_any": ["sos", "emergency", "incident"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should describe emergency feature."
+    },
+    {
+      "id": "notifications",
+      "owner": "guest",
+      "prompt": "how do notifications work",
+      "expect_any": ["notification", "unread", "read", "dismiss"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should describe notifications list/unread/read."
+    },
+    {
+      "id": "routing_fare",
+      "owner": "guest",
+      "prompt": "from COMSATS to Vehari fare estimate",
+      "expect_any": ["fare", "distance", "route", "locations"],
+      "expect_all": [],
+      "forbid": ["pbkdf2"],
+      "notes": "Should respond deterministically; may return distance/fare or ask to clarify locations."
+    },
+    {
+      "id": "restricted_cancel",
+      "owner": "guest",
+      "prompt": "cancel my booking",
+      "expect_any": ["can't", "can’t", "cannot", "use the app"],
+      "expect_all": [],
+      "forbid": ["pbkdf2"],
+      "notes": "Must refuse to perform restricted actions and guide to UI/admin support."
+    },
+    {
+      "id": "my_profile",
+      "owner": "user",
+      "prompt": "my profile",
+      "expect_any": ["name", "username", "email", "profile", "not reachable", "not authorized", "not verified", "banned", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://", "cnic", "driving_license"],
+      "notes": "Should show safe profile fields for verified users; deny for guest/pending/rejected/banned as per rules. Must not leak URLs or sensitive fields."
+    },
+    {
+      "id": "my_bookings",
+      "owner": "user",
+      "prompt": "my bookings",
+      "expect_any": ["booking", "bookings", "trip", "not reachable", "not authorized", "not verified", "banned", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should list bookings for verified; deny for pending/rejected/banned."
+    },
+    {
+      "id": "my_rides",
+      "owner": "user",
+      "prompt": "my rides",
+      "expect_any": ["ride", "rides", "trip", "not reachable", "not authorized", "not verified", "banned", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should list created trips/rides for verified users (may be empty); deny for non-verified/banned."
+    },
+    {
+      "id": "my_vehicles",
+      "owner": "user",
+      "prompt": "my vehicles",
+      "expect_any": ["vehicle", "vehicles", "status", "id", "not reachable", "not authorized", "not verified", "banned", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://", "engine_number", "chassis_number", "photo"],
+      "notes": "Should show safe vehicle fields; must not leak image URLs or engine/chassis numbers."
+    },
+    {
+      "id": "my_change_requests",
+      "owner": "user",
+      "prompt": "my change requests",
+      "expect_any": ["request", "requests", "change", "not reachable", "not authorized", "not verified", "banned", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Should list verification/profile change requests for verified; deny for non-verified/banned."
+    },
+    {
+      "id": "trip_details_missing_id",
+      "owner": "user",
+      "prompt": "trip details",
+      "expect_any": ["trip_id", "please provide", "matches", "not reachable", "not authorized", "not verified", "banned", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "If trip_id not provided, bot should ask for it or show matches from user bookings/rides (verified only)."
+    },
+    {
+      "id": "payment_details_missing_id",
+      "owner": "user",
+      "prompt": "payment details",
+      "expect_any": ["booking", "booking id", "provide", "not reachable", "not authorized", "not verified", "banned", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Without booking id, bot should ask for booking id."
+    },
+    {
+      "id": "chat_history_missing_id",
+      "owner": "user",
+      "prompt": "show chat history",
+      "expect_any": ["trip_id", "provide", "not reachable", "not authorized", "not verified", "banned", "chat", "rejected"],
+      "expect_all": [],
+      "forbid": ["pbkdf2", "http://", "https://"],
+      "notes": "Without trip_id, bot should ask for trip_id."
+    },
+    {
+      "id": "routes_search",
+      "owner": "guest",
+      "prompt": "routes from COMSATS to Vehari",
+      "expect_any": ["route", "routes", "found", "missing", "not reachable", "from", "to"],
+      "expect_all": [],
+      "forbid": ["pbkdf2"],
+      "notes": "Should route to route search (API) or provide deterministic guidance."
+    },
+    {
+      "id": "suggest_stops",
+      "owner": "guest",
+      "prompt": "suggest stops q=COMSATS",
+      "expect_any": ["stop", "stops", "comsats", "missing", "not reachable", "provide"],
+      "expect_all": [],
+      "forbid": ["pbkdf2"],
+      "notes": "Should call stop suggestion helper or ask for a search term if parsing fails."
+    }
+  ]
+}

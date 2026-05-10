@@ -15,6 +15,10 @@ class ApiService {
     // 'Authorization': 'Bearer $token',
   };
 
+  static String _digitsOnly(String input) {
+    return input.replaceAll(RegExp(r'\D'), '');
+  }
+
   static Future<int?> triggerAutoArchiveForDriver({
     required int userId,
     int limit = 5,
@@ -179,6 +183,28 @@ class ApiService {
     return json.decode(response.body) as Map<String, dynamic>;
   }
 
+  static Future<Map<String, dynamic>> getUserAnalytics({
+    required int userId,
+    int? windowDays,
+  }) async {
+    try {
+      final base = Uri.parse('$url/lets_go/users/$userId/analytics/');
+      final uri = windowDays == null
+          ? base
+          : base.replace(queryParameters: {'window_days': windowDays.toString()});
+      final response = await http
+          .get(uri, headers: _headers)
+          .timeout(const Duration(seconds: 12));
+      final decoded = response.body.isNotEmpty ? json.decode(response.body) : {};
+      if (decoded is Map<String, dynamic>) return decoded;
+      return {'success': response.statusCode >= 200 && response.statusCode < 300};
+    } on TimeoutException {
+      return {'success': false, 'error': 'Network timeout'};
+    } catch (e) {
+      return {'success': false, 'error': 'Network error: $e'};
+    }
+  }
+
   /// Get user's booked rides history (archived after 24h finalization)
   static Future<Map<String, dynamic>> getUserBookedRidesHistory({
     required int userId,
@@ -329,6 +355,35 @@ class ApiService {
       return await getSupportBotNewMessages(userId: userId, sinceId: 0);
     } catch (e) {
       throw Exception('Network error: $e');
+    }
+  }
+
+  static Future<Map<String, dynamic>> clearSupportChat({
+    required int userId,
+    int? guestUserId,
+    String threadType = 'BOT',
+  }) async {
+    try {
+      final uri = Uri.parse('$url/lets_go/support/clear/');
+      final response = await http.post(
+        uri,
+        headers: _headers,
+        body: json.encode({
+          if (guestUserId != null && guestUserId > 0)
+            'guest_user_id': guestUserId
+          else
+            'user_id': userId,
+          'thread_type': threadType,
+        }),
+      );
+      final decoded = response.body.isNotEmpty ? json.decode(response.body) : {};
+      if (decoded is Map<String, dynamic>) return decoded;
+      return {'success': response.statusCode >= 200 && response.statusCode < 300};
+    } catch (e) {
+      return {
+        'success': false,
+        'error': 'Network error: $e',
+      };
     }
   }
 
@@ -2071,6 +2126,7 @@ class ApiService {
     required String phoneNo,
   }) async {
     try {
+      final normalizedPhone = _digitsOnly(phoneNo.trim());
       final response = await http.put(
         Uri.parse('$url/lets_go/users/$userId/emergency-contact/'),
         headers: _headers,
@@ -2078,7 +2134,7 @@ class ApiService {
           'name': name,
           'relation': relation,
           'email': email,
-          'phone_no': phoneNo,
+          'phone_no': normalizedPhone,
         }),
       );
       final body = response.body;

@@ -25,6 +25,7 @@ urlpatterns = [
     path('reset_password/', views_authentication.reset_password, name='reset_password'),
     # User profile (lightweight) for Flutter role detection
     path('users/<int:user_id>/', views_profile.user_profile, name='user_profile'),
+    path('users/<int:user_id>/analytics/', views_profile.user_analytics, name='user_analytics'),
     path('users/<int:user_id>/contact-change/send-otp/', views_profile.send_profile_contact_change_otp, name='send_profile_contact_change_otp'),
     path('users/<int:user_id>/contact-change/verify-otp/', views_profile.verify_profile_contact_change_otp, name='verify_profile_contact_change_otp'),
     path('users/<int:user_id>/accountqr/upload/', views_profile.upload_user_accountqr, name='upload_user_accountqr'),
@@ -56,6 +57,7 @@ urlpatterns = [
     path('support/guest/', views_support_chat.support_guest, name='support_guest'),
     path('support/bot/', views_support_chat.view_bot, name='view_bot'),
     path('support/admin/', views_support_chat.view_adminchat, name='view_adminchat'),
+    path('support/clear/', views_support_chat.clear_support_chat, name='clear_support_chat'),
     path('trips/<str:trip_id>/', views_rideposting.get_trip_details, name='get_trip_details'),
     path('trips/<str:trip_id>/update/', views_rideposting.update_trip, name='update_trip'),
     path('trips/<str:trip_id>/delete/', views_rideposting.delete_trip, name='delete_trip'),

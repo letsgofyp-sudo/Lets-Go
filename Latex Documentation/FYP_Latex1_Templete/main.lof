@@ -1,0 +1,112 @@
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Master Use Case Diagram for the Lets Go Ride Sharing App system, covering all 25 use cases and the interactions between Driver, Passenger, Admin, and secondary Service APIs.}}{19}{figure.47}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Registration and Verification Theme: Illustrates the flow from account creation and multi-channel OTP verification to manual Admin identity approval.}}{20}{figure.49}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Vehicle Management: Covers the lifecycle of driver vehicle registration, including 2-wheel/4-wheel constraints and maintenance.}}{20}{figure.51}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Ride Management: Detailed driver-side ride lifecycle from route-based creation to manual completion marking.}}{21}{figure.53}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Discovery and Booking: The passenger search process, seat-locking mechanism, and post-booking coordination channels.}}{21}{figure.55}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Ride Execution Phase: Focuses on live GPS tracking, geofenced pickup code (OTP) verification, and arrival confirmations.}}{22}{figure.57}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Safety and Disputes: Workflow for SOS alerts, emergency contact escalation, and Admin audit of immutable evidence.}}{22}{figure.59}%
+\contentsline {figure}{\numberline {3.8}{\ignorespaces AI/ML Features: Automated content-based ride recommendations and intelligent support via the Generative AI knowledge base.}}{23}{figure.61}%
+\contentsline {figure}{\numberline {3.9}{\ignorespaces Manual Payment Flow: Two-step manual verification process for external fund transfers (Cash/Bank/QR).}}{23}{figure.63}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Context Diagram showing system boundary and interactions with external actors and services}}{92}{figure.143}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces High-level system architecture diagram showing multi-tier deployment and component interactions}}{96}{figure.163}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces Activity Diagram - Authentication and Onboarding workflow}}{97}{figure.168}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Activity Diagram - Document Management workflow}}{98}{figure.171}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Activity Diagram - Vehicle Management workflow}}{99}{figure.174}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Activity Diagram - Ride Management workflow}}{100}{figure.177}%
+\contentsline {figure}{\numberline {4.7}{\ignorespaces Activity Diagram - Ride Browsing and Search workflow}}{101}{figure.180}%
+\contentsline {figure}{\numberline {4.8}{\ignorespaces Activity Diagram - Booking and Seat Management workflow}}{102}{figure.183}%
+\contentsline {figure}{\numberline {4.9}{\ignorespaces Activity Diagram - Post-Booking Chat and Broadcast workflow}}{103}{figure.186}%
+\contentsline {figure}{\numberline {4.10}{\ignorespaces Activity Diagram - Pre-Ride Reminders workflow}}{104}{figure.189}%
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Activity Diagram - Live Tracking and Pickup Code workflow}}{105}{figure.192}%
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Activity Diagram - Manual Payment Confirmation workflow}}{106}{figure.195}%
+\contentsline {figure}{\numberline {4.13}{\ignorespaces Activity Diagram - Ratings and Completion workflow}}{107}{figure.198}%
+\contentsline {figure}{\numberline {4.14}{\ignorespaces Activity Diagram - SOS and Emergency workflow}}{108}{figure.201}%
+\contentsline {figure}{\numberline {4.15}{\ignorespaces Activity Diagram - Dispute Management workflow}}{109}{figure.204}%
+\contentsline {figure}{\numberline {4.16}{\ignorespaces Comprehensive Class Diagram showing all system entities and relationships}}{110}{figure.207}%
+\contentsline {figure}{\numberline {4.17}{\ignorespaces Sequence Diagram - User Authentication (Signup and Login)}}{112}{figure.213}%
+\contentsline {figure}{\numberline {4.18}{\ignorespaces Sequence Diagram - Driver Posting a Ride}}{113}{figure.216}%
+\contentsline {figure}{\numberline {4.19}{\ignorespaces Sequence Diagram - Passenger Booking and Driver Acceptance}}{114}{figure.219}%
+\contentsline {figure}{\numberline {4.20}{\ignorespaces Sequence Diagram - Live Tracking, Ride Completion, and Payment}}{115}{figure.222}%
+\contentsline {figure}{\numberline {4.21}{\ignorespaces State Transition Diagram - Booking States}}{116}{figure.226}%
+\contentsline {figure}{\numberline {4.22}{\ignorespaces State Transition Diagram - Driver States}}{117}{figure.229}%
+\contentsline {figure}{\numberline {4.23}{\ignorespaces State Transition Diagram - Passenger States}}{118}{figure.232}%
+\contentsline {figure}{\numberline {4.24}{\ignorespaces State Transition Diagram - SOS States}}{119}{figure.235}%
+\contentsline {figure}{\numberline {4.25}{\ignorespaces State Transition Diagram - Complaint and Dispute States}}{120}{figure.238}%
+\contentsline {figure}{\numberline {4.26}{\ignorespaces Level 1 DFD - Authentication and Onboarding}}{121}{figure.243}%
+\contentsline {figure}{\numberline {4.27}{\ignorespaces Level 1 DFD - Document Management}}{122}{figure.246}%
+\contentsline {figure}{\numberline {4.28}{\ignorespaces Level 1 DFD - Vehicle Management}}{123}{figure.249}%
+\contentsline {figure}{\numberline {4.29}{\ignorespaces Level 1 DFD - Ride Management}}{123}{figure.252}%
+\contentsline {figure}{\numberline {4.30}{\ignorespaces Level 1 DFD - Ride Browsing and Search}}{124}{figure.255}%
+\contentsline {figure}{\numberline {4.31}{\ignorespaces Level 1 DFD - Booking and Seat Management}}{125}{figure.258}%
+\contentsline {figure}{\numberline {4.32}{\ignorespaces Level 1 DFD - Post-Booking Chat}}{126}{figure.261}%
+\contentsline {figure}{\numberline {4.33}{\ignorespaces Level 1 DFD - Pre-Ride Reminders}}{127}{figure.264}%
+\contentsline {figure}{\numberline {4.34}{\ignorespaces Level 1 DFD - Live Tracking and Pickup Code}}{128}{figure.267}%
+\contentsline {figure}{\numberline {4.35}{\ignorespaces Level 1 DFD - Payment and Manual Confirmation}}{129}{figure.270}%
+\contentsline {figure}{\numberline {4.36}{\ignorespaces Level 1 DFD - Ratings and Completion}}{130}{figure.273}%
+\contentsline {figure}{\numberline {4.37}{\ignorespaces Level 1 DFD - SOS and Emergency Management}}{131}{figure.276}%
+\contentsline {figure}{\numberline {4.38}{\ignorespaces Level 1 DFD - Dispute Management}}{132}{figure.279}%
+\contentsline {figure}{\numberline {4.39}{\ignorespaces Level 1 DFD - Notification Service}}{133}{figure.282}%
+\contentsline {figure}{\numberline {4.40}{\ignorespaces Level 1 DFD - ML Recommendation Service}}{134}{figure.285}%
+\contentsline {figure}{\numberline {4.41}{\ignorespaces Level 1 DFD - Smart Chatbot Support}}{135}{figure.288}%
+\contentsline {figure}{\numberline {4.42}{\ignorespaces Level 1 DFD - Audit, Logging, and Analytics}}{136}{figure.291}%
+\contentsline {figure}{\numberline {4.43}{\ignorespaces Entity Relationship Diagram}}{138}{figure.295}%
+\contentsline {figure}{\numberline {4.44}{\ignorespaces Physical Database Schema Diagram showing table structures and relationships}}{140}{figure.299}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {5.1}{\ignorespaces User Signup Flow}}{171}{figure.415}%
+\contentsline {figure}{\numberline {5.2}{\ignorespaces Login Screen}}{172}{figure.418}%
+\contentsline {figure}{\numberline {5.3}{\ignorespaces Account Status (Banned/Rejected)}}{173}{figure.421}%
+\contentsline {figure}{\numberline {5.4}{\ignorespaces Create Ride Posting Flow (Map View, Summary, and Final Details)}}{174}{figure.424}%
+\contentsline {figure}{\numberline {5.5}{\ignorespaces Find Ride Flow (Available Rides, Pickup/Drop, and Filters)}}{175}{figure.427}%
+\contentsline {figure}{\numberline {5.6}{\ignorespaces Ride Details View}}{176}{figure.430}%
+\contentsline {figure}{\numberline {5.7}{\ignorespaces Request Ride (Booking Form)}}{177}{figure.433}%
+\contentsline {figure}{\numberline {5.8}{\ignorespaces Booked Ride Details}}{178}{figure.436}%
+\contentsline {figure}{\numberline {5.9}{\ignorespaces Negotiation Between Passenger and Driver}}{179}{figure.439}%
+\contentsline {figure}{\numberline {5.10}{\ignorespaces Driver Ride Details (Pending)}}{180}{figure.442}%
+\contentsline {figure}{\numberline {5.11}{\ignorespaces Negotiation Completed}}{181}{figure.445}%
+\contentsline {figure}{\numberline {5.12}{\ignorespaces My Rides}}{182}{figure.448}%
+\contentsline {figure}{\numberline {5.13}{\ignorespaces Passenger Live Tracking, Driver Live Tracking, and Driver Pickup QR Code}}{183}{figure.451}%
+\contentsline {figure}{\numberline {5.14}{\ignorespaces Passenger Payment, Rating, and Driver Payment Confirmation}}{184}{figure.454}%
+\contentsline {figure}{\numberline {5.15}{\ignorespaces Messaging and User Chat}}{185}{figure.457}%
+\contentsline {figure}{\numberline {5.16}{\ignorespaces Support Chat - Bot \& Admin}}{186}{figure.460}%
+\contentsline {figure}{\numberline {5.17}{\ignorespaces Notifications List}}{187}{figure.463}%
+\contentsline {figure}{\numberline {5.18}{\ignorespaces Emergency SOS (Countdown, SOS Notifications, and Offline/Error State)}}{188}{figure.466}%
+\contentsline {figure}{\numberline {5.19}{\ignorespaces Profile Overview}}{189}{figure.469}%
+\contentsline {figure}{\numberline {5.20}{\ignorespaces Profile Analytics}}{190}{figure.472}%
+\contentsline {figure}{\numberline {5.21}{\ignorespaces Ride History (Booked/Created)}}{191}{figure.475}%
+\contentsline {figure}{\numberline {5.22}{\ignorespaces Driver Verification Documents (Edit)}}{192}{figure.478}%
+\contentsline {figure}{\numberline {5.23}{\ignorespaces Blocked Users}}{193}{figure.481}%
+\contentsline {figure}{\numberline {5.24}{\ignorespaces Web Live Tracking (External)}}{194}{figure.484}%
+\contentsline {figure}{\numberline {5.25}{\ignorespaces Admin Login Screen}}{195}{figure.487}%
+\contentsline {figure}{\numberline {5.26}{\ignorespaces Admin Dashboard (Overview)}}{196}{figure.490}%
+\contentsline {figure}{\numberline {5.27}{\ignorespaces Rides Dashboard}}{196}{figure.493}%
+\contentsline {figure}{\numberline {5.28}{\ignorespaces Reached Pending Dashboard}}{197}{figure.496}%
+\contentsline {figure}{\numberline {5.29}{\ignorespaces SOS Incidents Dashboard}}{198}{figure.499}%
+\contentsline {figure}{\numberline {5.30}{\ignorespaces Users Management Screen}}{199}{figure.502}%
+\contentsline {figure}{\numberline {5.31}{\ignorespaces Change Requests Dashboard}}{200}{figure.505}%
+\contentsline {figure}{\numberline {5.32}{\ignorespaces Admin Todos Inbox}}{201}{figure.508}%
+\contentsline {figure}{\numberline {5.33}{\ignorespaces Support FAQs Management}}{201}{figure.511}%
+\contentsline {figure}{\numberline {5.34}{\ignorespaces Guest Support Users List}}{202}{figure.514}%
+\contentsline {figure}{\numberline {5.35}{\ignorespaces Application Navigation Flow}}{203}{figure.517}%
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {6.1}{\ignorespaces API Validation: Route Creation with Waypoint Coordinates}}{210}{figure.550}%
+\contentsline {figure}{\numberline {6.2}{\ignorespaces API Validation: Trip Publication based on Created Route}}{211}{figure.552}%
+\contentsline {figure}{\numberline {6.3}{\ignorespaces API Validation: Ride Booking Request Submission}}{211}{figure.554}%
+\contentsline {figure}{\numberline {6.4}{\ignorespaces API Validation: Trip State Transition to "IN_PROGRESS"}}{212}{figure.557}%
+\contentsline {figure}{\numberline {6.5}{\ignorespaces API Validation: Driver Real-time Location and Speed Update}}{212}{figure.559}%
+\contentsline {figure}{\numberline {6.6}{\ignorespaces API Validation: Trip Completion and Final Status Update}}{213}{figure.561}%
+\contentsline {figure}{\numberline {6.7}{\ignorespaces API Validation: Payment Confirmation and Status Update}}{213}{figure.564}%
+\contentsline {figure}{\numberline {6.8}{\ignorespaces API Validation: SOS Emergency Trigger and Automated Notification Dispatch}}{214}{figure.566}%
+\contentsline {figure}{\numberline {6.9}{\ignorespaces API Validation: Ride History Retrieval and Data Integrity Check}}{214}{figure.568}%
+\contentsline {figure}{\numberline {6.10}{\ignorespaces JMeter HTML Dashboard: Overall performance statistics under 1000 concurrent users}}{215}{figure.572}%
+\contentsline {figure}{\numberline {6.11}{\ignorespaces JMeter non-GUI execution: terminal summary output and completion status}}{216}{figure.574}%
+\contentsline {figure}{\numberline {6.12}{\ignorespaces Terminal evidence: Bandit and pip-audit execution and report generation for security testing}}{217}{figure.579}%
+\contentsline {figure}{\numberline {6.13}{\ignorespaces OWASP ZAP: Automated scan configuration and target selection}}{218}{figure.581}%
+\contentsline {figure}{\numberline {6.14}{\ignorespaces OWASP ZAP: Alerts summary after scan completion (no high-risk issues detected)}}{218}{figure.583}%
+\contentsline {figure}{\numberline {6.15}{\ignorespaces Automated Dependency Check and Controller Test Execution}}{221}{figure.596}%
+\contentsline {figure}{\numberline {6.16}{\ignorespaces Frontend Summary: 281 Tests Passed Successfully}}{221}{figure.598}%
+\contentsline {figure}{\numberline {6.17}{\ignorespaces Backend Summary: 199 Passed with Zero Failures}}{222}{figure.601}%
+\addvspace {10\p@ }

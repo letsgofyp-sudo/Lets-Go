@@ -1,0 +1,139 @@
+CHATBOT LIVE SMOKE TRANSCRIPT
+timestamp=2026-04-27T20:32:32.989615
+live_enable_llm=0
+api_base_url='http://10.91.39.199:8000'
+user_ids=[13, 14, 15]
+guest_ids=[6, 7, 8]
+total_prompts=10
+
+TARGET: user user_id=13
+PROMPT #0: 'hi'
+REPLY: 'Hi Fawad Saqlain. What would you like to do today—book a ride or create a ride?'
+PROMPT #1: 'help'
+REPLY: 'You can talk naturally. Examples:\n- book a ride from Saddar to DHA tomorrow at 6pm\n- I need 2 seats\n- make it 450 fare\n- yes (to confirm)\n- cancel (to stop current action)\n- ask business rules/questions like: can I chat without booking?'
+PROMPT #2: 'faq'
+REPLY: "Here are some FAQs you can ask about:\n- How do I book a ride?\n- How do I create a ride?\n- How does fare calculation work?\n- How do payments work?\n- How do notifications work?\n- What is the pickup code?\n- Why can't I book a ride?\n- Why can't I create a ride?\n- How does fare negotiation work?\n- How do I cancel a booking?\n- How do I cancel a trip?\n- How do I delete a trip?"
+PROMPT #3: 'manual'
+REPLY: "User manual topics:\n- Booking a ride\n- Creating a ride\n- Selecting a route and stops\n- Fare calculation and breakdown\n- Payments and payment confirmation\n- Messaging and chat\n- Fare negotiation\n- Cancel booking / cancel trip\n- Deleting a trip\n- Guest mode limitations\n- Profile and verification requests\n- SOS and safety\n\nAsk a question like: 'How do I book a ride?'"
+PROMPT #4: 'my profile'
+REPLY: "200: {'id': 13, 'name': 'Fawad Saqlain', 'username': 'fawad', 'email': 'fa22-bse-031@cuivehari.edu.pk', 'phone_no': '+923026975353', 'address': 'Mumtaz Garden Vehari', 'gender': 'male', 'status': 'VERIFIED'}"
+PROMPT #5: 'my bookings'
+REPLY: '200: {"success":true,"bookings":[{"booking_id":"B231-2026-03-14-16:56-13","id":199,"db_id":199,"route_names":["Stop A","Stop C, Stop D"],"trip_id":"T325-2026-03-14-16:43","trip_date":"2026-03-19","departure_time":"12:00","distance":4.43,"total_seats":4,"available_seats":3,"status":"CONFIRMED","booking_status":"CONFIRMED","payment_status":"PENDING","total_fare":200,"from_stop_order":1,"to_stop_order":3,"bargaining_status":"ACCEPTED","negotiated_fare":200,"passenger_offer":null,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B512-2026-03-13-15:17-13","id":198,"db_id":198,"route_names":["Off comsats road","COMSATS University Islamabad Vehari Campus"],"trip_id":"T835-2026-03-13-15:08","trip_date":"2026-03-13","departure_time":"15:37","distance":0.46,"total_seats":4,"available_seats":3,"status":"PENDING","booking_status":"PENDING","payment_status":"PENDING","total_fare":200,"from_stop_order":1,"to_stop_order":3,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":200,"passenger_offer":200,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B604-2026-03-13-15:00-13","id":197,"db_id":197,"route_names":["Off comsats road","COMSATS University Islamabad Vehari Campus"],"trip_id":"T662-2026-03-13-14:58","trip_date":"2026-03-13","departure_time":"15:26","distance":0.48,"total_seats":4,"available_seats":3,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":200,"from_stop_order":1,"to_stop_order":3,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":200,"passenger_offer":200,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B973-2026-03-12-20:59-13","id":196,"db_id":196,"route_names":["Off comsats road","Multan-Vehari Road"],"trip_id":"T345-2026-03-12-20:55","trip_date":"2026-03-12","departure_time":"21:23","distance":0.47,"total_seats":4,"available_seats":3,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":200,"from_stop_order":1,"to_stop_order":3,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":200,"passenger_offer":200,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B133-2026-03-12-19:37-13","id":195,"db_id":195,"route_names":["Off comsats road","Multan-Vehari Road"],"trip_id":"T342-2026-03-12-19:34","trip_date":"2026-03-12","departure_time":"20:04","distance":0.26,"total_seats":4,"available_seats":3,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":100,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"ACCEPTED","negotiated_fare":100,"passenger_offer":100,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B249-2026-03-12-16:30-13","id":194,"db_id":194,"route_names":["Off comsats road","Multan-Vehari Road"],"trip_id":"T271-2026-03-12-16:26","trip_date":"2026-03-12","departure_time":"16:55","distance":0.26,"total_seats":4,"available_seats":3,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":100,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":100,"passenger_offer":100,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B298-2026-03-12-14:24-13","id":193,"db_id":193,"route_names":["Off comsats road","Multan-Vehari Road"],"trip_id":"T249-2026-03-12-14:18","trip_date":"2026-03-12","departure_time":"14:47","distance":0.26,"total_seats":4,"available_seats":3,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":100,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":100,"passenger_offer":100,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B143-2026-03-10-15:05-13","id":189,"db_id":189,"route_names":["Off comsats road","COMSATS University Islamabad Vehari Campus"],"trip_id":"T559-2026-03-09-12:03","trip_date":"2026-03-10","departure_time":"12:01","distance":0.45,"total_seats":4,"available_seats":4,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":100,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"REJECTED","negotiated_fare":100,"passenger_offer":100,"passenger_id":13,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}}]}'
+PROMPT #6: 'my rides'
+REPLY: 'Here are your created rides:\n- trip_id=T607-2026-04-09-10:24 | Unknown -> Unknown | 2026-04-10 10:22 | status=pending\n- trip_id=T922-2026-03-11-12:50 | Unknown -> Unknown | 2026-03-12 12:49 | status=pending\n- trip_id=T680-2026-03-08-11:13 | وہاڑی -> Faisal Town | 2026-03-12 11:13 | status=pending\n- trip_id=T675-2026-03-08-11:13 | Unknown -> Unknown | 2026-03-09 11:13 | status=pending\n- trip_id=T905-2026-03-08-06:12 | Unknown -> Unknown | 2026-03-08 07:00 | status=cancelled'
+PROMPT #7: 'my vehicles'
+REPLY: 'Here are your vehicles:\n- vehicle_id=15 | ADU-6312 | ghgvhfu rvhchct | type=TW | seats=2 | status=VERIFIED\n- vehicle_id=14 | VEHPN-1336 | vehcn veh1mn | type=FW | seats=18 | status=VERIFIED\nReply with the vehicle_id you want to use.'
+PROMPT #8: 'trip details'
+REPLY: 'Which trip details do you want? Provide trip_id.'
+PROMPT #9: 'pickup code'
+REPLY: "I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action."
+
+TARGET: user user_id=14
+PROMPT #0: 'hi'
+REPLY: 'Hi Live User. What would you like to do today—book a ride or create a ride?'
+PROMPT #1: 'help'
+REPLY: 'You can talk naturally. Examples:\n- book a ride from Saddar to DHA tomorrow at 6pm\n- I need 2 seats\n- make it 450 fare\n- yes (to confirm)\n- cancel (to stop current action)\n- ask business rules/questions like: can I chat without booking?'
+PROMPT #2: 'faq'
+REPLY: "Here are some FAQs you can ask about:\n- How do I book a ride?\n- How do I create a ride?\n- How does fare calculation work?\n- How do payments work?\n- How do notifications work?\n- What is the pickup code?\n- Why can't I book a ride?\n- Why can't I create a ride?\n- How does fare negotiation work?\n- How do I cancel a booking?\n- How do I cancel a trip?\n- How do I delete a trip?"
+PROMPT #3: 'manual'
+REPLY: "User manual topics:\n- Booking a ride\n- Creating a ride\n- Selecting a route and stops\n- Fare calculation and breakdown\n- Payments and payment confirmation\n- Messaging and chat\n- Fare negotiation\n- Cancel booking / cancel trip\n- Deleting a trip\n- Guest mode limitations\n- Profile and verification requests\n- SOS and safety\n\nAsk a question like: 'How do I book a ride?'"
+PROMPT #4: 'my profile'
+REPLY: "200: {'id': 14, 'name': 'Ali', 'username': 'Ali123', 'email': 'ali@gmail.com', 'phone_no': '+923287754345', 'address': '39 wb', 'gender': 'male', 'status': 'VERIFIED'}"
+PROMPT #5: 'my bookings'
+REPLY: '200: {"success":true,"bookings":[{"booking_id":"B219-2026-03-11-12:52-14","id":190,"db_id":190,"route_names":["وہاڑی","وہاڑی"],"trip_id":"T922-2026-03-11-12:50","trip_date":"2026-03-12","departure_time":"12:49","distance":9.61,"total_seats":1,"available_seats":1,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":350,"from_stop_order":1,"to_stop_order":8,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":350,"passenger_offer":350,"passenger_id":14,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"rvhchct","company_name":"ghgvhfu","plate_number":"ADU-6312","seats":null,"vehicle_type":"TW"}},{"booking_id":"B509-2026-03-08-22:39-14","id":187,"db_id":187,"route_names":["وہاڑی","Peoples Colony"],"trip_id":"T160-2026-03-08-11:50","trip_date":"2026-03-09","departure_time":"11:50","distance":4.59,"total_seats":1,"available_seats":0,"status":"CONFIRMED","booking_status":"CONFIRMED","payment_status":"COMPLETED","total_fare":150,"from_stop_order":1,"to_stop_order":4,"bargaining_status":"ACCEPTED","negotiated_fare":150,"passenger_offer":150,"passenger_id":14,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"honda","plate_number":"ABF-3423","seats":null,"vehicle_type":"TW"}},{"booking_id":"B407-2026-03-08-06:13-14","id":186,"db_id":186,"route_names":["وہاڑی","GULZAR MEDICINE COMPANY, chemist, vehari"],"trip_id":"T905-2026-03-08-06:12","trip_date":"2026-03-08","departure_time":"07:00","distance":2.33,"total_seats":17,"available_seats":16,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":300,"from_stop_order":1,"to_stop_order":4,"bargaining_status":"ACCEPTED","negotiated_fare":300,"passenger_offer":300,"passenger_id":14,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"veh1mn","company_name":"vehcn","plate_number":"VEHPN-1336","seats":18,"vehicle_type":"FW"}}]}'
+PROMPT #6: 'my rides'
+REPLY: 'Here are your created rides:\n- trip_id=T325-2026-03-14-16:43 | Unknown -> Unknown | 2026-03-19 12:00 | status=inprocess\n- trip_id=T835-2026-03-13-15:08 | Unknown -> Unknown | 2026-03-13 15:37 | status=pending\n- trip_id=T662-2026-03-13-14:58 | Unknown -> Unknown | 2026-03-13 15:26 | status=cancelled\n- trip_id=T345-2026-03-12-20:55 | Unknown -> Unknown | 2026-03-12 21:23 | status=cancelled\n- trip_id=T342-2026-03-12-19:34 | Unknown -> Unknown | 2026-03-12 20:04 | status=cancelled\n- trip_id=T271-2026-03-12-16:26 | Unknown -> Unknown | 2026-03-12 16:55 | status=cancelled\n- trip_id=T249-2026-03-12-14:18 | Unknown -> Unknown | 2026-03-12 14:47 | status=cancelled\n- trip_id=T852-2026-03-12-13:13 | Unknown -> Unknown | 2026-03-12 13:43 | status=pending\n- trip_id=T306-2026-03-12-05:50 | Unknown -> Unknown | 2026-03-12 06:19 | status=cancelled\n- trip_id=T951-2026-03-11-21:34 | Unknown -> Unknown | 2026-03-11 22:03 | status=cancelled\n- trip_id=T559-2026-03-09-12:03 | Unknown -> Unknown | 2026-03-10 12:01 | status=cancelled\n- trip_id=T858-2026-03-09-10:20 | Unknown -> Unknown | 2026-03-10 10:19 | status=completed'
+PROMPT #7: 'my vehicles'
+REPLY: 'Here are your vehicles:\n- vehicle_id=17 | DJK-7525 | Honda 2023 | type=FW | seats=5 | status=VERIFIED\n- vehicle_id=18 | ABD-7529 | yamha 2023 | type=TW | seats=2 | status=VERIFIED\nReply with the vehicle_id you want to use.'
+PROMPT #8: 'trip details'
+REPLY: 'Which trip details do you want? Provide trip_id.'
+PROMPT #9: 'pickup code'
+REPLY: "I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action."
+
+TARGET: user user_id=15
+PROMPT #0: 'hi'
+REPLY: 'Hi Live User. What would you like to do today—book a ride or create a ride?'
+PROMPT #1: 'help'
+REPLY: 'You can talk naturally. Examples:\n- book a ride from Saddar to DHA tomorrow at 6pm\n- I need 2 seats\n- make it 450 fare\n- yes (to confirm)\n- cancel (to stop current action)\n- ask business rules/questions like: can I chat without booking?'
+PROMPT #2: 'faq'
+REPLY: "Here are some FAQs you can ask about:\n- How do I book a ride?\n- How do I create a ride?\n- How does fare calculation work?\n- How do payments work?\n- How do notifications work?\n- What is the pickup code?\n- Why can't I book a ride?\n- Why can't I create a ride?\n- How does fare negotiation work?\n- How do I cancel a booking?\n- How do I cancel a trip?\n- How do I delete a trip?"
+PROMPT #3: 'manual'
+REPLY: "User manual topics:\n- Booking a ride\n- Creating a ride\n- Selecting a route and stops\n- Fare calculation and breakdown\n- Payments and payment confirmation\n- Messaging and chat\n- Fare negotiation\n- Cancel booking / cancel trip\n- Deleting a trip\n- Guest mode limitations\n- Profile and verification requests\n- SOS and safety\n\nAsk a question like: 'How do I book a ride?'"
+PROMPT #4: 'my profile'
+REPLY: "200: {'id': 15, 'name': 'Hamza', 'username': 'hamza', 'email': 'hamza@gmail.com', 'phone_no': '+923228730277', 'address': 'people colony vehari', 'gender': 'male', 'status': 'VERIFIED'}"
+PROMPT #5: 'my bookings'
+REPLY: '200: {"success":true,"bookings":[{"booking_id":"B612-2026-04-09-10:36-15","id":200,"db_id":200,"route_names":["Multan-Vehari Road","Multan"],"trip_id":"T607-2026-04-09-10:24","trip_date":"2026-04-10","departure_time":"10:22","distance":77.24,"total_seats":1,"available_seats":0,"status":"PENDING","booking_status":"PENDING","payment_status":"PENDING","total_fare":506,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":506,"passenger_offer":506,"passenger_id":15,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"rvhchct","company_name":"ghgvhfu","plate_number":"ADU-6312","seats":null,"vehicle_type":"TW"}},{"booking_id":"B257-2026-03-12-05:54-15","id":192,"db_id":192,"route_names":["Off comsats road","Multan-Vehari Road"],"trip_id":"T306-2026-03-12-05:50","trip_date":"2026-03-12","departure_time":"06:19","distance":0.26,"total_seats":4,"available_seats":4,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":100,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":100,"passenger_offer":100,"passenger_id":15,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B211-2026-03-11-21:38-15","id":191,"db_id":191,"route_names":["Off comsats road","Multan-Vehari Road"],"trip_id":"T951-2026-03-11-21:34","trip_date":"2026-03-11","departure_time":"22:03","distance":0.26,"total_seats":4,"available_seats":3,"status":"CANCELLED","booking_status":"CANCELLED","payment_status":"PENDING","total_fare":100,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"NO_NEGOTIATION","negotiated_fare":100,"passenger_offer":100,"passenger_id":15,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}},{"booking_id":"B249-2026-03-09-10:21-15","id":188,"db_id":188,"route_names":["Off comsats road","Multan-Vehari Road"],"trip_id":"T858-2026-03-09-10:20","trip_date":"2026-03-10","departure_time":"10:19","distance":0.26,"total_seats":4,"available_seats":4,"status":"COMPLETED","booking_status":"COMPLETED","payment_status":"COMPLETED","total_fare":30,"from_stop_order":1,"to_stop_order":2,"bargaining_status":"ACCEPTED","negotiated_fare":30,"passenger_offer":30,"passenger_id":15,"driver_response":null,"negotiation_notes":"","vehicle":{"model_number":"2023","company_name":"Honda","plate_number":"DJK-7525","seats":5,"vehicle_type":"FW"}}]}'
+PROMPT #6: 'my rides'
+REPLY: 'Here are your created rides:\n- trip_id=T501-2026-03-08-12:05 | Unknown -> Unknown | 2026-03-09 12:04 | status=pending\n- trip_id=T160-2026-03-08-11:50 | Unknown -> Unknown | 2026-03-09 11:50 | status=completed'
+PROMPT #7: 'my vehicles'
+REPLY: 'Here are your vehicles:\n- vehicle_id=16 | ABF-3423 | honda 2023 | type=TW | seats=2 | status=VERIFIED\nReply with the vehicle_id you want to use.'
+PROMPT #8: 'trip details'
+REPLY: 'Which trip details do you want? Provide trip_id.'
+PROMPT #9: 'pickup code'
+REPLY: "I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action."
+
+TARGET: guest user_id=-6
+PROMPT #0: 'hi'
+REPLY: 'Hi there. What would you like to do today—book a ride or create a ride?'
+PROMPT #1: 'help'
+REPLY: 'You can talk naturally. Examples:\n- book a ride from Saddar to DHA tomorrow at 6pm\n- I need 2 seats\n- make it 450 fare\n- yes (to confirm)\n- cancel (to stop current action)\n- ask business rules/questions like: can I chat without booking?'
+PROMPT #2: 'faq'
+REPLY: "Here are some FAQs you can ask about:\n- How do I book a ride?\n- How do I create a ride?\n- How does fare calculation work?\n- How do payments work?\n- How do notifications work?\n- What is the pickup code?\n- Why can't I book a ride?\n- Why can't I create a ride?\n- How does fare negotiation work?\n- How do I cancel a booking?\n- How do I cancel a trip?\n- How do I delete a trip?"
+PROMPT #3: 'manual'
+REPLY: "User manual topics:\n- Booking a ride\n- Creating a ride\n- Selecting a route and stops\n- Fare calculation and breakdown\n- Payments and payment confirmation\n- Messaging and chat\n- Fare negotiation\n- Cancel booking / cancel trip\n- Deleting a trip\n- Guest mode limitations\n- Profile and verification requests\n- SOS and safety\n\nAsk a question like: 'How do I book a ride?'"
+PROMPT #4: 'my profile'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #5: 'my bookings'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #6: 'my rides'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #7: 'my vehicles'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #8: 'trip details'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #9: 'pickup code'
+REPLY: "I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action."
+
+TARGET: guest user_id=-7
+PROMPT #0: 'hi'
+REPLY: 'Hi there. What would you like to do today—book a ride or create a ride?'
+PROMPT #1: 'help'
+REPLY: 'You can talk naturally. Examples:\n- book a ride from Saddar to DHA tomorrow at 6pm\n- I need 2 seats\n- make it 450 fare\n- yes (to confirm)\n- cancel (to stop current action)\n- ask business rules/questions like: can I chat without booking?'
+PROMPT #2: 'faq'
+REPLY: "Here are some FAQs you can ask about:\n- How do I book a ride?\n- How do I create a ride?\n- How does fare calculation work?\n- How do payments work?\n- How do notifications work?\n- What is the pickup code?\n- Why can't I book a ride?\n- Why can't I create a ride?\n- How does fare negotiation work?\n- How do I cancel a booking?\n- How do I cancel a trip?\n- How do I delete a trip?"
+PROMPT #3: 'manual'
+REPLY: "User manual topics:\n- Booking a ride\n- Creating a ride\n- Selecting a route and stops\n- Fare calculation and breakdown\n- Payments and payment confirmation\n- Messaging and chat\n- Fare negotiation\n- Cancel booking / cancel trip\n- Deleting a trip\n- Guest mode limitations\n- Profile and verification requests\n- SOS and safety\n\nAsk a question like: 'How do I book a ride?'"
+PROMPT #4: 'my profile'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #5: 'my bookings'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #6: 'my rides'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #7: 'my vehicles'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #8: 'trip details'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #9: 'pickup code'
+REPLY: "I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action."
+
+TARGET: guest user_id=-8
+PROMPT #0: 'hi'
+REPLY: 'Hi there. What would you like to do today—book a ride or create a ride?'
+PROMPT #1: 'help'
+REPLY: 'You can talk naturally. Examples:\n- book a ride from Saddar to DHA tomorrow at 6pm\n- I need 2 seats\n- make it 450 fare\n- yes (to confirm)\n- cancel (to stop current action)\n- ask business rules/questions like: can I chat without booking?'
+PROMPT #2: 'faq'
+REPLY: "Here are some FAQs you can ask about:\n- How do I book a ride?\n- How do I create a ride?\n- How does fare calculation work?\n- How do payments work?\n- How do notifications work?\n- What is the pickup code?\n- Why can't I book a ride?\n- Why can't I create a ride?\n- How does fare negotiation work?\n- How do I cancel a booking?\n- How do I cancel a trip?\n- How do I delete a trip?"
+PROMPT #3: 'manual'
+REPLY: "User manual topics:\n- Booking a ride\n- Creating a ride\n- Selecting a route and stops\n- Fare calculation and breakdown\n- Payments and payment confirmation\n- Messaging and chat\n- Fare negotiation\n- Cancel booking / cancel trip\n- Deleting a trip\n- Guest mode limitations\n- Profile and verification requests\n- SOS and safety\n\nAsk a question like: 'How do I book a ride?'"
+PROMPT #4: 'my profile'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #5: 'my bookings'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #6: 'my rides'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #7: 'my vehicles'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #8: 'trip details'
+REPLY: 'Guests cannot access this feature.'
+PROMPT #9: 'pickup code'
+REPLY: "I can't do that directly here. Please use the app's official screens/support flow (or contact an admin) for this action."

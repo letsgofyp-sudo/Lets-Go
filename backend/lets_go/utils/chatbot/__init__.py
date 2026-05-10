@@ -1,3 +1,3 @@
-from .engine import handle_message, ask_bot
-from .api import api_login
-from .state import set_current_user
+from .engine_impl import handle_message, ask_bot
+from .integrations.api import api_login
+from .core import set_current_user

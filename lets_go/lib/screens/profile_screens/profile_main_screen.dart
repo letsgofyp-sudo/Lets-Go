@@ -7,6 +7,7 @@ import '../../controllers/profile/profile_main_controller.dart';
 import 'profile_general_info_screen.dart';
 import 'profile_ride_history_screen.dart';
 import 'profile_vehicle_info_screen.dart';
+import 'profile_analytics_screen.dart';
 import 'profile_blocked_users_screen.dart';
 import 'profile_change_password_screen.dart';
 
@@ -62,12 +63,13 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
+    final scheme = Theme.of(context).colorScheme;
     return Scaffold(
-      backgroundColor: Colors.grey[50],
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: const Color(0xFF00897B),
-        foregroundColor: Colors.white,
+        backgroundColor: scheme.primary,
+        foregroundColor: scheme.onPrimary,
         title: const FittedBox(
           fit: BoxFit.scaleDown,
           child: Text(
@@ -76,6 +78,17 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
           ),
         ),
         actions: [
+          IconButton(
+            tooltip: 'Analytics',
+            icon: const Icon(Icons.analytics_outlined),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => ProfileAnalyticsScreen(userData: _user),
+                ),
+              );
+            },
+          ),
           IconButton(
             tooltip: 'Change Password',
             icon: const Icon(Icons.lock_outline),
@@ -115,10 +128,10 @@ class _ProfileMainScreenState extends State<ProfileMainScreen> with SingleTicker
         ],
         bottom: TabBar(
           controller: _tabController,
-          indicatorColor: Colors.white,
+          indicatorColor: scheme.onPrimary,
           indicatorWeight: 3,
-          labelColor: Colors.white,
-          unselectedLabelColor: Colors.white70,
+          labelColor: scheme.onPrimary,
+          unselectedLabelColor: scheme.onPrimary.withValues(alpha: 0.7),
           labelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
           unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 14),
           tabs: [
