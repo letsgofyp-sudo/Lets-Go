@@ -289,5 +289,4 @@
 \contentsline {section}{\numberline {7.3}Limitations}{224}{section.606}%
 \contentsline {chapter}{Appendices}{226}{appendix*.608}%
 \contentsline {section}{Appendix A – Turnitin Similarity Report}{226}{section*.609}%
-\contentsline {section}{Appendix B – AI Writing Detection Report}{227}{section*.609}%
-\contentsline {section}{Appendix C – Source Code}{228}{section*.609}%
+\contentsline {section}{Appendix C – Source Code}{227}{figure.611}%

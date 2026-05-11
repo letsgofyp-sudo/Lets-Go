@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.7)  10 MAY 2026 03:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.7)  11 MAY 2026 17:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -926,7 +926,7 @@ Package hyperref Info: Link coloring ON on input line 101.
 
 Package hyperref Info: Option `pageanchor' set `false' on input line 102.
  (./title.tex
-<logo.png, id=1180, 157.33781pt x 152.06813pt>
+<logo.png, id=1178, 157.33781pt x 152.06813pt>
 File: logo.png Graphic file (type png)
 <use logo.png>
 Package pdftex.def Info: logo.png  used on input line 12.
@@ -1002,44 +1002,44 @@ Chapter 3.
 [17
 
 ] [18]
-<assets/master_uc.jpg, id=2118, 1800.7275pt x 1909.1325pt>
+<assets/master_uc.jpg, id=2114, 1800.7275pt x 1909.1325pt>
 File: assets/master_uc.jpg Graphic file (type jpg)
 <use assets/master_uc.jpg>
 Package pdftex.def Info: assets/master_uc.jpg  used on input line 85.
 (pdftex.def)             Requested size: 496.33032pt x 526.19287pt.
-<assets/reg_verification_uc.jpg, id=2119, 745.78625pt x 373.395pt>
+<assets/reg_verification_uc.jpg, id=2115, 745.78625pt x 373.395pt>
 File: assets/reg_verification_uc.jpg Graphic file (type jpg)
 <use assets/reg_verification_uc.jpg>
 Package pdftex.def Info: assets/reg_verification_uc.jpg  used on input line 92.
 
 (pdftex.def)             Requested size: 397.06284pt x 198.79861pt.
  [19 <./assets/master_uc.jpg>]
-<assets/vehicle_management_uc.jpg, id=2125, 625.33624pt x 473.77pt>
+<assets/vehicle_management_uc.jpg, id=2121, 625.33624pt x 473.77pt>
 File: assets/vehicle_management_uc.jpg Graphic file (type jpg)
 <use assets/vehicle_management_uc.jpg>
 Package pdftex.def Info: assets/vehicle_management_uc.jpg  used on input line 9
 9.
 (pdftex.def)             Requested size: 394.6223pt x 298.9755pt.
-<assets/ride_management_uc.jpg, id=2126, 687.56876pt x 403.5075pt>
+<assets/ride_management_uc.jpg, id=2122, 687.56876pt x 403.5075pt>
 File: assets/ride_management_uc.jpg Graphic file (type jpg)
 <use assets/ride_management_uc.jpg>
 Package pdftex.def Info: assets/ride_management_uc.jpg  used on input line 106.
 
 (pdftex.def)             Requested size: 397.05907pt x 233.0186pt.
  [20 <./assets/reg_verification_uc.jpg> <./assets/vehicle_management_uc.jpg>]
-<assets/discovery_booking_uc.jpg, id=2133, 708.6475pt x 423.5825pt>
+<assets/discovery_booking_uc.jpg, id=2129, 708.6475pt x 423.5825pt>
 File: assets/discovery_booking_uc.jpg Graphic file (type jpg)
 <use assets/discovery_booking_uc.jpg>
 Package pdftex.def Info: assets/discovery_booking_uc.jpg  used on input line 11
 3.
 (pdftex.def)             Requested size: 397.06697pt x 237.34032pt.
  [21 <./assets/ride_management_uc.jpg> <./assets/discovery_booking_uc.jpg>]
-<assets/ride_execution_uc.jpg, id=2141, 747.79375pt x 533.995pt>
+<assets/ride_execution_uc.jpg, id=2137, 747.79375pt x 533.995pt>
 File: assets/ride_execution_uc.jpg Graphic file (type jpg)
 <use assets/ride_execution_uc.jpg>
 Package pdftex.def Info: assets/ride_execution_uc.jpg  used on input line 121.
 (pdftex.def)             Requested size: 372.15016pt x 265.75018pt.
-<assets/safety_disputes_uc.jpg, id=2142, 632.3625pt x 503.8825pt>
+<assets/safety_disputes_uc.jpg, id=2138, 632.3625pt x 503.8825pt>
 File: assets/safety_disputes_uc.jpg Graphic file (type jpg)
 <use assets/safety_disputes_uc.jpg>
 Package pdftex.def Info: assets/safety_disputes_uc.jpg  used on input line 128.
@@ -1048,12 +1048,12 @@ Package pdftex.def Info: assets/safety_disputes_uc.jpg  used on input line 128.
  [22
 
  <./assets/ride_execution_uc.jpg> <./assets/safety_disputes_uc.jpg>]
-<assets/ml_chatbot_uc.jpg, id=2150, 741.77126pt x 393.47pt>
+<assets/ml_chatbot_uc.jpg, id=2146, 741.77126pt x 393.47pt>
 File: assets/ml_chatbot_uc.jpg Graphic file (type jpg)
 <use assets/ml_chatbot_uc.jpg>
 Package pdftex.def Info: assets/ml_chatbot_uc.jpg  used on input line 136.
 (pdftex.def)             Requested size: 397.07574pt x 210.62744pt.
-<assets/payment_uc.jpg, id=2151, 476.78125pt x 313.17pt>
+<assets/payment_uc.jpg, id=2147, 476.78125pt x 313.17pt>
 File: assets/payment_uc.jpg Graphic file (type jpg)
 <use assets/payment_uc.jpg>
 Package pdftex.def Info: assets/payment_uc.jpg  used on input line 143.
@@ -1121,20 +1121,20 @@ Chapter 4.
 [89
 
 ] [90] [91]
-<assets/context Diagram-Page-2.jpg, id=2447, 1193.45876pt x 926.46124pt>
+<assets/context Diagram-Page-2.jpg, id=2443, 1193.45876pt x 926.46124pt>
 File: assets/context Diagram-Page-2.jpg Graphic file (type jpg)
 <use assets/context Diagram-Page-2.jpg>
 Package pdftex.def Info: assets/context Diagram-Page-2.jpg  used on input line 
 124.
 (pdftex.def)             Requested size: 446.69003pt x 346.75769pt.
  [92 <./assets/context Diagram-Page-2.jpg>] [93] [94]
-<assets/architecture.jpg, id=2463, 1306.8825pt x 624.3325pt>
+<assets/architecture.jpg, id=2459, 1306.8825pt x 624.3325pt>
 File: assets/architecture.jpg Graphic file (type jpg)
 <use assets/architecture.jpg>
 Package pdftex.def Info: assets/architecture.jpg  used on input line 254.
 (pdftex.def)             Requested size: 446.68726pt x 213.39436pt.
  [95]
-<assets/activity diagrams/activity_auth.jpg, id=2468, 781.92125pt x 744.7825pt>
+<assets/activity diagrams/activity_auth.jpg, id=2464, 781.92125pt x 744.7825pt>
 
 File: assets/activity diagrams/activity_auth.jpg Graphic file (type jpg)
 <use assets/activity diagrams/activity_auth.jpg>
@@ -1144,7 +1144,7 @@ put line 274.
 
 [96 <./assets/architecture.jpg>] [97 <./assets/activity diagrams/activity_auth.
 jpg>]
-<assets/activity diagrams/activity_document.jpg, id=2480, 452.69125pt x 845.157
+<assets/activity diagrams/activity_document.jpg, id=2476, 452.69125pt x 845.157
 5pt>
 File: assets/activity diagrams/activity_document.jpg Graphic file (type jpg)
 <use assets/activity diagrams/activity_document.jpg>
@@ -1154,7 +1154,7 @@ n input line 287.
  [98
 
  <./assets/activity diagrams/activity_document.jpg>]
-<assets/activity diagrams/module 3.jpg, id=2486, 569.12625pt x 877.2775pt>
+<assets/activity diagrams/module 3.jpg, id=2482, 569.12625pt x 877.2775pt>
 File: assets/activity diagrams/module 3.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module 3.jpg>
 Package pdftex.def Info: assets/activity diagrams/module 3.jpg  used on input l
@@ -1163,7 +1163,7 @@ ine 300.
  [99
 
  <./assets/activity diagrams/module 3.jpg>]
-<assets/activity diagrams/module4.jpg, id=2493, 654.445pt x 815.045pt>
+<assets/activity diagrams/module4.jpg, id=2489, 654.445pt x 815.045pt>
 File: assets/activity diagrams/module4.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module4.jpg>
 Package pdftex.def Info: assets/activity diagrams/module4.jpg  used on input li
@@ -1172,7 +1172,7 @@ ne 313.
  [100
 
  <./assets/activity diagrams/module4.jpg>]
-<assets/activity diagrams/module5.jpg, id=2499, 431.6125pt x 855.195pt>
+<assets/activity diagrams/module5.jpg, id=2495, 431.6125pt x 855.195pt>
 File: assets/activity diagrams/module5.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module5.jpg>
 Package pdftex.def Info: assets/activity diagrams/module5.jpg  used on input li
@@ -1182,7 +1182,7 @@ ne 326.
 [101
 
  <./assets/activity diagrams/module5.jpg>]
-<assets/activity diagrams/module6.jpg, id=2505, 675.52374pt x 1014.79124pt>
+<assets/activity diagrams/module6.jpg, id=2501, 675.52374pt x 1014.79124pt>
 File: assets/activity diagrams/module6.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module6.jpg>
 Package pdftex.def Info: assets/activity diagrams/module6.jpg  used on input li
@@ -1191,7 +1191,7 @@ ne 339.
  [102
 
  <./assets/activity diagrams/module6.jpg>]
-<assets/activity diagrams/module7.jpg, id=2511, 468.75125pt x 733.74126pt>
+<assets/activity diagrams/module7.jpg, id=2507, 468.75125pt x 733.74126pt>
 File: assets/activity diagrams/module7.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module7.jpg>
 Package pdftex.def Info: assets/activity diagrams/module7.jpg  used on input li
@@ -1200,7 +1200,7 @@ ne 352.
  [103
 
  <./assets/activity diagrams/module7.jpg>]
-<assets/activity diagrams/module8.jpg, id=2517, 443.6575pt x 861.2175pt>
+<assets/activity diagrams/module8.jpg, id=2513, 443.6575pt x 861.2175pt>
 File: assets/activity diagrams/module8.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module8.jpg>
 Package pdftex.def Info: assets/activity diagrams/module8.jpg  used on input li
@@ -1209,7 +1209,7 @@ ne 365.
  [104
 
  <./assets/activity diagrams/module8.jpg>]
-<assets/activity diagrams/module9.jpg, id=2523, 614.295pt x 865.2325pt>
+<assets/activity diagrams/module9.jpg, id=2519, 614.295pt x 865.2325pt>
 File: assets/activity diagrams/module9.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module9.jpg>
 Package pdftex.def Info: assets/activity diagrams/module9.jpg  used on input li
@@ -1218,7 +1218,7 @@ ne 378.
  [105
 
  <./assets/activity diagrams/module9.jpg>]
-<assets/activity diagrams/module10.jpg, id=2530, 552.0625pt x 795.97375pt>
+<assets/activity diagrams/module10.jpg, id=2526, 552.0625pt x 795.97375pt>
 File: assets/activity diagrams/module10.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module10.jpg>
 Package pdftex.def Info: assets/activity diagrams/module10.jpg  used on input l
@@ -1228,7 +1228,7 @@ ine 391.
 [106
 
  <./assets/activity diagrams/module10.jpg>]
-<assets/activity diagrams/module11.jpg, id=2536, 794.97pt x 799.98875pt>
+<assets/activity diagrams/module11.jpg, id=2532, 794.97pt x 799.98875pt>
 File: assets/activity diagrams/module11.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module11.jpg>
 Package pdftex.def Info: assets/activity diagrams/module11.jpg  used on input l
@@ -1237,7 +1237,7 @@ ine 404.
  [107
 
  <./assets/activity diagrams/module11.jpg>]
-<assets/activity diagrams/module 12.jpg, id=2542, 540.0175pt x 835.12pt>
+<assets/activity diagrams/module 12.jpg, id=2538, 540.0175pt x 835.12pt>
 File: assets/activity diagrams/module 12.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module 12.jpg>
 Package pdftex.def Info: assets/activity diagrams/module 12.jpg  used on input 
@@ -1246,7 +1246,7 @@ line 417.
  [108
 
  <./assets/activity diagrams/module 12.jpg>]
-<assets/activity diagrams/module 13.jpg, id=2548, 398.48875pt x 825.0825pt>
+<assets/activity diagrams/module 13.jpg, id=2544, 398.48875pt x 825.0825pt>
 File: assets/activity diagrams/module 13.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module 13.jpg>
 Package pdftex.def Info: assets/activity diagrams/module 13.jpg  used on input 
@@ -1255,7 +1255,7 @@ line 430.
  [109
 
  <./assets/activity diagrams/module 13.jpg>]
-<assets/class diagram.jpg, id=2554, 1357.07pt x 1758.57pt>
+<assets/class diagram.jpg, id=2550, 1357.07pt x 1758.57pt>
 File: assets/class diagram.jpg Graphic file (type jpg)
 <use assets/class diagram.jpg>
 Package pdftex.def Info: assets/class diagram.jpg  used on input line 447.
@@ -1264,7 +1264,7 @@ Package pdftex.def Info: assets/class diagram.jpg  used on input line 447.
 
  <./assets/class diagram.jpg>] [111]
 <assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jpg, id=2
-565, 610.28pt x 724.7075pt>
+561, 610.28pt x 724.7075pt>
 File: assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jpg 
 Graphic file (type jpg)
 <use assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jpg>
@@ -1274,7 +1274,7 @@ Package pdftex.def Info: assets/sequence diagrams/sequence diagram-USER SIGNUP
 
 [112 <./assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jp
 g>]
-<assets/sequence diagrams/sequence diagram-post a ride.jpg, id=2572, 489.83pt x
+<assets/sequence diagrams/sequence diagram-post a ride.jpg, id=2567, 489.83pt x
  192.72pt>
 File: assets/sequence diagrams/sequence diagram-post a ride.jpg Graphic file (t
 ype jpg)
@@ -1286,7 +1286,7 @@ jpg  used on input line 510.
 
  <./assets/sequence diagrams/sequence diagram-post a ride.jpg>]
 <assets/sequence diagrams/sequence diagram-post ride (starting to reached).jpg,
- id=2578, 1116.17pt x 1305.87875pt>
+ id=2574, 1116.17pt x 1305.87875pt>
 File: assets/sequence diagrams/sequence diagram-post ride (starting to reached)
 .jpg Graphic file (type jpg)
 <use assets/sequence diagrams/sequence diagram-post ride (starting to reached).
@@ -1299,7 +1299,7 @@ tarting to reached).jpg  used on input line 523.
 
  <./assets/sequence diagrams/sequence diagram-post ride (starting to reached).j
 pg>]
-<assets/sequence diagrams/counter.jpg, id=2584, 655.44875pt x 704.6325pt>
+<assets/sequence diagrams/counter.jpg, id=2580, 655.44875pt x 704.6325pt>
 File: assets/sequence diagrams/counter.jpg Graphic file (type jpg)
 <use assets/sequence diagrams/counter.jpg>
 Package pdftex.def Info: assets/sequence diagrams/counter.jpg  used on input li
@@ -1309,7 +1309,7 @@ ne 536.
 
  <./assets/sequence diagrams/counter.jpg>]
 <assets/state transition diagrams/state transition-Ride Request → Booking Flo
-w.jpg, id=2590, 985.6825pt x 2220.295pt>
+w.jpg, id=2586, 985.6825pt x 2220.295pt>
 File: assets/state transition diagrams/state transition-Ride Request → Bookin
 g Flow.jpg Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-Ride Request → Booking
@@ -1318,7 +1318,7 @@ Package pdftex.def Info: assets/state transition diagrams/state transition-Ride
  Request → Booking Flow.jpg  used on input line 554.
 (pdftex.def)             Requested size: 191.70346pt x 431.82085pt.
 <assets/state transition diagrams/state transition-DRIVER STATE MACHINE.jpg, id
-=2591, 1005.7575pt x 2119.92pt>
+=2587, 1005.7575pt x 2119.92pt>
 File: assets/state transition diagrams/state transition-DRIVER STATE MACHINE.jp
 g Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-DRIVER STATE MACHINE.jpg
@@ -1331,7 +1331,7 @@ ER STATE MACHINE.jpg  used on input line 573.
  <./assets/state transition diagrams/state transition-Ride Request → Booking 
 Flow.jpg>]
 <assets/state transition diagrams/state transition-ASSENGER BOOKING STATE MACHI
-NE.jpg, id=2597, 794.97pt x 2641.87pt>
+NE.jpg, id=2593, 794.97pt x 2641.87pt>
 File: assets/state transition diagrams/state transition-ASSENGER BOOKING STATE 
 MACHINE.jpg Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-ASSENGER BOOKING STATE M
@@ -1342,7 +1342,7 @@ NGER BOOKING STATE MACHINE.jpg  used on input line 592.
  [117 <./assets/state transition diagrams/state transition-DRIVER STATE MACHINE
 .jpg>]
 <assets/state transition diagrams/state transition-SOS STATE MACHINE — DRAW.I
-O READY.jpg, id=2604, 663.47874pt x 814.04124pt>
+O READY.jpg, id=2600, 663.47874pt x 814.04124pt>
 File: assets/state transition diagrams/state transition-SOS STATE MACHINE — D
 RAW.IO READY.jpg Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-SOS STATE MACHINE — DR
@@ -1353,7 +1353,7 @@ STATE MACHINE — DRAW.IO READY.jpg  used on input line 611.
 
 [118 <./assets/state transition diagrams/state transition-ASSENGER BOOKING STAT
 E MACHINE.jpg>]
-<assets/state transition diagrams/DISPUTE STATE MACHINE.jpg, id=2610, 643.40375
+<assets/state transition diagrams/DISPUTE STATE MACHINE.jpg, id=2606, 643.40375
 pt x 984.67876pt>
 File: assets/state transition diagrams/DISPUTE STATE MACHINE.jpg Graphic file (
 type jpg)
@@ -1364,13 +1364,13 @@ Package pdftex.def Info: assets/state transition diagrams/DISPUTE STATE MACHINE
  [119 <./assets/state transition diagrams/state transition-SOS STATE MACHINE �
 � DRAW.IO READY.jpg>] [120 <./assets/state transition diagrams/DISPUTE STATE MA
 CHINE.jpg>]
-<assets/DFD/first registration module.jpg, id=2621, 601.24625pt x 539.01375pt>
+<assets/DFD/first registration module.jpg, id=2617, 601.24625pt x 539.01375pt>
 File: assets/DFD/first registration module.jpg Graphic file (type jpg)
 <use assets/DFD/first registration module.jpg>
 Package pdftex.def Info: assets/DFD/first registration module.jpg  used on inpu
 t line 658.
 (pdftex.def)             Requested size: 446.71341pt x 400.47595pt.
-<assets/DFD/second module documents registartion.jpg, id=2622, 543.02875pt x 56
+<assets/DFD/second module documents registartion.jpg, id=2618, 543.02875pt x 56
 7.11874pt>
 File: assets/DFD/second module documents registartion.jpg Graphic file (type jp
 g)
@@ -1381,7 +1381,7 @@ sed on input line 677.
  [121
 
  <./assets/DFD/first registration module.jpg>]
-<assets/DFD/3rd module add vechile.jpg, id=2628, 821.0675pt x 390.45876pt>
+<assets/DFD/3rd module add vechile.jpg, id=2624, 821.0675pt x 390.45876pt>
 File: assets/DFD/3rd module add vechile.jpg Graphic file (type jpg)
 <use assets/DFD/3rd module add vechile.jpg>
 Package pdftex.def Info: assets/DFD/3rd module add vechile.jpg  used on input l
@@ -1389,7 +1389,7 @@ ine 701.
 (pdftex.def)             Requested size: 446.6899pt x 212.42343pt.
 
 [122 <./assets/DFD/second module documents registartion.jpg>]
-<assets/module_4_ride_management.jpg, id=2634, 925.4575pt x 378.41376pt>
+<assets/module_4_ride_management.jpg, id=2630, 925.4575pt x 378.41376pt>
 File: assets/module_4_ride_management.jpg Graphic file (type jpg)
 <use assets/module_4_ride_management.jpg>
 Package pdftex.def Info: assets/module_4_ride_management.jpg  used on input lin
@@ -1397,13 +1397,13 @@ e 725.
 (pdftex.def)             Requested size: 446.6999pt x 182.65277pt.
  [123 <./assets/DFD/3rd module add vechile.jpg> <./assets/module_4_ride_managem
 ent.jpg>]
-<assets/DFD/module 5 view rides.jpg, id=2642, 795.97375pt x 385.44pt>
+<assets/DFD/module 5 view rides.jpg, id=2638, 795.97375pt x 385.44pt>
 File: assets/DFD/module 5 view rides.jpg Graphic file (type jpg)
 <use assets/DFD/module 5 view rides.jpg>
 Package pdftex.def Info: assets/DFD/module 5 view rides.jpg  used on input line
  750.
 (pdftex.def)             Requested size: 446.68962pt x 216.30367pt.
-<assets/DFD/module 6 booking.jpg, id=2643, 655.44875pt x 616.3025pt>
+<assets/DFD/module 6 booking.jpg, id=2639, 655.44875pt x 616.3025pt>
 File: assets/DFD/module 6 booking.jpg Graphic file (type jpg)
 <use assets/DFD/module 6 booking.jpg>
 Package pdftex.def Info: assets/DFD/module 6 booking.jpg  used on input line 77
@@ -1412,14 +1412,14 @@ Package pdftex.def Info: assets/DFD/module 6 booking.jpg  used on input line 77
  [124
 
  <./assets/DFD/module 5 view rides.jpg>]
-<assets/DFD/module 7 chat and message.jpg, id=2649, 927.465pt x 745.78625pt>
+<assets/DFD/module 7 chat and message.jpg, id=2645, 927.465pt x 745.78625pt>
 File: assets/DFD/module 7 chat and message.jpg Graphic file (type jpg)
 <use assets/DFD/module 7 chat and message.jpg>
 Package pdftex.def Info: assets/DFD/module 7 chat and message.jpg  used on inpu
 t line 796.
 (pdftex.def)             Requested size: 446.6924pt x 359.19098pt.
  [125 <./assets/DFD/module 6 booking.jpg>]
-<assets/DFD/module 8 notification handlers.jpg, id=2655, 821.0675pt x 493.845pt
+<assets/DFD/module 8 notification handlers.jpg, id=2651, 821.0675pt x 493.845pt
 >
 File: assets/DFD/module 8 notification handlers.jpg Graphic file (type jpg)
 <use assets/DFD/module 8 notification handlers.jpg>
@@ -1428,21 +1428,21 @@ Package pdftex.def Info: assets/DFD/module 8 notification handlers.jpg  used on
 (pdftex.def)             Requested size: 446.6899pt x 268.66922pt.
 
 [126 <./assets/DFD/module 7 chat and message.jpg>]
-<assets/DFD/module 9 code verify.jpg, id=2661, 619.31375pt x 934.49126pt>
+<assets/DFD/module 9 code verify.jpg, id=2657, 619.31375pt x 934.49126pt>
 File: assets/DFD/module 9 code verify.jpg Graphic file (type jpg)
 <use assets/DFD/module 9 code verify.jpg>
 Package pdftex.def Info: assets/DFD/module 9 code verify.jpg  used on input lin
 e 843.
 (pdftex.def)             Requested size: 286.19188pt x 431.83896pt.
  [127 <./assets/DFD/module 8 notification handlers.jpg>]
-<assets/DFD/module 10 payment.jpg, id=2667, 563.10374pt x 674.52pt>
+<assets/DFD/module 10 payment.jpg, id=2663, 563.10374pt x 674.52pt>
 File: assets/DFD/module 10 payment.jpg Graphic file (type jpg)
 <use assets/DFD/module 10 payment.jpg>
 Package pdftex.def Info: assets/DFD/module 10 payment.jpg  used on input line 8
 67.
 (pdftex.def)             Requested size: 360.51405pt x 431.84572pt.
  [128 <./assets/DFD/module 9 code verify.jpg>]
-<assets/DFD/module 11 ratings.jpg, id=2674, 883.3pt x 653.44125pt>
+<assets/DFD/module 11 ratings.jpg, id=2670, 883.3pt x 653.44125pt>
 File: assets/DFD/module 11 ratings.jpg Graphic file (type jpg)
 <use assets/DFD/module 11 ratings.jpg>
 Package pdftex.def Info: assets/DFD/module 11 ratings.jpg  used on input line 8
@@ -1450,51 +1450,51 @@ Package pdftex.def Info: assets/DFD/module 11 ratings.jpg  used on input line 8
 (pdftex.def)             Requested size: 446.68971pt x 330.44885pt.
 
 [129 <./assets/DFD/module 10 payment.jpg>]
-<assets/DFD/module 12.jpg, id=2681, 766.865pt x 614.295pt>
+<assets/DFD/module 12.jpg, id=2677, 766.865pt x 614.295pt>
 File: assets/DFD/module 12.jpg Graphic file (type jpg)
 <use assets/DFD/module 12.jpg>
 Package pdftex.def Info: assets/DFD/module 12.jpg  used on input line 914.
 (pdftex.def)             Requested size: 446.70105pt x 357.82857pt.
  [130 <./assets/DFD/module 11 ratings.jpg>]
-<assets/DFD/module13.jpg, id=2687, 587.19376pt x 593.21625pt>
+<assets/DFD/module13.jpg, id=2683, 587.19376pt x 593.21625pt>
 File: assets/DFD/module13.jpg Graphic file (type jpg)
 <use assets/DFD/module13.jpg>
 Package pdftex.def Info: assets/DFD/module13.jpg  used on input line 938.
 (pdftex.def)             Requested size: 427.46518pt x 431.84943pt.
  [131 <./assets/DFD/module 12.jpg>]
-<assets/DFD/module14.jpg, id=2693, 443.6575pt x 774.895pt>
+<assets/DFD/module14.jpg, id=2689, 443.6575pt x 774.895pt>
 File: assets/DFD/module14.jpg Graphic file (type jpg)
 <use assets/DFD/module14.jpg>
 Package pdftex.def Info: assets/DFD/module14.jpg  used on input line 962.
 (pdftex.def)             Requested size: 247.24826pt x 431.84541pt.
  [132 <./assets/DFD/module13.jpg>]
-<assets/DFD/module15.jpg, id=2699, 699.61375pt x 632.3625pt>
+<assets/DFD/module15.jpg, id=2695, 699.61375pt x 632.3625pt>
 File: assets/DFD/module15.jpg Graphic file (type jpg)
 <use assets/DFD/module15.jpg>
 Package pdftex.def Info: assets/DFD/module15.jpg  used on input line 986.
 (pdftex.def)             Requested size: 446.70511pt x 403.76501pt.
 
 [133 <./assets/DFD/module14.jpg>]
-<assets/DFD/module16.jpg, id=2705, 874.26625pt x 488.82625pt>
+<assets/DFD/module16.jpg, id=2701, 874.26625pt x 488.82625pt>
 File: assets/DFD/module16.jpg Graphic file (type jpg)
 <use assets/DFD/module16.jpg>
 Package pdftex.def Info: assets/DFD/module16.jpg  used on input line 1010.
 (pdftex.def)             Requested size: 446.69698pt x 249.76053pt.
  [134 <./assets/DFD/module15.jpg>]
-<assets/DFD/module17.jpg, id=2711, 613.29124pt x 614.295pt>
+<assets/DFD/module17.jpg, id=2707, 613.29124pt x 614.295pt>
 File: assets/DFD/module17.jpg Graphic file (type jpg)
 <use assets/DFD/module17.jpg>
 Package pdftex.def Info: assets/DFD/module17.jpg  used on input line 1034.
 (pdftex.def)             Requested size: 431.13512pt x 431.84074pt.
  [135 <./assets/DFD/module16.jpg>] [136 <./assets/DFD/module17.jpg>]
-<assets/db_diagrams/ERD_DIAGRAMAS.png, id=2723, 1849.91125pt x 1017.8025pt>
+<assets/db_diagrams/ERD_DIAGRAMAS.png, id=2719, 1849.91125pt x 1017.8025pt>
 File: assets/db_diagrams/ERD_DIAGRAMAS.png Graphic file (type png)
 <use assets/db_diagrams/ERD_DIAGRAMAS.png>
 Package pdftex.def Info: assets/db_diagrams/ERD_DIAGRAMAS.png  used on input li
 ne 1097.
 (pdftex.def)             Requested size: 664.37186pt x 365.52339pt.
  [137] [138 <./assets/db_diagrams/ERD_DIAGRAMAS.png>]
-<assets/db_diagrams/DB_SCHEM.png, id=2735, 1438.37375pt x 1508.63625pt>
+<assets/db_diagrams/DB_SCHEM.png, id=2731, 1438.37375pt x 1508.63625pt>
 File: assets/db_diagrams/DB_SCHEM.png Graphic file (type png)
 <use assets/db_diagrams/DB_SCHEM.png>
 Package pdftex.def Info: assets/db_diagrams/DB_SCHEM.png  used on input line 11
@@ -1518,7 +1518,7 @@ put line 186.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95> on input line 275.
  [160] [161] [162] [163] [164] [165] [166] [167] [168] [169]
-<assets/app screenshot/signup_personal_info.jpeg, id=2919, 722.7pt x 2160.07pt>
+<assets/app screenshot/signup_personal_info.jpeg, id=2915, 722.7pt x 2160.07pt>
 
 File: assets/app screenshot/signup_personal_info.jpeg Graphic file (type jpg)
 <use assets/app screenshot/signup_personal_info.jpeg>
@@ -1530,7 +1530,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 796--797
  [][] 
  []
 
-<assets/app screenshot/signup_emergency_contact.jpeg, id=2920, 722.7pt x 1606.0
+<assets/app screenshot/signup_emergency_contact.jpeg, id=2916, 722.7pt x 1606.0
 pt>
 File: assets/app screenshot/signup_emergency_contact.jpeg Graphic file (type jp
 g)
@@ -1543,7 +1543,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 800--801
  [][] 
  []
 
-<assets/app screenshot/signup_otp_verification.jpeg, id=2921, 722.7pt x 1606.0p
+<assets/app screenshot/signup_otp_verification.jpeg, id=2917, 722.7pt x 1606.0p
 t>
 File: assets/app screenshot/signup_otp_verification.jpeg Graphic file (type jpg
 )
@@ -1556,7 +1556,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 804--805
  [][] 
  []
 
-<assets/app screenshot/signup_images uploading.jpg, id=2922, 722.7pt x 1606.0pt
+<assets/app screenshot/signup_images uploading.jpg, id=2918, 722.7pt x 1606.0pt
 >
 File: assets/app screenshot/signup_images uploading.jpg Graphic file (type jpg)
 
@@ -1572,14 +1572,14 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 808--809
 [170] [171 <./assets/app screenshot/signup_personal_info.jpeg> <./assets/app sc
 reenshot/signup_emergency_contact.jpeg> <./assets/app screenshot/signup_otp_ver
 ification.jpeg> <./assets/app screenshot/signup_images uploading.jpg>]
-<assets/app screenshot/login_screen.jpeg, id=2934, 722.7pt x 1606.0pt>
+<assets/app screenshot/login_screen.jpeg, id=2930, 722.7pt x 1606.0pt>
 File: assets/app screenshot/login_screen.jpeg Graphic file (type jpg)
 <use assets/app screenshot/login_screen.jpeg>
 Package pdftex.def Info: assets/app screenshot/login_screen.jpeg  used on input
  line 832.
 (pdftex.def)             Requested size: 223.33995pt x 496.31102pt.
  [172 <./assets/app screenshot/login_screen.jpeg>]
-<assets/app screenshot/account_banned.jpeg, id=2940, 722.7pt x 1606.0pt>
+<assets/app screenshot/account_banned.jpeg, id=2936, 722.7pt x 1606.0pt>
 File: assets/app screenshot/account_banned.jpeg Graphic file (type jpg)
 <use assets/app screenshot/account_banned.jpeg>
 Package pdftex.def Info: assets/app screenshot/account_banned.jpeg  used on inp
@@ -1590,7 +1590,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 856--857
  [][] 
  []
 
-<assets/app screenshot/account_pending.jpeg, id=2941, 721.69624pt x 1639.12375p
+<assets/app screenshot/account_pending.jpeg, id=2937, 721.69624pt x 1639.12375p
 t>
 File: assets/app screenshot/account_pending.jpeg Graphic file (type jpg)
 <use assets/app screenshot/account_pending.jpeg>
@@ -1602,7 +1602,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 860--861
  [][] 
  []
 
-<assets/app screenshot/account_rejected.jpeg, id=2942, 722.7pt x 1606.0pt>
+<assets/app screenshot/account_rejected.jpeg, id=2938, 722.7pt x 1606.0pt>
 File: assets/app screenshot/account_rejected.jpeg Graphic file (type jpg)
 <use assets/app screenshot/account_rejected.jpeg>
 Package pdftex.def Info: assets/app screenshot/account_rejected.jpeg  used on i
@@ -1613,7 +1613,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 864--865
  [][] 
  []
 
-<assets/app screenshot/create_route_map_view.jpeg, id=2943, 722.7pt x 1606.0pt>
+<assets/app screenshot/create_route_map_view.jpeg, id=2939, 722.7pt x 1606.0pt>
 
 File: assets/app screenshot/create_route_map_view.jpeg Graphic file (type jpg)
 <use assets/app screenshot/create_route_map_view.jpeg>
@@ -1625,7 +1625,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 883--884
  [][] 
  []
 
-<assets/app screenshot/create_ride_summary.jpeg, id=2944, 722.7pt x 1606.0pt>
+<assets/app screenshot/create_ride_summary.jpeg, id=2940, 722.7pt x 1606.0pt>
 File: assets/app screenshot/create_ride_summary.jpeg Graphic file (type jpg)
 <use assets/app screenshot/create_ride_summary.jpeg>
 Package pdftex.def Info: assets/app screenshot/create_ride_summary.jpeg  used o
@@ -1636,7 +1636,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 887--888
  [][] 
  []
 
-<assets/app screenshot/create_ride_final_details.jpeg, id=2945, 722.7pt x 1606.
+<assets/app screenshot/create_ride_final_details.jpeg, id=2941, 722.7pt x 1606.
 0pt>
 File: assets/app screenshot/create_ride_final_details.jpeg Graphic file (type j
 pg)
@@ -1653,7 +1653,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 891--892
 ount_pending.jpeg> <./assets/app screenshot/account_rejected.jpeg>] [174 <./ass
 ets/app screenshot/create_route_map_view.jpeg> <./assets/app screenshot/create_
 ride_summary.jpeg> <./assets/app screenshot/create_ride_final_details.jpeg>]
-<assets/app screenshot/find_ride_available_rides.jpeg, id=2957, 722.7pt x 1606.
+<assets/app screenshot/find_ride_available_rides.jpeg, id=2952, 722.7pt x 1606.
 0pt>
 File: assets/app screenshot/find_ride_available_rides.jpeg Graphic file (type j
 pg)
@@ -1666,7 +1666,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 917--918
  [][] 
  []
 
-<assets/app screenshot/find_ride_select_pickup.jpeg, id=2958, 722.7pt x 1606.0p
+<assets/app screenshot/find_ride_select_pickup.jpeg, id=2953, 722.7pt x 1606.0p
 t>
 File: assets/app screenshot/find_ride_select_pickup.jpeg Graphic file (type jpg
 )
@@ -1679,7 +1679,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 921--922
  [][] 
  []
 
-<assets/app screenshot/find_ride_filters.jpeg, id=2959, 722.7pt x 1606.0pt>
+<assets/app screenshot/find_ride_filters.jpeg, id=2954, 722.7pt x 1606.0pt>
 File: assets/app screenshot/find_ride_filters.jpeg Graphic file (type jpg)
 <use assets/app screenshot/find_ride_filters.jpeg>
 Package pdftex.def Info: assets/app screenshot/find_ride_filters.jpeg  used on 
@@ -1690,7 +1690,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 925--926
  [][] 
  []
 
-<assets/app screenshot/ride_details part 1.jpeg, id=2960, 722.7pt x 1606.0pt>
+<assets/app screenshot/ride_details part 1.jpeg, id=2955, 722.7pt x 1606.0pt>
 File: assets/app screenshot/ride_details part 1.jpeg Graphic file (type jpg)
 <use assets/app screenshot/ride_details part 1.jpeg>
 Package pdftex.def Info: assets/app screenshot/ride_details part 1.jpeg  used o
@@ -1701,7 +1701,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 949--950
  [][] 
  []
 
-<assets/app screenshot/ride_details part 2.jpeg, id=2961, 722.7pt x 1606.0pt>
+<assets/app screenshot/ride_details part 2.jpeg, id=2956, 722.7pt x 1606.0pt>
 File: assets/app screenshot/ride_details part 2.jpeg Graphic file (type jpg)
 <use assets/app screenshot/ride_details part 2.jpeg>
 Package pdftex.def Info: assets/app screenshot/ride_details part 2.jpeg  used o
@@ -1716,14 +1716,14 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 953--954
 eenshot/find_ride_select_pickup.jpeg> <./assets/app screenshot/find_ride_filter
 s.jpeg>] [176 <./assets/app screenshot/ride_details part 1.jpeg> <./assets/app 
 screenshot/ride_details part 2.jpeg>]
-<assets/app screenshot/ride_request_part1.jpeg, id=2972, 722.7pt x 2159.06625pt
+<assets/app screenshot/ride_request_part1.jpeg, id=2968, 722.7pt x 2159.06625pt
 >
 File: assets/app screenshot/ride_request_part1.jpeg Graphic file (type jpg)
 <use assets/app screenshot/ride_request_part1.jpeg>
 Package pdftex.def Info: assets/app screenshot/ride_request_part1.jpeg  used on
  input line 978.
 (pdftex.def)             Requested size: 160.10826pt x 478.32346pt.
-<assets/app screenshot/ride_request_part2.jpeg, id=2973, 722.7pt x 2159.06625pt
+<assets/app screenshot/ride_request_part2.jpeg, id=2969, 722.7pt x 2159.06625pt
 >
 File: assets/app screenshot/ride_request_part2.jpeg Graphic file (type jpg)
 <use assets/app screenshot/ride_request_part2.jpeg>
@@ -1732,7 +1732,7 @@ Package pdftex.def Info: assets/app screenshot/ride_request_part2.jpeg  used on
 (pdftex.def)             Requested size: 160.10826pt x 478.32346pt.
  [177 <./assets/app screenshot/ride_request_part1.jpeg> <./assets/app screensho
 t/ride_request_part2.jpeg>]
-<assets/app screenshot/passenger_booking_details_pending part 1.jpeg, id=2980, 
+<assets/app screenshot/passenger_booking_details_pending part 1.jpeg, id=2976, 
 721.69624pt x 1550.79375pt>
 File: assets/app screenshot/passenger_booking_details_pending part 1.jpeg Graph
 ic file (type jpg)
@@ -1740,7 +1740,7 @@ ic file (type jpg)
 Package pdftex.def Info: assets/app screenshot/passenger_booking_details_pendin
 g part 1.jpeg  used on input line 1006.
 (pdftex.def)             Requested size: 129.85567pt x 279.03618pt.
-<assets/app screenshot/passenger_booking_details_pending part 2.jpeg, id=2981, 
+<assets/app screenshot/passenger_booking_details_pending part 2.jpeg, id=2977, 
 721.69624pt x 1062.97125pt>
 File: assets/app screenshot/passenger_booking_details_pending part 2.jpeg Graph
 ic file (type jpg)
@@ -1755,7 +1755,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1010--1011
 
 [178 <./assets/app screenshot/passenger_booking_details_pending part 1.jpeg> <.
 /assets/app screenshot/passenger_booking_details_pending part 2.jpeg>]
-<assets/app screenshot/passenger_negotiation_details.jpeg, id=2987, 722.7pt x 1
+<assets/app screenshot/passenger_negotiation_details.jpeg, id=2983, 722.7pt x 1
 768.6075pt>
 File: assets/app screenshot/passenger_negotiation_details.jpeg Graphic file (ty
 pe jpg)
@@ -1768,7 +1768,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1035--1036
  [][] 
  []
 
-<assets/app screenshot/driver_response_screen.jpeg, id=2988, 722.7pt x 2422.048
+<assets/app screenshot/driver_response_screen.jpeg, id=2984, 722.7pt x 2422.048
 75pt>
 File: assets/app screenshot/driver_response_screen.jpeg Graphic file (type jpg)
 
@@ -1781,7 +1781,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1039--1040
  [][] 
  []
 
-<assets/app screenshot/driver_ride_requests_pending.jpeg, id=2989, 722.7pt x 14
+<assets/app screenshot/driver_ride_requests_pending.jpeg, id=2985, 722.7pt x 14
 41.385pt>
 File: assets/app screenshot/driver_ride_requests_pending.jpeg Graphic file (typ
 e jpg)
@@ -1797,7 +1797,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1043--1044
 [179 <./assets/app screenshot/passenger_negotiation_details.jpeg> <./assets/app
  screenshot/driver_response_screen.jpeg> <./assets/app screenshot/driver_ride_r
 equests_pending.jpeg>]
-<assets/app screenshot/driver_ride_details_pending_part1.jpeg, id=2995, 722.7pt
+<assets/app screenshot/driver_ride_details_pending_part1.jpeg, id=2991, 722.7pt
  x 1561.835pt>
 File: assets/app screenshot/driver_ride_details_pending_part1.jpeg Graphic file
  (type jpg)
@@ -1805,7 +1805,7 @@ File: assets/app screenshot/driver_ride_details_pending_part1.jpeg Graphic file
 Package pdftex.def Info: assets/app screenshot/driver_ride_details_pending_part
 1.jpeg  used on input line 1067.
 (pdftex.def)             Requested size: 159.85463pt x 345.46364pt.
-<assets/app screenshot/driver_ride_details_pending_part2.jpeg, id=2996, 722.7pt
+<assets/app screenshot/driver_ride_details_pending_part2.jpeg, id=2992, 722.7pt
  x 1561.835pt>
 File: assets/app screenshot/driver_ride_details_pending_part2.jpeg Graphic file
  (type jpg)
@@ -1815,7 +1815,7 @@ Package pdftex.def Info: assets/app screenshot/driver_ride_details_pending_part
 (pdftex.def)             Requested size: 159.85463pt x 345.46364pt.
  [180 <./assets/app screenshot/driver_ride_details_pending_part1.jpeg> <./asset
 s/app screenshot/driver_ride_details_pending_part2.jpeg>]
-<assets/app screenshot/driver_respond_request_accepted.jpeg, id=3002, 722.7pt x
+<assets/app screenshot/driver_respond_request_accepted.jpeg, id=2998, 722.7pt x
  2259.44125pt>
 File: assets/app screenshot/driver_respond_request_accepted.jpeg Graphic file (
 type jpg)
@@ -1828,7 +1828,7 @@ Overfull \hbox (1.99283pt too wide) in paragraph at lines 1095--1096
  [][] 
  []
 
-<assets/app screenshot/passenger request accepted.jpg, id=3003, 722.7pt x 1606.
+<assets/app screenshot/passenger request accepted.jpg, id=2999, 722.7pt x 1606.
 0pt>
 File: assets/app screenshot/passenger request accepted.jpg Graphic file (type j
 pg)
@@ -1843,14 +1843,14 @@ Overfull \hbox (1.99283pt too wide) in paragraph at lines 1099--1100
 
 [181 <./assets/app screenshot/driver_respond_request_accepted.jpeg> <./assets/a
 pp screenshot/passenger request accepted.jpg>]
-<assets/app screenshot/my_bookings_confirmed.jpeg, id=3009, 722.7pt x 1606.0pt>
+<assets/app screenshot/my_bookings_confirmed.jpeg, id=3005, 722.7pt x 1606.0pt>
 
 File: assets/app screenshot/my_bookings_confirmed.jpeg Graphic file (type jpg)
 <use assets/app screenshot/my_bookings_confirmed.jpeg>
 Package pdftex.def Info: assets/app screenshot/my_bookings_confirmed.jpeg  used
  on input line 1123.
 (pdftex.def)             Requested size: 194.3266pt x 431.8369pt.
-<assets/app screenshot/my rides created rides.jpg, id=3010, 722.7pt x 1606.0pt>
+<assets/app screenshot/my rides created rides.jpg, id=3006, 722.7pt x 1606.0pt>
 
 File: assets/app screenshot/my rides created rides.jpg Graphic file (type jpg)
 <use assets/app screenshot/my rides created rides.jpg>
@@ -1859,7 +1859,7 @@ Package pdftex.def Info: assets/app screenshot/my rides created rides.jpg  used
 (pdftex.def)             Requested size: 194.3266pt x 431.8369pt.
  [182 <./assets/app screenshot/my_bookings_confirmed.jpeg> <./assets/app screen
 shot/my rides created rides.jpg>]
-<assets/app screenshot/passenger_live_tracking_start.jpeg, id=3016, 722.7pt x 1
+<assets/app screenshot/passenger_live_tracking_start.jpeg, id=3012, 722.7pt x 1
 606.0pt>
 File: assets/app screenshot/passenger_live_tracking_start.jpeg Graphic file (ty
 pe jpg)
@@ -1872,7 +1872,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1153--1154
  [][] 
  []
 
-<assets/app screenshot/driver_live_ride_tracking.jpeg, id=3017, 722.7pt x 1441.
+<assets/app screenshot/driver_live_ride_tracking.jpeg, id=3013, 722.7pt x 1441.
 385pt>
 File: assets/app screenshot/driver_live_ride_tracking.jpeg Graphic file (type j
 pg)
@@ -1885,7 +1885,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1157--1158
  [][] 
  []
 
-<assets/app screenshot/driver_pickup_qr_code.jpeg, id=3018, 722.7pt x 1441.385p
+<assets/app screenshot/driver_pickup_qr_code.jpeg, id=3014, 722.7pt x 1441.385p
 t>
 File: assets/app screenshot/driver_pickup_qr_code.jpeg Graphic file (type jpg)
 <use assets/app screenshot/driver_pickup_qr_code.jpeg>
@@ -1900,7 +1900,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1161--1162
 [183 <./assets/app screenshot/passenger_live_tracking_start.jpeg> <./assets/app
  screenshot/driver_live_ride_tracking.jpeg> <./assets/app screenshot/driver_pic
 kup_qr_code.jpeg>]
-<assets/app screenshot/payment_screen_cash.jpeg, id=3025, 722.7pt x 1606.0pt>
+<assets/app screenshot/payment_screen_cash.jpeg, id=3021, 722.7pt x 1606.0pt>
 File: assets/app screenshot/payment_screen_cash.jpeg Graphic file (type jpg)
 <use assets/app screenshot/payment_screen_cash.jpeg>
 Package pdftex.def Info: assets/app screenshot/payment_screen_cash.jpeg  used o
@@ -1911,7 +1911,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1187--1188
  [][] 
  []
 
-<assets/app screenshot/passenger payment and rating screen.jpeg, id=3026, 722.7
+<assets/app screenshot/passenger payment and rating screen.jpeg, id=3022, 722.7
 pt x 2073.7475pt>
 File: assets/app screenshot/passenger payment and rating screen.jpeg Graphic fi
 le (type jpg)
@@ -1924,7 +1924,7 @@ Overfull \hbox (1.99269pt too wide) in paragraph at lines 1191--1192
  [][] 
  []
 
-<assets/app screenshot/driver_confirm_payments.jpeg, id=3027, 722.7pt x 1441.38
+<assets/app screenshot/driver_confirm_payments.jpeg, id=3023, 722.7pt x 1441.38
 5pt>
 File: assets/app screenshot/driver_confirm_payments.jpeg Graphic file (type jpg
 )
@@ -1940,7 +1940,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1195--1196
 [184 <./assets/app screenshot/payment_screen_cash.jpeg> <./assets/app screensho
 t/passenger payment and rating screen.jpeg> <./assets/app screenshot/driver_con
 firm_payments.jpeg>]
-<assets/app screenshot/driver_trip_passengers_list.jpeg, id=3033, 722.7pt x 144
+<assets/app screenshot/driver_trip_passengers_list.jpeg, id=3029, 722.7pt x 144
 1.385pt>
 File: assets/app screenshot/driver_trip_passengers_list.jpeg Graphic file (type
  jpg)
@@ -1953,7 +1953,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1219--1220
  [][] 
  []
 
-<assets/app screenshot/passenger_driver_one_to_one_chating_screen.jpeg, id=3034
+<assets/app screenshot/passenger_driver_one_to_one_chating_screen.jpeg, id=3030
 , 722.7pt x 1606.0pt>
 File: assets/app screenshot/passenger_driver_one_to_one_chating_screen.jpeg Gra
 phic file (type jpg)
@@ -1966,7 +1966,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1223--1224
  [][] 
  []
 
-<assets/app screenshot/driver_broadcast_message.jpeg, id=3035, 722.7pt x 1441.3
+<assets/app screenshot/driver_broadcast_message.jpeg, id=3031, 722.7pt x 1441.3
 85pt>
 File: assets/app screenshot/driver_broadcast_message.jpeg Graphic file (type jp
 g)
@@ -1982,7 +1982,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1227--1228
 [185 <./assets/app screenshot/driver_trip_passengers_list.jpeg> <./assets/app s
 creenshot/passenger_driver_one_to_one_chating_screen.jpeg> <./assets/app screen
 shot/driver_broadcast_message.jpeg>]
-<assets/app screenshot/support_chat_bot.jpeg, id=3041, 722.7pt x 1441.385pt>
+<assets/app screenshot/support_chat_bot.jpeg, id=3037, 722.7pt x 1441.385pt>
 File: assets/app screenshot/support_chat_bot.jpeg Graphic file (type jpg)
 <use assets/app screenshot/support_chat_bot.jpeg>
 Package pdftex.def Info: assets/app screenshot/support_chat_bot.jpeg  used on i
@@ -1993,7 +1993,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1251--1252
  [][] 
  []
 
-<assets/app screenshot/support_chat_admin_reply.jpeg, id=3042, 722.7pt x 1606.0
+<assets/app screenshot/support_chat_admin_reply.jpeg, id=3038, 722.7pt x 1606.0
 pt>
 File: assets/app screenshot/support_chat_admin_reply.jpeg Graphic file (type jp
 g)
@@ -2008,13 +2008,13 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1255--1256
 
 [186 <./assets/app screenshot/support_chat_bot.jpeg> <./assets/app screenshot/s
 upport_chat_admin_reply.jpeg>]
-<assets/app screenshot/notifications_list.jpeg, id=3048, 722.7pt x 1606.0pt>
+<assets/app screenshot/notifications_list.jpeg, id=3044, 722.7pt x 1606.0pt>
 File: assets/app screenshot/notifications_list.jpeg Graphic file (type jpg)
 <use assets/app screenshot/notifications_list.jpeg>
 Package pdftex.def Info: assets/app screenshot/notifications_list.jpeg  used on
  input line 1279.
 (pdftex.def)             Requested size: 197.31505pt x 438.4779pt.
-<assets/app screenshot/notification_deletion.jpeg, id=3049, 722.7pt x 1606.0pt>
+<assets/app screenshot/notification_deletion.jpeg, id=3045, 722.7pt x 1606.0pt>
 
 File: assets/app screenshot/notification_deletion.jpeg Graphic file (type jpg)
 <use assets/app screenshot/notification_deletion.jpeg>
@@ -2023,7 +2023,7 @@ Package pdftex.def Info: assets/app screenshot/notification_deletion.jpeg  used
 (pdftex.def)             Requested size: 197.31505pt x 438.4779pt.
  [187 <./assets/app screenshot/notifications_list.jpeg> <./assets/app screensho
 t/notification_deletion.jpeg>]
-<assets/app screenshot/emergency_sos_countdown.jpeg, id=3055, 722.7pt x 1606.0p
+<assets/app screenshot/emergency_sos_countdown.jpeg, id=3051, 722.7pt x 1606.0p
 t>
 File: assets/app screenshot/emergency_sos_countdown.jpeg Graphic file (type jpg
 )
@@ -2036,7 +2036,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1307--1308
  [][] 
  []
 
-<assets/app screenshot/notifications_list_sos.jpeg, id=3056, 722.7pt x 1606.0pt
+<assets/app screenshot/notifications_list_sos.jpeg, id=3052, 722.7pt x 1606.0pt
 >
 File: assets/app screenshot/notifications_list_sos.jpeg Graphic file (type jpg)
 
@@ -2049,7 +2049,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1311--1312
  [][] 
  []
 
-<assets/app screenshot/emergency_sos_network_error.jpeg, id=3057, 722.7pt x 160
+<assets/app screenshot/emergency_sos_network_error.jpeg, id=3053, 722.7pt x 160
 6.0pt>
 File: assets/app screenshot/emergency_sos_network_error.jpeg Graphic file (type
  jpg)
@@ -2065,7 +2065,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1315--1316
 [188 <./assets/app screenshot/emergency_sos_countdown.jpeg> <./assets/app scree
 nshot/notifications_list_sos.jpeg> <./assets/app screenshot/emergency_sos_netwo
 rk_error.jpeg>]
-<assets/app screenshot/profile_general_info_part1.jpeg, id=3063, 542.025pt x 15
+<assets/app screenshot/profile_general_info_part1.jpeg, id=3059, 542.025pt x 15
 20.68124pt>
 File: assets/app screenshot/profile_general_info_part1.jpeg Graphic file (type 
 jpg)
@@ -2073,7 +2073,7 @@ jpg)
 Package pdftex.def Info: assets/app screenshot/profile_general_info_part1.jpeg 
  used on input line 1339.
 (pdftex.def)             Requested size: 189.44693pt x 531.50389pt.
-<assets/app screenshot/profile_general_info_part2.jpeg, id=3064, 722.7pt x 2174
+<assets/app screenshot/profile_general_info_part2.jpeg, id=3060, 722.7pt x 2174
 .1225pt>
 File: assets/app screenshot/profile_general_info_part2.jpeg Graphic file (type 
 jpg)
@@ -2083,13 +2083,13 @@ Package pdftex.def Info: assets/app screenshot/profile_general_info_part2.jpeg
 (pdftex.def)             Requested size: 176.67157pt x 531.48698pt.
  [189 <./assets/app screenshot/profile_general_info_part1.jpeg> <./assets/app s
 creenshot/profile_general_info_part2.jpeg>]
-<assets/app screenshot/analytics_part_1.jpeg, id=3071, 722.7pt x 1606.0pt>
+<assets/app screenshot/analytics_part_1.jpeg, id=3067, 722.7pt x 1606.0pt>
 File: assets/app screenshot/analytics_part_1.jpeg Graphic file (type jpg)
 <use assets/app screenshot/analytics_part_1.jpeg>
 Package pdftex.def Info: assets/app screenshot/analytics_part_1.jpeg  used on i
 nput line 1364.
 (pdftex.def)             Requested size: 179.38434pt x 398.63187pt.
-<assets/app screenshot/analytics_part_2.jpeg, id=3072, 722.7pt x 1606.0pt>
+<assets/app screenshot/analytics_part_2.jpeg, id=3068, 722.7pt x 1606.0pt>
 File: assets/app screenshot/analytics_part_2.jpeg Graphic file (type jpg)
 <use assets/app screenshot/analytics_part_2.jpeg>
 Package pdftex.def Info: assets/app screenshot/analytics_part_2.jpeg  used on i
@@ -2097,7 +2097,7 @@ nput line 1368.
 (pdftex.def)             Requested size: 179.38434pt x 398.63187pt.
  [190 <./assets/app screenshot/analytics_part_1.jpeg> <./assets/app screenshot/
 analytics_part_2.jpeg>]
-<assets/app screenshot/profile_booked_ride_history.jpeg, id=3078, 542.025pt x 1
+<assets/app screenshot/profile_booked_ride_history.jpeg, id=3074, 542.025pt x 1
 321.93875pt>
 File: assets/app screenshot/profile_booked_ride_history.jpeg Graphic file (type
  jpg)
@@ -2110,7 +2110,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1386--1387
  [][] 
  []
 
-<assets/app screenshot/profile_created_rides_history.jpeg, id=3079, 542.025pt x
+<assets/app screenshot/profile_created_rides_history.jpeg, id=3075, 542.025pt x
  1204.5pt>
 File: assets/app screenshot/profile_created_rides_history.jpeg Graphic file (ty
 pe jpg)
@@ -2125,7 +2125,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1390--1391
 
 [191 <./assets/app screenshot/profile_booked_ride_history.jpeg> <./assets/app s
 creenshot/profile_created_rides_history.jpeg>]
-<assets/app screenshot/driver_license_vehicle_info.jpeg, id=3086, 542.025pt x 2
+<assets/app screenshot/driver_license_vehicle_info.jpeg, id=3081, 542.025pt x 2
 064.96469pt>
 File: assets/app screenshot/driver_license_vehicle_info.jpeg Graphic file (type
  jpg)
@@ -2133,7 +2133,7 @@ File: assets/app screenshot/driver_license_vehicle_info.jpeg Graphic file (type
 Package pdftex.def Info: assets/app screenshot/driver_license_vehicle_info.jpeg
   used on input line 1414.
 (pdftex.def)             Requested size: 95.91443pt x 365.40736pt.
-<assets/app screenshot/edit_driving_license.jpeg, id=3087, 722.7pt x 1606.0pt>
+<assets/app screenshot/edit_driving_license.jpeg, id=3082, 722.7pt x 1606.0pt>
 File: assets/app screenshot/edit_driving_license.jpeg Graphic file (type jpg)
 <use assets/app screenshot/edit_driving_license.jpeg>
 Package pdftex.def Info: assets/app screenshot/edit_driving_license.jpeg  used 
@@ -2144,7 +2144,7 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1418--1419
  [][] 
  []
 
-<assets/app screenshot/vehicle_details_card.jpeg, id=3088, 722.7pt x 1979.395pt
+<assets/app screenshot/vehicle_details_card.jpeg, id=3083, 722.7pt x 1979.395pt
 >
 File: assets/app screenshot/vehicle_details_card.jpeg Graphic file (type jpg)
 <use assets/app screenshot/vehicle_details_card.jpeg>
@@ -2159,21 +2159,21 @@ Overfull \hbox (2.0pt too wide) in paragraph at lines 1422--1423
 [192 <./assets/app screenshot/driver_license_vehicle_info.jpeg> <./assets/app s
 creenshot/edit_driving_license.jpeg> <./assets/app screenshot/vehicle_details_c
 ard.jpeg>]
-<assets/app screenshot/blocked_users_list.jpeg, id=3094, 722.7pt x 1606.0pt>
+<assets/app screenshot/blocked_users_list.jpeg, id=3090, 722.7pt x 1606.0pt>
 File: assets/app screenshot/blocked_users_list.jpeg Graphic file (type jpg)
 <use assets/app screenshot/blocked_users_list.jpeg>
 Package pdftex.def Info: assets/app screenshot/blocked_users_list.jpeg  used on
  input line 1444.
 (pdftex.def)             Requested size: 179.38434pt x 398.63187pt.
  [193 <./assets/app screenshot/blocked_users_list.jpeg>]
-<assets/app screenshot/web_live_tracking.jpeg, id=3100, 722.7pt x 1606.0pt>
+<assets/app screenshot/web_live_tracking.jpeg, id=3096, 722.7pt x 1606.0pt>
 File: assets/app screenshot/web_live_tracking.jpeg Graphic file (type jpg)
 <use assets/app screenshot/web_live_tracking.jpeg>
 Package pdftex.def Info: assets/app screenshot/web_live_tracking.jpeg  used on 
 input line 1465.
 (pdftex.def)             Requested size: 179.38434pt x 398.63187pt.
  [194 <./assets/app screenshot/web_live_tracking.jpeg>]
-<assets/app screenshot/dashboard images/administration-login.png, id=3106, 1538
+<assets/app screenshot/dashboard images/administration-login.png, id=3102, 1538
 .74875pt x 749.80125pt>
 File: assets/app screenshot/dashboard images/administration-login.png Graphic f
 ile (type png)
@@ -2181,7 +2181,7 @@ ile (type png)
 Package pdftex.def Info: assets/app screenshot/dashboard images/administration-
 login.png  used on input line 1486.
 (pdftex.def)             Requested size: 421.88379pt x 205.57245pt.
-<assets/app screenshot/dashboard images/administration-dashboard.png, id=3107, 
+<assets/app screenshot/dashboard images/administration-dashboard.png, id=3103, 
 1538.74875pt x 968.61874pt>
 File: assets/app screenshot/dashboard images/administration-dashboard.png Graph
 ic file (type png)
@@ -2190,7 +2190,7 @@ Package pdftex.def Info: assets/app screenshot/dashboard images/administration-
 dashboard.png  used on input line 1499.
 (pdftex.def)             Requested size: 421.88379pt x 265.56548pt.
  [195 <./assets/app screenshot/dashboard images/administration-login.png>]
-<assets/app screenshot/dashboard images/Rides-Dashboard.png, id=3115, 1533.73pt
+<assets/app screenshot/dashboard images/Rides-Dashboard.png, id=3111, 1533.73pt
  x 735.74875pt>
 File: assets/app screenshot/dashboard images/Rides-Dashboard.png Graphic file (
 type png)
@@ -2200,7 +2200,7 @@ Package pdftex.def Info: assets/app screenshot/dashboard images/Rides-Dashboard
 (pdftex.def)             Requested size: 421.88379pt x 202.38205pt.
  [196 <./assets/app screenshot/dashboard images/administration-dashboard.png> <
 ./assets/app screenshot/dashboard images/Rides-Dashboard.png>]
-<assets/app screenshot/dashboard images/administration-reached.png, id=3124, 15
+<assets/app screenshot/dashboard images/administration-reached.png, id=3120, 15
 43.7675pt x 1609.01125pt>
 File: assets/app screenshot/dashboard images/administration-reached.png Graphic
  file (type png)
@@ -2209,7 +2209,7 @@ Package pdftex.def Info: assets/app screenshot/dashboard images/administration-
 reached.png  used on input line 1525.
 (pdftex.def)             Requested size: 421.88379pt x 439.71742pt.
  [197 <./assets/app screenshot/dashboard images/administration-reached.png>]
-<assets/app screenshot/dashboard images/administration-sos.png, id=3131, 1543.7
+<assets/app screenshot/dashboard images/administration-sos.png, id=3127, 1543.7
 675pt x 896.34875pt>
 File: assets/app screenshot/dashboard images/administration-sos.png Graphic fil
 e (type png)
@@ -2217,7 +2217,7 @@ e (type png)
 Package pdftex.def Info: assets/app screenshot/dashboard images/administration-
 sos.png  used on input line 1538.
 (pdftex.def)             Requested size: 421.88379pt x 244.958pt.
-<assets/app screenshot/dashboard images/administration-users.png, id=3132, 1543
+<assets/app screenshot/dashboard images/administration-users.png, id=3128, 1543
 .7675pt x 887.315pt>
 File: assets/app screenshot/dashboard images/administration-users.png Graphic f
 ile (type png)
@@ -2227,7 +2227,7 @@ users.png  used on input line 1551.
 (pdftex.def)             Requested size: 421.88379pt x 242.4892pt.
  [198 <./assets/app screenshot/dashboard images/administration-sos.png>]
 <assets/app screenshot/dashboard images/administration-change-requests.png, id=
-3139, 1543.7675pt x 1124.2pt>
+3135, 1543.7675pt x 1124.2pt>
 File: assets/app screenshot/dashboard images/administration-change-requests.png
  Graphic file (type png)
 <use assets/app screenshot/dashboard images/administration-change-requests.png>
@@ -2236,7 +2236,7 @@ Package pdftex.def Info: assets/app screenshot/dashboard images/administration-
 change-requests.png  used on input line 1564.
 (pdftex.def)             Requested size: 421.88379pt x 307.22615pt.
  [199 <./assets/app screenshot/dashboard images/administration-users.png>]
-<assets/app screenshot/dashboard images/administration-todos.png, id=3146, 1543
+<assets/app screenshot/dashboard images/administration-todos.png, id=3142, 1543
 .7675pt x 810.02625pt>
 File: assets/app screenshot/dashboard images/administration-todos.png Graphic f
 ile (type png)
@@ -2246,8 +2246,8 @@ todos.png  used on input line 1577.
 (pdftex.def)             Requested size: 421.88379pt x 221.3674pt.
  [200 <./assets/app screenshot/dashboard images/administration-change-requests.
 png>]
-<assets/app screenshot/dashboard images/administration-support-faqs.png, id=315
-3, 1543.7675pt x 810.02625pt>
+<assets/app screenshot/dashboard images/administration-support-faqs.png, id=314
+9, 1543.7675pt x 810.02625pt>
 File: assets/app screenshot/dashboard images/administration-support-faqs.png Gr
 aphic file (type png)
 <use assets/app screenshot/dashboard images/administration-support-faqs.png>
@@ -2256,7 +2256,7 @@ support-faqs.png  used on input line 1590.
 (pdftex.def)             Requested size: 421.88379pt x 221.3674pt.
  [201 <./assets/app screenshot/dashboard images/administration-todos.png> <./as
 sets/app screenshot/dashboard images/administration-support-faqs.png>]
-<assets/app screenshot/dashboard images/Guest-Users.png, id=3163, 1533.73pt x 7
+<assets/app screenshot/dashboard images/Guest-Users.png, id=3159, 1533.73pt x 7
 35.74875pt>
 File: assets/app screenshot/dashboard images/Guest-Users.png Graphic file (type
  png)
@@ -2264,7 +2264,7 @@ File: assets/app screenshot/dashboard images/Guest-Users.png Graphic file (type
 Package pdftex.def Info: assets/app screenshot/dashboard images/Guest-Users.png
   used on input line 1603.
 (pdftex.def)             Requested size: 421.88379pt x 202.38205pt.
-<assets/db_diagrams/navigation_flow_diagram.png, id=3164, 1684.2925pt x 1101.11
+<assets/db_diagrams/navigation_flow_diagram.png, id=3160, 1684.2925pt x 1101.11
 375pt>
 File: assets/db_diagrams/navigation_flow_diagram.png Graphic file (type png)
 <use assets/db_diagrams/navigation_flow_diagram.png>
@@ -2278,7 +2278,7 @@ Chapter 6.
 
 ] [206] [207] [208] [209]
 <assets/app screenshot/postman screenshots/driver_ride_details_pending_part1.jp
-eg, id=3212, 1606.0pt x 903.375pt>
+eg, id=3208, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/driver_ride_details_pending_par
 t1.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/driver_ride_details_pending_part
@@ -2287,7 +2287,7 @@ Package pdftex.def Info: assets/app screenshot/postman screenshots/driver_ride_
 details_pending_part1.jpeg  used on input line 277.
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.59.5
-6.jpeg, id=3213, 1606.0pt x 903.375pt>
+6.jpeg, id=3209, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10
 .59.56.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.
@@ -2298,7 +2298,7 @@ ge 2026-02-21 at 10.59.56.jpeg  used on input line 283.
  [210 <./assets/app screenshot/postman screenshots/driver_ride_details_pending_
 part1.jpeg>]
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.59.5
-7.jpeg, id=3220, 1606.0pt x 903.375pt>
+7.jpeg, id=3216, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10
 .59.57.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.
@@ -2307,7 +2307,7 @@ Package pdftex.def Info: assets/app screenshot/postman screenshots/WhatsApp Ima
 ge 2026-02-21 at 10.59.57.jpeg  used on input line 289.
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.59.5
-8.jpeg, id=3221, 1606.0pt x 903.375pt>
+8.jpeg, id=3217, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10
 .59.58.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.
@@ -2319,7 +2319,7 @@ ge 2026-02-21 at 10.59.58.jpeg  used on input line 299.
  10.59.56.jpeg> <./assets/app screenshot/postman screenshots/WhatsApp Image 202
 6-02-21 at 10.59.57.jpeg>]
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.595.
-58.jpeg, id=3228, 1606.0pt x 903.375pt>
+58.jpeg, id=3224, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10
 .595.58.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.
@@ -2328,7 +2328,7 @@ Package pdftex.def Info: assets/app screenshot/postman screenshots/WhatsApp Ima
 ge 2026-02-21 at 10.595.58.jpeg  used on input line 305.
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.59.5
-9.jpeg, id=3229, 1606.0pt x 903.375pt>
+9.jpeg, id=3225, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10
 .59.59.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 10.
@@ -2340,7 +2340,7 @@ ge 2026-02-21 at 10.59.59.jpeg  used on input line 311.
  10.59.58.jpeg> <./assets/app screenshot/postman screenshots/WhatsApp Image 202
 6-02-21 at 10.595.58.jpeg>]
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.00.0
-3.jpeg, id=3236, 1606.0pt x 903.375pt>
+3.jpeg, id=3232, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11
 .00.03.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.
@@ -2349,7 +2349,7 @@ Package pdftex.def Info: assets/app screenshot/postman screenshots/WhatsApp Ima
 ge 2026-02-21 at 11.00.03.jpeg  used on input line 321.
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.00g.
-03.jpeg, id=3237, 1606.0pt x 903.375pt>
+03.jpeg, id=3233, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11
 .00g.03.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.
@@ -2361,7 +2361,7 @@ ge 2026-02-21 at 11.00g.03.jpeg  used on input line 327.
  10.59.59.jpeg> <./assets/app screenshot/postman screenshots/WhatsApp Image 202
 6-02-21 at 11.00.03.jpeg>]
 <assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.0f0.
-03.jpeg, id=3245, 1606.0pt x 903.375pt>
+03.jpeg, id=3241, 1606.0pt x 903.375pt>
 File: assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11
 .0f0.03.jpeg Graphic file (type jpg)
 <use assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.
@@ -2372,7 +2372,7 @@ ge 2026-02-21 at 11.0f0.03.jpeg  used on input line 333.
  [214 <./assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at
  11.00g.03.jpeg> <./assets/app screenshot/postman screenshots/WhatsApp Image 20
 26-02-21 at 11.0f0.03.jpeg>]
-<assets/tests/performance testing/statistics image.png, id=3252, 1208.515pt x 5
+<assets/tests/performance testing/statistics image.png, id=3248, 1208.515pt x 5
 22.95375pt>
 File: assets/tests/performance testing/statistics image.png Graphic file (type 
 png)
@@ -2380,7 +2380,7 @@ png)
 Package pdftex.def Info: assets/tests/performance testing/statistics image.png 
  used on input line 355.
 (pdftex.def)             Requested size: 446.69426pt x 193.29036pt.
-<assets/tests/performance testing/terminal image 1.png, id=3253, 1537.745pt x 8
+<assets/tests/performance testing/terminal image 1.png, id=3249, 1537.745pt x 8
 72.25874pt>
 File: assets/tests/performance testing/terminal image 1.png Graphic file (type 
 png)
@@ -2388,7 +2388,7 @@ png)
 Package pdftex.def Info: assets/tests/performance testing/terminal image 1.png 
  used on input line 361.
 (pdftex.def)             Requested size: 446.69426pt x 253.37447pt.
-<assets/tests/performance testing/terminal image 2.png, id=3254, 1537.745pt x 8
+<assets/tests/performance testing/terminal image 2.png, id=3250, 1537.745pt x 8
 72.25874pt>
 File: assets/tests/performance testing/terminal image 2.png Graphic file (type 
 png)
@@ -2399,19 +2399,19 @@ Package pdftex.def Info: assets/tests/performance testing/terminal image 2.png
  [215 <./assets/tests/performance testing/statistics image.png>] [216 <./assets
 /tests/performance testing/terminal image 1.png> <./assets/tests/performance te
 sting/terminal image 2.png>]
-<assets/tests/terminal security testing.png, id=3269, 1606.0pt x 903.375pt>
+<assets/tests/terminal security testing.png, id=3264, 1606.0pt x 903.375pt>
 File: assets/tests/terminal security testing.png Graphic file (type png)
 <use assets/tests/terminal security testing.png>
 Package pdftex.def Info: assets/tests/terminal security testing.png  used on in
 put line 392.
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
-<assets/tests/zap/welcome screen.png, id=3270, 1606.0pt x 903.375pt>
+<assets/tests/zap/welcome screen.png, id=3265, 1606.0pt x 903.375pt>
 File: assets/tests/zap/welcome screen.png Graphic file (type png)
 <use assets/tests/zap/welcome screen.png>
 Package pdftex.def Info: assets/tests/zap/welcome screen.png  used on input lin
 e 400.
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
-<assets/tests/zap/altert tab.png, id=3271, 1606.0pt x 903.375pt>
+<assets/tests/zap/altert tab.png, id=3266, 1606.0pt x 903.375pt>
 File: assets/tests/zap/altert tab.png Graphic file (type png)
 <use assets/tests/zap/altert tab.png>
 Package pdftex.def Info: assets/tests/zap/altert tab.png  used on input line 40
@@ -2420,20 +2420,20 @@ Package pdftex.def Info: assets/tests/zap/altert tab.png  used on input line 40
  [217 <./assets/tests/terminal security testing.png>]
 [218 <./assets/tests/zap/welcome screen.png> <./assets/tests/zap/altert tab.png
 >] [219]
-<assets/tests/screenshot 1.jpeg, id=3301, 1606.0pt x 903.375pt>
+<assets/tests/screenshot 1.jpeg, id=3288, 1606.0pt x 903.375pt>
 File: assets/tests/screenshot 1.jpeg Graphic file (type jpg)
 <use assets/tests/screenshot 1.jpeg>
 Package pdftex.def Info: assets/tests/screenshot 1.jpeg  used on input line 513
 .
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
  [220]
-<assets/tests/scrennsots 2.jpeg, id=3310, 1606.0pt x 903.375pt>
+<assets/tests/scrennsots 2.jpeg, id=3295, 1606.0pt x 903.375pt>
 File: assets/tests/scrennsots 2.jpeg Graphic file (type jpg)
 <use assets/tests/scrennsots 2.jpeg>
 Package pdftex.def Info: assets/tests/scrennsots 2.jpeg  used on input line 519
 .
 (pdftex.def)             Requested size: 446.69426pt x 251.26158pt.
-<assets/tests/screenshiots 3.jpeg, id=3311, 1606.0pt x 903.375pt>
+<assets/tests/screenshiots 3.jpeg, id=3296, 1606.0pt x 903.375pt>
 File: assets/tests/screenshiots 3.jpeg Graphic file (type jpg)
 <use assets/tests/screenshiots 3.jpeg>
 Package pdftex.def Info: assets/tests/screenshiots 3.jpeg  used on input line 5
@@ -2451,132 +2451,52 @@ Chapter 7.
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
 (hyperref)                be the same. Added a new anchor on input line 158.
 
-(./ch_8_plagiarismreport.tex) [226
+(./ch_8_plagiarismreport.tex
+<assets/plegerism report.jpg, id=3338, 614.295pt x 794.97pt>
+File: assets/plegerism report.jpg Graphic file (type jpg)
+<use assets/plegerism report.jpg>
+Package pdftex.def Info: assets/plegerism report.jpg  used on input line 11.
+(pdftex.def)             Requested size: 359.37518pt x 465.07378pt.
+) [226
 
 
-] (./ch_8.1_AI_report.tex) [227
-
-]
+ <./assets/plegerism report.jpg>]
 (./ch_9_appendix_source_code.tex
 LaTeX Font Info:    Font shape `T1/lmtt/bx/n' in size <12> not available
 (Font)              Font shape `T1/lmtt/b/n' tried instead on input line 11.
-) [228
+) [227
+
 
 ] (./main.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
-
-Package rerunfilecheck Warning: File `main.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `main.out':
-(rerunfilecheck)             Before: 7BC9F7D06A970C9603CF07F5703ABB74;66691
-(rerunfilecheck)             After:  8DA2D006417A7EEBD972EB5AE749E303;66696.
+Package rerunfilecheck Info: File `main.out' has not changed.
+(rerunfilecheck)             Checksum: EBB6C4B5B880F84A0E83FEBC4C8CDEBD;66412.
  ) 
 Here is how much of TeX's memory you used:
- 25855 strings out of 469438
- 498713 string characters out of 5468411
- 863582 words of memory out of 5000000
- 53068 multiletter control sequences out of 15000+600000
+ 25838 strings out of 469438
+ 498623 string characters out of 5468411
+ 863581 words of memory out of 5000000
+ 53073 multiletter control sequences out of 15000+600000
  704837 words of font info for 78 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  88i,12n,94p,1349b,714s stack positions out of 10000i,1000n,20000p,200000b,200000s
+</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/ty
+pe1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></
+usr/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/
+public/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/sh
+are/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/
+lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf
+/fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy1
+0.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts
+/type1/public/lm/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
 
-pdfTeX warning (dest): name{figure.603} has been referenced but does not exist,
- replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.585} has been referenced but does not exist,
- replaced by a fixed one
-
-
-pdfTeX warning (dest): name{figure.576} has been referenced but does not exist,
- replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.593} has been referenced but does not exist, 
-replaced by a fixed one
-
-
-pdfTeX warning (dest): name{table.579} has been referenced but does not exist, 
-replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section*.611} has been referenced but does not exis
-t, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{appendix*.610} has been referenced but does not exi
-st, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.608} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.607} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{chapter.605} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsection.601} has been referenced but does not ex
-ist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsection.596} has been referenced but does not ex
-ist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.595} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.594} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsection.591} has been referenced but does not ex
-ist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsection.588} has been referenced but does not ex
-ist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{subsection.587} has been referenced but does not ex
-ist, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.586} has been referenced but does not exist
-, replaced by a fixed one
-
-
-pdfTeX warning (dest): name{section.577} has been referenced but does not exist
-, replaced by a fixed one
-
-</usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type
-1/public/lm/lmbx12.pfb></usr/share/texmf/fonts/type1/public/lm/lmcsc10.pfb></us
-r/share/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/pu
-blic/lm/lmmi12.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/shar
-e/texmf/fonts/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm
-/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/f
-onts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.
-pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts/t
-ype1/public/lm/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (250 pages, 20439812 bytes).
+Output written on main.pdf (249 pages, 21089299 bytes).
 PDF statistics:
- 3657 PDF objects out of 4296 (max. 8388607)
- 3184 compressed objects within 32 object streams
- 958 named destinations out of 1000 (max. 500000)
- 3052 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 3630 PDF objects out of 4296 (max. 8388607)
+ 3157 compressed objects within 32 object streams
+ 940 named destinations out of 1000 (max. 500000)
+ 3049 words of extra memory for PDF output out of 10000 (max. 10000000)
 
