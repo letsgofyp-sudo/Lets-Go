@@ -146,3 +146,6 @@ curl -i "https://lets-go-bay.vercel.app/lets_go/trips/share-app/TOKEN_HERE/"
 # Open the web live tracking page
 curl -i "https://lets-go-bay.vercel.app/lets_go/trips/share/TOKEN_HERE/"
 ```
+##Demo video
+
+[![Watch the video](https://youtube.com)](https://youtu.be/PDrwPcooYKc)
