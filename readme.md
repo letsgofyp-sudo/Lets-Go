@@ -146,6 +146,10 @@ curl -i "https://lets-go-bay.vercel.app/lets_go/trips/share-app/TOKEN_HERE/"
 # Open the web live tracking page
 curl -i "https://lets-go-bay.vercel.app/lets_go/trips/share/TOKEN_HERE/"
 ```
-##Demo video
 
-[![Watch the video](https://youtube.com)](https://youtu.be/PDrwPcooYKc)
+## Demo Video
+
+<video width="100%" controls>
+  <source src="https://raw.githubusercontent.com/letsgofyp-sudo/Lets-Go/main/demo-faster.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
