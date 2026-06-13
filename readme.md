@@ -149,7 +149,4 @@ curl -i "https://lets-go-bay.vercel.app/lets_go/trips/share/TOKEN_HERE/"
 
 ## Demo Video
 
-<video width="100%" controls>
-  <source src="https://raw.githubusercontent.com/letsgofyp-sudo/Lets-Go/main/demo-faster.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+[📹 Watch Demo Video](https://github.com/letsgofyp-sudo/Lets-Go/raw/main/demo-faster.mp4)
