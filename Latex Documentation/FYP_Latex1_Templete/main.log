@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.7)  11 MAY 2026 17:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.7)  13 JUN 2026 14:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1255,11 +1255,11 @@ line 430.
  [109
 
  <./assets/activity diagrams/module 13.jpg>]
-<assets/class diagram.jpg, id=2550, 1357.07pt x 1758.57pt>
+<assets/class diagram.jpg, id=2550, 1326.9575pt x 1760.5775pt>
 File: assets/class diagram.jpg Graphic file (type jpg)
 <use assets/class diagram.jpg>
 Package pdftex.def Info: assets/class diagram.jpg  used on input line 447.
-(pdftex.def)             Requested size: 410.1474pt x 531.49278pt.
+(pdftex.def)             Requested size: 400.5808pt x 531.48163pt.
  [110
 
  <./assets/class diagram.jpg>] [111]
@@ -2493,7 +2493,7 @@ lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf
 0.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts
 /type1/public/lm/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
 
-Output written on main.pdf (249 pages, 21089299 bytes).
+Output written on main.pdf (249 pages, 21206860 bytes).
 PDF statistics:
  3630 PDF objects out of 4296 (max. 8388607)
  3157 compressed objects within 32 object streams

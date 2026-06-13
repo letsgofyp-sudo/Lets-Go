@@ -1,0 +1,152 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
+  <diagram name="Page-1" id="6dRJ6HxGyBLJa_kWn-Kq">
+    <mxGraphModel dx="1095" dy="561" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="qNsbD1t2UK21VGBreROF-15" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-1" target="qNsbD1t2UK21VGBreROF-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-30" value="sos triggr&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-15">
+          <mxGeometry x="-0.2625" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-1" value="passengr /divr" style="html=1;dashed=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="190" y="30" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-2" target="qNsbD1t2UK21VGBreROF-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="770" y="50" />
+              <mxPoint x="770" y="670" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-39" value="continous&lt;div&gt;gps&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-27">
+          <mxGeometry x="0.0194" y="4" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-2" value="gps" style="html=1;dashed=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="490" y="30" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-4" value="triggr sos and captur&amp;nbsp;&lt;div&gt;data&lt;/div&gt;" style="shape=ellipse;html=1;dashed=0;whiteSpace=wrap;aspect=fixed;perimeter=ellipsePerimeter;" vertex="1" parent="1">
+          <mxGeometry x="140" y="170" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-20" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-5" target="qNsbD1t2UK21VGBreROF-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-35" value="notify emergency contact&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-20">
+          <mxGeometry x="0.2563" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-26" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.1;entryY=0.033;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-5" target="qNsbD1t2UK21VGBreROF-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-34" value="creta incident&amp;nbsp;&lt;br&gt;id" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-26">
+          <mxGeometry x="0.1176" y="1" relative="1" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-5" value="creat incident and&amp;nbsp;&lt;div&gt;notify&lt;/div&gt;" style="shape=ellipse;html=1;dashed=0;whiteSpace=wrap;aspect=fixed;perimeter=ellipsePerimeter;" vertex="1" parent="1">
+          <mxGeometry x="540" y="200" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-19" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-6" target="qNsbD1t2UK21VGBreROF-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-38" value="respond updates" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-19">
+          <mxGeometry x="0.1143" y="1" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-6" value="admin" style="html=1;dashed=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="510" y="450" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-23" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-8" target="qNsbD1t2UK21VGBreROF-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-40" value="update gps&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-23">
+          <mxGeometry x="-0.0262" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-25" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-8" target="qNsbD1t2UK21VGBreROF-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-42" value="audit every log" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-25">
+          <mxGeometry x="-0.2999" y="3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-8" value="updat and manage&lt;div&gt;status&lt;/div&gt;" style="shape=ellipse;html=1;dashed=0;whiteSpace=wrap;aspect=fixed;perimeter=ellipsePerimeter;" vertex="1" parent="1">
+          <mxGeometry x="500" y="610" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-9" value="emrgncy contact&amp;nbsp;" style="html=1;dashed=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="200" y="650" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-21" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-10" target="qNsbD1t2UK21VGBreROF-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-36" value="send notification" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-21">
+          <mxGeometry x="-0.08" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-10" value="notification&lt;div&gt;service&lt;/div&gt;" style="html=1;dashed=0;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="190" y="490" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-11" value="gps stor" style="html=1;dashed=0;whiteSpace=wrap;shape=partialRectangle;right=0;" vertex="1" parent="1">
+          <mxGeometry x="20" y="720" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-12" value="incidnt store" style="html=1;dashed=0;whiteSpace=wrap;shape=partialRectangle;right=0;" vertex="1" parent="1">
+          <mxGeometry x="390" y="780" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-14" value="audit log" style="html=1;dashed=0;whiteSpace=wrap;shape=partialRectangle;right=0;" vertex="1" parent="1">
+          <mxGeometry x="790" y="750" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-16" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;entryX=0.725;entryY=0.083;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-2" target="qNsbD1t2UK21VGBreROF-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-31" value="capture location" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-16">
+          <mxGeometry x="-0.2401" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-17" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.375;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-4" target="qNsbD1t2UK21VGBreROF-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-32" value="extract ride detail&amp;nbsp;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-17">
+          <mxGeometry x="-0.3215" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-18" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.45;entryY=0.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-5" target="qNsbD1t2UK21VGBreROF-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-37" value="alert admin" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-18">
+          <mxGeometry x="-0.0834" y="-1" relative="1" as="geometry">
+            <mxPoint x="20" y="29" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-24" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.32;entryY=-0.067;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-8" target="qNsbD1t2UK21VGBreROF-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-41" value="update incident" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-24">
+          <mxGeometry x="-0.0652" y="-2" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-28" style="edgeStyle=none;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=1;exitDx=0;exitDy=0;entryX=0.6;entryY=0.133;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="qNsbD1t2UK21VGBreROF-4" target="qNsbD1t2UK21VGBreROF-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="qNsbD1t2UK21VGBreROF-33" value="store gps store" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="qNsbD1t2UK21VGBreROF-28">
+          <mxGeometry x="-0.4337" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

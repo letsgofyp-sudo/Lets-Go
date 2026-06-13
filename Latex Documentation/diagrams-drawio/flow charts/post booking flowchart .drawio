@@ -1,0 +1,251 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/28.2.5 Chrome/138.0.7204.251 Electron/37.6.1 Safari/537.36" version="28.2.5">
+  <diagram name="Driver User Flow" id="M22OdzJP7_4aow-SgGuZ">
+    <mxGraphModel dx="1481" dy="1920" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-1" target="XgCVTkL0Ag6doLVoyKIB-19">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-1" value="start" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="329" y="-160" width="107" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-4" target="XgCVTkL0Ag6doLVoyKIB-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-4" value="Driver Navigates to Pickup Location" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="290" y="447" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-5" target="XgCVTkL0Ag6doLVoyKIB-21">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;strokeWidth=2;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-5" target="i_dsi-ZBCnfj-9X7P8fW-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="479" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-5" value="navigate to the trip live tracking screen" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="270" y="60" width="170" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-6" target="XgCVTkL0Ag6doLVoyKIB-4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;strokeWidth=2;fontSize=16;fontStyle=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-6" target="XgCVTkL0Ag6doLVoyKIB-13">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="515" y="400" />
+              <mxPoint x="709" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;strokeWidth=2;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-6" target="i_dsi-ZBCnfj-9X7P8fW-9">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="485" y="420" />
+              <mxPoint x="560" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-6" value="Live Location Sharing Starts" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="425" y="346" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=16;fontStyle=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-11" target="XgCVTkL0Ag6doLVoyKIB-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="310" y="550" />
+              <mxPoint x="310" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-11" value="Driver Reaches Pickup point" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="155" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-44" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;fontSize=16;fontStyle=1;strokeWidth=2;" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-13" target="XgCVTkL0Ag6doLVoyKIB-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-13" value="Passenger verifies it by submitting code or scanning qr code" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="629" y="520" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-15" target="XgCVTkL0Ag6doLVoyKIB-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-15" target="XgCVTkL0Ag6doLVoyKIB-17">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="380" y="600" />
+              <mxPoint x="220" y="600" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-15" value="Driver generates code" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="320" y="520" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-17" target="XgCVTkL0Ag6doLVoyKIB-24">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-17" value="Driver navigates to the drop of point" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="150" y="643" width="140" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-18" target="i_dsi-ZBCnfj-9X7P8fW-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-18" value="Passenger Boards Vehicle" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="649" y="643" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=16;fontStyle=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-19" target="XgCVTkL0Ag6doLVoyKIB-20">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="-80" />
+              <mxPoint x="355" y="-80" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-19" target="i_dsi-ZBCnfj-9X7P8fW-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="-80" />
+              <mxPoint x="587" y="-80" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-19" value="Login" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="480" y="-160" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-20" target="XgCVTkL0Ag6doLVoyKIB-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-20" value="navigate to created rides" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="295" y="-38" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-21" target="XgCVTkL0Ag6doLVoyKIB-6">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="385" y="320" />
+              <mxPoint x="455" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-39" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-21" target="i_dsi-ZBCnfj-9X7P8fW-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;fontSize=16;fontStyle=1;strokeWidth=2;" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-21" target="i_dsi-ZBCnfj-9X7P8fW-45">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="410" y="228" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-21" value="Driver Start Ride" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="312" y="198" width="85" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-23" value="if any confirmed&lt;div&gt;booking&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="155" y="20" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-24" target="XgCVTkL0Ag6doLVoyKIB-25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-24" value="Driver Navigates to Destination" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="160" y="760" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="XgCVTkL0Ag6doLVoyKIB-25" target="XgCVTkL0Ag6doLVoyKIB-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-25" value="Driver marked as reached" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="327" y="760" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="XgCVTkL0Ag6doLVoyKIB-27" value="End" style="rounded=1;whiteSpace=wrap;html=1;arcSize=50;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="490" y="760" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-1" value="navigate to booked rides" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="532" y="-38" width="110" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="i_dsi-ZBCnfj-9X7P8fW-2" target="i_dsi-ZBCnfj-9X7P8fW-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fontSize=16;strokeWidth=2;fontStyle=1" edge="1" parent="1" source="i_dsi-ZBCnfj-9X7P8fW-2" target="i_dsi-ZBCnfj-9X7P8fW-8">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="479" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-2" value="navigate to booking live&amp;nbsp;tracking screen" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="520" y="60" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-22" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="i_dsi-ZBCnfj-9X7P8fW-3" target="XgCVTkL0Ag6doLVoyKIB-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="580" y="290" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="640" y="257" />
+              <mxPoint x="640" y="320" />
+              <mxPoint x="515" y="320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-38" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontSize=16;fontStyle=1;exitX=0.75;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="i_dsi-ZBCnfj-9X7P8fW-3" target="i_dsi-ZBCnfj-9X7P8fW-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-3" value="Passenger Start Ride" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="625" y="198" width="94" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="i_dsi-ZBCnfj-9X7P8fW-7" target="XgCVTkL0Ag6doLVoyKIB-27">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-7" value="Passenger marked as reached" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="650" y="759" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-8" value="chat with each other" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="393.5" y="140" width="171" height="37" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-9" value="sends live location&amp;nbsp; to any one via third party app" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="480" y="447" width="160" height="63" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-10" value="confirm payment&lt;br&gt;and submit ratings / comments(optional)" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="254" y="340" width="160" height="63.75" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-11" value="submit payment reciept or by cash and submit ratings and comments (optional)" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="649" y="300" width="190" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-15" value="Driver" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="276" y="-80" width="70" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-16" value="Passenger" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="591" y="-80" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.417;entryY=0.917;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;fontSize=16;fontStyle=1" edge="1" parent="1" source="i_dsi-ZBCnfj-9X7P8fW-1" target="i_dsi-ZBCnfj-9X7P8fW-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-25" value="display QR or&amp;nbsp;&lt;div&gt;tell code&amp;nbsp;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;to&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;the&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;passenger&amp;nbsp;&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="464" y="560" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-40" value="can be done at&lt;div&gt;any point after&lt;/div&gt;&lt;div&gt;starting the ride&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="716" y="230" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-41" value="can be done at&lt;div&gt;any point after&lt;/div&gt;&lt;div&gt;starting the ride&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="197" y="260" width="130" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-42" value="sends a reminder&lt;div&gt;message&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;before&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;10 minutes&lt;/span&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="393.5" y="-80" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-43" value="if not mark as&amp;nbsp;&lt;div&gt;reached sends a reminder&lt;div&gt;message&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;after 2 to 12 hours&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;dynamically and after it&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;informs the emergency contact&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="370" y="643" width="240" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-45" value="submit sos at any point from starting the ride until marked as reached" style="rounded=1;whiteSpace=wrap;html=1;flipH=0;flipV=1;strokeWidth=2;fontSize=16;fontStyle=1" vertex="1" parent="1">
+          <mxGeometry x="428" y="206" width="155" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-47" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.25;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;fontSize=16;fontStyle=1;strokeWidth=2;" edge="1" parent="1" source="i_dsi-ZBCnfj-9X7P8fW-3" target="i_dsi-ZBCnfj-9X7P8fW-45">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="610" y="228" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="i_dsi-ZBCnfj-9X7P8fW-48" value="if varified&lt;br&gt;else try again" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;fontStyle=1;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="712" y="590" width="120" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

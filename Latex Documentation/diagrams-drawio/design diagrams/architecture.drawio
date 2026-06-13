@@ -1,0 +1,85 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/29.0.3 Chrome/140.0.7339.249 Electron/38.7.0 Safari/537.36" version="29.0.3">
+  <diagram name="Page-1" id="MPktfUFucXhq8-wkDF5G">
+    <mxGraphModel dx="1106" dy="669" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeWidth=2;fontStyle=1" parent="1" source="Z5G_ho-KrJiQ75-W2rJA-3" target="Z5G_ho-KrJiQ75-W2rJA-7" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-3" value="Client" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="100" y="340" width="270" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-4" value="&lt;span style=&quot;&quot;&gt;&amp;nbsp; &amp;nbsp;passenger/driver Mobile App&amp;nbsp;&lt;/span&gt;" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-3" vertex="1">
+          <mxGeometry x="5" y="90" width="255" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-21" value="&lt;div&gt;• Login/Signup&lt;/div&gt;&lt;div&gt;• Browse Rides&lt;br&gt;&amp;nbsp;• Post Ride&lt;/div&gt;&lt;div&gt;• Request Ride&lt;br&gt;• Accept/Reject Ride&amp;nbsp;&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Negotiation&lt;br&gt;• Driver Tracking&lt;br&gt;• Driver Verification&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Live Tracking&lt;br&gt;• Start/End Ride&lt;/span&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-4" vertex="1">
+          <mxGeometry x="20" y="39" width="160" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-6" value="admin web app" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-3" vertex="1">
+          <mxGeometry x="10" y="370" width="220" height="200" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-22" value="&lt;div&gt;• Admin Dashboard&lt;br&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Complaints&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• SOS Panel&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Driver Verification&lt;br&gt;&lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;• Reports&lt;/span&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-6" vertex="1">
+          <mxGeometry x="15" y="50" width="120" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontStyle=1" parent="1" source="Z5G_ho-KrJiQ75-W2rJA-7" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="370" y="620" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="410" y="620" />
+              <mxPoint x="410" y="620" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-7" value="&lt;div&gt;BACKEND SERVER (CORE)&lt;/div&gt;" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="420" y="340" width="315" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-10" value="&lt;font&gt;&lt;span&gt;&lt;u&gt;Backend Modules&lt;/u&gt;&lt;/span&gt;&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-7" vertex="1">
+          <mxGeometry x="58.75" y="40" width="197.5" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-28" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-7" source="Z5G_ho-KrJiQ75-W2rJA-11" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="380" y="335" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-11" value="&lt;div&gt;&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;&amp;nbsp;Authentication Module (JWT + OTP)&amp;nbsp;&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;Passenger Module&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;font&gt;Driver &amp;amp; Vehicle Module&amp;nbsp;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;font&gt;Ride Request Module (Pass→Driver)&amp;nbsp;&lt;/font&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;ML Recommendation Handler&amp;nbsp;&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;Booking Module (with negotiation)&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;Live Tracking Engine (Channels)&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;Chat Engine (real-time messaging)&amp;nbsp;&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;SOS Manager&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;Complaint &amp;amp; Feedback Manager&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;Admin Tools (verification, reports, bans)&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;li&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&lt;font&gt;Notification Orchestrator (delegates to FCM/SMS)&lt;/font&gt;&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;rounded=0;fontSize=18;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-7" vertex="1">
+          <mxGeometry x="10" y="90" width="300" height="490" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontStyle=1" parent="1" source="Z5G_ho-KrJiQ75-W2rJA-12" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="740" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-12" value="&lt;div&gt;external services&lt;/div&gt;" style="swimlane;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="800" y="350" width="315" height="610" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-16" value="Map / Routing API&lt;br&gt;OSRM / Google Map" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-12" vertex="1">
+          <mxGeometry x="70" y="70" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-17" value="&lt;div&gt;Chatbot Service (NLP)&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;&amp;nbsp;FAQs &amp;amp; User Assist&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-12" vertex="1">
+          <mxGeometry x="70" y="430" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-18" value="Notification Services&lt;br&gt;FCM Push, SMS Gateway" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-12" vertex="1">
+          <mxGeometry x="70" y="190" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-19" value="ML Recommendation Engine&amp;nbsp;Route similarity ML" style="rounded=0;whiteSpace=wrap;html=1;fontSize=16;strokeWidth=2;fontStyle=1" parent="Z5G_ho-KrJiQ75-W2rJA-12" vertex="1">
+          <mxGeometry x="70" y="310" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;strokeWidth=2;fontStyle=1" parent="1" source="Z5G_ho-KrJiQ75-W2rJA-23" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1120" y="640" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-23" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fontSize=16;strokeWidth=2;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="1240" y="450" width="160" height="380" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-24" value="&lt;font style=&quot;font-size: 26px;&quot;&gt;Database&lt;/font&gt;" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontSize=16;strokeWidth=2;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="1290" y="625" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Z5G_ho-KrJiQ75-W2rJA-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.025;entryY=0.537;entryDx=0;entryDy=0;entryPerimeter=0;strokeWidth=2;fontStyle=1" parent="1" source="Z5G_ho-KrJiQ75-W2rJA-12" target="Z5G_ho-KrJiQ75-W2rJA-23" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
