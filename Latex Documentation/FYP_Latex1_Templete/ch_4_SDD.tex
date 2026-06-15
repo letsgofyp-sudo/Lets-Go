@@ -2,14 +2,15 @@
 % CHAPTER: SOFTWARE DESIGN
 % ==============================================
 \chapter{Software Design}
+\justifying
 
 %===========================================================
 \section{Introduction to Software Design}
 %===========================================================
 
-This chapter presents the detailed software design of the Lets Go Ride Sharing App ride-sharing and recommendation system. It translates the requirements identified in Chapter 3 into structured architectural, behavioral, and data models. The purpose of this chapter is to provide a clear blueprint for system implementation, ensuring maintainability, scalability, and modular development.
+The software design for Lets Go Ride Sharing App ride sharing and recommendation system is given in detail in this chapter. It converts the requirements from Chapter 3 into structured architectural, behavioral, and data models. This chapter is intended to serve as a guide for a clear blueprint for implementing the system: maintainable, scalable and modular development.
 
-The design follows Object-Oriented Design (OOD) principles and implements a hybrid architecture combining Multi-Tier and Model-View-Controller (MVC) patterns. This chapter includes architectural design, UML models (class, sequence, state, activity diagrams), data flow models, database design, and detailed algorithms for core functionalities including ML-based ride recommendations, route ETA calculation, and SOS escalation logic.
+The design adheres to Object-Oriented Design (OOD) and the architecture is a hybrid of Multi-Tier design and Model-View-Controller (MVC). This chapter includes architectural design, UML models (class, sequence, state, activity diagrams), data flow models, database design, and thorough algorithms for the core capabilities like the ride recommendation algorithm (based on machine learning), the route ETA calculation, and the SOS escalation policy.
 
 %===========================================================
 \section{Design Methodology and Software Process Model}
@@ -17,22 +18,17 @@ The design follows Object-Oriented Design (OOD) principles and implements a hybr
 
 \subsection{Design Methodology}
 
-The design process embraced in the Lets Go Ride Sharing App system is Object-Oriented Design (OOD). The system has various real-world objects including Passenger, Driver, Ride, Vehicle, Booking, Payment, and Route with their own attributes and behaviours. Object-oriented modeling is the best method to map these real-world concepts to software components.
+The design process that has been used in the Lets Go Ride Sharing App system is Object-Oriented Design (OOD). The system has various real-world objects including Passenger, Driver, Ride, Vehicle, Booking, Payment, and Route with their own attributes and behaviors. These concepts are most easily represented in the software by creating software objects that represent them in the real world.
 
 \subsubsection{Reasons behind the use of Object-Oriented Design (OOD)}
 
 \begin{itemize}
     \item \textbf{Inherent Recreation of Real-Life Objects:} OOD enables the project to represent core domain objects, including users, vehicles, rides, and trip requests, as classes having attributes and methods. This enhances the clarity of concepts and aligns with the domain outlined in the SRS.
-    
     \item \textbf{Reusability and Extensibility:} The application includes multiple modules (Authentication, Ride Matches, ML Recommendations, SOS Handling, Chat, Notifications) allowing OOD to achieve reuse via inheritance, interfaces, and composition. New features (e.g., corporate rides, scheduled rides) can be added without rewriting core modules.
-    
-    \item \textbf{Encapsulation and Modularity:} The system is built with the MVC (MTV) pattern of Django with models, views, controllers and services being defined as separate modules. Encapsulation ensures that each module is responsible for its own task.
-    
+    \item \textbf{Encapsulation and Modularity:} The system is constructed using the MVC (MTV) pattern in Django. Models, views, controllers and services are defined as distinct modules, and each module performs a specific function.
     \item \textbf{Conformity with Multi-Tier Architecture:} Object-oriented modules can be distributed across layers since the application is based on the multi-tier architecture (Client, Backend Servers, Database, External Services).
-    
-    \item \textbf{Support for Scalability:} Horizontal scaling is facilitated with multiple backend servers, all running the same OOP-based services. Classes like BookingManager, RideManager, VerificationManager, and MLService separate complex logic into manageable units.
-    
-    \item \textbf{Simplified Maintenance:} Classes separate complex logic into single, manageable units which are easy to debug and update.
+    \item \textbf{Support for Scalability:} Multiple backend servers provide horizontal scaling while running the same OOP-based services. Classes like BookingManager, RideManager, VerificationManager, and MLService break complex logic into manageable units.
+    \item \textbf{Simplified Maintenance:} Classes isolate complex logic into individual, manageable units that are easier to debug and update.
 \end{itemize}
 
 The design follows key software engineering principles including SOLID (Single Responsibility, Open-Closed, Liskov Substitution, Interface Segregation, Dependency Inversion), DRY (Don't Repeat Yourself), and Separation of Concerns.
@@ -72,29 +68,29 @@ Testing and validation were integrated into each sprint through continuous integ
 \section{System Overview}
 %===========================================================
 
-This section provides a high-level overview of system components and interactions with external entities.
+This section gives a high level description of system components and interactions with external entities.
 
 \subsection{External Actors}
 
 \begin{itemize}
-    \item \textbf{Passenger (Mobile App):} Requests rides, browses available options, tracks drivers, and completes trips.
-    \item \textbf{Driver (Mobile App):} Shows availability, accepts rides, shares live location, and completes trips.
-    \item \textbf{Administrator (Web Portal):} Monitors the system, verifies users, and manages disputes.
+    \item \textbf{Passenger (Mobile App):} Requests rides, takes payments, views available options, tracks drivers, and completes trips.
+    \item \textbf{Driver (Mobile App):} Is available, accepts rides, shares location in real-time, and finishes journeys.
+    \item \textbf{Administrator (Web Portal):} Manages disputes, verifies users, and monitors the system.
 \end{itemize}
 
 \subsection{External Services}
 
 \begin{itemize}
-    \item \textbf{Map API (OpenStreetMap/OSRM):} Route calculation, reverse geocoding, and ETA estimation.
+    \item \textbf{Map API (OpenStreetMap/OSRM):} Used for calculating routes, reverse geocoding, and ETA estimation.
     \item \textbf{Notification Services (Supabase/FCM):} Sends real-time notifications for ride requests, acceptances, and SOS alerts.
-    \item \textbf{Machine Learning Service:} Recommends best-fitting rides to passengers based on past information.
-    \item \textbf{Chatbot/AI Assistant:} Automated support for frequently asked questions.
-    \item \textbf{Storage Service:} Manages profile pictures, license files, and verification documents.
+    \item \textbf{Machine Learning Service:} Suggests the most suitable rides for passengers according to past information.
+    \item \textbf{Generative AI / Chatbot Assistant:} Enhances productivity by creating content quickly and accurately, ensuring it is relevant and engaging.
+    \item \textbf{Storage Service:} Handles profile images, license files, and verification documents.
 \end{itemize}
 
 \subsection{Backend (Django MVC + JSON APIs)}
 
-The central component of the system fulfills:
+The backend development is done in Django MVC, with JSON APIs. The central component of the system fulfills:
 \begin{itemize}
     \item Ride matching logic
     \item Booking and cancellation
@@ -122,21 +118,17 @@ Stores:
 \begin{figure}[htbp]
 \centering
 \includegraphics[width=0.9\textwidth,keepaspectratio,height=0.8\textheight]{assets/context Diagram-Page-2.jpg}
-\caption{Context Diagram showing system boundary and interactions with external actors and services}
+\caption{Context Diagram: System boundary and interactions with external actors and services}
 \label{fig:context}
 \end{figure}
 
-The context diagram illustrates the Lets Go Ride Sharing App system boundary and its interactions with external entities including Passengers, Drivers, Administrators, and third-party services (Map API, Notification Service, ML Service, Chatbot, Storage). Data flows represent ride requests, location updates, notifications, and document transfers.
+The context diagram depicts the boundary of the Lets Go Ride Sharing App system and its relationships with external entities such as Passengers, Drivers, Administrators, and third-party services (Map API, Notification Service, ML Service, Chatbot, Storage). Data flows represent ride requests, updates, notifications, and document transfers.
 
 %===========================================================
 \section{Architectural Design}
 %===========================================================
 
-The Lets Go Ride Sharing App system is built under a hybrid architectural style consisting of two broad paradigms:
-1. Multi-Tier Architecture for the overall system structure
-2. Model-View-Controller (MVC) internally in the backend through Django framework
-
-The combination offers separation of concerns, scalability, maintainability, and distributed deployment over several servers.
+The Lets Go Ride Sharing App system is designed in a hybrid architecture with two broad paradigms: 1. Multi-Tier Architecture for the overall system structure and 2. Model-View-Controller (MVC) internally in the backend through Django framework. The combination offers separation of concerns, scalability, maintainability, and distributed deployment over several servers.
 
 \subsection{Architecture Style (MVC + Multi-tier)}
 
@@ -1077,16 +1069,16 @@ The Entity Relationship Diagram (ERD) represents the logical database structure 
 
 \textbf{Guidelines:}
 \begin{itemize}
-    \item Clearly identify all entities (tables/collections).
+    \item Make sure that all entities (tables/collections) are clearly identified.
     \item Highlight Primary Keys (PK).
     \item Highlight Foreign Keys (FK).
     \item Show relationship cardinality (1:1, 1:N, M:N).
-    \item Maintain consistency with database tables defined earlier.
+    \item Consistency with the previous database tables.
 \end{itemize}
 
 \textbf{Include in ERD:}
 \begin{itemize}
-    \item \textbf{User Entity}: User (abstract superclass), Passenger, Driver.
+    \item \textbf{User Entity}: User entity includes: User (abstract superclass), Passenger, Driver.
     \item \textbf{Core Functional Entities}: RideRequest, Ride, Booking, Location.
     \item \textbf{Transaction/Log Entity}: Payment, Complaint, SOSRequest, ChatMessage.
     \item \textbf{Administrative Entity}: User verification state and user document/image URL fields.
@@ -1133,15 +1125,21 @@ The Database Schema Diagram represents the physical database implementation stru
 \label{fig:schema}
 \end{figure}
 
-The database schema is normalized to 3NF to eliminate Data redundancy. This structured design ensures \textbf{data integrity} by enforcing strict relational constraints (Foreign Keys) between tables like Users, Rides, and Bookings. It supports \textbf{efficient querying} through indexing on frequently accessed fields like \texttt{user\_id} and \texttt{ride\_id}. The schema's modularity allows \textbf{scalability} by enabling seamless extension of tables without affecting core operations. Finally, \textbf{security} is maintained by isolating sensitive authentication data in the core User table away from public operational data.
+The database schema is normalized to 3NF to eliminate Data redundancy. his structured
+Design guarantees that data is consistent and compliant by enforcing strict relationships (Foreign Keys) between data elements.
+Relationships, such as Users to Rides and Users to Bookings, are presented in tables. It has efficient querying capabilities via indexing on
+Commonly used fields such as user_id and ride_id. In the modularity of the schema, the following features were observed:
+scalability - ability to extend tables seamlessly without impacting core operations. Finally,
+Security is ensured by separating key authentication information in the User table from sensitive information.
+Based on public operational data.
 
 \subsection{Data Dictionary}
 
-The Data Dictionary defines the structure of all primary data elements in the database.
+The structure of all the primary data elements in the database is defined in the Data Dictionary
 
 \textbf{Guidelines:}
 \begin{itemize}
-    \item Include field name, Data type, Size, Description, Constraints.
+    \item Include fieldname,Datatype,Size,Description,Constraints.
 \end{itemize}
 
 \begin{table}[H]
@@ -1481,12 +1479,11 @@ Each table or collection includes primary keys, relationships, and major attribu
 
 \subsection{User Collection / Table}
 
-The User table stores authentication credentials and user profile information. It supports role-based access control and secure authentication.
+The User table stores authentication credentials and user profile information. It supports permission and authentication based on the role of the user.
 
 \textbf{Description:}
 \begin{itemize}
-    \item \textbf{Primary Key:} user\_id
-    \item \textbf{Relationships:} Linked to transactions, predictions, or system logs.
+    \item \textbf{Relationships:} Tied to transactions, predictions or system logs.
     \item \textbf{Authentication Attributes:} Email, password hash, role, account status.
 \end{itemize}
 
@@ -1517,7 +1514,7 @@ status & VARCHAR(10) & Choice & Enum: PENDING, VERIFIED, BANNED \\
 
 \subsection{Core Data Collection}
 
-This subsection describes domain-specific core data tables. These structures store the primary operational data processed by the Ride Booking system.
+This subsection describes domain-specific core data tables. These structures are used for the main storage. Data that is processed by the Ride Booking system.
 
 \textbf{Domain-Specific Tables:}
 
@@ -1774,32 +1771,32 @@ An Entity-Relationship (ER) Diagram visually represents these relationships.
 
 \subsection{Security and Data Integrity}
 
-To ensure confidentiality and integrity of stored data, the following measures are implemented:
+The following measures are taken to help ensure that the data stored is confidential and secure:
 \begin{itemize}
-    \item \textbf{Password Encryption} using secure hashing algorithms (e.g., bcrypt, SHA-256 with salt).
-    \item \textbf{Role-Based Access Control (RBAC)} to restrict unauthorized access between passengers, drivers, and admins.
-    \item \textbf{Input validation} and constraint enforcement at the database level (e.g., NOT NULL, UNIQUE constraints).
-    \item \textbf{Secure communication} using HTTPS for API endpoints accessing the DB.
-    \item \textbf{Regular database backup} and disaster recovery strategy.
+    \item Password Encryption using secure hashing algorithms (e.g., bcrypt, SHA-256 with salt).
+    \item Role Based Access Control (RBAC): To limit access between passengers, drivers, and admins.
+    \item Validation and constraint checking at the database-level (such as NOT NULL, UNIQUE constraints).
+    \item Ensure communication to endpoints which access the DB is done securely via HTTPS.
+    \item Back up and disaster recovery plan for the database.
 \end{itemize}
 
 \subsection{Scalability Considerations}
 
-The database design incorporates scalability mechanisms to support future growth of the ride-sharing platform.
+The database is designed to be scalable, allowing for future expansion of the ride-sharing service.
 \begin{itemize}
-    \item \textbf{Horizontal Scaling} using distributed database systems.
-    \item \textbf{Indexing} on frequently queried attributes (like \texttt{pickup\_location}, \texttt{drop\_location}, \texttt{status}) to improve search performance.
-    \item \textbf{Caching strategies} for frequently accessed data like active ride and booking summaries.
-    \item \textbf{Load balancing} across database instances for API request handling.
-    \item \textbf{Partitioning or sharding} for large-scale data environments (e.g., partitioning old ride records by year).
+    \item Scaling across systems horizontally with distributed database systems.
+    \item Indexing on frequently accessed attributes (such as \texttt{pickup\_location}, \texttt{drop\_location}, \texttt{status}) to enhance the performance of searches.
+    \item Optimizing data for frequently-used operations such as active ride and booking summaries.
+    \item Load balancing of API requests on different database instances.
+    \item Sharding or partitioning of data in large environments (e.g., sharding old ride records by year).
 \end{itemize}
 
 %===========================================================
 \section{Chapter Summary}
 %===========================================================
 
-This chapter discussed the software architecture and design of the Let’s Go system in detail. It outlined the transition from requirements to an actual system blueprint using an Agile incremental model. 
+The software architecture and design of Let's go was discussed in detail in the above chapter. It described the evolution from requirements to a real system blueprint in an Agile incremental model. 
 
-Key modeling diagrams—including Activity, Class, Sequence, and State Transition diagrams—were presented to illustrate the dynamic and structural behavior of the system. Data Flow Diagrams (DFDs) detailed the movement of data across various operational phases, from authentication to ride tracking and dispute resolution. 
+Key modeling diagrams such as Activity, Class, Sequence, State Transition. The dynamic and structural behaviour of the system was illustrated by the use of diagrams. Data the flow of data was shown through the different aspects of operation using Flow Diagrams (DFDs), for riding tracking purposes and dispute resolution.
 
-The chapter concluded with a comprehensive data design section, explicitly defining PostgreSQL schemas, ER diagrams, data dictionaries, and database relationships to ensure a scalable, secure, and normalized data architecture.
+The chapter ended with a detailed design of the data section of PostgreSQL. Relationships, ER diagrams, data dictionaries, and schemas for scalable, secure database relationships, and normalized data structure.

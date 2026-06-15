@@ -3,8 +3,9 @@
 % ============================================
 
 \chapter{Testing and Evaluation}
+\justifying
 
-This chapter presents the testing strategies and evaluation procedures used to verify the correctness, reliability, and performance of the Lets Go Ride Sharing App ride-sharing and recommendation system. Testing ensures that all functional and non-functional requirements defined in earlier chapters are satisfied. The chapter covers unit testing, integration testing, system testing, performance testing, security testing, model evaluation (for the ML recommendation component), and user acceptance testing.
+This chapter describes the testing strategies and evaluation procedures for verifying the correctness, reliability and performance of the Lets Go Ride Sharing App ride-sharing and recommendation system. Testing is used to verify the fulfillment of functional and non-functional requirements as described in previous chapters. The chapter includes unit testing, integration testing, system testing, performance testing, security testing, model evaluation (for the ML recommendation component), and finally, user acceptance testing.
 
 % -------------------------------------------------
 % 6.1 Testing Strategy
@@ -12,19 +13,23 @@ This chapter presents the testing strategies and evaluation procedures used to v
 
 \section{Testing Strategy}
 
-The testing approach for the Lets Go Ride Sharing App system follows a multi-level strategy to ensure comprehensive validation at each stage of development. Both manual and automated testing techniques were employed.
+Testing strategy for the Lets Go Ride Sharing App system is a multi-level strategy to test the system to ensure that it has been tested in a comprehensive manner throughout the development process. Manual testing and automated testing techniques were used.
 
-\begin{itemize}
-    \item \textbf{Unit Testing:} Individual modules and functions were tested in isolation using Python's \texttt{pytest} framework for backend services and Flutter's built-in test framework for frontend components. Mock objects were used to simulate external dependencies (e.g., database, APIs).
-    \item \textbf{Integration Testing:} Interactions between integrated modules (e.g., backend APIs with database, frontend with backend) were tested using Postman for API endpoints and manual end-to-end verification of the Admin panel workflows. Database connectivity and transaction integrity were verified.
-    \item \textbf{System Testing:} Complete end-to-end workflows covering all use cases (UC-1 to UC-25) were executed manually and through automated scripts. Edge cases, error handling, and user journeys were validated.
-    \item \textbf{Performance Testing:} Load testing was performed using Apache JMeter to simulate multiple concurrent users and measure response times, throughput, and resource utilization under stress.
-    \item \textbf{Security Testing:} Authentication mechanisms, role-based access control, input validation, and data encryption were tested using tools like OWASP ZAP and manual penetration tests.
-    \item \textbf{ML Model Evaluation:} The content-based recommendation algorithm was evaluated offline using historical ride data, with metrics such as precision, recall, and F1-score.
-    \item \textbf{User Acceptance Testing (UAT):} A group of potential users (students and staff) were invited to test the application and provide feedback, which was used to refine the UI and fix usability issues.
-\end{itemize}
+Backend services were tested individually using \texttt{pytest}, and frontend components were tested using built-in Flutter test framework, for each unit and each function. External dependencies (such as database, APIs, etc.) were simulated using mock objects.
 
-All testing activities were documented with test cases, expected results, and actual outcomes. A defect tracking system (GitHub Issues) was used to manage and resolve bugs.
+Using \texttt{Postman}, API interactions were tested for API endpoints and end-to-end testing of the Admin panel workflows were done manually. Database connectivity and integrity of transactions were checked.
+
+All end-to-end workflows for each of the use cases (UC-1 to UC-25) were performed using manual and automated scripts. Edge cases, error handling and user journeys were checked.
+
+Load testing was conducted using the \texttt{Apache JMeter} software, which was used to simulate a number of concurrent users and to test the response times, throughput, and resource utilization under load.
+
+Security Testing: Security testing was performed using tools such as \texttt{OWASP ZAP} and manual penetration tests, including authentication mechanisms, role-based access control, input validation and data encryption.
+
+Historical ride data was used to evaluate offline the content-based recommendation algorithm, using metrics like precision, recall and F1-score.
+
+After testing the application, user feedback was gathered from a group of potential users (students and staff) to make necessary adjustments to the UI and usability issues.
+
+Test cases and results were documented for all testing activities with the results compared with the expected results. Defects are managed and solved by defect tracking system (\texttt{GitHub Issues}).
 
 % -------------------------------------------------
 % 6.2 Unit Testing
@@ -32,7 +37,7 @@ All testing activities were documented with test cases, expected results, and ac
 
 \section{Unit Testing}
 
-Unit tests were written for all critical functions and classes across the backend and frontend. Each test case verifies a single unit of work with controlled inputs and validates outputs against expected results. A total of 480 automated unit tests were executed.
+Critical functions and classes were tested with unit tests both on the backend and frontend. Each test case is designed to test one unit of work using specific inputs, and to compare the outputs against a set of expected results. 480 were automated unit tests conducted.
 
 \begin{table}[H]
 \centering
@@ -59,7 +64,7 @@ C & Backend Pytest & 199 & 199 & 0 & 100\% \\
 
 \subsection{Backend Unit Testing (Pytest)}
 
-The backend test suite utilizes the \texttt{pytest} framework to validate authentication, ride posting, and administration logic.
+The \texttt{pytest} framework is used for the back-end test suite, which checks the logic of authentication, the posting of rides, and administration.
 
 \begin{table}[H]
 \centering
@@ -151,7 +156,7 @@ BT-22 & \texttt{sos\_incident} logic & Atomic save of incident with coordination
 
 \subsection{Frontend Behavioral Testing (Flutter)}
 
-Behavioral tests verify the business logic and state management within Flutter controllers.
+Behavioral tests are used to test the business logic and state management of the Flutter controllers.
 
 \begin{table}[H]
 \centering
@@ -178,7 +183,7 @@ FT-06 & \texttt{applyRouteData} & Preserves overlay when route editor returns & 
 
 \subsection{Frontend Code Contract Verification}
 
-Contract tests ensure that all critical utility classes, controllers, and screens maintain their expected structure and API surface.
+Contract tests guarantees that all vital utility classes, controllers, and screens have the desired API surface and structure.
 
 \begin{table}[H]
 \centering
@@ -228,18 +233,16 @@ Signup Flow & \texttt{LoginScreen}, \texttt{OTPVerificationScreen} & Classes Pre
 
 \section{Integration Testing}
 
-Integration testing validated the interactions between different modules and external services. Key integration points tested include:
+Integration testing confirmed the relationships between various modules and outside services. The following are key integration points tested:
 
-\begin{itemize}
-    \item \textbf{Frontend (Flutter) + Backend APIs:} All API endpoints were tested using Postman collections. Session-based authentication (cookies), request/response formats, and error handling were verified.
-    \item \textbf{Backend + Database (PostgreSQL):} CRUD operations, transaction integrity, and foreign key constraints were tested. The system ensures referential integrity between trips, bookings, and users.
-    \item \textbf{External Services (Frontend/Backend):}
-        \begin{itemize}
-            \item Frontend Map Directions (OSRM/ORS): Road polyline and route directions retrieval for map visualization (with OSRM fallback when ORS is not configured).
-            \item Supabase Storage: Handling document uploads for user verification.
-            \item Recommendation Ranking: Candidate trips were ranked using the recommendation ranking component when configured; otherwise a backend fallback ranking strategy was applied.
-        \end{itemize}
-\end{itemize}
+All API endpoints tested with Postman collections - Frontend (Flutter) + Backend APIs. The authentication system (cookies), request/response format and error handling were tested.
+
+Backend + Database (PostgreSQL): CRUD operations, transaction integrity, foreign key constraints were tested. This system provides referential integrity between trips, bookings and users.
+
+- \textbf{External Services (Frontend/Backend):}
+  - Frontend Map Directions (OSRM/ORS): Road polyline retrieval and road direction retrieval for map visualization (fallback to OSRM if no ORS is set up).
+  Uploading documents for user verification: Supabase Storage.
+  The recommendation ranking component was used for the ranking of the candidate trips.
 
 \begin{table}[H]
 \centering
@@ -266,16 +269,16 @@ IT-04 & Backend + Supabase Bucket Integration & Successful upload and URL retrie
 
 \section{API Endpoint Validation via Postman}
 
-To ensure the reliability of the backend infrastructure and seamless data flow between the server and the mobile application, extensive API testing was conducted using Postman. This phase focused on validating request/response schemas, authentication protocols, and edge-case handling (e.g., duplicate booking attempts or invalid location data) before frontend integration.
+API testing was done in \texttt{Postman} to ensure the reliability of the backend infrastructure and smooth data flow from the server to the mobile app. During this phase, the focus was on validating the request/response schemas, authentication methods, and edge cases (such as duplicate booking attempts, or invalid location data).This phase was used to validate the request/response schema, authentication methods, edge cases (duplicate booking attempts, invalid location data), etc., before frontend integration.
 
 \subsection{Core Lifecycle APIs}
 
-The following screenshots demonstrate the initial phases of a ride, including route definition and trip publication.
+The following screen shots illustrate the first steps of a ride: definition of the route, and publication of the trip.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/app screenshot/postman screenshots/driver_ride_details_pending_part1.jpeg}
-    \caption{API Validation: Route Creation with Waypoint Coordinates}
+    \caption{The following figure illustrates the route created by the API validation using waypoint coordinates.The following figure shows the route built by the API validation using coordinates for the waypoints.}
 \end{figure}
 
 \begin{figure}[H]
@@ -292,7 +295,7 @@ The following screenshots demonstrate the initial phases of a ride, including ro
 
 \subsection{Trip Execution and Real-time Updates}
 
-These tests confirm the backend's ability to handle state transitions and periodic live location updates during an active ride.
+During a live ride, these tests will validate the backend's ability to perform the state transitions and periodic live location updates.
 
 \begin{figure}[H]
     \centering
@@ -314,7 +317,7 @@ These tests confirm the backend's ability to handle state transitions and period
 
 \subsection{Infrastructure and Safety Services}
 
-Validation of critical payment processing and emergency response triggers.
+Critical payment processing and emergency response trigger validation.
 
 \begin{figure}[H]
     \centering
@@ -325,13 +328,13 @@ Validation of critical payment processing and emergency response triggers.
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.00g.03.jpeg}
-    \caption{API Validation: SOS Emergency Trigger and Automated Notification Dispatch}
+    \caption{The number of messages received by SOS Emergency Trigger and Automated Notification Dispatch has been validated at the API.API validation has been performed on the number of messages received by SOS Emergency Trigger and Automated Notification Dispatch.}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/app screenshot/postman screenshots/WhatsApp Image 2026-02-21 at 11.0f0.03.jpeg}
-    \caption{API Validation: Ride History Retrieval and Data Integrity Check}
+    \caption{Using the API, you can retrieve the ride history and check the integrity of the data.With the API, you can get the ride history and verify the data integrity.}
 \end{figure}
 
 % -------------------------------------------------
@@ -340,7 +343,7 @@ Validation of critical payment processing and emergency response triggers.
 
 \section{System Testing}
 
-System testing validated complete end-to-end workflows covering all use cases (UC-1 to UC-25). All scenarios were executed successfully, with any issues logged and resolved. The system demonstrated robustness and adherence to requirements.
+All use cases (UC-1 to UC-25) were covered in completely end-to-end system testing. All scenarios were successfully run and if there were any problems they were recorded and dealt with.
 
 % -------------------------------------------------
 % 6.6 Performance Testing
@@ -348,12 +351,12 @@ System testing validated complete end-to-end workflows covering all use cases (U
 
 \section{Performance Testing}
 
-Performance testing was conducted using Apache JMeter (v5.6.3) in non-GUI mode to evaluate the backend under concurrent load. The test simulated 1000 concurrent virtual users accessing major Lets-Go API endpoints (e.g., trip listing, stop suggestion, and user profile services) and measured response time, throughput, and error rate. The backend was served using Gunicorn to ensure stable request handling during high concurrency. The JMeter HTML dashboard was generated to provide a documented summary of execution statistics and performance metrics.
+To stress test the backend under concurrent load, the performance test was done in non-GUI mode with Apache JMeter (v5.6.3). The test rendered 1000 virtual users on a number of critical API endpoints (e.g. trip listing, stop suggestion, user profile services etc.) and recorded response time, throughput and error rate. We used Gunicorn as our backend to provide stable handling of requests even in high concurrency. The JMeter HTML dashboard was created to show a summarized documentation of execution statistics and performance metrics.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/tests/performance testing/statistics image.png}
-    \caption{JMeter HTML Dashboard: Overall performance statistics under 1000 concurrent users}
+    \caption{Figure 6.10 shows the overall performance statistics for JMeter with 1000 concurrent users in the HTML Dashboard.Figure 6.10 is the overall performance stats in the JMeter HTML Dashboard with 1000 concurrent users.}
 \end{figure}
 
 \begin{figure}[H]
@@ -370,7 +373,9 @@ Performance testing was conducted using Apache JMeter (v5.6.3) in non-GUI mode t
 
 \section{Security Testing}
 
-Security testing was conducted using automated tools to assess both third-party dependency risk and source-code security patterns in the Django backend. A Django configuration sanity check was performed using \texttt{python manage.py check}, which reported no issues. Dependency vulnerability scanning was performed using \texttt{pip-audit} against \texttt{requirements.txt}. After upgrading vulnerable packages and re-testing, \texttt{pip-audit} reported ``No known vulnerabilities found''. Static application security testing (SAST) was performed using Bandit while excluding the virtual environment and test directories to reduce third-party noise. The Bandit scan covered 32,180 lines of code and reported 250 low-severity and 19 medium-severity findings, with no high-severity issues. Most low-severity findings were related to broad exception handling patterns (\texttt{try/except pass}) and were treated as robustness and maintainability concerns, while medium-severity findings highlighted areas for improvement such as reviewing network exposure configurations and security-related randomness usage in supporting scripts.
+Automated security tests were run to check for third-party dependency risks as well as source-code security patterns in the Django backend. \texttt{python manage.py check} was used to run a Django configuration sanity check and no problems were reported. The dependency vulnerability scanning was done on \texttt{requirements.txt} file using \texttt{pip-audit}. Following the upgrade of the vulnerable packages and re-testing, \texttt{pip-audit} reported "No known vulnerabilities found.
+
+Static application security testing (SAST) was done with Bandit, with the exception of the virtual environment and test directories to minimize third-party noise. The Bandit scan identified 250 low severity and 19 medium severity issues in a total of 32,180 lines of code, and found no issues of high severity. Most of the low-severity findings were of a general nature about exception handling patterns (\texttt{try/except pass}), which were considered to be robustness and maintainability issues, and for medium severity, this was primarily about the areas where improvements could be made, including reviewing network exposure configuration and security-related randomness misuses in supporting scripts.
 
 \begin{table}[H]
 \centering
@@ -390,17 +395,19 @@ Bandit & Static analysis of Python source code to detect insecure coding pattern
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/tests/terminal security testing.png}
-    \caption{Terminal evidence: Bandit and pip-audit execution and report generation for security testing}
+    \caption{Bandit and pip-audit execution and report generation for security testing - Terminal evidence}
 \end{figure}
 
-Additionally, dynamic application security testing (DAST) was performed using OWASP ZAP (Automated Scan) against the deployed backend endpoint. The scan completed successfully and produced only non-critical findings. No high-risk alerts were detected in the results; the identified alerts were primarily related to recommended security hardening, such as missing Content Security Policy (CSP) headers and server version disclosure via response headers. These findings are common in development configurations and can be addressed during production hardening.
+Further, a dynamic application security test (DAST) was conducted on the deployed backend endpoint using OWASP ZAP (Automated Scan). Only non-critical results were obtained from the scan. There were no high risk alerts detected in the results: most of the alerts found were on the recommended security hardening, for example, missing Content Security Policy (CSP) headers, and disclosure of server version information through response headers.
+
+These conclusions are typical in development and can be mitigated during the production hardening process.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.9\textwidth]{assets/tests/zap/welcome screen.png}
-    \caption{OWASP ZAP: Automated scan configuration and target selection}
+    \caption{The automated scan configuration and target selection process for OWASP ZAP is shown in Figure 6.13.The automated scan configuration and target selection flow of OWASP ZAP is displayed in Figure 6.13.}
     \includegraphics[width=0.9\textwidth]{assets/tests/zap/altert tab.png}
-    \caption{OWASP ZAP: Alerts summary after scan completion (no high-risk issues detected)}
+    \caption{Figure 6.15: OWASP ZAP: Alerts summary after scan completion (high risk issues: none found)}
 \end{figure}
 
 % -------------------------------------------------
@@ -409,19 +416,20 @@ Additionally, dynamic application security testing (DAST) was performed using OW
 
 \section{Machine Learning Model Evaluation}
 
-The content-based recommendation algorithm uses a custom weighted ranking score. Evaluation was performed using synthetic datasets generated to match Pakistan's urban topology.
+A custom weighted ranking score is used for the content based recommendation algorithm. Synthetic data sets were generated to reflect the urban geometry of Pakistan and evaluated.
 
 \subsection{Ranking Logic Factors}
-\begin{itemize}
-    \item \textbf{Route Similarity (W=0.46):} Jaccard similarity of stop names and route pairs.
-    \item \textbf{Soonness (W=0.12):} Exponential decay based on departure time relative to query time.
-    \item \textbf{Driver Rating (W=0.18):} Impact of history and aggregate driver stars.
-    \item \textbf{Gender Preference (W=Penalty):} Hard mismatch penalty for mixed-gender rides against user preference.
-\end{itemize}
+Similarity of route pairs measurement: - Route Similarity (W=0.46): Jaccard similarity of stop names and route pairs.
+
+- Soonness (W=0.12): Exponential decay according to the time of departure of the document, relative to the query time.
+
+This is where aggregated driver star ratings and history are considered.This is where Driver Rating (W=0.18) kicks in.
+
+Gender Preference (W=Penalty): Hard mismatch penalty, depending on gender preference of user.
 
 \subsection{Evaluation Performance Metrics}
 
-The recommendation engine was evaluated using a testing dataset comprising 2,000 unique ride events. The model's ability to rank the actually booked ride high in the candidate list was measured using standard information retrieval metrics, as shown in Table 6.13.
+A test data set of 2000 individual ride events was used to test the recommendation engine. The capability of this model to top the list of the candidates actually booked was evaluated by the standard information retrieval metrics as given in Table 6.13.
 
 \begin{table}[H]
 \centering
@@ -445,7 +453,7 @@ MAP@10 & 0.9373 \\
 \end{tabular}
 \end{table}
 
-The average position of the booked ride within the returned candidate list (Booked Rank) demonstrates the model's precision in prioritizing relevant options. A lower rank indicates higher precision.
+The mean of the bookmarked ride's spot in the candidate list (Booked Rank) provides a measure of the model's accuracy in ranking the relevant candidates. Lower ranks mean higher precision.
 
 \begin{itemize}
     \item \textbf{Mean Booked Rank:} 1.1385
@@ -454,7 +462,7 @@ The average position of the booked ride within the returned candidate list (Book
 
 \subsection{Error Analysis (Worst Cases)}
 
-An analysis of the events where the model performed least optimally (highest rank for the booked ride) shows that even in the worst-case scenarios, the relevant candidate remained within the top 4 results out of 50 candidates, as detailed in Table 6.14.
+Table 6.14 shows the results from an analysis of the events in which the model did not perform as well (highest rank for booked ride), indicating that even in the worst of the case scenarios, the model got a top 4 ride out of 50.
 
 \begin{table}[H]
 \centering
@@ -494,19 +502,19 @@ E1853 & 50 & 3 \\
 
 \section{User Acceptance Testing}
 
-UAT was conducted with participants from the university community. Users confirmed that the system is intuitive and meets their commuting needs. Overall satisfaction was rated at 4.5/5.
+The UAT was performed with the University community. The system is user-friendly and fulfills the commuting requirements, as confirmed by users. The overall satisfaction was given as 4.5/5.
 
 % -------------------------------------------------
 % 6.10 Automated Test Execution Results (Proofs)
 % -------------------------------------------------
 
-\section{Automated Test Execution Results (Proofs)}
+\section{Automated Test Execution Results (Proofs) 6.10}
 
-To ensure documentable proof of the testing phase, the complete test suites for both frontend and backend were executed. The following screenshots show the terminal output of these successful executions.
+All test suites for frontend and backend were run to provide proof of the testing phase. The output of these successful runs of the terminal is shown below.
 
-\subsection{Frontend Unit and Widget Tests}
+\subsection{Frontend Unit and Widget Tests 6.10.1}
 
-The Flutter test suite, comprising 281 test cases, was executed successfully. These tests cover navigation controllers, route data mapping, and UI widget behaviors.
+All 281 test cases of the Flutter test suite were successfully run. These tests include UI widget behaviours, route data mapping, and navigation controllers.
 
 \begin{figure}[H]
 \centering
@@ -522,7 +530,7 @@ The Flutter test suite, comprising 281 test cases, was executed successfully. Th
 
 \subsection{Backend Logic and View Tests}
 
-The Python-based backend test suite, utilizing \texttt{pytest}, executed 199 test cases covering authentication logic, fare calculations, and administrative endpoints.
+The Python backend test suite, using pytest, was run with 199 test cases and tested authentication logic, fare calculation logic, and administrative endpoints.
 
 \begin{figure}[H]
 \centering
@@ -536,14 +544,14 @@ The Python-based backend test suite, utilizing \texttt{pytest}, executed 199 tes
 
 \section{Testing Summary}
 
-A total of 480 automated unit test cases were executed across the platform.
+480 automated unit test cases were run on the platform.
 
 \begin{itemize}
-    \item \textbf{Frontend (Flutter):} 281 test cases, 100\% passing rate.
-    \item \textbf{Backend (Pytest):} 199 test cases, 100\% passing rate.
+    \item Pass Rate on the Frontend (Flutter): 100\% with 281 test cases.
+    \item Backend (Pytest): 199 test cases passed (100\%).
 \end{itemize}
 
-The system demonstrates high reliability, meeting all functional and non-functional requirements. It is ready for deployment and production use.
+The system is very reliable, fulfilling all its functional and non-functional requirements. It is immediately deployment and production ready.
 
 % -------------------------------------------------
 % End of Chapter

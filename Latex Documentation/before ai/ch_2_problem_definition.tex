@@ -1,0 +1,267 @@
+% ==============================
+% Chapter 2 – Problem Definition
+% ==============================
+
+\chapter{Problem Definition}
+
+% --------------------------------
+% 2.1 Problem Statement
+% --------------------------------
+
+\section{Problem Statement}
+
+When it comes to conventional ride-hailing services, a large number of commuters must wait extended periods and spend considerable amounts of money for transportation, while having limited options regarding ride selection. The following salient points of concern have been identified in existing transportation solutions:
+
+\begin{itemize}
+    \item \textbf{Limited Expense-Sharing:} Existing solutions rarely focus on matching users who are already traveling the same way, missing opportunities for cost reduction through ride-sharing.
+    
+    \item \textbf{Cultural Insensitivities:} Traditional models often neglect gender-based or cultural preferences that are particularly important in regions like Pakistan, where cultural norms significantly influence transportation choices.
+    
+    \item \textbf{Increased Fares and Delays:} Drivers are obligated to deviate from their routes for pickups and drop-offs, causing longer delays for passengers and higher operational costs that are passed on as increased fares.
+    
+    \item \textbf{Environmental Impact:} The current model places more vehicles on roads than necessary, contributing to traffic congestion and increased carbon emissions.
+\end{itemize}
+
+These challenges affect multiple stakeholders including daily commuters seeking affordable transportation, drivers aiming to maximize earnings while minimizing route deviations, and the broader community impacted by traffic congestion and environmental pollution. The significance of this problem extends beyond individual inconvenience to encompass operational inefficiencies in urban transportation systems and missed opportunities for sustainable commuting practices.
+
+% --------------------------------
+% 2.2 Proposed Solution Overview
+% --------------------------------
+
+\section{Proposed Solution Overview}
+
+Lets Go Ride Sharing App is a ride-sharing mobile application designed to connect passengers and drivers traveling along similar routes, fundamentally reimagining how commuting works in local communities. Unlike conventional services that send drivers out of their way, Lets Go Ride Sharing App matches users who already commuting in the same direction, enabling them to share both the journey and associated costs.
+
+The proposed system addresses identified challenges through several key innovations:
+
+\begin{itemize}
+    \item \textbf{Efficient Route-Based Matching:} Drivers define exact routes with start positions, intermediate stops, and destinations; passengers find rides that align with their travel path without requiring drivers to deviate unnecessarily.
+    
+    \item \textbf{Cultural Sensitivity:} Gender-based preferences allow users to select drivers they feel comfortable with, addressing cultural norms often overlooked by global platforms.
+    
+    \item \textbf{Hybrid Transparent Pricing:} The app automatically suggests fares based on distance and fuel costs while allowing drivers and passengers to view, adjust, and mutually agree on final fares, combining automation with flexible negotiation.
+    
+    \item \textbf{Comprehensive Safety Stack:} Robust verification of identity documents, real-time location tracking, pickup codes, and SOS emergency features build trust among users.
+\end{itemize}
+
+By integrating advanced technologies including machine learning for personalized recommendations and a chatbot for instant support, Lets Go Ride Sharing App delivers a cost-effective, environmentally conscious, and culturally appropriate substitute for modern commuters.
+
+% --------------------------------
+% 2.3 Objectives of the Proposed System
+% --------------------------------
+
+\section{Objectives of the Proposed System}
+
+The following objectives have been established to guide the development of the Lets Go Ride Sharing App system. Each objective is specific, measurable, achievable, and directly aligned with the problem statement.
+
+\vspace{0.3cm}
+
+\textbf{Business Objectives (BO):}
+
+\begin{itemize}
+    \item \textbf{BO-1: Develop} a route-based ride matching system that connects passengers with drivers traveling along identical routes, reducing individual transportation costs by up to 40\% through expense sharing.
+    
+    \item \textbf{BO-2: Implement} comprehensive user verification including CNIC validation, driving license authentication, and document uploads to target administrator verification for all active users before accessing platform features.
+    
+    \item \textbf{BO-3: Provide} gender-based preference selection allowing users to choose drivers based on gender, addressing cultural sensitivities and increasing platform adoption among diverse user segments.
+    
+    \item \textbf{BO-4: Enable} hybrid transparent pricing with automatic fare calculation based on distance and fuel costs, while supporting mutual fare agreement between drivers and passengers for all completed rides.
+    
+    \item \textbf{BO-5: Integrate} real-time GPS tracking with pickup code verification within a 100-meter geofence, aiming to improve accurate passenger-driver pairing and minimize wrong pickups.
+    
+    \item \textbf{BO-6: Develop} an SOS emergency system that immediately notifies emergency contacts and administrators with live location within 3 seconds of activation during critical situations.
+    
+    \item \textbf{BO-7: Implement} a machine learning module for personalized ride recommendations based on user travel history, improving ride discovery efficiency and user satisfaction scores.
+    
+    \item \textbf{BO-8: Create} a chatbot assistant powered by Generative AI to provide instant support for frequently asked questions, reducing the need for human intervention in routine queries.
+    
+    \item \textbf{BO-9: Establish} a comprehensive dispute resolution system with audit logs, chat transcripts, and GPS evidence to support timely dispute handling, with a target resolution window of 48 hours where feasible.
+    
+    \item \textbf{BO-10: Design} a modular, scalable architecture with independent modules for registration, rides, payments, safety, and administration to support future enhancements without system-wide disruption.
+\end{itemize}
+
+% --------------------------------
+% 2.4 Scope of the System
+% --------------------------------
+
+\section{Scope of the System}
+
+The Lets Go Ride Sharing App application targets local communities including office complexes, university campuses, and residential neighborhoods to provide eco-friendly and cost-effective commuting solutions. The system encompasses the following elements:
+
+\begin{itemize}
+    \item \textbf{User Registration:} Integrated process with complete document verification including CNIC, driving license, and vehicle registration documents for drivers.
+    
+    \item \textbf{Route Specification:} Drivers define precise routes with start positions, intermediate stops, and destinations using an interactive map interface; passengers select pickup and drop-off points exclusively from these predefined stops.
+    
+    \item \textbf{Real-Time Tracking:} Continuous location updates with notifications on arrival times, driver location, and ride progress visible to both drivers and passengers during active rides.
+    
+    \item \textbf{Cultural Considerations:} Gender-based matching options allowing passengers to filter rides based on driver gender preferences.
+    
+    \item \textbf{Dynamic Fare Calculation:} Automated fare suggestions based on distance, fuel costs, and vehicle type, with flexibility for mutual adjustment and agreement between parties.
+    
+    \item \textbf{Payment Integration:} Support for cash payments and manual bank transfers (including QR-based bank transfer where applicable) with manual two-step confirmation (passenger marks paid, driver confirms receipt).
+    
+    \item \textbf{Feedback System:} Built-in ratings and reviews for quality assurance and community trust building.
+    
+    \item \textbf{Safety Features:} Emergency contacts integration, manual document verification, live location tracking, and SOS alerts.
+    
+    \item \textbf{Administrative Panel:} Web-based dashboard for user verification, dispute resolution, financial analytics, and account management.
+\end{itemize}
+
+\textbf{Out of Scope:} Automated payment gateways, intercity long-distance trips, non-Android mobile platforms (iOS deferred to future releases), and real-time automated identity verification (all verification is admin-manual).
+
+% --------------------------------
+% 2.5 System Architecture and Modules
+% --------------------------------
+
+\section{System Architecture and Modules}
+
+The Lets Go Ride Sharing App system follows a \textbf{three-tier client-server architecture} with clear separation of concerns that ensures scalability, maintainability, and independent module deployment. The four-layer view used in the software design chapter is a detailed decomposition of this three-tier model where external services are separated explicitly.
+
+\begin{itemize}
+    \item \textbf{Presentation Tier:} Cross-platform Flutter mobile applications for passengers and drivers providing unified interfaces with role-switching capabilities. An administrative web console built with HTML5, CSS3, and JavaScript delivers dashboard access for user verification and dispute management.
+    
+    \item \textbf{Application Tier:} Django backend services implementing JSON-based APIs for authentication, ride lifecycle management, bookings, fare negotiation, chat, live tracking, pickup code verification, payment confirmations, dispute handling, SOS alerts, and analytics. Real-time behavior on mobile is achieved through periodic HTTP updates.
+    
+    \item \textbf{Data Tier:} PostgreSQL (via Supabase) serves as the central transactional database with secure object storage for document uploads including CNIC images, driving licenses, and vehicle photographs.
+\end{itemize}
+
+The modular architecture enables independent development, testing, and deployment of core components while maintaining loose coupling through well-defined API interfaces. Modules interact through REST APIs and message queues, ensuring that failures in one module do not cascade to others.
+
+% --------------------------------
+% 2.5.1 Module Descriptions
+% --------------------------------
+
+\subsection{Module 1: Profile Management (Registration \& Verification)}
+
+\textbf{Description:} This module handles user registration, authentication, and profile management for both passengers and drivers. It collects comprehensive user information including name, phone number, email, postal address, CNIC, driving license, and vehicle registration details. The module implements two-factor authentication via OTP sent to both email and phone, and manages role switching between driver and passenger modes. All uploaded documents are securely stored and linked to user records for administrative verification.
+
+\textbf{Functional Requirements:}
+
+\begin{itemize}
+    \item \textbf{FE-1.1:} The system shall allow users to register by providing name, username, email, password, address, phone number, CNIC, and gender, with validation for unique username and email.
+    
+    \item \textbf{FE-1.2:} The system shall accept image uploads for profile photo, live photo, CNIC front/back, and license images with validation for size (<1MB) and format (JPG/PNG).
+    
+    \item \textbf{FE-1.3:} The system shall generate and send OTPs to both email and phone within 5 seconds of registration submission, with OTPs expiring after 5 minutes.
+    
+    \item \textbf{FE-1.4:} The system shall set account status to "Pending Admin Verification" after successful OTP verification and prevent feature access until admin approval.
+    
+    \item \textbf{FE-1.5:} The system shall enforce business rules requiring bank account number and bank name to be supplied together if either is provided.
+\end{itemize}
+
+\subsection{Module 2: Communication Module (Chat \& Notifications)}
+
+\textbf{Description:} This module enables seamless communication between drivers and passengers through multiple channels. After booking confirmation, one-to-one in-app messaging allows coordination of pickup details and ride-specific communication. Drivers can broadcast messages to selected subsets of passengers for announcements or updates. The notification system delivers real-time alerts via push notifications, SMS, and email for booking confirmations, reminders, cancellations, and emergency alerts. All communications are persisted for audit and dispute resolution purposes.
+
+\textbf{Functional Requirements:}
+
+\begin{itemize}
+    \item \textbf{FE-2.1:} The system shall enable secure one-to-one messaging between drivers and passengers only after booking confirmation.
+    
+    \item \textbf{FE-2.2:} The system shall allow drivers to broadcast messages to any subset of accepted passengers from the ride management screen.
+    
+    \item \textbf{FE-2.3:} The system shall generate real-time push notifications for booking requests, acceptances, rejections, cancellations, and payment confirmations.
+    
+    \item \textbf{FE-2.4:} The system shall maintain immutable chat logs with timestamps for all messages, linked to the associated booking for audit purposes.
+    
+    \item \textbf{FE-2.5:} The system shall support multiple notification channels including in-app push, SMS, and email with configurable user preferences.
+\end{itemize}
+
+\subsection{Module 3: Core Functional Module (Ride Management \& Booking)}
+
+\textbf{Description:} This module delivers the primary value of the Lets Go Ride Sharing App system by enabling drivers to create rides and passengers to discover and book them. Drivers use an interactive map editor to mark start points, intermediate stops, and destinations, with automatic place name suggestions from map providers. Ride parameters include date/time, vehicle selection, available seats, gender preferences, negotiation flags, and fare settings. Passengers browse available rides with comprehensive cards showing route previews, times, fares, and driver information, then book by selecting pickup/drop stops and seat counts. The module implements seat locking during booking requests to prevent overbooking.
+
+\textbf{Functional Requirements:}
+
+\begin{itemize}
+    \item \textbf{FE-3.1:} The system shall provide a map-based route editor where drivers can mark start (green), intermediate (orange), and end (red) stops with auto-fetched place names.
+    
+    \item \textbf{FE-3.2:} The system shall calculate and display auto-fare based on total route distance, vehicle type, and fuel coefficient, allowing driver override with confirmation.
+    
+    \item \textbf{FE-3.3:} The system shall display ride cards to passengers showing route preview, departure time, available seats, driver rating, gender preference, and fare.
+    
+    \item \textbf{FE-3.4:} The system shall allow passengers to request booking by selecting pickup and drop stops from the driver's route, specifying seat counts with gender-based allocation.
+    
+    \item \textbf{FE-3.5:} The system shall lock selected seats for a configurable reservation window (5 minutes) during booking request processing to prevent double-booking.
+    
+    \item \textbf{FE-3.6:} The system shall notify drivers of booking requests and allow acceptance or rejection within a configurable timeframe.
+\end{itemize}
+
+\subsection{Module 4: Management / Admin Module}
+
+\textbf{Description:} This comprehensive web-based panel provides administrators with complete control over platform operations. The module displays paginated user lists with document viewing capabilities, enabling efficient verification workflows. Administrators can verify, reject, or ban users, with CNIC blacklisting preventing re-registration of banned individuals. The dispute management interface presents cases with attached evidence including chat logs, GPS traces, and uploaded images, allowing resolution with notes. The module also provides financial analytics, system usage reports, and configuration management for platform policies.
+
+\textbf{Functional Requirements:}
+
+\begin{itemize}
+    \item \textbf{FE-4.1:} The system shall provide an admin dashboard displaying paginated user lists with filtering by verification status and document viewing capabilities.
+    
+    \item \textbf{FE-4.2:} The system shall allow administrators to verify users, reject with reason, or ban users by CNIC, with CNIC blacklisting preventing future registration attempts.
+    
+    \item \textbf{FE-4.3:} The system shall flag user verifications pending longer than 24 hours and surface them to admin dashboards for expedited handling.
+    
+    \item \textbf{FE-4.4:} The system shall display disputes with comprehensive evidence including chat transcripts, GPS location traces, pickup code attempt logs, and uploaded images.
+    
+    \item \textbf{FE-4.5:} The system shall allow administrators to resolve disputes with notes, update dispute status, and notify involved parties of resolution outcomes.
+    
+    \item \textbf{FE-4.6:} The system shall generate system usage reports including ride statistics, user growth metrics, and financial summaries.
+\end{itemize}
+
+\subsection{Module 5: Advanced / Additional Features (ML \& Chatbot)}
+
+\textbf{Description:} This module delivers intelligent capabilities that enhance user experience through personalization and automated assistance. The machine learning component analyzes user travel history, saved routes, search behavior, and preferences to generate personalized ride recommendations displayed on the home screen. Using content-based filtering, it computes similarity scores between user profiles and available rides, ranking results by relevance. The chatbot, powered by Generative AI, provides instant support by answering FAQs from the knowledge base and assisting with app navigation. For ride recommendation queries, it interfaces with the ML module to deliver personalized suggestions conversationally.
+
+\textbf{Functional Requirements:}
+
+\begin{itemize}
+    \item \textbf{FE-5.1:} The system shall analyze user travel history, saved routes, recent searches, and preferences to generate personalized ride recommendations using content-based filtering algorithms.
+    
+    \item \textbf{FE-5.2:} The system shall rank recommended rides using similarity scores based on route coordinates, departure time proximity, driver rating, and price alignment with user history.
+    
+    \item \textbf{FE-5.3:} The system shall respect driver-set gender preferences and safety filters in all recommendations, never showing rides to disallowed genders.
+    
+    \item \textbf{FE-5.4:} The system shall fall back to deterministic rule-based ranking (distance + departure time + driver rating) when ML service is unavailable to prevent user experience degradation.
+    
+    \item \textbf{FE-5.5:} The system shall provide a chatbot interface that answers frequently asked questions by accessing the knowledge base and user manual content.
+    
+    \item \textbf{FE-5.6:} The chatbot shall provide personalized ride recommendations when requested by calling the recommendation engine and presenting results conversationally.
+    
+    \item \textbf{FE-5.7:} The system shall log all chatbot interactions for analytics, continuous improvement, and identification of gaps in automated support.
+\end{itemize}
+
+% --------------------------------
+% 2.6 Assumptions and Dependencies
+% --------------------------------
+
+\section{Assumptions and Dependencies}
+
+The design and development of the Lets Go Ride Sharing App system is based on the following assumptions and dependencies:
+
+\begin{itemize}
+    \item \textbf{User Participation:} The system assumes a critical mass of active users for efficient ride matching; a small user base may hinder ride twinning effectiveness and limit available ride options.
+    
+    \item \textbf{Third-Party Services:} The system depends on external mapping APIs (Google Maps or OpenStreetMap) for route calculation, geocoding, and ETA estimation. It also depends on LLM APIs for chatbot functionality. Service downtime, API changes, or rate limitations may temporarily affect application functionality.
+    
+    \item \textbf{Internet Connectivity:} The system requires stable internet connectivity and accurate GPS data. Users in areas with poor network coverage or inaccurate GPS signals may experience degraded performance or inability to use core features.
+    
+    \item \textbf{Device Capabilities:} The system assumes users have Android devices running version 8.0 or higher with GPS, camera functionality, and minimum 2GB RAM. Device fragmentation may require additional testing efforts.
+    
+    \item \textbf{Notification Delivery:} The system depends on Firebase Cloud Messaging for push notifications and SMS/email gateways for alerts. Delivery reliability depends on these third-party services, with retry mechanisms implemented for transient failures.
+    
+    \item \textbf{Manual Verification:} The system depends on administrator review for document verification. Thorough verification may slow registration but ensures platform safety and trust.
+    
+    \item \textbf{Payment Processing:} The system assumes manual payment confirmation without integrated payment gateway. Payment reconciliation requires administrative oversight and user honesty in marking payments.
+    
+    \item \textbf{Data Retention:} The system assumes compliance with data protection regulations and platform store policies regarding storage of user documents and personal information.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Chapter Summary}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+This chapter defined the core problems addressed by the Lets Go Ride Sharing App ride-sharing system, including limited expense-sharing opportunities, cultural insensitivities in existing platforms, increased fares due to route deviations, and negative environmental impacts from unnecessary vehicle usage. A conceptual solution was outlined focusing on route-based matching, gender preferences, hybrid transparent pricing, and comprehensive safety features. Clear, measurable objectives were established using action verbs to guide development and ensure alignment with identified challenges. The system scope was defined, targeting local communities with specific inclusions and exclusions. A three-tier client-server architecture was presented with modular design enabling independent development and scalability. Detailed module descriptions for Profile Management, Communication, Core Ride Management, Administration, and Advanced Features provided comprehensive functional requirements. Key assumptions and dependencies were documented to clarify operational constraints and external service dependencies.
+
+This chapter establishes the problem foundation and sets the direction for the detailed software design presented in the next chapter.
+
+\newpage

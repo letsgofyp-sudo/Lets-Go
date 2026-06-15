@@ -3,6 +3,7 @@
 % ============================================
 
 \chapter{Implementation}
+\justifying
 
 This chapter describes the practical implementation of the Lets Go Ride Sharing App ride-sharing and recommendation system. It explains how the architectural design and models presented in Chapter 4 were translated into working modules, algorithms, user interfaces, and deployment components. The implementation follows the modular design and incremental delivery approach outlined earlier.
 
@@ -15,35 +16,45 @@ This chapter describes the practical implementation of the Lets Go Ride Sharing 
 The development environment for the Lets Go Ride Sharing App system was selected to support Flutter mobile development, a Django backend, PostgreSQL database management, and template-based Admin pages.
 
 \textbf{IDE and Tools:}
+
+Visual Studio Code – main editor for writing Flutter (Dart) and Django (Python).
+
+Android Studio – for Android emulator testing and Flutter layout debugging.
+
+Figma – UI/UX Design \& Prototyping.
+
+Postman – HTTP Endpoint Testing for Backend Integration Testing.
 \begin{itemize}
-    \item \textbf{Visual Studio Code} -- Primary code editor for Flutter (Dart) and Django (Python) development.
-    \item \textbf{Android Studio} -- Used for Android emulator testing and Flutter layout debugging.
-    \item \textbf{Figma} -- UI/UX design and prototyping.
-    \item \textbf{Postman} -- HTTP endpoint testing for backend integration testing.
-    \item \textbf{Git \& GitHub} -- Version control and collaboration, including issue tracking.
-    \item \textbf{Supabase Dashboard} -- Database inspection and storage bucket management for Supabase PostgreSQL and Supabase Storage.
+    \item Git \& GitHub – Version control and collaboration (including issue tracking).
+\end{itemize}
+Supabase Dashboard – Database Inspection and Storage Bucket Management for Supabase PostgreSQL and Supabase Storage.
+
+Programming Languages and Frameworks:
+
+Frontend (Mobile): Dart and Flutter for cross-platform mobile screens.
+\begin{itemize}
+    \item Frontend: HTML, CSS, and JavaScript.
+    \item Database: SQLite.
+    \item Authentication: Session-based authentication with Django sessions with the user id saved in the \texttt{request.session['user\_id']} property.
+    \item Notifications: Notification logic for the backend and push delivery via FCM as well as email/SMS support where set up.
+\end{itemize}
+Database: PostgreSQL on Supabase.
+\begin{itemize}
+    \item Storage: Uploaded images and documents are stored in Supabase Storage.
+    \item Haversine Distance: An algorithmic formula for calculating distances between two locations.
 \end{itemize}
 
-\textbf{Programming Languages and Frameworks:}
-\begin{itemize}
-    \item \textbf{Frontend (Mobile):} Dart with Flutter for cross-platform mobile screens.
-    \item \textbf{Backend:} Python with Django 6.0.5 using function-based views and explicit \texttt{path()} routing.
-    \item \textbf{Authentication:} Session-based authentication using Django sessions, with the user id stored in \texttt{request.session['user\_id']}.
-    \item \textbf{Notifications:} Backend notification logic with push delivery through FCM and email/SMS support where configured.
-    \item \textbf{Database:} PostgreSQL hosted and managed on Supabase.
-    \item \textbf{Storage:} Supabase Storage for uploaded images and documents.
-    \item \textbf{Geospatial Logic:} Haversine-based distance calculation for fares, route summaries, and ETA-related logic.
-    \item \textbf{Chatbot:} Backend support chatbot implemented as a local utility in the Django project, with optional LLM support only when environment variables are configured.
-\end{itemize}
+Backend support chatbot as a local utility within the Django project that can optionally include LLM support in the event that environment variables are set.
 
-\textbf{Operating System and Hardware:}
+Operating System and Hardware:
+
+Development OS: Ubuntu, Windows 10 and Windows 11 have been used for development and testing.
 \begin{itemize}
-    \item \textbf{Development OS:} Windows 10, Windows 11, and Ubuntu were used during development and testing.
-    \item \textbf{Backend Hosting Environment:} Cloud deployment for the Django backend and Admin pages.
-    \item \textbf{Hardware:}
+    \item Backend Hosting Environment: Cloud deployment of backend and Admin pages (Django).
+    \item Hardware:
         \begin{itemize}
-            \item Development machines with at least 16 GB RAM and a modern multi-core processor.
-            \item Mobile test devices and emulators for Android and iOS validation.
+            \item Modern multi-core processor and 16+ GB RAM machines for development.
+            \item Application validation (Android and iOS) using mobile test devices and emulators.
         \end{itemize}
 \end{itemize}
 
@@ -53,122 +64,124 @@ The development environment for the Lets Go Ride Sharing App system was selected
 
 \section{Core Module Implementation}
 
-This section explains how the main modules of the Lets Go Ride Sharing App system were implemented. Each module was developed as a separate backend feature or Flutter screen flow, which kept the code organized and easier to maintain.
+This section describes the implementation of the main modules of the Lets Go Ride Sharing App system. Each module was designed as a standalone feature or a screen flow within the Flutter app, maintaining the code structure and making it easier to maintain.
 
 \subsection{Module 1: Authentication \& Verification Module}
 
-\textbf{Purpose:} Handle user registration, login, OTP verification, password reset, and Admin-driven document review.
+This is used to manage user registration, login, OTP verification, password reset and Admin review of documents.
 
 \textbf{Key Functionalities:}
 \begin{itemize}
-    \item User signup with email, phone, CNIC, and optional license or bank details.
-    \item Document upload for profile photos, CNIC images, driver license images, and vehicle documents through Supabase Storage.
-    \item OTP generation and verification for account verification and password reset flows.
-    \item Session-based login after successful authentication.
-    \item Admin pages for reviewing pending verifications and approving, rejecting, or banning users.
+    \item User Registration by email, phone, CNIC and (optional) license/bank details.
+    \item Upload profile images, CNIC images, driver license images, vehicle documents to Supabase Storage.
+    \item OTP generation and verification for account verification \& password reset flow.
+    \item Logging in automatically to the session once successful.
+    \item Administrator pages to see pending validations and approve, reject or ban users.
 \end{itemize}
 
 \textbf{Important Classes/Functions:}
 \begin{itemize}
-    \item User profile records for passenger and driver information.
-    \item User document/image fields stored in the user profile model, with uploaded assets persisted in Supabase Storage and referenced through stored URLs.
-    \item OTP generation and verification helpers integrated into authentication views, using server-side cache/state and configured email/SMS delivery utilities.
-    \item Django function-based views mapped through routes such as \texttt{/signup/}, \texttt{/login/}, \texttt{/send\_otp/}, \texttt{/verify\_otp/}, and \texttt{/reset\_password/}.
-    \item Flutter screens: \texttt{RegistrationScreen}, \texttt{OTPScreen}, and \texttt{DocumentUploadScreen}.
+    \item User profile database for passenger \& driver data.
+    \item User document/image fields stored in user profile model, uploaded assets stored in Supabase Storage with reference through stored URLs.
+    \item Web-based helpers for generating and verifying OTPs, with server side cache/state and configured delivery utilities for email/SMS.
+    \item Django function-based views were mapped on the following routes: \texttt{/signup/}, \texttt{/login/}, \texttt{/send\_otp/}, \texttt{/verify\_otp/}, and \texttt{/reset\_password/}.
+    \item The Flutter screens that are being registered are \texttt{RegistrationScreen}, \texttt{OTPScreen} and \texttt{DocumentUploadScreen}.
 \end{itemize}
 
-\textbf{Integration:} Communicates with the notification layer for OTP delivery and with Supabase Storage for document uploads. Admin actions update user status and trigger the relevant notifications.
+\textbf{Integration:} interacts with the notification layer for OTP delivery and Supabase Storage for document uploads. The updating of the user status and triggering of the corresponding notifications are carried out due to admin actions.
 
 \subsection{Module 2: Ride Management Module}
 
-\textbf{Purpose:} Enable drivers to create, edit, and publish rides, and manage route stops and ride parameters.
+\textbf{Aim:} To allow drivers to develop, edit and publish rides as well as control stops on the ride and ride parameters.
 
 \textbf{Key Functionalities:}
 \begin{itemize}
-    \item Map-based route editor that allows drivers to define start, intermediate, and end stops.
-    \item Fare calculation based on route distance, vehicle type, and ride parameters.
-    \item Configuration of departure time, available seats, gender preference, and negotiation availability.
-    \item Publishing rides to passenger discovery pages and updating ride details through backend forms.
+    \item Map-based route editor with the ability to create start, intermediate and end stops.
+    \item The fare calculation is done based on the distance of the route, type of the vehicle and ride parameters.
+    \item Availability of departure time and seats, gender preference and the availability for negotiation.
+    \item Adding the ride to the passenger discovery pages and updating the ride information using a form in the backend.
 \end{itemize}
 
 \textbf{Important Classes/Functions:}
 \begin{itemize}
-    \item \texttt{Ride} model with route and stop data.
-    \item \texttt{FareCalculator} utility that uses Haversine distance and route metadata.
-    \item Django views mapped through \texttt{/create\_route/}, \texttt{/create\_trip/}, and \texttt{/trips/<trip\_id>/...}.
-    \item Flutter screens: \texttt{CreateRideScreen}, \texttt{MyRidesScreen}, and \texttt{RideDetailsScreen}.
+    \item Ride model using route and stop data.
+    \item FareCalculator is a utility to calculate the fare distance, based on Haversine distance, and route metadata.
+    \item Django views in \texttt{/create\_route/}, \texttt{/create\_trip/}, and \texttt{/trips/<trip\_id>/...}.
+    \item These screens should be flutter screens that are created as follows: \texttt{CreateRideScreen}, \texttt{MyRidesScreen}, and \texttt{RideDetailsScreen}.
 \end{itemize}
 
-\textbf{Integration:} Stores ride data in PostgreSQL, uses route and distance helpers for fare calculation, and exposes the ride data to passenger search and booking flows.
+\textbf{Integration:} Saves data for rides in PostgreSQL, provides fare calculation helpers for routes and distance, and provides access to the ride data to the passenger search and booking flows.
 
 \subsection{Module 3: Booking \& Payment Module}
 
-\textbf{Purpose:} Allow passengers to search, view, book, and confirm rides, while supporting seat locking, negotiation, and manual payment confirmation.
+\textbf{Objective:} To enable passengers to locate, check, reserve and confirm trips, as well as to lock the seats, negotiate and manually confirm payments.
 
 \textbf{Key Functionalities:}
 \begin{itemize}
-    \item Browse available rides with filters for origin, destination, date, and gender preference.
-    \item Select pickup and drop stops from a driver route.
-    \item Lock seats during booking requests to prevent overbooking.
-    \item Support booking acceptance, rejection, cancellation, and payment confirmation.
-    \item Manual payment flow where the passenger marks payment submitted and the driver confirms receipt.
+    \item Search for rides by origin, destination, date and gender preference.
+    \item Choose pick up and drop off stops from a driver route.
+    \item Prevent overbooking by locking seats when booking.
+    \item Accept, reject, cancel and confirm bookings.
+    \item Manual payment flow in which the passenger indicates that payment is made and the driver checks it.
 \end{itemize}
 
 \textbf{Important Classes/Functions:}
 \begin{itemize}
-    \item \texttt{Booking} model with states such as requested, accepted, rejected, cancelled, and completed.
-    \item \texttt{Payment} model linked to bookings.
-    \item Django endpoints such as \texttt{/ride-booking/<trip\_id>/}, \texttt{/bookings/<booking\_id>/payment/submit/}, and \texttt{/bookings/<booking\_id>/payment/confirm/}.
-    \item Flutter screens: \texttt{SearchRidesScreen}, \texttt{BookingScreen}, and \texttt{PaymentScreen}.
+    \item Requested, accepted, rejected, cancelled, completed booking model with states.
+    \item Payment model that is based on bookings.
+    \item Endpoints that are related to Django, like \texttt{/ride-booking/<trip\_id>/}, \texttt{/bookings/<booking\_id>/payment/submit/}, and \texttt{/bookings/<booking\_id>/payment/confirm/}.
+    \item The following screens will be fluttered: \texttt{SearchRidesScreen}, \texttt{BookingScreen} and \texttt{PaymentScreen}.
 \end{itemize}
 
-\textbf{Integration:} Interacts with the notification layer for alerts and updates ride seat availability after booking state changes.
+\textbf{Integration:} Communicates with notification layer for alerts and updates on state changes after booking rides.
 
 \subsection{Module 4: Live Tracking \& Safety Module}
 
-\textbf{Purpose:} Provide near real-time ride tracking through periodic HTTP updates, pickup code verification, SOS emergency handling, and ride completion support.
+In this Module 4: Live Tracking \& Safety Module, you will learn how to track animals in the field and how to keep them safe and sound.
+
+\textbf{Purpose:} Frequency update support with HTTP near real-time ride tracking, pickup code verification, SOS emergency and ride completion support.
 
 \textbf{Key Functionalities:}
 \begin{itemize}
-    \item Location updates are sent through HTTP endpoints and refreshed on the client side through polling or periodic updates.
-    \item Pickup code generation and verification are used to confirm passenger boarding.
-    \item SOS incidents notify emergency contacts through email/SMS workflows and generate shareable tracking links or tokens.
-    \item Incident and tracking data are stored for review in Admin pages.
+    \item Location updates are transmitted via HTTP endpoints on the client via polling or periodic updates.
+    \item Passenger boarding is verified by code picking and code verification.
+    \item SOS incidents alert through e-mail/SMS workflows and create shareable tracking links or tokens.
+    \item Data of the incidents and tracking data are saved for review in the Admin pages.
 \end{itemize}
 
 \textbf{Important Classes/Functions:}
 \begin{itemize}
-    \item \texttt{PickupCodeService} for generating and validating pickup codes.
+    \item \texttt{PickupCodeService} for creating and verifying pickup codes.
     \item \texttt{SOSIncident} and \texttt{SOSService} for emergency handling.
-    \item \texttt{TripShareToken} for shareable ride-tracking links.
-    \item Endpoints such as \texttt{/pickup-code/verify/}, \texttt{/incidents/sos/}, \texttt{/incidents/sos/share/<token>/...}, and \texttt{/trips/<trip\_id>/share/}.
-    \item Flutter screens: \texttt{LiveTrackingScreen} and \texttt{PickupCodeEntryScreen}.
+    \item \texttt{TripShareToken} is a link to share your trip.
+    \item Endpoints like \texttt{/pickup-code/verify/}, \texttt{/incidents/sos/}, \texttt{/incidents/sos/share/<token>/...} and \texttt{/trips/<trip\_id>/share/...} are examples of these.
+    \item For the live tracking screen and pick up code entry screen, flutter screens were created.
 \end{itemize}
 
-\textbf{Integration:} Uses Haversine-based distance logic for location-related checks, backend notification logic for alerts, and Admin pages for incident monitoring.
+\textbf{Integration:} Integrates Haversine distance logic for location-based checks, backend notification logic for alerts, and Admin pages to monitor incidents.
 
 \subsection{Module 5: Admin Portal Module}
 
-\textbf{Purpose:} Provide web-based Admin pages for user verification, dispute handling, incident review, and system monitoring.
+\textbf{Goal:} Web based administration pages to verify use, to resolve disputes, to review incidents and monitor system usage.
 
 \textbf{Key Functionalities:}
 \begin{itemize}
-    \item Paginated user lists with filtering by verification status.
-    \item Document preview and approve/reject/ban actions.
-    \item Dispute review with attached evidence such as chat logs, location history, and uploaded images.
-    \item Resolution workflow with notes and notifications to involved parties.
-    \item Dashboard view for important operational information.
+    \item Lists of users with pager and filter by verification status.
+    \item Record and accept/reject/ban.
+    \item Dispute resolution, including evidence including chat logs, location history and uploaded images.
+    \item Resolution workflow including notes and notifications of parties involved.
+    \item A view of important operational information on the dashboard.
 \end{itemize}
 
 \textbf{Important Classes/Functions:}
 \begin{itemize}
-    \item Django template-based Admin pages and backend views.
-    \item Dispute and verification handling views.
-    \item \texttt{VerificationService} for document review logic.
-    \item Dashboard widgets rendered with standard Django templates and Bootstrap styling.
+    \item Admin pages and views using the Django template system.
+    \item Handling Disputes and Verification views.
+    \item The VerificationService is a service used for the document review logic.
+    \item Normal Django templates and Bootstrap styling are used for the dashboard widgets.
 \end{itemize}
 
-\textbf{Integration:} Reads data from all core modules and triggers notifications when Admin actions change a user or dispute state.
+\textbf{Integration:} Pulls in data from all the core modules and notifies when the Admin changes a user or dispute state.
 
 % -------------------------------------------------
 % 5.3 Algorithmic Implementation
@@ -180,13 +193,14 @@ This section details the formal logic used in the core modules of the Lets Go Ri
 
 \subsection{Algorithm 1: User Registration \& Verification}
 
-This algorithm handles user onboarding, stores the authenticated user in a Django session after login, and uses OTP verification before account activation.
+This algorithm processes the user onboarding, stores the user who has successfully signed in to a Django session and activates accounts after verifies the OTP.
 
 \begin{breakablealgorithm}
-\caption{User Registration and OTP Verification}
-\textbf{Input:} User data (email, phone, password, role) \\
+\caption{This algorithm deals with the process of user registration and OTP verification.This algorithm is related to user registration and OTP verification.}
+\textbf{Input:} User data (Email, Phone, Password, User role) \\
 \textbf{Output:} Verification status and session state
 \begin{algorithmic}[1]
+\State TO ADD A USER TO THE SITE, YOU NEED TO CALL THE FOLLOWING FUNCTION:
 \Function{RegisterUser}{$email, phone, password, role$}
     \If{\Call{CheckExists}{$email$} \textbf{or} \Call{CheckExists}{$phone$}}
         \State \Return Error("User already exists")
@@ -209,15 +223,16 @@ This algorithm handles user onboarding, stores the authenticated user in a Djang
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} The system validates the user's uniqueness, generates an OTP, sends it through the configured notification channel, and stores the verified user's id in the Django session after successful login or verification.
+\textbf{Explanation:} The system will check the uniqueness of the user, then create a code called OTP and send it via a text message to the user's mobile phone. Uses the configured notification channel, and updates the verified user's id in the Django session after successful login/verification.
 
 \subsection{Algorithm 2: Ride Creation \& Fare Calculation}
 
-This algorithm is executed when a driver creates or updates a trip. It calculates route distance using stored stop points and computes the fare from local business rules.
+This algorithm is run when a drive is created or updated. It determines the distance of the route uses stored stop points, and calculates fare based on local business rules.
 
 \begin{breakablealgorithm}
 \caption{Ride Creation and Fare Calculation}
-\textbf{Input:} Ordered stops $W$, vehicle type $V$ \\
+\textbf{Input:} Ordered stops $W$, Vehicle type $V$ \\
+\textbf{Input:} Fares and route number \\
 \textbf{Output:} Ride record and estimated fare
 \begin{algorithmic}[1]
 \Function{CreateRide}{$W, V$}
@@ -225,7 +240,7 @@ This algorithm is executed when a driver creates or updates a trip. It calculate
     \For{$i \gets 1$ \textbf{to} $\Call{Length}{W} - 1$}
         \State $segment \gets$ \Call{HaversineDistance}{$W[i], W[i+1]$}
         \State $total\_distance \gets total\_distance + segment$
-    \EndFor
+        \EndFor
     \State $base\_rate \gets$ \Call{GetBaseRate}{}
     \State $multiplier \gets$ \Call{GetVehicleMultiplier}{$V$}
     \State $fare \gets total\_distance \times base\_rate \times multiplier$
@@ -235,50 +250,45 @@ This algorithm is executed when a driver creates or updates a trip. It calculate
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} The fare is derived from route distance and vehicle-based rules rather than from an external routing service as the primary backend computation.
+\textbf{Explanation:} The fare is not based on the distance traveled but on distance on the route and also on the rules for the vehicles. An external routing service as the main computation backend.
 
 \subsection{Algorithm 3: Ride Booking \& Seat Locking}
 
-This algorithm manages booking requests while preventing overbooking and enforcing seat availability.
+This algorithm handles requests for booking, avoids the possibility of overbooking, and ensures seats are booked according to the rules availability.
 
 \begin{breakablealgorithm}
 \caption{Ride Booking and Seat Locking}
-\textbf{Input:} Passenger ID $P$, Trip ID $T$, Seats requested $S$ \\
+\textbf{Input:} Passenger ID, Trip ID, S, Seats requested \\
 \textbf{Output:} Booking status
 \begin{algorithmic}[1]
-\Function{BookRide}{$P, T, S$}
+\Function{CourseRide}{$P, T$}
     \State \Call{BeginDBTransaction}{}
     \State $trip \gets$ \Call{FetchTripWithLock}{$T$}
-    \If{$trip.available\_seats < S$}
+    \If{the number of seats available in the trip, $trip.available\_seats$, is less than $S$}
         \State \Call{RollbackDBTransaction}{}
-        \State \Return Error("Not enough seats available")
+        \State \Return "The number of seats is insufficient.Return "The number of seats is insufficient."
     \EndIf
-    \State $trip.available\_seats \gets trip.available\_seats - S$
-    \State $booking \gets$ \Call{CreateBooking}{$P, T, S$}
-    \State \Call{Save}{$trip$}
-    \State \Call{CommitDBTransaction}{}
-    \State \Call{NotifyDriver}{$trip.driver, booking$}
     \State \Return Success("Booking requested")
 \EndFunction
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} A database transaction is used to prevent concurrent bookings from consuming the same seat inventory.
+\textbf{Explanation:} A database transaction is used to avoid simultaneous bookings from removing the book. The same seating capacity.
 
 \subsection{Algorithm 4: Live Tracking \& Pickup Code Verification}
 
-This algorithm processes periodic location updates through HTTP-based tracking and generates a pickup code when the driver reaches the pickup area.
+That is an algorithm that handles periodic updates of location via HTTP-based tracking and produces a pickup code when the driver gets to the pickup area.
 
 \begin{breakablealgorithm}
 \small
 \caption{Live Tracking and Pickup Code Verification}
-\textbf{Input:} Driver location $L_D$, passenger pickup location $L_P$, trip ID $T$ \\
-\textbf{Output:} Tracking status and pickup code
+\textbf{Input:} The driver location is located at LD, the passenger pickup location is located at LP, and the trip ID is T. \\
+\textbf{Output:} Track and status code/pickup code is being tracked.
 \begin{algorithmic}[1]
 \Function{UpdateLiveLocation}{$L_D, L_P, T$}
     \State $distance \gets$ \Call{HaversineDistance}{$L_D, L_P$}
     \State \Call{SaveLocationUpdate}{$T, L_D$}
-    \If{$distance \leq 100$ meters \textbf{and} \textbf{not} \Call{PickupCodeExists}{$T$}}
+    \If{distance is less or equal to 100 meters and it doesn't exist \Call{PickupCodeExists}{$T$}}
         \State $code \gets$ \Call{GenerateSecureCode}{4}
         \State \Call{SavePickupCode}{$T, code$}
         \State \Call{NotifyPassenger}{$T, code$}
@@ -297,17 +307,17 @@ This algorithm processes periodic location updates through HTTP-based tracking a
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} The system stores periodic GPS updates through HTTP requests and verifies the pickup code before the trip can move to the in-progress state.
+\textbf{Explanation:} The system stores periodic GPS updates via HTTP requests and verifies the pickup code prior to the trip can be moved to the in-progress state.
 
 \subsection{Algorithm 5: SOS Escalation Logic}
 
-This algorithm records SOS incidents, notifies the relevant contacts, and generates a shareable tracking token.
+This algorithm notifies contacts, logs SOS incidents and creates a shareable tracking token.
 
 \begin{breakablealgorithm}
 \small
-\caption{SOS Incident Handling and Share Link Generation}
+\caption{Link Generation Considerations for SOS Incident Handling}
 \textbf{Input:} User ID $U$, Trip ID $T$, Current location $L$ \\
-\textbf{Output:} Incident record and share token
+\textbf{Result:} Incident record and share token
 \begin{algorithmic}[1]
 \Function{HandleSOS}{$U, T, L$}
     \If{\Call{SOSAlreadyActive}{$T$}}
@@ -319,12 +329,11 @@ This algorithm records SOS incidents, notifies the relevant contacts, and genera
     \State \Call{NotifyEmergencyContacts}{$U, L$}
     \State \Call{NotifyAdminPages}{$T, L$}
     \State \Call{SendEmailSMS}{$U, T, L, token$}
-    \State \Return $token$
 \EndFunction
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} The SOS flow creates a persistent incident record, alerts emergency contacts through the configured notification channels, and prepares a shareable tracking token for safe location sharing.
+\textbf{Explanation:} The SOS flow maintains an incident log that is available for future reference and notifies on-call personnel by sending alerts. sends the configured notification channels and creates a tracking token to be shared safely location sharing.
 
 \subsection{Algorithm 6: Ride Suggestion Helper}
 
@@ -387,7 +396,7 @@ This algorithm stores completed trip data and keeps a compact audit trail of the
 \textbf{Output:} Archived status
 \begin{algorithmic}[1]
 \Function{ArchiveTrip}{$T, t_{end}$}
-    \If{\Call{CurrentTime}{} - $t_{end} < 24$ hours}
+    \If{the time difference between the current time and tend is less than 24 hours, then}
         \State \Return False
     \EndIf
     \If{\Call{HasPendingPayment}{$T$}}
@@ -401,11 +410,11 @@ This algorithm stores completed trip data and keeps a compact audit trail of the
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} Completed trips can be archived after the operational workflow finishes, while the audit log and status history remain available for future review.
+\textbf{Explanation:} After the operational workflow is completed, the finished trips can be archived - The audit log and status history are kept for future reference.
 
 \subsection{Algorithm 9: Polyline Decoding for Route Geometry}
 
-This algorithm decodes encoded route geometry returned by mapping utilities into coordinate pairs.
+This algorithm will decode route geometry that is encoded back from mapping utilities to coordinate pairs.
 
 \begin{breakablealgorithm}
 \small
@@ -428,17 +437,18 @@ This algorithm decodes encoded route geometry returned by mapping utilities into
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} The decoded route geometry is used for map rendering and route summaries inside the app.
+\textbf{Explanation:} Map Rendering and Route summaries: The decoded route geometry is used for this purpose inside the app.
 
 \subsection{Algorithm 10: Ride Fare Negotiation Protocol}
 
-This algorithm handles passenger fare requests, counteroffers, and final acceptance or rejection.
+This algorithm processes passenger fare requests, counteroffers and final acceptance/rejection.
 
 \begin{breakablealgorithm}
 \caption{Ride Fare Negotiation State Machine}
 \textbf{Input:} Driver ID $D$, Passenger ID $P$, Booking $B$, Action $A$, Counter fare $F_c$ \\
-\textbf{Output:} Negotiation state update
+\textbf{Output:} The "Output: Negotiation state update" button updates the negotiation state of the output port.
 \begin{algorithmic}[1]
+\State This function is used to process negotiation.
 \Function{ProcessNegotiation}{$D, P, B, A, F_c$}
     \If{$A = \text{accept}$}
         \State $B.negotiated\_fare \gets B.passenger\_offer$
@@ -458,11 +468,11 @@ This algorithm handles passenger fare requests, counteroffers, and final accepta
 \end{algorithmic}
 \end{breakablealgorithm}
 
-\textbf{Explanation:} The negotiation state machine records every offer and response so that the booking lifecycle remains traceable.
+\textbf{Explanation:} The negotiation state machine keeps track of all the offers and responses made in the negotiation and it allows the states to be reversed. The entire booking lifecycle is traceable.
 
 \subsection{Algorithm 11: Support Chatbot Engine (End-to-End State Machine + API + Routing Fallback)}
 
-This algorithm documents the implemented backend support chatbot (located in \texttt{lets\_go/utils/chatbot}). The engine maintains per-user conversational state, supports multi-turn guided flows (booking, creating rides, negotiation, messaging), integrates with the system backend APIs, provides routing/geocoding assistance through a fallback chain (local stop knowledge, ORS/OSM services, and Haversine), and optionally uses an LLM layer when enabled via environment configuration.
+This algorithm is used in documenting the implemented backend support chatbot (located in: \texttt{lets\_go/utils/chatbot}). The engine is capable of storing the conversational state for each user, and---booking, creating rides, negotiation and messaging workflows, integrates with the wraps around system backend APIs, offers routing/geocoding support if the chain of fallbacks to the local stop is provided, uses an LLM layer (when available) in addition to knowledge, ORS/OSM services, and optionally via environment configuration.
 
 \begin{breakablealgorithm}
 \caption{End-to-End Chatbot Engine Pipeline}
@@ -608,11 +618,11 @@ This algorithm documents the implemented backend support chatbot (located in \te
 \end{algorithmic}
 \end{breakablealgorithm}
 
-The chatbot works as a deterministic rule-and-state engine by default. It uses keyword-based intent detection, keeps a per-user conversation state, follows multi-turn chooser flows such as \texttt{choose\_trip}, \texttt{choose\_route}, \texttt{choose\_vehicle}, and \texttt{choose\_location}, and calls the same backend HTTP endpoints that power the rest of the system. Optional LLM support is enabled only when environment variables configure a provider; otherwise the chatbot remains fully deterministic.
+The chatbot works as a deterministic rule-and-state engine by default. It uses keyword-based intent detection, keeps a per-user conversation state, follows multi-turn chooser flows such as \texttt{choose\_trip}, \texttt{choose\_route}, \texttt{choose\_vehicle}, and \texttt{choose\_location}, and calls the same backend HTTP endpoints that power the rest of the system. If you have not set up a provider via environment variables, the chat bot will be fully deterministic, otherwise it will include optional LLM support.
 
 \subsection{Algorithm 12: Notification Dispatch}
 
-This algorithm describes the backend notification flow used for OTP, booking updates, SOS alerts, and status changes.
+This is the algorithm for the backend notifications about OTP, booking updates, SOS and status changes.
 
 \begin{breakablealgorithm}
 \caption{Notification Dispatch}
@@ -734,7 +744,7 @@ This algorithm updates the rating summary after a completed trip.
 
 The Lets Go Ride Sharing App system integrates a small number of external services to support maps, storage, and notifications.
 
-\textbf{Authentication Mechanisms:} Sensitive configuration values are loaded from environment variables. Django sessions handle authentication state, while Supabase Storage and PostgreSQL are accessed through backend configuration.
+\textbf{Authentication Mechanisms:} Sensitive configuration values are loaded from the environment variables. Django sessions control authentication state and Supabase Storage and PostgreSQL are accessed via backend configuration.
 
 \begin{table}[H]
 \centering
@@ -764,21 +774,21 @@ SMTP / SMS Gateway & Email and SMS delivery for OTPs and verification-related me
 
 \section{User Interface Implementation}
 
-This section presents the implementation of the main user interface screens in the Lets Go Ride Sharing App mobile application and the Admin portal.
+This section demonstrates the main user interface screens in the LetsGoRide Sharing App mobile application and Admin portal.
 
 \subsection{UI Design Approach}
 
-The UI follows \textbf{Material Design 3} guidelines to ensure a modern and consistent look across Android and iOS platforms. Key principles include:
+The UI is designed per the Material Design 3 guidelines, and will look modern and consistent across Android and iOS platforms. Key principles include:
 
 \begin{itemize}
     \item \textbf{Minimalistic design:} Clean layouts with clear spacing and readable content.
-    \item \textbf{Consistent color scheme:} Primary color: teal (\#006064) for buttons and highlights; secondary: amber (\#FFA000) for warnings and alerts.
-    \item \textbf{Typography:} Roboto font family with clear hierarchy for headings and body text.
-    \item \textbf{Accessibility:} High contrast text, minimum touch target size 48x48 dp, and screen reader support.
-    \item \textbf{Responsive design:} Mobile-first layouts using Flutter's \texttt{LayoutBuilder} and \texttt{MediaQuery}; Admin pages use template-based responsive layouts.
+    \item \textbf{Primary color:} teal (\#006064) should be used for buttons and highlighting. The Secondary color: amber (\#FFA000) should be used for warnings and alerts.
+    \item \textbf{Typography:} Roboto font family, headings and body text are clearly differentiated.
+    \item \textbf{Accessibility:} High contrast text, minimum touch target size, 48x48dp, and screen reader support.
+    \item \textbf{Responsive design:} Mobile-first design with Flutter \texttt{LayoutBuilder} and \texttt{MediaQuery}, Admin pages: template based responsive design.
 \end{itemize}
 
-Wireframing was done in Figma, and the final screens were implemented in Flutter using custom widgets and theming.
+Wireframing was created in Figma and the screens were built using custom widgets and theming in Flutter.
 
 \subsection{Screen-wise Implementation}
 
@@ -787,7 +797,7 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 
 \subsubsection{User Signup}
 
-\textbf{Purpose:} Complete onboarding flow that collects personal information, emergency contact details, and verifies the user via OTP.
+\textbf{Description:} This flow is for completing onboarding stage where they enter their personal data, emergency contact details and verify with OTP.
 
 \begin{figure}[H]
 \centering
@@ -810,21 +820,21 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{User Signup Flow}
 \end{figure}
 
-\textbf{Functional Flow:} The user enters personal and emergency contact information, uploads required images, and then completes OTP verification. On successful OTP validation, the user profile is created and the app proceeds to the login/home flow depending on account status.
+\textbf{Functional Flow:} Enter personal and emergency contact details, upload required images and then complete OTP verification. If the OTP is validated successfully, then the user profile is created and the app moves on to the login/home flow based on the account status.
 
-\textbf{Backend Integration:} Signup uses registration and OTP verification endpoints, and stores user profile data in the backend database.
+\textbf{Backend Integration:} Signup endpoints to register users and OTP verification to verify them, user profile data is stored in a backend database.
 
-\textbf{Validation/Security:} Required fields are validated client-side, OTP expiry and retry limits are enforced, and uploaded images are validated before submission.
+\textbf{Validation/Security:} Validator for required fields (client side), OTP expiry and retries implemented, validation for uploaded images implemented before submission.
 
 \subsubsection{Screen 4: Login Screen}
 
-\textbf{Purpose:} Primary entry point for existing users to access the platform.
+\textbf{Function:} Where current users come from to use the platform.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Email and password input fields.
+    \item Textboxes for text and password input.
     \item Remember Me checkbox.
-    \item ``Login'' button and navigation to registration or forgot-password flows.
+    \item Type ``Login'' button and navigation to registration and forgot password flows.
 \end{itemize}
 
 \begin{figure}[H]
@@ -833,15 +843,17 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Login Screen}
 \end{figure}
 
-\textbf{Functional Flow:} The user inputs credentials and submits the login form. If authentication succeeds, a session is established and the user is redirected to the main home/dashboard screen.
+\textbf{Functional Flow:} The user enters the login information and clicks on the login form. A session is created and the user is taken to Home / Dashboard page if authentication is successful.
 
-\textbf{Backend Integration:} The screen calls the authentication endpoint to validate credentials and fetches the user profile payload required for navigation.
+\textbf{Backend Integration:} The screen requests authentication credentials from the security end point to verify them and then requests the user profile payload to be used for navigation.
 
-\textbf{Validation/Security:} Empty fields are blocked, errors are displayed for invalid credentials, and authenticated calls use session-based authorization.
+\textbf{Validation/Security:} Fields are blanked, error messages are provided if the credentials are invalid, and authentication calls are passed with session-based authorization.
 
 \subsubsection{Screen 5: Account Status (Banned/Rejected)}
 
-\textbf{Purpose:} Informs the user of their account status if access is denied by Admin review.
+A screen displaying Account Status (Banned/Rejected).A screen that shows if the account is banned or rejected.
+
+\textbf{Instructions:} If access is denied by Admin review, this will let the user know.
 
 \textbf{Components:}
 \begin{itemize}
@@ -866,15 +878,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Account Status (Banned/Rejected)}
 \end{figure}
 
-\textbf{Functional Flow:} After login or signup, the app checks account status. If the account is pending, banned, or rejected, the user is shown a clear status screen with guidance and a support option.
+\textbf{Login/signup and account status check:} This is a functional flow where after login/signup, the app validates the account status. When the account is pending, banned or rejected, the user is presented with a clear status screen with instructions and a support link.
 
-\textbf{Backend Integration:} Status is derived from the user profile response and/or a status check endpoint.
+\textbf{Backend Integration:} Status is taken from the user profile response and/or a status check endpoint.
 
-\textbf{Validation/Security:} Server-side account gating prevents access to protected flows when the user is not approved.
+\textbf{Server-side account gating:} Access to gated flows is denied if the user is not approved.
 
 \subsubsection{Create Ride: Simplified Posting Flow}
 
-\textbf{Purpose:} A simplified view of the driver ride posting flow from route selection to final ride confirmation.
+\textbf{Purpose:} A driver ride posting simplified process from route selection to ride confirmation.
 
 \begin{figure}[H]
 \centering
@@ -893,19 +905,19 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Create Ride Posting Flow (Map View, Summary, and Final Details)}
 \end{figure}
 
-\textbf{Functional Flow:} The driver creates a route on the map, reviews a ride summary, and submits the final details to publish the ride. After submission, the ride becomes visible in passenger search results.
+\textbf{Functional Flow:} Driver enters a route on the map, looks at a ridesummary and clears the final ride data and publishes the ride. Once the ride is submitted, it will appear in the passenger search results.
 
-\textbf{Backend Integration:} The flow calls ride creation endpoints and stores route geometry, stops, seats, and fare settings in the backend.
+\textbf{Backend integration:} Flow calls ride creation endpoints and stores route geometries, stops, seats, and fare settings in the backend.
 
-\textbf{Validation/Security:} Input constraints (seats, time, fare) are validated and only authenticated drivers with eligible profiles can post rides.
+\textbf{Validation/Security:} Input constraints (seats, time, fare) are checked for validation and only validly authenticated drivers with valid profiles can post rides.
 
 \subsubsection{Screen 14-16: Find Ride (Browse, Pickup/Drop, and Filters)}
 
-\textbf{Purpose:} Passenger journey for browsing available rides, selecting pickup/drop, and refining results using filters.
+\textbf{Goal:} User wants to see the available rides, choose which one to pickup/drop and filter the results.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Origin and destination search fields.
+    \item Home and Work location search boxes.
     \item Visual location markers.
     \item Pickup/drop selection and ride filtering.
 \end{itemize}
@@ -927,19 +939,21 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Find Ride Flow (Available Rides, Pickup/Drop, and Filters)}
 \end{figure}
 
-\textbf{Functional Flow:} Passengers browse the list of rides, select pickup and drop stops, and apply filters to refine results. Selecting a ride navigates to the ride details view.
+\textbf{Functional Flow:} The Functional Flow is pretty easy to use: Users review a list of rides, choose a pickup location, choose a drop location, and use a filter to narrow their choices. Clicking on ``Select a ride'' will switch to the Ride Details view.
 
-\textbf{Backend Integration:} The list and filters are powered by trip search endpoints with query parameters such as route, time window, and seat availability.
+\textbf{Backend Integration:} Search Endpoints: The list and filters are driven by trip search end points which include query parameters like route, time window and seat availability.
 
-\textbf{Validation/Security:} Filters are sanitized and results are scoped to the current user session and platform rules.
+\textbf{Validation/Security:} Filters are sanitized and results are limited to the current user session and platform rules.
 
 \subsubsection{Screen 17: Ride Details View}
 
-\textbf{Purpose:} Detailed view of all ride parameters for passenger review.
+The Ride Details View is the next screen.The next screen is the Ride Details View.
+
+\textbf{Aim:} All ride parameters for passenger review detailed.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Driver profile, vehicle info, and trip timeline.
+    \item Driver profile, vehicle information and trip timeline.
 \end{itemize}
 
 \begin{figure}[H]
@@ -955,20 +969,20 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Ride Details View}
 \end{figure}
 
-\textbf{Functional Flow:} The passenger reviews driver and ride information including route and timing, then proceeds to the booking/request screen. This screen acts as a confirmation step before committing to a booking.
+\textbf{Functional Flow:} The passenger reads the driver and ride information (route and time) and then goes to the booking/request screen. This screen is used to confirm a booking prior to making a booking.
 
-\textbf{Backend Integration:} Ride details are fetched from the backend using the trip identifier and include driver profile and stop data.
+\textbf{Backend Integration:} Rides are retrieved from the backend using the trip identifier and will contain data like driver profile and stops.
 
-\textbf{Validation/Security:} The UI hides actions when the ride is unavailable and prevents booking attempts without valid session context.
+\textbf{Validation/Security:} The UI hides actions if the ride is unavailable and blocks booking without valid session context.
 
 \subsubsection{Screen 18: Request Ride (Booking Form)}
 
-\textbf{Purpose:} Allows passengers to review the route overview and submit a ride request with seat selection, optional price negotiation, and special notes.
+\textbf{Use case:} Enables passengers to view the route overview and to submit a ride request with seat selection, optional price negotiation and special notes.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Route overview map and trip summary (date, time, duration, base fare).
-    \item Pickup/drop-off selection, seat and gender selection, and negotiation input.
+    \item An overview map and trip report (date, time, length of trip, cost of trip).
+    \item Negotiation input, seat selection, and gender selection in pick-up/drop-off.
 \end{itemize}
 
 \begin{figure}[H]
@@ -984,19 +998,19 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Request Ride (Booking Form)}
 \end{figure}
 
-\textbf{Functional Flow:} The passenger selects pickup/drop stops and seats, optionally proposes a counter fare, and submits the request. The request then enters a pending/negotiation state until the driver responds.
+\textbf{Functional Flow:} Passenger chooses pickup/drop stops and seats, optionally offers counter fare, submits request. The request will then be in a pending/negotiation state until the driver responds.
 
-\textbf{Backend Integration:} Submits a booking request payload linked to the trip and passenger profile, and triggers notifications for driver review.
+\textbf{Backend Integration:} Sends a booking request payload which is associated with the trip and passenger profile and sends notifications for driver review.
 
-\textbf{Validation/Security:} Seat constraints are enforced server-side to prevent overbooking; invalid stop selections are rejected.
+\textbf{Validation/Security:} If more people than seats are available, the reservation is not processed and if a wrong stop is selected, it is rejected.
 
 \subsubsection{Screen 19: Booked Ride Details}
 
-\textbf{Purpose:} Selection of required seats and confirmation of booking conditions.
+\textbf{Aim:} Choosing seats and confirming booking conditions.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Seat count and specific stop selection.
+    \item Number of seats available, and certain seating choices.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1012,20 +1026,20 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Booked Ride Details}
 \end{figure}
 
-\textbf{Functional Flow:} After the booking is placed, the passenger reviews the booking details and seat allocation state. The screen reflects updates as the driver accepts, rejects, or negotiates.
+\textbf{Functional Flow:} After the booking is completed, the passenger sees the booking details and the seat allocation state. The screen is updated as the driver accepts, rejects or negotiates with the updates.
 
-\textbf{Backend Integration:} Loads booking details from booking endpoints and listens for state changes through periodic refresh.
+\textbf{Backend Integration:} loads booking information from the bookings endpoints and will periodically refresh for state changes.
 
-\textbf{Validation/Security:} Only the booking owner can view the details and sensitive fields are restricted by role.
+\textbf{Validation/Security:} Only the owner of the booking is able to see the details and sensitive fields are limited by role.
 
 \subsubsection{Screen 21: Negotiation Between Passenger and Driver}
 
-\textbf{Purpose:} Allows both passenger and driver to review and respond to price negotiation during booking.
+This can be used when negotiating the price when booking, where both the driver and passenger can view and comment on the negotiation.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Negotiation details and counter-offer information.
-    \item Response controls and updated request status.
+    \item Information about negotiations and counter offers.
+    \item Response controls and request status update.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1045,19 +1059,19 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Negotiation Between Passenger and Driver}
 \end{figure}
 
-\textbf{Functional Flow:} The passenger and driver exchange offers and messages until a final fare is agreed or the request is withdrawn. The UI indicates the latest offer and the permitted next action.
+When the passenger and driver offer and discuss fares, they do so until they arrive at a final fare, or the passenger backs out of the deal. The UI shows the most recent offer and the action permitted next.
 
-\textbf{Backend Integration:} Uses negotiation history endpoints and submit/accept/counter actions to update the booking state.
+\textbf{Backend Integration:} Update the booking state with negotiation history endpoints, and submit/accept/counter actions.
 
-\textbf{Validation/Security:} Only authorized users on the booking can negotiate; server rules prevent invalid state transitions.
+\textbf{Validation/Security:} Only valid users on the booking can negotiate, server rules are used to prevent invalid state transitions.
 
 \subsubsection{Screen 22: Driver Ride Details (Pending)}
 
-\textbf{Purpose:} Displays the detailed ride request information for driver review before accepting or rejecting.
+\textbf{Purpose:} Provides information about the ride request in detail for driver review prior to acceptance or rejection.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Passenger details, route summary, and approval controls.
+    \item Passenger information, route overview and approval management.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1073,11 +1087,11 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Driver Ride Details (Pending)}
 \end{figure}
 
-\textbf{Functional Flow:} The driver reviews the pending booking request and decides whether to accept, reject, or negotiate further. Driver actions update the passenger-facing status immediately.
+Functional Flow: Driver sees the work order and accepts/rejects or takes up negotiation. Passenger facing status updates instantly when driver actions are done.
 
-\textbf{Backend Integration:} Driver actions call booking decision endpoints that update booking status and send notifications.
+\textbf{Backend Integration:} Driver actions are made to a booking decision Endpoint that updates booking status and sends notifications.
 
-\textbf{Validation/Security:} Only the trip owner can approve requests; backend checks prevent accepting beyond available seats.
+\textbf{Validation/Security:} only the trip owner can approve requests, backend checks prevent requests if there are not enough seats available.
 
 \subsubsection{Screen 23: Negotiation Completed}
 
@@ -1101,15 +1115,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Negotiation Completed}
 \end{figure}
 
-\textbf{Functional Flow:} Once both parties accept the final terms, the booking transitions to an accepted/confirmed state. The next steps become available, such as chat, ride tracking, and later payment confirmation.
+Accepted/Confirmed Booking: If both parties agree to the final terms, the booking moves to the accepted/confirmed state. The next steps open up – including chat, ride tracking, and, later, payments confirmation.
 
-\textbf{Backend Integration:} Acceptance is persisted on the booking and triggers downstream flows (notifications, seat locking, and tracking session readiness).
+\textbf{Backend Integration:} When a user accepts it, it is stored in the booking and downstream (notifications, lock seats, etc. and tracking readiness of the session).
 
-\textbf{Validation/Security:} Backend enforces that acceptance can only occur from valid negotiation states and by authorized users.
+\textbf{Validation/Security:} Backend validates that acceptance may take place from valid negotiation states and from authorized users.
 
 \subsubsection{Screen 24: My Rides}
 
-\textbf{Purpose:} Dashboard for users to track their upcoming and active trip commitments.
+\textbf{Function:} Providing users with a dashboard where they can view their future and current trips commitments.
 
 \textbf{Components:}
 \begin{itemize}
@@ -1129,21 +1143,23 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{My Rides}
 \end{figure}
 
-\textbf{Functional Flow:} Users can review their active and upcoming rides from a single list and open actions such as chat and tracking. This screen acts as the main entry point to post-booking operations.
+The functional flow will let users see all their currently active and upcoming rides from one list and launch actions like chat, tracking etc. This screen is the primary one for post-booking operations.
 
-\textbf{Backend Integration:} Loads ride lists from booking and trip history endpoints, filtering by status.
+\textbf{Backend Integration:} Fetches ride list from booking and trip history endpoints, and filters by status.
 
-\textbf{Validation/Security:} Results are scoped to the authenticated user and sensitive data is hidden across roles.
+\textbf{Validation/Security:} Results are filtered for the authenticated user and sensitive data is obscured by roles.
 
 \subsubsection{Screen 25: Live Tracking and Pickup Verification}
 
-\textbf{Purpose:} Near real-time monitoring of an active ride for both passenger and driver, with secure pickup verification.
+This screen provides live tracking and pick-up verification.This screen offers live tracking and pick-up verification.
+
+\textbf{Goal:} Real time monitoring of an active ride for driver and passenger, secure pickup verification.
 
 \textbf{Components:}
 \begin{itemize}
-    \item GPS markers for vehicle and pickup location.
+    \item GPS Markers for vehicle and pickup location.
     \item Periodic ETA updates.
-    \item Pickup verification via QR code.
+    \item QR Code verification for pickups.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1163,21 +1179,25 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Passenger Live Tracking, Driver Live Tracking, and Driver Pickup QR Code}
 \end{figure}
 
-\textbf{Functional Flow:} The passenger tracks the driver on a map while the driver tracks the active route and passenger manifest. At pickup, the QR code is used to verify boarding before proceeding.
+Figure 5.13 is a passenger live tracking, driver live tracking, and driver pick up QR code.
 
-\textbf{Backend Integration:} Tracking uses periodic location updates via API calls and retrieves live session state by trip and booking identifiers.
+The QR code is checked for boarding at pickup before heading on to the process.
 
-\textbf{Validation/Security:} Only users on the active booking can access tracking; pickup verification prevents unauthorized boarding.
+\textbf{Tracking:} Periodic location updates through API calls and bookings and trip identifier to get the live state of the session.
+
+\textbf{Validation/Security:} Only users on the active booking can access the tracking, pickup verification prevents unauthorized boarding.
 
 \subsubsection{Screen 29: Payment and Rating Screen}
 
-\textbf{Purpose:} Enables passengers to submit payment, provide a rating after trip completion, and allows drivers to confirm payment receipt.
+The Payment and Rating Screen opens.The Payment and Rating screen appears.
+
+\textbf{Use:} Allows riders to pay, rate after a ride and for the driver to acknowledge receipt of payment.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Payment method selection and final amount confirmation.
-    \item Rating submission after payment.
-    \item Driver-side payment receipt confirmation.
+    \item Choice and confirmation of payment method and final amount.
+    \item Submitting a rating following payment.
+    \item Receipt confirmation on driver.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1197,19 +1217,21 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Passenger Payment, Rating, and Driver Payment Confirmation}
 \end{figure}
 
-\textbf{Functional Flow:} After ride completion, the passenger submits payment information and provides a driver rating. The driver then confirms the payment receipt to finalize the booking.
+Once the driver has confirmed receipt, the booking is complete.
 
-\textbf{Backend Integration:} Uses payment submit and payment confirm endpoints linked to the booking/payment records.
+\textbf{Backend Integration:} Payment submit / payment confirm endpoints that are coupled to the booking/payment records.
 
-\textbf{Validation/Security:} Confirmation permissions are role-based, and status transitions are validated to prevent double confirmation.
+\textbf{Validation/Security:} Confirmation permissions are role based and there is no double confirmation.
 
 \subsubsection{Screen 31: Messaging and User Chat}
 
-\textbf{Purpose:} Consolidated communication interface for drivers to coordinate with passengers.
+Messaging and User Chat:Screen 31: Messaging and User Chat:
+
+The purpose is to provide unified communication system for drivers to communicate with passengers.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Messaging thread with timestamped bubbles.
+    \item Bubble chat where bubbles are marked with a time.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1229,15 +1251,17 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Messaging and User Chat}
 \end{figure}
 
-\textbf{Functional Flow:} Drivers and passengers exchange messages for coordination and updates during booking and ride execution. Broadcast messages allow drivers to notify all passengers in a trip.
+Booking and ride execution involves functional flow: Drivers and passengers are exchanging messages for coordination and updates. Broadcast messages can be used to send information to ALL passengers on a trip.
 
-\textbf{Backend Integration:} Messaging uses chat service endpoints and persists messages for later retrieval.
+\textbf{Backend Integration:} Messaging stores messages for future retrieval and does so through chat service endpoints.
 
-\textbf{Validation/Security:} Chat visibility is restricted to users within the same trip/booking and messages are filtered by participant roles.
+\textbf{Validation/Security:} Messages can only be seen by participants in the same trip/booking, and message filters are based on the roles of the participants.
 
 \subsubsection{Screen 32: Support Chat - Bot \& Admin}
 
-\textbf{Purpose:} Dedicated channel for platform support and manual resolution.
+On screen \#32, you can click on the Support Chat-Bot \& Admin button.Click Support Chat-Bot \& Admin on screen \#32.
+
+\textbf{Goal:} A dedicated channel for platform support and manual resolution.
 
 \textbf{Components:}
 \begin{itemize}
@@ -1257,19 +1281,19 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Support Chat - Bot \& Admin}
 \end{figure}
 
-\textbf{Functional Flow:} The user first interacts with the support bot for common issues and guided troubleshooting. If the issue requires manual handling, the conversation is escalated to an Admin support channel for resolution.
+The user first contacts the support bot to resolve common issues and guided troubleshooting. If it is a manual handling problem, it is discussed in an Admin support channel to resolve the issue.
 
-\textbf{Backend Integration:} The screen loads and posts messages through support chat endpoints and periodically refreshes new replies.
+\textbf{Backend Integration:} The screen loads and posts messages with support chat endpoints, and fetches new replies periodically.
 
-\textbf{Validation/Security:} Access is scoped to the authenticated user (or guest support session) and message threads are isolated per user.
+\textbf{Validation/Security:} access restricted to authenticated user (or guest support session) and message threads (chats) isolated per user.
 
 \subsubsection{Screen 33: Notifications List}
 
-\textbf{Purpose:} Chronological feed of all user-specific system alerts.
+\textbf{Description:} All System Alerts for all Users are fed in chronological order.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Notification cards with deep-link capabilities.
+    \item Deep link notification cards.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1285,19 +1309,19 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Notifications List}
 \end{figure}
 
-\textbf{Functional Flow:} The user opens the notifications inbox to review booking updates, SOS alerts, and system announcements. Notifications can be viewed and dismissed, and deep-links route the user to the relevant screen.
+Functional Flow: User opens the notifications inbox to check updates on booking, SOS alerts, and system announcements. Deep-links direct users to the relevant screen and notifications can be viewed and dismissed.
 
-\textbf{Backend Integration:} Notifications are fetched from the backend notifications API and updated through periodic refresh and FCM-triggered events.
+\textbf{Backend Integration:} Notifications are retrieved from the backend notifications API and refreshed periodically, or when triggered by FCM.
 
-\textbf{Validation/Security:} Only the current user’s notifications are returned and sensitive payload data is filtered based on role and ownership.
+\textbf{Validation/Security:} Only the current user's notifications returned and sensitive payload data filtered by role and ownership.
 
 \subsubsection{Screen 34-35: Emergency SOS}
 
-\textbf{Purpose:} Immediate safety intervention tool for users in distress.
+The purpose is to provide intervener to user with tool to intervene in the immediate moment of distress.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Visual countdown and alarm confirmation control.
+    \item Visual confirmation of countdown and alarm.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1317,15 +1341,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Emergency SOS (Countdown, SOS Notifications, and Offline/Error State)}
 \end{figure}
 
-\textbf{Functional Flow:} The user triggers SOS, completes the countdown confirmation, and the incident is recorded and surfaced through SOS notifications. If connectivity is unavailable, the UI provides offline/error guidance until the request can be completed.
+Functional Flow: User activates SOS, goes through the countdown confirmation, and the incident is documented and reported via SOS notifications. If there is an offline/connection error, the UI gives the user offline/connection advice until the request can be made.
 
-\textbf{Backend Integration:} SOS events are posted to the backend incident endpoints and also generate notification entries for users and Admin monitoring.
+\textbf{Backend Integration:} SOS events are sent to the back-end incident endpoints, and trigger notification entries to users and Admin monitoring.
 
-\textbf{Validation/Security:} SOS requests are tied to the current session user and rate-limited to prevent abuse; incident visibility is role-controlled.
+\textbf{Validation/Security:} Requests for SOS are associated with the current session user, and subjected to rate limits, thereby preventing abuse; visibility of incidents are role-controlled.
 
 \subsubsection{Screen 36: Profile Overview}
 
-\textbf{Purpose:} Hub for managing personal stats and application settings.
+\textbf{Purpose:} Manage personal stats and application settings.
 
 \textbf{Components:}
 \begin{itemize}
@@ -1345,17 +1369,17 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Profile Overview}
 \end{figure}
 
-\textbf{Functional Flow:} The user reviews profile information and navigates to related sections such as analytics, ride history, and blocked users. Profile actions update local state and reflect immediately after successful backend updates.
+Functional Flow: User accesses profile information, and accesses other linked areas like analytics, ride history, blocked users. Profile actions update the local state and instantaneously after successful backend updates.
 
-\textbf{Backend Integration:} Profile data is loaded from user profile endpoints and updates (e.g., edits) are persisted through authenticated API calls.
+\textbf{Backend Integration:} Profile data is retrieved from user profile endpoints and updated (e.g., edited) by authenticated API calls.
 
-\textbf{Validation/Security:} Edits require authentication, input is validated before submission, and role checks control driver-only settings.
+\textbf{Validation/Security:} edit must be authenticated, input validated before submission, and role checks for driver-only settings.
 
 \subsubsection{Screen 37: Profile Analytics}
 
-\textbf{Purpose:} Provides users with a consolidated view of their activity based on archived ride history.
+Purpose: Gives the user a combined overview of their riding history in the past.
 
-\textbf{Description:} The screen supports time-based filtering (All-time, last 30 days, last 7 days) and presents key indicators for both driver and passenger roles. It summarizes created/booked rides, completion ratios, distance and spending/revenue totals. Trend charts visualize revenue and spending over time, and a notes section highlights possible data delays.
+Description: The screen includes time-based filtering (All-time, last 30 days, last 7 days) and provides key indicators for both driver and passenger positions. It provides a summary of created/booked rides, completion rates, distance covered and spending/revenue. Trend charts are used to show revenue and expenditures over time and a note box alerts the reader to possible data delays.
 
 \begin{figure}[H]
 \centering
@@ -1372,11 +1396,11 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 
 \subsubsection{Screen 38: Ride History (Booked/Created)}
 
-\textbf{Purpose:} Allows users to browse and audit their previous trip data.
+Use for: Accessing and reviewing previous trip information.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Detailed history records with route summaries.
+    \item History records with details of the routes.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1392,20 +1416,20 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Ride History (Booked/Created)}
 \end{figure}
 
-\textbf{Functional Flow:} The user browses past rides with key metadata such as route summary and status. Selecting an item can open deeper detail views depending on role and availability.
+Functional Flow: User scrolls through rides and views key ride information (route summary, status). Clicking on an item can trigger more detailed views, based on role and availability.
 
-\textbf{Backend Integration:} Ride history is loaded from booking/trip history endpoints and supports pagination for large histories.
+Backend integration: Ride history is loaded from booking/trip history endpoints, including pagination for large histories.
 
-\textbf{Validation/Security:} History data is restricted to the owner account and private passenger/driver details are minimized in list views.
+Validation/Security: Data from history is only accessible to the owner account and details of passengers/drivers is kept to a minimum in list views.
 
 \subsubsection{Screen 39: Driver Verification Documents (Edit)}
 
-\textbf{Purpose:} Documentation portal for maintaining driver and vehicle eligibility.
+Use this screen to edit the driver verification documents.This screen is used for editing the driver verification documents.
+
+The purpose of this document is to provide a portal for keeping drivers and vehicles eligible.
 
 \textbf{Components:}
-\begin{itemize}
-    \item Image upload and text fields for ID and vehicle registration.
-\end{itemize}
+Uploading images and inputting ID and vehicle registration.
 
 \begin{figure}[H]
 \centering
@@ -1424,19 +1448,19 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Driver Verification Documents (Edit)}
 \end{figure}
 
-\textbf{Functional Flow:} Drivers upload or edit their license and vehicle documents and submit them for verification. The UI provides immediate feedback and the verification status is reflected in driver eligibility.
+Functional Flow: Drivers upload and/or update their license and vehicle documents and submit them for verification. The UI gives instant feedback and driver eligibility is based on the verification status.
 
-\textbf{Backend Integration:} Document metadata and images are uploaded to the backend storage layer and linked to the driver profile for Admin review.
+\textbf{Backend Integration:} Document metadata and images are uploaded to the backend storage layer, and are correlated with the driver profile for Admin review.
 
-\textbf{Validation/Security:} File types and sizes are validated, uploads require authentication, and documents are accessible only to authorized roles.
+\textbf{Validation/Security:} File types and sizes are validated, uploads must be authenticated and documents are only accessible to authorised roles.
 
 \subsubsection{Screen 40: Blocked Users}
 
-\textbf{Purpose:} Enables users to manage blocked accounts to control who can interact with them on the platform.
+Purpose: Users can use the blocked accounts functionality to limit their interactions on the platform.
 
 \textbf{Components:}
 \begin{itemize}
-    \item Blocked user list and search/filter controls.
+    \item Blocked user list and user search/filter controls.
 \end{itemize}
 
 \begin{figure}[H]
@@ -1445,20 +1469,20 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Blocked Users}
 \end{figure}
 
-\textbf{Functional Flow:} The user reviews blocked accounts and can unblock users to restore interaction. The list updates immediately after a block/unblock action.
+Functional Flow: User will see blocked accounts and will be able to unblock users to re-enable interaction. After a block/unblock operation, the list will be updated immediately.
 
-\textbf{Backend Integration:} Block/unblock actions are persisted via profile privacy endpoints and reflected in chat/search access.
+Backend Integration: Block/Unblock actions are saved through profile privacy endpoints and are synced with access to chat and/or search.
 
-\textbf{Validation/Security:} Blocking is enforced server-side to prevent unwanted contact across messaging and booking flows.
+Validation/Security: Blocking is done on the server side to prevent unwanted contact in the messaging and booking flow.
 
 \subsubsection{Screen 41: Web Live Tracking (External)}
 
-\textbf{Purpose:} Desktop tracking interface for ride monitoring.
+Web Live Tracking (External): Screen 41
+
+\textbf{Target:} A person with access to a desktop computer.\textbf{Goal:} Enable a person to track their ride using a desktop computer.
 
 \textbf{Components:}
-\begin{itemize}
-    \item Desktop-scale live map and trip status.
-\end{itemize}
+Real time map and trip status for the desktop.
 
 \begin{figure}[H]
 \centering
@@ -1466,20 +1490,24 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \caption{Web Live Tracking (External)}
 \end{figure}
 
-\textbf{Functional Flow:} The user opens a web-based tracking view to monitor a trip on a larger screen. The map updates periodically and highlights the active route and current status.
+Functional Flow: The user accesses a web-based tracking view to see more of a trip on a larger screen. Active route and status are indicated on the map which is updated regularly.
 
-\textbf{Backend Integration:} The view consumes tracking endpoints that provide current location snapshots and status changes.
+Backend Integration: View subscribes to tracking endpoints for current location snapshots and tracking status changes.
 
-\textbf{Validation/Security:} Access is limited to authorized viewers (trip participants or Admin) and share links are validated before rendering data.
+Validation/Security: Data is shared only with authorised viewers (trip participants or Admin) and share links are validated before displaying data.
 
-\textbf{Admin Module Overview:} The administration module provides authenticated web dashboards for monitoring rides, users, SOS incidents, and operational requests. All admin pages are served by backend templates and protected using role-based authorization.
+\textbf{Admin Module Overview:} Administrative web dashboards for monitoring rides, users, SOS incident, operational requests etc. are available in the administration module for authenticated users. Backend templates are used to serve all admin pages and role-based authorization is used to protect these pages.
 
 \subsubsection{Screen 42: Admin Login}
-\textbf{Purpose:} Entry point for Admin authentication and session creation.
-\textbf{Components:} Login form fields, error feedback, and session/redirect handling.
-\textbf{Functional Flow:} Admin submits credentials and receives an authenticated session to access protected dashboards.
-\textbf{Backend Integration:} Uses the administration login view and session middleware.
-\textbf{Validation/Security:} Credentials are validated server-side and access to dashboards is blocked without a valid Admin session.
+Authorizes entry point for Admin authentication and session creation.
+
+Components: Login form, error feedback and session/redirect handling.
+
+Functional Flow: Admin provides credentials and receives authenticated session to access a protected dashboard.
+
+Backend Integration: Administration login view and Session middleware.
+
+\textbf{Validation/Security:} Server-side validation and access to dashboards is denied without a valid Admin session.
 
 \begin{figure}[H]
 \centering
@@ -1488,11 +1516,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 43: Admin Dashboard (Overview)}
-\textbf{Purpose:} High-level snapshot of platform health and key operational counters.
-\textbf{Components:} Summary cards, quick links, and key metric widgets.
-\textbf{Functional Flow:} Loads summary cards and links to deeper dashboards such as SOS and reached pending.
-\textbf{Backend Integration:} Aggregates ride, user, and incident data from the administration dashboard view.
-\textbf{Validation/Security:} Metrics are calculated from trusted database sources and shown only to authorized Admin roles.
+Purpose: High level view of platform health and important operational counters.
+
+Components: Summary cards, quick links and key metric widgets.
+
+Functional Flow: Fills summary cards and connects to more detailed dashboards like SOS and reached pending.
+
+Backend Integration: Integrates ride, user and incident data from the administration dashboard view.
+
+Validation/Security: Metrics are based on trusted data sources and displayed only to approved Admin roles.
 
 \begin{figure}[H]
 \centering
@@ -1501,11 +1533,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 44: Rides Dashboard}
-\textbf{Purpose:} Monitor published rides and operational ride lifecycle data.
-\textbf{Components:} Ride listing table, filters, and navigation to ride/trip detail pages.
-\textbf{Functional Flow:} Admin filters and inspects rides, and opens trip detail pages for investigation.
-\textbf{Backend Integration:} Served by the rides dashboard template and corresponding Django view.
-\textbf{Validation/Security:} Admin-only access is enforced server-side and sensitive fields are not exposed to non-admin sessions.
+\textbf{Description:} Watch published rides and ride lifecycle data.
+
+Ride listing table, filters and navigation to ride/trip detail pages.
+
+Functional Flow: Admin filters and views rides and opens trip detail pages to investigate rides.
+
+Backend Integration: Provided through rides dashboard template and corresponding Django view.
+
+Validation/Security: Only admin users have access to the admin area, and sensitive fields are not visible to non-admin users.
 
 \begin{figure}[H]
 \centering
@@ -1514,11 +1550,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 45: Reached Pending Dashboard}
-\textbf{Purpose:} Track riders with pending reached/overdue status requiring follow-up.
-\textbf{Components:} Pending/overdue list, status indicators, and navigation controls.
-\textbf{Functional Flow:} Admin reviews overdue entries and navigates to detail screens for action.
-\textbf{Backend Integration:} Powered by the reached overdue dashboard view and template.
-\textbf{Validation/Security:} The list is generated from verified ride states and only visible within authenticated Admin sessions.
+Purpose: Identify riders who have reached/overdue status that needs follow-up.
+
+The components are the pending/overdue list, status indicators and navigation controls.
+
+Functional Flow: Admin reviews overdue entries and moves on to detail screens for action.
+
+Backend Integration: With reached overdue dashboard view and template.
+
+Validation/Security: List is created from verified ride states and only accessible in authenticated Admin sessions.
 
 \begin{figure}[H]
 \centering
@@ -1527,11 +1567,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 46: SOS Incidents Dashboard}
-\textbf{Purpose:} Safety monitoring dashboard to review, respond to, and resolve SOS incidents.
-\textbf{Components:} Incident table, incident detail navigation, and resolution/status controls.
-\textbf{Functional Flow:} Admin opens an incident, reviews location and metadata, and marks it resolved after action.
-\textbf{Backend Integration:} Uses SOS dashboards and incident detail views served from Django templates.
-\textbf{Validation/Security:} Incident access is role-restricted and all state changes are recorded through server-side actions.
+Safety Monitoring Dashboard for reviewing, reacting to and resolving SOS incidents.
+
+Components: Incident table, incident detail navigation, resolution/Status controls.
+
+Admin opens an incident, reads through the location and metadata, and checks it off when action is taken.
+
+Backend Integration: Backend dashboards and incident detail views served from Django templates.
+
+Security/Validation: Access to incidents is role-restricted, and all state changes are done server side.
 
 \begin{figure}[H]
 \centering
@@ -1540,11 +1584,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 47: Users Management}
-\textbf{Purpose:} Manage user accounts, review status, and support moderation workflows.
-\textbf{Components:} User list/search, detail views, and administrative action controls.
-\textbf{Functional Flow:} Admin searches users, opens details, and performs allowed actions based on policy.
-\textbf{Backend Integration:} Loaded from user list/detail views in the administration module.
-\textbf{Validation/Security:} Account actions are permission-checked and restricted to Admin roles with server-side enforcement.
+Purpose: to control the user accounts, to check the status, and to help with moderation processes.
+
+Features include user list/search, detail views and administrative action controls.
+
+Functional Flow: Admin searches users, opens details, and does allowed actions according to the policy.
+
+Backend Integration: Loaded in User list/detail views in the admin module.
+
+Validation/Security: Server-side validation of actions and only for Admin roles.
 
 \begin{figure}[H]
 \centering
@@ -1553,11 +1601,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 48: Change Requests Dashboard}
-\textbf{Purpose:} Track and review user-submitted ride change requests.
-\textbf{Components:} Request queue, request detail views, and approve/reject controls.
-\textbf{Functional Flow:} Admin inspects each request, reviews details, and approves or rejects based on constraints.
-\textbf{Backend Integration:} Served by change request list/detail templates with corresponding views.
-\textbf{Validation/Security:} Requests are validated against ride constraints and all decisions are executed server-side.
+Use to monitor and log ride change requests from users.
+
+The following components will be used: Request queue, request detail views, and approve and reject controls.
+
+Functional Flow: Admin checks each request, and based on constraints he approves or rejects.
+
+Backend Integration: Was provided through change request list/detail templates and views.
+
+All requests are validated against ride constraints; any decisions are made server side (validation/security).
 
 \begin{figure}[H]
 \centering
@@ -1566,11 +1618,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 49: Admin Todos Inbox}
-\textbf{Purpose:} Centralized backlog of operational tasks and follow-ups.
-\textbf{Components:} Todo list items with links to related entities and task status indicators.
-\textbf{Functional Flow:} Admin reviews pending items and opens linked entities to complete tasks.
-\textbf{Backend Integration:} Rendered by the embedded todos inbox view and supporting endpoints.
-\textbf{Validation/Security:} Todos are only accessible to Admin sessions and task updates are persisted through protected endpoints.
+Purpose: Single source of information for tasks and follow-ups in operation.
+
+Components: ToDo items and links to other entities, as well as task status indicators.
+
+Functional Flow: Admin approves pending records and clicks on related entities to finish the job.
+
+Back end integration: Embedded todos inbox view and supporting endpoints.
+
+The following are also secured: Validation/Security: Todos can only be accessed by Admin sessions, updates to tasks are persisted using a secured endpoint.
 
 \begin{figure}[H]
 \centering
@@ -1579,11 +1635,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 50: Support FAQs Management}
-\textbf{Purpose:} Manage FAQ entries used by support and bot responses.
-\textbf{Components:} FAQ list, add/edit forms, and publish/update controls.
-\textbf{Functional Flow:} Admin adds/edits FAQs which then become available to user support flows.
-\textbf{Backend Integration:} Uses FAQ CRUD views backed by the administration database models.
-\textbf{Validation/Security:} Only Admins can modify FAQs and inputs are validated before storing content.
+Purpose: Control FAQ entries for use by support and bot responses.
+
+The components include the FAQ list, add/edit form, and the publish/update control.
+
+Functional Flow: Admin adds / edits FAQs and these are made available to user support flows.
+
+Backend Integration: Utilizes FAQ CRUD views backed by administration database models.
+
+Validation/Security: Only Admins can edit FAQs and input is checked for validation before adding content.
 
 \begin{figure}[H]
 \centering
@@ -1592,11 +1652,15 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 \end{figure}
 
 \subsubsection{Screen 51: Guest Support Users List}
-\textbf{Purpose:} View guest users and handle support conversations without full registration.
-\textbf{Components:} Guest user list, chat thread access, and support response tools.
-\textbf{Functional Flow:} Admin selects a guest user and opens the chat thread for resolution.
-\textbf{Backend Integration:} Driven by guest list and chat templates connected to the support message store.
-\textbf{Validation/Security:} Guest threads are isolated per guest identity and only visible to authorized Admin sessions.
+The purpose of this is to be able to see the guests and to deal with support conversations without the need to have complete registration.
+
+Components: Guest user list, access to chat thread, and support response tools.
+
+Functional Flow: Admin is able to choose a guest user and then open the chat thread for resolution.
+
+Guest List and chat templates are linked with the support message store, which powers Backend Integration.
+
+Validation/Security: Guest threads are protected in accordance with the guest identity and only accessible for authorized admin sessions.
 
 \begin{figure}[H]
 \centering
@@ -1606,7 +1670,7 @@ Wireframing was done in Figma, and the final screens were implemented in Flutter
 
 \subsection{Navigation Flow Diagram}
 
-The overall navigation flow of the mobile app is illustrated below:
+The route and the general navigation flow of the mobile app is shown below.
 
 \begin{figure}[H]
 \centering
@@ -1616,20 +1680,18 @@ The overall navigation flow of the mobile app is illustrated below:
 
 \subsection{Responsiveness and Performance}
 
-The Flutter app is designed to be responsive across various screen sizes using:
-\begin{itemize}
-    \item \texttt{LayoutBuilder} and \texttt{MediaQuery} to adapt layouts.
-    \item \texttt{Expanded} and \texttt{Flexible} widgets for dynamic spacing.
-    \item Separate tablet layouts for larger screens.
-\end{itemize}
+The Flutter app is made responsive to different screen sizes with the help of:
+
+Wrapping layouts with -\texttt{LayoutBuilder} and -\texttt{MediaQuery} to adapt layouts.
+- \texttt{Expanded} and \texttt{Flexible} widgets for dynamic spacing.
+- Tabler layout for larger screens.
 
 Performance considerations include:
-\begin{itemize}
-    \item Pagination for long ride lists.
-    \item Image caching for uploaded documents and media.
-    \item Efficient state updates to avoid unnecessary rebuilds.
-    \item Periodic location refreshes instead of persistent socket connections.
-\end{itemize}
+
+- Long ride lists with pagination.
+Document and media upload caching.
+Efficient state updates to avoid unnecessary rebuilds.
+Refreshed locations periodically rather than persistent socket connections.
 
 % -------------------------------------------------
 % 5.6 Deployment
@@ -1637,7 +1699,7 @@ Performance considerations include:
 
 \section{Deployment}
 
-The Lets Go Ride Sharing App system is deployed using cloud hosting for the Django backend and Admin pages, while the database and file storage are managed on Supabase.
+The Django backend and Admin pages are deployed via cloud hosting and the database and file storage are managed via Supabase.
 
 \begin{table}[htbp]
 \centering
@@ -1659,18 +1721,16 @@ Storage & Supabase Storage & Object storage for user documents and media \\
 \end{tabularx}
 \end{table}
 
-\textbf{CI/CD:} GitHub Actions and the hosting platform integration are used for:
-\begin{itemize}
-    \item \textbf{Backend \& Admin Pages:} Automatic deployment to the hosting environment upon merging changes to the \texttt{main} branch.
-    \item \textbf{Mobile App:} Automated build pipelines for generating release-ready APKs, which are then uploaded to GitHub Releases.
-\end{itemize}
+CI/CD: These are integrated with the hosting platform and run via GitHub Actions:
+
+Backend \& Admin Pages: Automatically deploy changes to the hosting environment when they're merged to the \texttt{main} branch.
+- Mobile App: Automated build pipelines to build release-ready APKs, uploaded to GitHub Releases.
 
 \textbf{Security Measures:}
-\begin{itemize}
-    \item \textbf{HTTPS Encryption:} TLS is used to protect data in transit.
-    \item \textbf{Authentication:} Django sessions are used for authenticated user access.
-    \item \textbf{Environment Security:} Sensitive credentials and API keys are managed through environment variables rather than hard-coded values.
-\end{itemize}
+
+- HTTPS Encryption: TLS protects data that is being transferred.
+- Authentication: authenticated user access via Django sessions.
+Environment Security: Sensitive credentials and API keys are stored in environment variables and not hard-coded.
 
 % -------------------------------------------------
 % Chapter Summary
@@ -1678,15 +1738,14 @@ Storage & Supabase Storage & Object storage for user documents and media \\
 
 \section*{Chapter Summary}
 
-This chapter presented the implementation of the Lets Go Ride Sharing App system, covering the development environment, core modules, algorithms, external integrations, user interface implementation, and deployment. The implementation follows the modular architecture established in Chapter 4 and uses Django, Flutter, PostgreSQL on Supabase, and Supabase Storage in a consistent way.
+The chapter discussed the development environment, the core modules of the Lets Go Ride Sharing App system, the algorithms, external integrations and user interface implementation, and deployment of the Lets Go Ride Sharing App system. It is implemented in a modular fashion described in Chapter 4 and is implemented consistently using Django, Flutter, PostgreSQL on Supabase, and Supabase Storage.
 
 Key achievements include:
-\begin{itemize}
-    \item Translation of the documented use cases into working code paths and backend workflows.
-    \item Session-based authentication and OTP-based verification flows.
-    \item Ride creation, booking, negotiation, chat, tracking, and SOS support.
-    \item A Flutter mobile app with responsive screens and template-based Admin pages.
-    \item Cloud deployment using Vercel, Supabase, and GitHub Releases.
-\end{itemize}
 
-The implemented system is now ready for comprehensive testing and evaluation, as discussed in the next chapter.
+- Documenting use cases and translating them to working code paths and back end workflows.
+- Session based authentication and OTP based verification flows.
+Ride creation, booking, negotiation, chat, tracking and SOS support.
+Responsive mobile app that has screens that adapt to the screen being used and template-based Admin Pages.
+Cloud deployment with Vercel, Supabase and GitHub Releases.
+
+The system developed is now ready for a complete test and evaluation, which will be explored in the next chapter.
