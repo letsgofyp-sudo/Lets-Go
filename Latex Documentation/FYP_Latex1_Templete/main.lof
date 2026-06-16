@@ -1,17 +1,17 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Master Use Case Diagram for the Lets Go Ride Sharing App system, covering all use cases and actor interactions.}}{19}{figure.45}%
-\contentsline {figure}{\numberline {3.2}{\ignorespaces Registration and Verification Theme: flow from account creation and multi-channel OTP verification to manual Admin identity approval.}}{20}{figure.47}%
-\contentsline {figure}{\numberline {3.3}{\ignorespaces Vehicle Management: driver vehicle registration lifecycle and maintenance considerations.}}{20}{figure.49}%
-\contentsline {figure}{\numberline {3.4}{\ignorespaces Ride Management: driver-side ride lifecycle from route creation to completion.}}{21}{figure.51}%
-\contentsline {figure}{\numberline {3.5}{\ignorespaces Discovery and Booking: passenger search, seat lock mechanism, and post-booking coordination.}}{21}{figure.53}%
-\contentsline {figure}{\numberline {3.6}{\ignorespaces Ride Execution Phase: live GPS tracking, geofenced pickup OTP verification, and arrival confirmations.}}{22}{figure.55}%
-\contentsline {figure}{\numberline {3.7}{\ignorespaces Safety and Disputes: SOS alerts, emergency escalation, and Admin audit workflows.}}{22}{figure.57}%
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Master Use Case Diagram of Lets Go Ride Sharing App system including all use cases \& actor interaction.}}{19}{figure.45}%
+\contentsline {figure}{\numberline {3.2}{\ignorespaces Registration and Verification Theme: Shift from Account creation and Multi channel OTP verification towards Manual Approval by Admin.}}{20}{figure.47}%
+\contentsline {figure}{\numberline {3.3}{\ignorespaces Vehicle Management: from driver to vehicle registration through to lifecycle management.}}{20}{figure.49}%
+\contentsline {figure}{\numberline {3.4}{\ignorespaces Ride Management: driver side of the ride lifecycle – from creating the route to completion.}}{21}{figure.51}%
+\contentsline {figure}{\numberline {3.5}{\ignorespaces Discovery and Booking: passenger search, seat lock mechanism and post-booking coordination.}}{21}{figure.53}%
+\contentsline {figure}{\numberline {3.6}{\ignorespaces Ride Execution Phase: live GPS tracking, geofenced OTP verification on pickup, and arrival confirmations.}}{22}{figure.55}%
+\contentsline {figure}{\numberline {3.7}{\ignorespaces Safety and Disputes: SOS alerts, emergency escalation, Admin audit workflows.}}{22}{figure.57}%
 \contentsline {figure}{\numberline {3.8}{\ignorespaces AI/ML Features: content-based ride recommendations and generative AI support.}}{23}{figure.59}%
 \contentsline {figure}{\numberline {3.9}{\ignorespaces Manual Payment Flow: two-step verification for external transfers (Cash/Bank/QR).}}{23}{figure.61}%
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Context Diagram: System boundary and interactions with external actors and services}}{91}{figure.141}%
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Context Diagram: System boundary and interactions with external actors and services}}{92}{figure.141}%
 \contentsline {figure}{\numberline {4.2}{\ignorespaces High-level system architecture diagram showing multi-tier deployment and component interactions}}{95}{figure.161}%
 \contentsline {figure}{\numberline {4.3}{\ignorespaces Activity Diagram - Authentication and Onboarding workflow}}{96}{figure.166}%
 \contentsline {figure}{\numberline {4.4}{\ignorespaces Activity Diagram - Document Management workflow}}{97}{figure.169}%

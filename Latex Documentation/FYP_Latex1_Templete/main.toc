@@ -106,17 +106,17 @@
 \contentsline {subsection}{\numberline {4.3.3}Backend (Django MVC + JSON APIs)}{90}{subsection.137}%
 \contentsline {subsection}{\numberline {4.3.4}Database (PostgreSQL)}{91}{subsection.138}%
 \contentsline {subsection}{\numberline {4.3.5}Context Diagram}{91}{subsection.139}%
-\contentsline {section}{\numberline {4.4}Architectural Design}{92}{section.142}%
-\contentsline {subsection}{\numberline {4.4.1}Architecture Style (MVC + Multi-tier)}{92}{subsection.143}%
-\contentsline {subsubsection}{\numberline {4.4.1.1}MVC Architecture (within Django backend servers)}{92}{subsubsection.144}%
-\contentsline {subsection}{\numberline {4.4.2}High-Level System Components}{92}{subsection.147}%
+\contentsline {section}{\numberline {4.4}Architectural Design}{91}{section.142}%
+\contentsline {subsection}{\numberline {4.4.1}Architecture Style (MVC + Multi-tier)}{91}{subsection.143}%
+\contentsline {subsubsection}{\numberline {4.4.1.1}MVC Architecture (within Django backend servers)}{91}{subsubsection.144}%
+\contentsline {subsection}{\numberline {4.4.2}High-Level System Components}{93}{subsection.147}%
 \contentsline {subsection}{\numberline {4.4.3}Multi-Tier Deployment Architecture}{93}{subsection.148}%
 \contentsline {subsubsection}{\numberline {4.4.3.1}Tier 1 - Client Layer}{93}{subsubsection.149}%
 \contentsline {subsubsection}{\numberline {4.4.3.2}Tier 2 - Application Layer}{93}{subsubsection.150}%
 \contentsline {subsubsection}{\numberline {4.4.3.3}Tier 3 - External Services Layer}{93}{subsubsection.151}%
 \contentsline {subsubsection}{\numberline {4.4.3.4}Tier 4 - Data Layer}{93}{subsubsection.152}%
-\contentsline {subsection}{\numberline {4.4.4}External Services Integration}{93}{subsection.153}%
-\contentsline {subsubsection}{\numberline {4.4.4.1}Map Service}{93}{subsubsection.154}%
+\contentsline {subsection}{\numberline {4.4.4}External Services Integration}{94}{subsection.153}%
+\contentsline {subsubsection}{\numberline {4.4.4.1}Map Service}{94}{subsubsection.154}%
 \contentsline {subsubsection}{\numberline {4.4.4.2}Notification Service}{94}{subsubsection.155}%
 \contentsline {subsubsection}{\numberline {4.4.4.3}ML Recommendation Service}{94}{subsubsection.156}%
 \contentsline {subsubsection}{\numberline {4.4.4.4}Chatbot Service}{94}{subsubsection.157}%

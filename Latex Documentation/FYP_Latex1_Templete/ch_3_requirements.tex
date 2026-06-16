@@ -24,15 +24,15 @@ Requirements for the Lets Go Ride Sharing App project were identified using the 
     \item \textbf{Stakeholder interviews} with potential drivers, passengers, and administrators to capture user expectations, pain points, and desired features.
     \item \textbf{Literature review} of existing ride-sharing platforms (BlaBlaCar, InDrive, Bykea) and academic research on carpooling systems.
     \item \textbf{Analysis of existing solutions} to identify functional gaps, such as lack of route-based matching and cultural preferences.
-    \item \textbf{Dataset examination} for the machine learning module, studying travel patterns and user behavior to define recommendation and recommendation evaluation features.
-    \item \textbf{Observation of workflow processes} in current transportation services to understand manual verification, payment handling, and dispute resolution needs.
+    \item \textbf{Data analysis} data analysis for the machine learning module in order to determine the features of the recommendation and recommendation evaluation.
+    \item \textbf{Observation processes in workflow} to understand the manual verification, payment, and dispute resolution requirements in the current transportation services.
 \end{itemize}
 
 %===========================================================
 \section{User Classes and Characteristics}
 %===========================================================
 
-This section defines the different user categories interacting with the Lets Go Ride Sharing App system. Each user class is described along with responsibilities, access privileges, and typical technical proficiency. This classification supports role-based access control and requirement mapping.
+This section outlines the various types of users that interact with the Lets Go Ride Sharing App system. A description of each user class, their responsibilities, access rights and typical technical abilities. This classification provides role-based access control and requirement mapping.
 
 % keep table Table 3.1: User Classes and Characteristics as it is
 
@@ -55,52 +55,52 @@ External System & Third-party services such as Maps API, Notification Service (F
 \end{tabularx}
 \end{table}
 
-The system boundary includes all internal modules, user interfaces, data processing components, and integrated third-party services (Maps, Notifications, LLM). External entities interact with the system via well-defined APIs.
+All internal modules, user interfaces, data processing components, integrated third-party services (Maps, Notifications, LLM) are part of the system boundary. The system has well-defined API to communicate with external entities.
 
 %===========================================================
 \section{Use Case Model}
 %===========================================================
 
-The use case model represents high-level system interactions between actors and system functionalities. It defines system boundaries and captures functional behaviour from a user perspective.
+Use case model is a high-level model of interactions that the system has with actors and system functions. It establishes a boundary for the system, and reflects functional behaviour as seen by the user.
 
 %-----------------------------------------------------------------
 \subsection{Use Case Diagram}
 %-----------------------------------------------------------------
 
-The Lets Go Ride Sharing App system includes 25 use cases that span registration, vehicle availability, driver–passenger interactions, ride creation, booking, ride execution, safety and dispute handling, ML recommendations, chatbot support, and manual payment flows. The diagrams in the repository illustrate the system and thematic groupings.
+The Lets Go Ride Sharing App system consists of 25 use cases: registration, vehicle availability, driver-passenger interaction, ride creation, booking, ride execution, safety and dispute, ML recommendations, chatbot, manual payment flows. The diagrams in the repository illustrate the system and thematic groupings.
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth,keepaspectratio]{assets/master_uc.jpg}
-    \caption{Master Use Case Diagram for the Lets Go Ride Sharing App system, covering all use cases and actor interactions.}
+    \caption{Master Use Case Diagram of Lets Go Ride Sharing App system including all use cases \& actor interaction.}
     \label{fig:master_uc}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.45\textheight]{assets/reg_verification_uc.jpg}
-    \caption{Registration and Verification Theme: flow from account creation and multi-channel OTP verification to manual Admin identity approval.}
+    \caption{Registration and Verification Theme: Shift from Account creation and Multi channel OTP verification towards Manual Approval by Admin.}
     \label{fig:registration_uc}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.45\textheight]{assets/vehicle_management_uc.jpg}
-    \caption{Vehicle Management: driver vehicle registration lifecycle and maintenance considerations.}
+    \caption{Vehicle Management: from driver to vehicle registration through to lifecycle management.}
     \label{fig:vehicle_uc}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.45\textheight]{assets/ride_management_uc.jpg}
-    \caption{Ride Management: driver-side ride lifecycle from route creation to completion.}
+    \caption{Ride Management: driver side of the ride lifecycle – from creating the route to completion.}
     \label{fig:ride_mgmt_uc}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.45\textheight]{assets/discovery_booking_uc.jpg}
-    \caption{Discovery and Booking: passenger search, seat lock mechanism, and post-booking coordination.}
+    \caption{Discovery and Booking: passenger search, seat lock mechanism and post-booking coordination.}
     \label{fig:booking_uc}
 \end{figure}
 
@@ -108,14 +108,14 @@ The Lets Go Ride Sharing App system includes 25 use cases that span registration
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.4\textheight]{assets/ride_execution_uc.jpg}
-    \caption{Ride Execution Phase: live GPS tracking, geofenced pickup OTP verification, and arrival confirmations.}
+    \caption{Ride Execution Phase: live GPS tracking, geofenced OTP verification on pickup, and arrival confirmations.}
     \label{fig:execution_uc}
 \end{figure}
 
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.4\textheight]{assets/safety_disputes_uc.jpg}
-    \caption{Safety and Disputes: SOS alerts, emergency escalation, and Admin audit workflows.}
+    \caption{Safety and Disputes: SOS alerts, emergency escalation, Admin audit workflows.}
     \label{fig:safety_uc}
 \end{figure}
 
@@ -1700,7 +1700,7 @@ Assumptions & $\bullet$ No integrated payment gateway: all payments are external
 % ==============================================
 \section{Functional Requirements}
 
-The functional requirements of the Lets Go Ride Sharing App application are divided into FR-1 to FR-16, each specifying clear, testable behavior. They include user registration and OTP-based authentication (FR-1), administration functions of user verification, banning, and dispute (FR-2), vehicle management and validation rights (FR-3), and ride generation with route editor on a map and fare calculation and gender preference (FR-4). Passengers can browse and book seat-locked and special request rides (FR-5), negotiate fares where necessary (FR-6), and receive real-time booking notifications (FR-7). Other features include profile management (FR-8), enhanced system notifications (FR-9), dispute handling (FR-10), ML ride suggestions (FR-11), chatbot assistance (FR-12), and manual payment confirmation workflow (FR-13). Post-booking safety (FR-16) covers pre-ride previews, live tracking, SOS, pickup code validation, escalation timers, and audit logging.
+The functional requirements of the Lets Go Ride Sharing App application are divided into FR-1 through FR-16 with each stating definite and measurable functionality. They contain the user registration and OTP-based authentication (FR-1), user’s verification, banning and dispute administration functions (FR-2), vehicle management and vehicle validation rights (FR-3), Ride generation, with the map and Ride editor, fare calculation and gender preference (FR-4). Avoids hesitation in booking, seat locked and special request rides (FR-5), negotiates fares when required (FR-6), and provides real-time booking notification (FR-7). These features include dispute handling (FR-10), enhanced system notifications (FR-9), manual payment confirmation workflow (FR-13), profile management (FR-8), chatbot assistance (FR-12) and ML ride suggestions (FR-11). Post-booking safety includes pre-ride preview, live tracking, SOS, pickup code validation, escalation timers and audit logging.
 
 % -------------------------------------------------------------
 \subsection{FR-1: User Registration \& Authentication}
@@ -2973,16 +2973,16 @@ Non-functional requirements define quality attributes that describe how the syst
 
 \subsection{Reliability Requirements}
 \begin{itemize}
-\item \textbf{REL-1:} The system shall maintain at least 99.5\% uptime for core APIs (auth, rides, bookings).
-\item \textbf{REL-2:} Data shall not be lost due to system failures; database backups shall be made each day with point-in-time recovery.
-\item \textbf{REL-3:} Critical operations (booking, payment confirmation, SOS) should be idempotent to handle retries.
-\item \textbf{REL-4:} In the event that a third-party service fails (Maps, Notifications), the system shall retry with exponential backoff and provide user-visible status.
+\item \textbf{REL-1:} The system must be up to 99.5% of the time with core APIs (auth, rides, bookings).
+\item \textbf{REL-2:} No loss of data from system failures; Database Backups will be done daily with Point-In-Time Recovery.
+\item \textbf{REL-3:} Operations like booking, payment confirmation, SOS should be idempotent – for retries.
+\item \textbf{REL-4:} If the third-party service fails (Maps, Notifications), the system should attempt with exponential back off and the status should be shown to the user.
 \end{itemize}
 
 \subsection{Usability Requirements}
 \begin{itemize}
-\item \textbf{USE-1:} The interface shall be user-friendly; first-time customers should register and complete OTP verification in under 4 minutes.
-\item \textbf{USE-2:} Clear and meaningful error messages shall be displayed, indicating the problem and suggested action.
+\item \textbf{USE-1:} registration and OTP verification time for first time customers should not exceed 4 minutes; interface shall be user-friendly.
+\item \textbf{USE-2:} Error messages shall be clear and meaningful and should point out the problem and suggest what to do.
 \item \textbf{USE-3:} All tappable targets shall be at least 44×44 pixels with sufficient color contrast (WCAG AA).
 \item \textbf{USE-4:} The SOS button shall be clearly visible on the live map and require a 3-second press to avoid accidental triggering.
 \item \textbf{USE-5:} The application shall be localized in English at launch and support right-to-left layouts.
@@ -3000,26 +3000,27 @@ Non-functional requirements define quality attributes that describe how the syst
 \item \textbf{MAIN-1:} The system shall be modular, using independent Django apps (accounts, vehicles, rides, bookings, payments, chat, safety, Admin, ml).
 \item \textbf{MAIN-2:} The source code shall be well documented, well structured, and well named within the repository and project report.
 \item \textbf{MAIN-3:} Maintenance shall be done with the use of feature flags to enable optional flows (negotiation, vehicle review) toggling without deployment.
-\item \textbf{MAIN-4:} Automated unit tests shall be performed against critical modules, with results recorded in the testing chapter.
+\item \textbf{MAIN-4:} For critical modules automated unit tests shall be conducted and results recorded in testing chapter, MAIN-4.
+
 \end{itemize}
 
 %===========================================================
 \section{External Interface Requirements}
 %===========================================================
 
-This section defines how the system interacts with external entities including users, hardware devices, software systems, and communication networks.
+This section specifies how the system communicates with other components of the system, such as users, hardware devices, software systems, and communication networks.
 
 \subsection{User Interface Requirements}
 \begin{itemize}
-\item \textbf{UI-1:} Implement a graphical user interface for mobile applications (Flutter) and a desktop Admin console (HTML/CSS/JavaScript) via a web browser.
-\item \textbf{UI-2:} Font sizes shall be readable (body text at least 12pt; headings at least 14pt).
-\item \textbf{UI-3:} Layout shall be responsive across devices (phones, tablets, desktops).
-\item \textbf{UI-4:} Navigation shall be consistent throughout the modules; key screens include registration, ride creation, booking, live tracking, and disputes.
+\item \textbf{UI-1:} Develop a GUI (using web browser) for mobile with Flutter and desktop with HTML/CSS/JavaScript for Admin console.
+\item \textbf{UI-2:} Body text will be at least 12pt in size and headings 14pt.
+\item \textbf{UI-3:} Layout should be responsive for phones, tablets and desktop.
+\item \textbf{UI-4:} Navigation shall be uniform across the modules, particularly when it comes to screens such as registration, ride creation, booking, live tracking, and disputes.
 \end{itemize}
 
 \subsection{Hardware Interface Requirements}
 \begin{itemize}
-\item \textbf{HI-1:} Mobile app shall operate on Android devices with minimum OS 8.0, GPS, camera, and 2GB RAM.
+\item \textbf{HI-1:} Mobile app to be developed to run on Android OS from version 8.0 with GPS, Camera and RAM 2GB.
 \item \textbf{HI-2:} The system shall utilize device GPS for location tracking and camera for document capture.
 \item \textbf{HI-3:} For ML model training (offline), GPU support may be utilized; inference runs on CPU/cloud.
 \end{itemize}
@@ -3096,6 +3097,7 @@ BO-10: Modular scalable architecture & All & FR-15 \\
 \section*{Chapter Summary}
 %===========================================================
 
-In this chapter, a structured requirement analysis of Lets Go Ride Sharing App system was presented. It outlined requirement elicitation techniques, user classes, 25 detailed use cases and models. cases, functional requirements (FR-1 to FR-16) with sub-requirements, non-functional requirements covering performance, security, reliability, usability, scalability and maintainability. External interface requirements of user, hardware, software and communication. A traceability To align objectives and implementation requirements, matrix has been included. The requirements are the formal basis for a system design that will be presented in the next chapter. The detailed analysis allows for the needs of all stakeholders to be captured and turned into Testable system behaviors, giving a clear course for the next development stages. This complete record will minimise the chances of requirements drift and provide a foundation for assessing the quality in the process of the project.
+In this chapter, a structured requirement analysis of Lets Go Ride Sharing App system was presented. It outlined requirement elicitation techniques, user classes, 25 detailed use cases and models. cases, functional requirements (FR-1 to FR-16) with sub-requirements, non-functional requirements covering performance, security, reliability, usability, scalability and maintainability. External interface requirements of user, hardware, software and communication. A traceability To align objectives and implementation requirements, matrix has been included. The requirements are the formal basis for a system design that will be presented in the next chapter. The detailed analysis allows for the needs of all stakeholders to be captured and turned into Testable system behaviors, giving a clear course for the next development stages.This complete record will minimise the chances of requirements drift and provide a foundation for assessing the quality in the process of the project.
+
 
 % End of Chapter 3
