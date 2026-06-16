@@ -8,7 +8,7 @@
 \section{Introduction to Software Design}
 %===========================================================
 
-The software design for Lets Go Ride Sharing App ride sharing and recommendation system is given in detail in this chapter. Transforms the needs of Chapter 3 into structured architectural, behavioural and data models. The intention of this chapter is to act as a compass on a clear blueprint to implement the system in a maintainable, scalable and modular manner.
+The software design of the Lets Go Ride Sharing App and The Lets Go Ride Sharing App Recommendation System are detailed in this chapter. Renders the requirements identified in Chapter 3 into structured models, both architectural and behavioral and data. The aim of this chapter is to give a concrete idea of how to build the system scale-able, maintainable and modular.
 
 The design adheres to Object-Oriented Design (OOD) and the architecture is a hybrid of Multi-Tier design and Model-View-Controller (MVC). This chapter includes architectural design, UML models (class, sequence, state, activity diagrams), data flow models, database design, and thorough algorithms for the core capabilities like the ride recommendation algorithm (based on machine learning), the route ETA calculation, and the SOS escalation policy.
 
@@ -43,7 +43,7 @@ The project is built using the \textbf{Agile Incremental Development Model (AIDM
 \begin{itemize}
     \item \textbf{Rapid Requirement Evolution:} Ride-sharing systems need to evolve their requirements including new safety regulations, new verification flows, etc., and improvements in rider/driver matching. Agile allows the team to be stable, while still being able to adapt to change on a regular basis.
     
-    \item \textbf{Modular \& Incremental Delivery:} The system was built in major increments:
+    \item \textbf{Modular and Incremental Delivery:} The system has been developed incrementally with a number of large increments making it very easy to do this.
     \begin{itemize}
         \item Increment 1: User signup/login
         \item Increment 2: Ride creation and search
@@ -52,9 +52,9 @@ The project is built using the \textbf{Agile Incremental Development Model (AIDM
         \item Increment 5: SOS, dispute, notifications
         \item Increment 6: ML recommendations
     \end{itemize}
-    This is a perfect fit with the incremental approach!
+    This is a perfect incremental approach.
     
-    \item \textbf{End Users Ongoing Feedback:} Ride-sharing applications must be piloted by real users to ensure usability, map accuracy and ride matching quality. Agile cycles enabled feedback from users on early releases.
+    \item \textbf{Continuous End-User Feedback:} Ride sharing companies need testing with real time users to test the usability, mapping accuracy, and effectiveness of ride matching. User feedback from early releases were fed into further developments in the agile development cycles.
     
     \item \textbf{Concurrent Development of Subsystems:} Multiple modules (Mobile App, Backend API, External Services, Chatbot, ML Recommendation Engine) have been developed concurrently, through iterative sprints.
     
@@ -82,24 +82,24 @@ This section gives a high level description of system components and interaction
 \subsection{External Services}
 
 \begin{itemize}
-    \item \textbf{Map API (OpenStreetMap/OSRM):} For route calculation, back tracking and ETA estimation.
-    \item \textbf{Notification Services (Supabase/FCM):} Delivers real-time notifications to users on ride requests, acceptances, and SOS alerts.
-    \item \textbf{Machine Learning Service:} Suggests the most suitable rides for passengers according to past information.
-    \item \textbf{Generative AI / Chatbot Assistant:} Improves content production efficiency and quality, such as relevance and engagement, with the help of Generative AI / Chatbot Assistant.
-    \item \textbf{Storage Service:} Stores profile images, license files and documents for verification.
+    \item \textbf{Map API (OpenStreetMap/OSRM):} Way to calculate route, to track route, and to calculate estimated time of arrival calculations.
+    \item \textbf{Notification Services (Supabase/FCM):} These services process notifications related to ride requests, ride acceptances, and SOS notifications.
+    \item \textbf{Machine Learning Service:} Recommends the appropriate ride to passengers, based on past data and user preferences.
+    \item \textbf{Generative AI/Chatbot Assistant:} Improves content quality, relevance, engagement, and helpfulness using AI-driven interactions.
+    \item \textbf{Storage Service:} Storage of profile pictures, driver's license and verification documents.
 \end{itemize}
 
 \subsection{Backend (Django MVC + JSON APIs)}
 
-The backend development is done in Django MVC, with JSON APIs. The central component of the system fulfills:
+Back-end is done with Django MVC framework and communicates with the outside with JSON APIs. Core responsibilities include:
 \begin{itemize}
-    \item Ride matching logic
-    \item Booking and cancellation
-    \item Periodic location updates by HTTP requests
-    \item Verify images and add to profile.
-    \item ML-based recommendation calls
-    \item SOS escalation and dispute management
-    \item Managing communication with drivers and passengers
+    \item Ride matching operations
+    \item Ticketing systems
+    \item Apply periodic location updates using HTTP requests.Use periodic location updates via http requests.
+    \item A verification image is needed in conjunction with profile.Along with profile, a verification image is needed.
+    \item Machine-learning recommendation integration
+    \item Begin escalation and disputes.Start escalation and dispute process.
+    \item All activities and events relating to the process of communicating: between the driver and passengers, between passengers
 \end{itemize}
 
 \subsection{Database (PostgreSQL)}
@@ -123,13 +123,13 @@ Stores:
 \label{fig:context}
 \end{figure}
 
-The context diagram depicts the boundary of the Lets Go Ride Sharing App system and its relationships with external entities such as Passengers, Drivers, Administrators, and third-party services (Map API, Notification Service, ML Service, Chatbot, Storage). Data flows represent ride requests, updates, notifications, and document transfers.
+The Lets Go Ride Sharing App system boundary diagram shows the interactions between the system and external entities such as passengers, drivers, and administrators along with interaction with third-party services like the Map API, Notification Service, Machine Learning Service, Chatbot Service and Storage Service. Data flows are ride requests, ride update, notifications and document exchanges.
 
 %===========================================================
 \section{Architectural Design}
 %===========================================================
 
-The Lets Go Ride Sharing App system is designed in a hybrid architecture with two broad paradigms: 1. Multi-Tier Architecture for the overall system structure and 2. Model-View-Controller (MVC) internally in the backend through Django framework. The combination offers separation of concerns, scalability, maintainability, and distributed deployment over several servers.
+The architectural style of the Lets Go Ride Sharing App is a hybrid of the Multi-Tier Architecture pattern for the overall structure and Model-View-Controller (MVC) pattern for the Django backend. This mix of features results in separation of concerns, scalability, maintainability and support for distributed deployments over multiple servers.
 
 \subsection{Architecture Style (MVC + Multi-tier)}
 
@@ -204,7 +204,7 @@ The system is composed of:
 
 \subsection{External Services Integration}
 
-Backend servers interface with external services through well-defined REST APIs with token-based authentication and fault-tolerant retry mechanisms.
+Backend servers communicate with external services using RESTful API secured via token based authentication with fault-tolerant retry infrastructure.
 
 \subsubsection{Map Service}
 \begin{itemize}
@@ -213,39 +213,39 @@ Backend servers interface with external services through well-defined REST APIs 
     \item Distance and ETA estimation
 \end{itemize}
 
-\subsubsection{Notification Service}
+\subsubsection{Notification Service Responsibilities}
 \begin{itemize}
-    \item Push notifications via FCM
-    \item Alerts for ride request, driver acceptance, SOS
+    \item Send push notifications with Firebase Cloud Messaging (FCM)
+    \item This feature indicates that an alert for ride requests, driver acceptance and SOS events will be sent.
 \end{itemize}
 
-\subsubsection{ML Recommendation Service}
+\subsubsection{Responsibilities of Machine Learning Recommendation Service}
 \begin{itemize}
-    \item Receives ride request data
-    \item Returns list of recommended rides
-    \item Uses TF-IDF similarity
+    \item Reads request data from motorcycle(s)
+    \item Suggests suitable ride methods
+    \item Performs TF-IDF similarity techniques in the generation of recommendations
 \end{itemize}
 
-\subsubsection{Chatbot Service}
+\subsubsection{Chatbot Service Responsibilities}
 \begin{itemize}
-    \item Provides automated FAQ responses
+    \item Automatically answers common questions
 \end{itemize}
 
-\subsubsection{Storage Service}
+\subsubsection{Storage Service Responsibilities:}
 \begin{itemize}
-    \item Uploading profile images
-    \item Uploading verification documents
-    \item Generating signed URLs
+    \item Uploading profile photographs
+    \item Requires uploading of verification and identity documents.Requires verification and identity documents to be uploaded.
+    \item Creating signed URLs for secure file access.
 \end{itemize}
 
 \subsection{Architecture Diagram}
 
-The architecture diagram illustrates the four tiers: Client Layer (Mobile Apps, Admin Web), Application Layer (Django Backend with MVC and JSON APIs), External Services Layer (Map, Notifications, ML, Chatbot, Storage), and Data Layer (PostgreSQL). Arrows indicate data flow and API interactions between components.
+The architecture diagram shows the four major layers in the system – the Client Layer, Application Layer, External Services Layer, and the Data Layer. The arrows in the diagram are used to show the flow of data and the communication between the APIs in each layer.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.9\textwidth,keepaspectratio,height=0.8\textheight]{assets/architecture.jpg}
-\caption{High-level system architecture diagram showing multi-tier deployment and component interactions}
+\caption{Multi-tier system architecture diagram depicting interactions and deployments of the system components.}
 \label{fig:architecture}
 \end{figure}
 
@@ -253,49 +253,50 @@ The architecture diagram illustrates the four tiers: Client Layer (Mobile Apps, 
 \section{Design Models}
 %===========================================================
 
-This section presents detailed design models of the system. These models describe system behavior, structure, and interactions using UML diagrams. The models help developers understand system workflow before implementation.
+This section will present the detailed design models for the system. These models represent behaviour, structure and interactions of a system in UML diagrams. They help developers to learn about processes and the sytem's capabilities prior to implementation.
 
 %===========================================================
 \subsection{Activity Diagrams}
 
-Activity diagrams represent the workflow of different modules of the system. Each core module has a separate activity diagram showing user interaction, decision nodes, validation checks, and database/model interaction.
+Activity diagrams show the operations of various modules of the system. There are various activities diagrammatically shown in each primary module, which indicates interaction with the users, decision points, checkpoints, interaction with the database, interaction with the model.
 
-\subsubsection{Authentication \& Onboarding (Register, OTP, Admin verify)}
+\subsubsection{The first phase is Authentication – Onboarding (Registration, OTP Verification, and Admin Approval).The initial phase is Authentication – Onboarding (Registration, OTP Verification and Admin Approval)}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.8\textheight]{assets/activity diagrams/activity_auth.jpg}
-\caption{Activity Diagram - Authentication and Onboarding workflow}
+\caption{A workflow that allows both the authentication and onboarding of activity.}
 \label{fig:activity_auth}
 \end{figure}
 
-This diagram illustrates the complete user registration and verification process: user enters details, uploads documents, receives OTP via email/SMS, verifies OTP, and awaits admin approval. Admin reviews documents and either verifies, rejects, or bans the user.
+The complete registration and verification process as shown in this activity diagram. The users fill in details, upload necessary files, get a one-time password by email or SMS, confirm OTP and await admin approval. Administrators look at the documents that have been submitted and can determine if it is accurate or not, whether they want it submitted, or if they think they shouldn't be submitted.
 
 \clearpage
 
-\subsubsection{Document Management (uploads \& verification)}
+\subsubsection{Data is uploaded onto computers for documentation purposes and verified.}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.6\textwidth,keepaspectratio,height=0.8\textheight]{assets/activity diagrams/activity_document.jpg}
-\caption{Activity Diagram - Document Management workflow}
+\caption{Activity Diagram – Document Management Workflow.}
 \label{fig:activity_document}
 \end{figure}
 
-Shows the process of document upload, validation (format/size), storage, and admin verification workflow including approval/rejection cycles.
+This diagram illustrates the document submission, document size and format validation, secure storage, document administration steps (approvals and reject steps).
 
 \clearpage
 
-\subsubsection{Vehicle Management (add/edit/delete vehicles)}
+\subsubsection{Vehicle Management - Add, Edit, Delete Vehicles}
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.8\textheight]{assets/activity diagrams/module 3.jpg}
-\caption{Activity Diagram - Vehicle Management workflow}
+\caption{Now, let's create an interactive diagram that illustrates the workflow for managing a vehicle.}
 \label{fig:activity_vehicle}
 \end{figure}
 
-Depicts driver adding vehicle details, uploading images, system validation, and optional admin review for critical changes.
+This diagram shows steps drivers take to add a vehicle to the system, upload vehicle images, pass through system checks and receive an optional administrative review for any large changes.
+
 
 \clearpage
 
@@ -304,11 +305,12 @@ Depicts driver adding vehicle details, uploading images, system validation, and 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.8\textwidth,keepaspectratio,height=0.8\textheight]{assets/activity diagrams/module4.jpg}
-\caption{Activity Diagram - Ride Management workflow}
+\caption{Let's create a sequence diagram for the User Authentication (signup and login) flow.}
 \label{fig:activity_ride_mgmt}
 \end{figure}
 
-Illustrates driver creating a ride with map-based route editor, setting parameters (date/time, seats, gender preference, fare), validation, and publishing.
+This sequence diagram (SDG) shows the flow of sign-up and sign-in. The user provides information to the application during the application's registration process, and the application passes these to the back-end. The backend verifies the information, adds the user account and pushes an OTP via notification service back to the gateway and checks the OTP, and puts the status "pending administrative verification". To log in, the user sends user credentials, back-end checks these credentials, verifies account and returns a JWT token of authentication.
+
 
 \clearpage
 
@@ -482,7 +484,6 @@ The class diagram represents the static structure of the system by showing entit
 \subsection{Sequence Diagrams}
 
 Sequence diagrams show interaction between objects over time, illustrating request-response flows and component interactions.
-
 \subsubsection{Sequence Diagram – Authentication (Login/Signup)}
 
 \begin{figure}[H]
@@ -492,7 +493,7 @@ Sequence diagrams show interaction between objects over time, illustrating reque
 \label{fig:seq_auth}
 \end{figure}
 
-\textbf{Description:} This diagram shows the interaction for user signup: User enters details, app sends to backend, backend validates, creates user record, sends OTP via Notification Service, user enters OTP, backend verifies and sets status to PENDING\_ADMIN\_VERIFICATION. For login: user enters credentials, backend validates, checks verification status, and returns JWT token.
+\textbf{Description:} This sequence diagram (SDG) shows the flow of sign-up and sign-in. The user provides information to the application during the application's registration process, and the application passes these to the back-end. The backend verifies the information, adds the user account and pushes an OTP via notification service back to the gateway and checks the OTP, and puts the status "pending administrative verification". To log in, the user sends user credentials, back-end checks these credentials, verifies account and returns a JWT token of authentication.
 
 \clearpage
 
@@ -501,11 +502,11 @@ Sequence diagrams show interaction between objects over time, illustrating reque
 \begin{figure}[H]
 \centering
 \includegraphics[width=1.0\textwidth,keepaspectratio,height=0.75\textheight]{assets/sequence diagrams/sequence diagram-post a ride.jpg}
-\caption{Sequence Diagram - Driver Posting a Ride}
+\caption{To create a sequence diagram to represent a driver posting a ride.}
 \label{fig:seq_ride_post}
 \end{figure}
 
-\textbf{Description:} Driver opens map, selects stops (interacting with Map Service for geocoding), enters ride parameters, backend validates, calculates fare (using FareCalculator), stores ride in database, and confirms creation. Ride becomes visible in marketplace.
+\textbf{Description:} This diagram shows how a driver forms a ride. The driver brings up the map interface, chooses stops from a map service that performs geocoding, provides ride details, and submits the ride. It then validates the information, passes it to a fare calculation component to calculate fare, updates the database with ride information, and indicates that it was created successfully. Then the ride is shown in the ride marketplace.
 
 \clearpage
 

@@ -12,11 +12,11 @@
 \contentsline {figure}{\numberline {3.9}{\ignorespaces Manual Payment Flow: two-step verification for external transfers (Cash/Bank/QR).}}{23}{figure.61}%
 \addvspace {10\p@ }
 \contentsline {figure}{\numberline {4.1}{\ignorespaces Context Diagram: System boundary and interactions with external actors and services}}{91}{figure.141}%
-\contentsline {figure}{\numberline {4.2}{\ignorespaces High-level system architecture diagram showing multi-tier deployment and component interactions}}{94}{figure.161}%
-\contentsline {figure}{\numberline {4.3}{\ignorespaces Activity Diagram - Authentication and Onboarding workflow}}{95}{figure.166}%
-\contentsline {figure}{\numberline {4.4}{\ignorespaces Activity Diagram - Document Management workflow}}{96}{figure.169}%
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Activity Diagram - Vehicle Management workflow}}{97}{figure.172}%
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Activity Diagram - Ride Management workflow}}{98}{figure.175}%
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Multi-tier system architecture diagram depicting interactions and deployments of the system components.}}{94}{figure.161}%
+\contentsline {figure}{\numberline {4.3}{\ignorespaces A workflow that allows both the authentication and onboarding of activity.}}{95}{figure.166}%
+\contentsline {figure}{\numberline {4.4}{\ignorespaces Activity Diagram – Document Management Workflow.}}{96}{figure.169}%
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Now, let's create an interactive diagram that illustrates the workflow for managing a vehicle.}}{97}{figure.172}%
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Let's create a sequence diagram for the User Authentication (signup and login) flow.}}{98}{figure.175}%
 \contentsline {figure}{\numberline {4.7}{\ignorespaces Activity Diagram - Ride Browsing and Search workflow}}{99}{figure.178}%
 \contentsline {figure}{\numberline {4.8}{\ignorespaces Activity Diagram - Booking and Seat Management workflow}}{100}{figure.181}%
 \contentsline {figure}{\numberline {4.9}{\ignorespaces Activity Diagram - Post-Booking Chat and Broadcast workflow}}{101}{figure.184}%
@@ -28,7 +28,7 @@
 \contentsline {figure}{\numberline {4.15}{\ignorespaces Activity Diagram - Dispute Management workflow}}{107}{figure.202}%
 \contentsline {figure}{\numberline {4.16}{\ignorespaces Comprehensive Class Diagram showing all system entities and relationships}}{108}{figure.205}%
 \contentsline {figure}{\numberline {4.17}{\ignorespaces Sequence Diagram - User Authentication (Signup and Login)}}{110}{figure.211}%
-\contentsline {figure}{\numberline {4.18}{\ignorespaces Sequence Diagram - Driver Posting a Ride}}{111}{figure.214}%
+\contentsline {figure}{\numberline {4.18}{\ignorespaces To create a sequence diagram to represent a driver posting a ride.}}{111}{figure.214}%
 \contentsline {figure}{\numberline {4.19}{\ignorespaces Sequence Diagram - Passenger Booking and Driver Acceptance}}{112}{figure.217}%
 \contentsline {figure}{\numberline {4.20}{\ignorespaces Sequence Diagram - Live Tracking, Ride Completion, and Payment}}{113}{figure.220}%
 \contentsline {figure}{\numberline {4.21}{\ignorespaces State Transition Diagram - Booking States}}{114}{figure.224}%

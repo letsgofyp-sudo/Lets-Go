@@ -1159,12 +1159,12 @@ Normal (Basic) Flow & 1. System recognizes that the passenger is within 100 mete
 & 2. System displays a notification: ``You are near your destination – Mark as Reached?'' \\
 & 3. Passenger clicks ``Mark as Reached''. \\
 & 4. System transitions the ride status for that passenger to ``Reached''. \\
-& 5. System displays a payment screen containing: \newline $\bullet$ Driver's bank account details. \newline $\bullet$ Driver's QR code for payment. \newline $\bullet$ Option to mark payment as completed. \\
-& 6. Passenger pays the driver using the available method (manual cash or bank-app). \\
-& 7. System prompts the passenger to rate the driver (1–5 stars and optional feedback). \\
-& 8. Passenger submits the rating. \\
-& 9. System records the payment and rating details in the database. \\
-& 10. Driver receives a notification that the passenger is marked as reached and paid. \\
+& 5. A payment screen is presented that displays: \newline $\bullet$ payment details such as bank account information, \newline $\bullet$ QR code and a confirm/submit payment \newline $\bullet$ choice for the passenger. \\
+& 6. The passenger pays the rest of the amount with available means (cash or bank transfer). \\
+& 7. The system asks the rater/occupant to rate the driver and, optionally, to enter feedback. \\
+& 8. The rating is submitted by the passenger. \\
+& 9. Payment information is saved along with the ratings in the system's database. \\
+& 10. Driver is alerted to the fact that the passenger is at the destination and the entire transaction completed. \\
 \hline
 Preconditions & $\bullet$ The ride must be started successfully (verified code entered). \\
 & $\bullet$ Passenger and driver are currently in an active ride state. \\
@@ -1485,39 +1485,32 @@ Description & Administrators can send personalized emails to affected users to d
 \hline
 Trigger & Admin selects ``Contact User'' from a dispute case or user account, or the system initiates an Admin follow-up. \\
 \hline
-Normal Flow (Admin starts a chat) & 1. Admin opens the dispute case and clicks ``Contact User'' (selects driver or passenger). \\
-& 2. System opens a secure Admin chat window pre-populated with dispute summary, resolution details, and attachments. \\
-& 3. Admin composes a message (text, attachments: PDF/photo) and sends it. \\
-& 4. Server persists the message immutably and links it to dispute\_id and Admin\_id. \\
-& 5. Notification Service sends the user a notification (in-app push or email/SMS). \\
-& 6. User receives the message and can reply; replies are routed back to the Admin portal and update case status. \\
-& 7. Admin reviews the reply and may take actions (close case, request documents, trigger refund). \\
-& 8. When the conversation finishes, Admin marks the follow-up as Completed. \\
+Normal Flow (Admin starts a chat) & 1. Administrator opens dispute record and chooses a user to communicate with. \newline 2. The system opens a secure messaging window with the information and documents relating to the dispute. \newline 3. The administrator sends a message (with attachments like documents and/or pictures). \newline 4. The communication will be permanently stored, and tied to the dispute and administrator records. \newline 5. Notifications are broadcast to the selected user via available communication. \newline 6. The user gets the message and can respond within the app. \newline 7. The administrator reviews answers and takes any necessary follow-up steps, such as getting documents, changing accounts, etc. \newline 8. After communication is finished, the administrator ends the follow-up communication. \\
 \hline
-Preconditions & $\bullet$ Admin is authenticated with appropriate privileges. \\
-& $\bullet$ A dispute or case exists and is Resolved, Escalated, or Awaiting Follow-up. \\
-& $\bullet$ Target user account is active and has at least one enabled contact channel. \\
-& $\bullet$ Message retention and access-control policies are in place. \\
+Preconditions & $\bullet$ Administrator has the proper permissions. \\
+& $\bullet$ There is a dispute or other related case. \\
+& $\bullet$ The user account is either active or there is at least one communications method available. \\
+& $\bullet$ Retention and Access-control Policies set. \\
 \hline
-Postconditions & $\bullet$ Conversation transcript is appended to the dispute record and audit logs. \\
-& $\bullet$ Users receive notifications according to their preferences. \\
-& $\bullet$ Required user actions are recorded and update dispute workflow state. \\
+Postconditions & $\bullet$ The conversation history and audit log are both kept with the conversation log. \\
+& $\bullet$ Users are informed according to their means of communication. \\
+& $\bullet$ If there are required actions as a result of the conversation, these are documented and carried out in the workflow. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — User Does Not Respond} \newline If no reply arrives within the response window, system sends a reminder and sets the case to Awaiting User Response. \\
-& \textbf{AF-2 — User Requests an Appeal} \newline If the user requests an appeal, system opens an appeal workflow and notifies the review team. \\
-& \textbf{AF-3 — Abusive User Reply} \newline If the reply contains abusive content, system flags it for moderation, suspends messaging, and notifies security. \\
-& \textbf{AF-4 — Preferred Channel Disabled} \newline If delivery fails on the preferred channel, system falls back to an alternative channel such as SMS and logs the error. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — No User Response} \newline The system provides reminders and updates of the case status if the user doesn't respond in the allocated time. \\
+& \textbf{AF-2 — Appeal Request} \newline Once the user wants an appeal to be reconsidered, they trigger an appeal process and the review team is notified. \\
+& \textbf{AF-3 — Inappropriate User Response} \newline If a message contains abusive language, it is sent to the moderation system, communication is reduced, and they notify the appropriate team. \\
+& \textbf{AF-4 — Communication Channel Failure} \newline If it can't get the delivery through the preferred channel, the system delivers through an alternate channel and makes a note. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Only authorized Admins may initiate or respond to post-resolution chats. \\
-& \textbf{BR-2:} All Admin-user messages are persisted immutably and linked to the dispute record; deletion is not allowed. \\
-& \textbf{BR-3:} Sensitive PII must not appear in free-text messages; the system redacts it or prompts for secure upload. \\
-& \textbf{BR-4:} Message retention policy applies (24 months) before archiving. \\
-& \textbf{BR-5:} Notifications use user preferences; fallback channels are used when primary delivery fails. \\
-& \textbf{BR-6:} Standard outcomes should use templated messages to ensure compliance. \\
+Business Rules (BR) & \textbf{BR-1:} Post resolution communication is permitted only for administrative personnel authorized for it. \\
+& \textbf{BR-2:} Messages will not be deleted and are permanent. \\
+& \textbf{BR-3:} Any sensitive personal information must be redacted or protected using secure means for submitting documents. \\
+& \textbf{BR-4:} Previous communications are held in line of policy prior to being judicialized. \\
+& \textbf{BR-5:} Where possible, user notification preferences are taken into account. \\
+& \textbf{BR-6:} Common results should be expressed in standardized message structure to ensure consistency and compliance. \\
 \hline
-Assumptions & $\bullet$ Users check the app or contact channels within reasonable time windows. \\
-& $\bullet$ Notification Service supports multi-channel delivery with retry and bounce handling. \\
-& $\bullet$ Legal jurisdiction rules for retention and redaction are configured. \\
+Assumptions & $\bullet$ Users regularly visit the application or other communication mediums are checked. \\
+& $\bullet$ Notification services offer multiple support for methods of delivery as well as multi-retry. \\
+& $\bullet$ Retention and information protection requirements in accordance with the law and regulation are in place. \\
 \hline
 \end{longtable}
 
@@ -1552,37 +1545,32 @@ Description & The ML-based Recommendation Module uses historical data and real-t
 \hline
 Trigger & Passenger opens the app home screen OR background work runs to refresh personalized feeds. \\
 \hline
-Normal Flow (Real-time recommendation) & 1. Passenger opens the app and the client sends a request to the recommendation endpoint. \\
-& 2. Fetch User Profile: Get data relevant to the user, including saved routes, preferred vehicle type, price sensitivity, gender preference, and recent searches. \\
-& 3. Feature Vector Construction: Combine user preferences, historical data, context (time and location), and candidate ride features. \\
-& 4. Model Scoring: Feed feature vectors into the trained ML model to calculate relevance scores. \\
-& 5. Filtering and Ranking: Apply hard filters and sort by relevance score to restrict top N results. \\
-& 6. Return Results: System returns a ranked list of ride recommendations with metadata. \\
-& 7. Client displays recommendations on the home screen. \\
+Normal Flow (Real-time recommendation) & 1. Passenger accesses the application; the recommendation service sends a recommendation request to the passenger. \newline 2. The system pulls user data like saved routes, vehicle types they like, pricing preferences, gender likes and dislikes preferences and recent searches. \newline 3. A feature set is established using the combination of user preferences, historical interactions, context (time, location, etc.) and ride specific attributes. \newline 4. The machine learning model will analyze the data and produce relevance scores for candidate rides. \newline 5. System applies the appropriate filters, calculates a relative score for each ride, and returns the rides ranked by their relative score. \newline 6. A list of suggested rides with additional metadata is returned. \newline 7. When the client app displays the recommendations on the home screen, the client app automatically downloads them. \\
 \hline
-Preconditions & $\bullet$ Passenger is authenticated or is a new user with default preferences. \\
-& $\bullet$ ML Service is operational and the model is trained/deployed. \\
-& $\bullet$ Active published rides exist in the system. \\
+Preconditions & $\bullet$ New user default preferences may be used, and the passenger is authenticated. \\
+& $\bullet$ Operational: recommendation service is in place; deployed: machine learning model is available. \\
+& $\bullet$ Published rides are those available in the system. \\
 \hline
-Postconditions & $\bullet$ Passenger receives tailored ride suggestions. \\
-& $\bullet$ System logs the recommendation event for feedback loop and model improvement. \\
-& $\bullet$ Passenger engagement metrics are monitored. \\
+Postconditions & $\bullet$ The passenger is authenticated, or default preferences are available for new users. \\
+& $\bullet$ The recommendation service is operational and the machine learning model is deployed. \\
+
+& $\bullet$ Published rides are available in the system. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — New User / Cold Start} \newline If user has no history, use default recommendations based on popular routes and location. \\
-& \textbf{AF-2 — No Matches Found} \newline Relax non-critical constraints and show nearby options with rationale. \\
-& \textbf{AF-3 — Model Unavailable / Latency} \newline Fall back to deterministic rule-based ranking (distance + departure time + driver rating). \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — New User (Cold Start)} \newline When no historical data exists, the recommendations are generated based on the popular routes, nearby rides and default preferences. \\
+& \textbf{AF-2 — No Suitable Results} \newline In case there are no propositions that match the common rides, it lets go of unnecessary constraints to display alternative nearby rides with explanations. \\
+& \textbf{AF-3 — Recommendation Service Unavailable} \newline In case the machine learning model is not available, or calculation takes a long time, the system falls back to a rule-based way of calculating the ranks based on things like distance, departure, driver ratings etc. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Only publish rides that are deemed safe and verified. \\
-& \textbf{BR-2:} Respect driver-set gender preference—never recommend to disallowed genders. \\
-& \textbf{BR-3:} Prioritize recent rides (freshness) while preserving diversity. \\
-& \textbf{BR-4:} Respect user preferences for saved routes, vehicle type, and price sensitivity. \\
-& \textbf{BR-5:} Do not show rides with departure time in the past. \\
-& \textbf{BR-6:} Do not use PII in modeling outputs; honor opt-out requests. \\
+Business Rules (BR) & \textbf{BR-1:} Rides are only recommended if they are fully verified and are approved. \\
+& \textbf{BR-2:} Driver imposed gender restrictions are always to be respected. \\
+& \textbf{BR-3:} Recent rides should be emphasized but diversity should be maintained in recommendations. \\
+& \textbf{BR-4:} Preferences should affect ranking of these routes, vehicles and price. \\
+& \textbf{BR-5:} Previous rides may NOT be shown. \\
+& \textbf{BR-6:} No personal information should be made public in the outputs of their recommendations, and choices should be respected about whether or not to be included. \\
 \hline
-Assumptions & $\bullet$ Sufficient historical data exists for training. \\
-& $\bullet$ Admins define safe default parameters. \\
-& $\bullet$ The feature store and ride index are kept fresh. \\
-& $\bullet$ Infrastructure supports low-latency scoring. \\
+Assumptions & $\bullet$ There are sufficient past historical data for model development. \\
+& $\bullet$ The administrators make safe default settings for recommendation. \\
+& $\bullet$ Store and ride indexes continue to be updated. \\
+& $\bullet$ Low-latency recommendation generation is supported by infrastructure. \\
 \hline
 \end{longtable}
 
@@ -1613,20 +1601,20 @@ Use Case Name & Intelligent Chatbot Support \\
 Actors & \textbf{Primary Actor:} User (Passenger or Driver) \\
 & \textbf{Secondary Actors:} Generative AI Service, Knowledge Base (FAQs), Database, Recommendation Engine \\
 \hline
-Description & A support chatbot offers on-the-spot help, answers FAQs, guides users on features, and can suggest rides. It acts as a deterministic rule-based assistant by default, with optional Generative AI fallback when configured. \\
+Description & The chatbot supports the users by answering the frequently asked questions, helping users to navigate the application features, and recommending rides when they ask for them. It is a rule-based assistant by default, but can be configured to use generative AI functionality. \\
 \hline
 Trigger & User taps the chatbot icon OR asks for ride recommendations/app help. \\
 \hline
-Normal Flow & 1. User opens the chatbot UI; system greets the user with a context-sensitive message. \\
-& 2. User enters a query (FAQ or ride recommendation request). \\
-& 3. Generative AI processes the query: \newline $\bullet$ If FAQ $\rightarrow$ fetch answer from the Knowledge Base. \newline $\bullet$ If ride recommendation $\rightarrow$ call the Recommendation Engine. \\
-& 4. Recommendation Engine: \newline $\bullet$ fetch user profile (preferences, saved routes, recent searches). \newline $\bullet$ retrieve candidate rides from database tables. \newline $\bullet$ compute similarity scores using Content-Based Filtering. \newline $\bullet$ return top K rides. \\
-& 5. Chatbot displays a response (step-by-step guidance for FAQs or ride cards for recommendations). \\
-& 6. Feedback Loop: log user interactions for analytics and personalization. \\
+Normal Flow & 1. The user initiates the chatbot, and the chatbot introduces themselves in a context-aware manner. \\
+& 2. A question or request will be submitted by the user. \\
+& 3. The system fulfills the request: \newline $\bullet$ If that's the case for some frequently asked questions, $\rightarrow$ the answer comes from the knowledge base. \newline $\bullet$ When a request to make a recommendation is received for a ride, $\rightarrow$ the recommendation engine is invoked. \\
+& 4. When requested for recommendations: \newline $\bullet$ User profile information is returned. \newline $\bullet$ The candidate rides are collected from the database for candidate. \newline $\bullet$ Content-based recommendation methods are used to carry out similarity calculations. \newline $\bullet$    Most appropriate rides are chosen. \\
+& 5. The chatbot offers directions, information or road suggestions. \\
+& 6. Usable interactions are captured for analytics and to drive personalization enhancements. \\
 \hline
-Preconditions & $\bullet$ User is authenticated for personalized recommendations. \\
-& $\bullet$ Generative AI service, Knowledge Base, and database are available. \\
-& $\bullet$ Privacy consent banners are shown when accessing PII. \\
+Preconditions & $\bullet$ When providing personalized recommendations, the user will be authenticated. \\
+& $\bullet$ There are Chatbot services, Knowledge base and Database. \\
+& $\bullet$ Appropriate notice and consent are provided for accessing sensitive information. \\
 \hline
 Postconditions & $\bullet$ User receives accurate FAQ answers or personalized ride recommendations. \\
 & $\bullet$ All interactions are logged for analytics and future improvements. \\
@@ -1635,15 +1623,15 @@ Alternate Flows \& Exceptions & \textbf{AF-1: Ambiguous Query} \newline Chatbot 
 & \textbf{AF-2: Database/API Failure} \newline Inform user and suggest retrying later. \\
 & \textbf{AF-3: Low Confidence} \newline Chatbot provides the best suggestions or fallback FAQ. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Chatbot must not disclose PII without re-authentication. \\
-& \textbf{BR-2:} Recommendations must respect safety and diversity rules. \\
-& \textbf{BR-3:} Log all interactions for audit and analytics. \\
-& \textbf{BR-4:} Provide localized responses based on user language preference. \\
+Business Rules (BR) & \textbf{BR-1:} Personal information should not be shared without proper authentication unless there is a sensitive data. \\
+& \textbf{BR-2:} Outputs from the chatbot should adhere to safety and fairness principles. \\
+& \textbf{BR-3:} All chatbot communications should be recorded for the purpose of auditing and analytics. \\
+& \textbf{BR-4:} The answers should be localised in line with the language preference of the user. \\
 \hline
-Assumptions & $\bullet$ A maintained Knowledge Base exists with FAQs and app usage guides. \\
-& $\bullet$ Database tables for rides and user profiles are accessible. \\
-& $\bullet$ Optional Generative AI API access may be configured for enhanced responses. \\
-& $\bullet$ Routine queries are handled by the chatbot, while complex cases may be escalated to Admin/support workflows. \\
+Assumptions & $\bullet$ There is a maintained knowledge base with FAQs and application guidance. \\
+& $\bullet$ Being able to view ride and user profile information on demand. \\
+& $\bullet$ It is possible to integrate optional generative AI services to improve responses. \\
+& $\bullet$ Escalation of complex support requests can be made to administrators or administrative avenues including customer support. \\
 \hline
 \end{longtable}
 
@@ -1674,11 +1662,11 @@ Use Case Name & Manual Payment Confirmation (Cash / Bank Transfer / QR) \\
 Actors & \textbf{Primary Actor:} Passenger (payer) \\
 & \textbf{Secondary Actors:} Driver, Notification Service \\
 \hline
-Description & The system supports manual payment after ride completion. Passengers can pay via Cash or Bank Transfer / QR. When the passenger arrives at the destination, the app displays the driver's bank details or QR code. \\
+Description & Manual post payment is supported. You are able to finish your payment online using cash, bank transfer or QR-based payment. Once the ride is over, the application will show the driver's payment information and the confirmation of the payment, providing operation to a standardised control. \\
 \hline
 Trigger & Passenger taps ``Reached'' in the app OR Driver taps ``Reached Last Destination''. \\
 \hline
-Normal Flow & 1. Passenger taps ``Reached'' $\rightarrow$ App displays driver's bank details or QR code. \\
+Normal Flow & 1. Once the passenger confirms his/her arrival, the application shows the details of the driver's bank account, or the QR code for payments. \\
 & 2. Passenger pays (Cash or Bank Transfer) and taps ``I have paid'' (optional receipt upload). \\
 & 3. Notification Service sends message to driver: ``Passenger has paid you''. \\
 & 4. Driver reaches last destination and taps ``I have received payment''. \\
