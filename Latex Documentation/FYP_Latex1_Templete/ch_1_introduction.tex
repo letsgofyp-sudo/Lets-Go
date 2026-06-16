@@ -110,13 +110,12 @@ Bykea &
 % 1.4 Project Deliverables
 % --------------------------------
 
-
-The tangible Outputs of the Lets Go Ride Sharing App mobile application project are software modules, documentation artefacts and implementation deliverables.
+The tangible Outputs of the Lets Go Ride Sharing App mobile application project are software modules, artefacts of documentation and implementation deliverables.
 
 \textbf{List of Deliverables:}
 
 \begin{enumerate}
-    \item \textbf{Registration \& Verification Module} – A complete system to register users (Drivers \& Passengers). This module gathers and validates the user data. Name, Phone number, e-mail, Post oce address, CNIC, driving license, Vehicle. registration details. They come with capability to swap roles between driver and passenger, and two-factor authentication for added security.
+    \item \textbf{Registration \& Verification Module} – A complete system to register users (Drivers \& Passengers). This module collects and verifies this user data. Name /Person name, Phone number, e-mail, Post office address, CNIC, driving license, Vehicle registration details. In addition to capability to swap drivers and passengers, they have a built-in two enigma authentication system.
 
     \item \textbf{Ride Request \& Acceptance Module} – Facilitates smooth communication between drivers and passengers through ride requests, real-time notifications, fare estimates, and ride progress updates. It includes a well-defined cancellation policy with clear conditions.
     
@@ -148,24 +147,24 @@ While well designed, the mobile application Lets Go Ride Sharing App has a numbe
 
     \item \textbf{Relying on Third-Party Services:} The app relies on third-party mapping APIs to provide location tracking, route calculation, and LLM APIs to enhance the chatbot feature. This could cause a period of downtime, API changes, or limitations on API rates from these third-party providers, and make the functionality of the application operate differently for some period of time, depending on the specific changes made.
 
-    \item \textbf{Internet Connectivity \& Location Accuracy:} The need for real-time features such as ride-matching, location tracking and fare calculations come with the condition of robust Internet connectivity and accurate GPS information. Depending on the location, if GPS signal is not convenient or accurate, the user could experience poor performance and/or not have access to core features.
+\item \textbf{Internet Connectivity \& Location Accuracy:} Real-time features like ride matching, live location tracking, and fare estimates require reliable internet connections and accurate GPS from the vehicles. If network connectivity is poor or the service is inaccurate, access, performance and delays to critical features of the application may be limiting.
 
-    \item \textbf{Comprehensive manual Security and Verification Overheads:} Manual validation of User documents (CNIC, driving license, vehicle registration) increases security but could slow down the Registration process. However, there may be delays for new users to leverage their full capacity with the platform, potentially impacting user acquisition and retention.
+\item \textbf{Comprehensive manual Security and Verification Overheads:} Manual verification of crucial paperwork like CNICs, driving licenses, and vehicle registration forms enhances platform trust and security. This is beneficial to ensure the sense of authenticity for users, but it could also extend the process to onboard them, potentially dampening the user experience for new users when their accounts are activated.
 
-    \item \textbf{Automated Payment Gateways:} Payment Gateways are also outside of the scope of the current work. Transactions are dependent on cash payments and manual verification of bank payments and can lead to delays in payment confirmation and extra administration in reconciling payments.
+\item \textbf{Automated Payment Gateways:} Use of integrated online payment gateways of the web is not part of the current implementation. The system is, therefore, cash based and based on 'verification' of bank transfers. This can cause a timelapse in receiving confirmation on the payment and increase in administrative work for the management of transactions and reconciliation.
 
-    \item \textbf{Geographic Scope:} Early deployment to certain local communities and urban areas: During the initial stages, the application may be provided only for rural areas and for smaller cities, which will confine its scope of service and its usage and reduced accessibility.
+\item \textbf{Geographic Scope:} At the time of initial deployment, the application may be limited to certain local communities, rural areas and limited urban areas. By limiting these coverages, it decreases the services available and users' access in other locations.
 
-    \item \textbf{Resource and Time Constraints:} Some high level features or deep testing of scalability testing could be planned as future improvements due to time and resources constraints as part of the academic project with a fixed timeline. A development team of two students reduces both the capacity for development and level of specialization.
+\item \textbf{Resource and Time Constraints:} With all the project being built in an academic setting within financial and time constraints, some of the more complex features and large scale testing of the project may be delayed for a later release. Furthermore, there is a limit to the total development capacity and specialization in the project due to a development team comprising of two students.
 \end{itemize}
 
 % --------------------------------
 % 1.6 Tools and Technologies
 % --------------------------------
 
-Our mobile application named Lets Go Ride Sharing App Rideshare App uses a strategically updated tech stack for end-to-end compatibility, optimized processing, efficient data management and future-proof scalable architecture. Each choice of technology reflects specific needs or restrictions of the project.
+A tech stack with optimal compatibility, processing speed, data reliability and longevity is carefully selected in the development of the Lets Go Ride Sharing App. Each technology has been selected for meeting certain project needs and with future expansion and maintainability in mind.
 
-\textbf{For cross-platform mobile app development, Frontend Development:} Flutter with Dart SDK is selected, meaning that the same code is used for both Android and iOS platforms. It saves development time and effort, and maintains native-like performance and smooth user experience across all devices. Flutter's "widgets" library also gives a lot of flexibility to get the user-friendly interface that this project needs.
+\textbf{For cross-platform mobile app development, Frontend Development:} Flutter together with the Dart SDK has been chosen for frontend application development and cross-platform mobile application development. With this structure, they can work with the same codebase from Android and iOS, which will help them to save on development time and with this ensure that their device will work on the same level of performance. In addition, the wide-ranging selection of Flutter widgets guarantees the flexibility needed to create a user-friendly and responsive interface that suits the project's goals and requirements.
 
 \textbf{Backend Development frame-work:} Python with Django provides a productive backend framework that is powerful, scalable, and secure. Django's security capabilities, ORM and template system assist development and encourage well-designed security and access control. The backend implemented with Django 6.0.5 is based on the project dependency and for testing, Python 3.12 is used.
 

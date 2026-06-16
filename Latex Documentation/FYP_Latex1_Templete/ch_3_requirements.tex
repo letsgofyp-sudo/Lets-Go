@@ -177,40 +177,40 @@ Description & An Unverified User registers a new account by supplying personal i
 \hline
 Trigger & User launches the application and selects \textit{Create Account / Sign Up}. \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. Unverified User opens the Registration screen and completes the registration form with required fields (name, username, email, password \& confirm password, address, phone number, CNIC, gender). \\
-& 2. User may optionally provide bank account number and bank name (both required if one is supplied) and/or driving license number. \\
-& 3. User uploads required documents (profile photo, live photo, CNIC front/back; driving license images if applicable; account QR if bank transfer desired). Client-side UI enforces format and size constraints before upload. \\
-& 4. User submits the form; client performs basic checks (required fields, password strength) and a quick server uniqueness check for username/email. \\
-& 5. Server validates inputs, creates a provisional user with status OTP\_VERIFICATION\_PENDING, and securely stores uploaded files. \\
-& 6. System issues two OTPs (email and SMS/phone) with a 5-minute expiry and sends them via Notification Service. \\
-& 7. User is prompted to enter both OTPs. \\
-& 8. Server verifies OTPs; if both are valid and within expiry, the account state is set to PENDING\_ADMIN\_VERIFICATION and success is returned. \\
-& 9. System displays a confirmation: ``OTP verified — your account is pending Admin verification. You will be notified on completion.'' \\
-& 10. User is taken to login screen or offered to log in after Admin verification. \\
+Normal (Basic) Flow (Main Success Scenario) & 1. The Unverified User accesses the Registration screen and registers with the required information: Name, User Name, email, password and confirm password, Address, phone, CNIC and gender. \\
+& 2. The user can also enter an Account Number and a Bank Name (if the user enters these fields) and/or a Driving License Number. \\
+& 3. The user uploads to the system required documents/profile photo, live photo, front and back of CNIC, images of driving license (if applicable), and account QR (if bank transfer is in plan). Client side interface validates file format and size prior to file upload. \\
+& 4. User fills form. Userns, emails checked for uniqueness in basic way on client-side and also on a quick, server-side check. \\
+& 5. Validation of inputs, creation of an intermediary user (OTP_VERIFICATION_PENDING), storage of uploaded files in a secure manner are handled by the server. \\
+& 6. The system creates 2 OTP one for email and other for SMS/phone with expiry time 5 minutes, and sends them using Notification Service. \\
+& 7. The user is asked to enter the 2 OTPs. \\
+& 8. Server checks the OTPs. The account is then marked as PENDING_ADMIN_VERIFICATION, and the success property is returned, if both of the above properties are still valid and in good time to expire. \\
+& 9. The system shows the confirmation message as OTP is a valid OTP and account is awaiting Admin verification. \\
+& 10. The user is displayed the login screen or is given the chance to log in once the login has been verified by the Admin. \\
 \hline
 Preconditions & $\bullet$ User has a device with an active internet connection. \\
 & $\bullet$ User has a valid email address and phone number to receive OTPs. \\
 \hline
-Postconditions & $\bullet$ \textbf{On success:} user account created with PENDING\_ADMIN\_VERIFICATION status and audit logs recorded. \\
-& $\bullet$ \textbf{On failure:} user remains unverified; errors are reported to the user; provisional data retained per retention policy. \\
+Postconditions & $\bullet$ \textbf{On success:} user is added to the system with a status of PENDING_ADMIN_VERIFICATION and audit log is added. \\
+& $\bullet$ \textbf{If it fails:} it does not update the user record, output errors and keep the provisional data for the duration of the retention policy. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{A1 — Missing Required Field / Client-side validation fails} \newline If the user omits required fields or client-side validation fails, display inline errors and block submission until corrected. Return to step 1. \\
-& \textbf{A2 — Server-side validation failure (e.g., duplicate email/username)} \newline If server detects duplicate username/email or invalid CNIC format, return error to user with a clear message. User corrects input and resubmits. \\
-& \textbf{A3 — Image upload fails (format/size or network error)} \newline Inform user which image failed and why (wrong format, too large or network issue). Allow retry and resume. \\
-& \textbf{A4 — OTP expired / incorrect OTP} \newline If an OTP is expired or incorrect, display error and offer resend. Return to OTP entry step. \\
-& \textbf{A5 — OTP delivery failure (SMS/email gateway problem)} \newline If Notification Service fails, show guidance (e.g., try alternate channel), log the failure, and increment monitoring metrics for Admin. \\
-& \textbf{A6 — User abandons signup} \newline If user closes the app or session times out, provisional data is retained per retention policy. \\
+Alternate Flows \& Exceptions & \textbf{A1 — Missing Required Field / Client-side validation fails} \newline Show inline errors/Permit submission if not corrected. \\
+& \textbf{A2 — Server side Validation failure:} \newline Send an error if the email/username is duplicate or the CNIC is not in a valid format. \\
+& \textbf{A3 — Upload of pictures failed:} \newline provide user with information about which image it failed, and let him try again. \\
+& \textbf{A4 — OTP expired / incorrect OTP} \newline Show an error message and provide resend option. \\
+& \textbf{A5 — OTP failure} \newline Show guidance, report failure, increase monitoring metrics for Admin \\
+& \textbf{A6 — User leaves signup:} \newline If the app is closed or time out, provisional data is saved according to the retention policy. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} OTP expiration = 5 minutes. \\
-& \textbf{BR-2:} If bank account number is entered, bank name is mandatory and vice versa. \\
-& \textbf{BR-3:} Username and email must be unique. \\
-& \textbf{BR-4:} Driving license images are required if driving license number is provided. \\
-& \textbf{BR-5:} Limit OTP resend attempts to a configurable number (default: 3 per hour). \\
-& \textbf{BR-6:} Uploaded images must satisfy configured size and format constraints; otherwise reject. \\
+Business Rules (BR) & \textbf{BR-1:} OTP Timeout-Expires: 5 mins. \\
+& \textbf{BR-2:} When bank account is entered, bank name must be entered and vice versa. \\
+& \textbf{BR-3:} You may not use the same username and emails as others created. \\
+& \textbf{BR-4:} Required if a driving license number is provided: images of the driving license. \\
+& \textbf{BR-5:} Numerous attempts to re-send OTP will be capped at a maximum of any OTP number (default 3/hour). \\
+& \textbf{BR-6:} Rejected images need to be configured with a size constraint and/or format constraint. \\
 \hline
-Assumptions & $\bullet$ Notification Service (email/SMS) is available and operational. \\
-& $\bullet$ Users will have access to the email and phone provided for OTP reception. \\
-& $\bullet$ CNIC format rules and validation logic are defined elsewhere and available to the system. \\
+Assumptions & $\bullet$ Notification service available \& in operation. \\
+& $\bullet$ Users can get access to email and mobile number for OTP's. \\
+& $\bullet$ There are already existing rules and validation logic for CNIC format in the system. \\
 \end{longtable}
 
 % ============================================================================
@@ -240,32 +240,32 @@ Use Case Name & Upload Documents \\
 Actors & \textbf{Primary Actor:} Unverified User / User (during profile completion or driver onboarding) \\
 & \textbf{Secondary Actors:} Notification Service (for confirmations), Admin (viewer during verification), Chatbot (optional help) \\
 \hline
-Description & A user uploads required identity and vehicle documents (profile photo, live photo, CNIC front/back, account QR, driving license front/back if applicable, and vehicle images when adding a vehicle). The system validates file formats and sizes, stores files securely, and associates them with the user or vehicle records. Uploaded documents are reviewed by Admins during verification. \\
+Description & When adding a Vehicle, a user uploads necessary documentation of identity and vehicle including profile photos, live photos, CNIC front and back, account QR, and vehicle images (front or back if available) and driving license. The system checks file format and size and securely stores files, and associates them with the user or vehicle records. During verification, uploaded documents are verified by Admins. \\
 \hline
 Trigger & User navigates to the document-upload screen during registration, profile editing, or while adding a vehicle and initiates the upload action. \\
 \hline
 Normal (Basic) Flow (Main Success Scenario) & 1. User opens the Upload Documents section (during registration or via profile). \\
-& 2. UI shows required and optional document slots with accepted formats and size limits (e.g., JPG/PNG, max dimensions/MB). \\
-& 3. User selects a slot (e.g., CNIC front) and picks or captures an image. \\
-& 4. Client performs light validation (file type, size) and shows immediate errors if invalid. \\
-& 5. Client uploads files (multipart/form-data) including metadata (user\_id, document\_type, timestamp, optional vehicle\_id). \\
-& 6. Server validates file type/signature, size, and dimensions, then stores the file securely. \\
-& 7. Server creates a document record linking file location, document type, user\_id or vehicle\_id, upload timestamp and sets status to PENDING\_REVIEW. \\
-& 8. Server returns success; UI displays thumbnail and status ``Uploaded — pending Admin review''. Notification Service may send confirmation. \\
-& 9. Admin later reviews uploads in the Admin portal as part of verification flows. \\
+& 2. The node dialog displays document slots that are required and optional, accepted formats, and size limits. \\
+& 3. The user chooses one of the slots, e.g. CNIC front, and loads or takes a picture of it. \\
+& 4. The client validates (light validation) – file type, file size – and displays errors if validation fails. \\
+& 5. The client will send a multipart form with the file itself and the metadata like user ID, document type, date and time and optional vehicle ID for the file.
+& 6. The server validates the file type, signature, size and dimensions of the file and stores this file securely. \\
+& 7. The server will generate a document record for this file, with status PENDING_REVIEW and information related to the file's location, document type, user ID or vehicle ID, upload date and time. \\
+& 8. Success is returned and the interface shows a thumbnail and status message indicating that the document is uploaded and awaiting Admin review. Yes, it is possible to receive confirmation from Notification Service. \\
+& 9. Uploads are reviewed in the Admin portal by Admin later as a part of the verification flows. \\
 \hline
-Preconditions & $\bullet$ User is authenticated (in profile flow) or in registration flow with a stateful session. \\
-& $\bullet$ Client device has camera or file access and internet connectivity. \\
+Preconditions & $\bullet$ User logs in in profile flow or has a stateful session in the registration flow. \\
+& $\bullet$ Client device has access to camera and/or files, and the internet. \\
 \hline
-Postconditions & $\bullet$ Document saved and linked to user/vehicle record. \\
-& $\bullet$ Document status recorded (PENDING\_REVIEW / APPROVED / REJECTED). \\
-& $\bullet$ Optional notification sent to user confirming upload. \\
+Postconditions & $\bullet$ Document saved, and attached to the user or vehicle record. \\
+& $\bullet$ Document status is either PENDING_REVIEW, APPROVED, or REJECTED. \\
+& $\bullet$ If the user does not need to be notified, this will be a choice that will communicate to the user that they have uploaded. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{A1 — Client-side Validation Failure (wrong format / too large)} \newline If client-side validation fails, show clear error and prevent upload; provide guidance on acceptable formats/sizes. Return to step 3. \\
-& \textbf{A2 — Upload Interruption / Network Failure} \newline If upload fails mid-transfer, allow retry/resume where possible and retain a temporary local copy until success. Log failures. \\
-& \textbf{A3 — Server-side Validation Failure (malformed file/signature mismatch)} \newline Server rejects the file with reason and prompts user to re-upload. \\
-& \textbf{A4 — Duplicate or Previously Uploaded Document} \newline If a prior document of same type exists, UI shows both with timestamps and marks latest as current; replacement triggers re-verification per business rule. \\
-& \textbf{A5 — Unauthorized Upload Attempt} \newline Unauthenticated/unauthorized uploads are rejected (401/403). \\
+Alternate Flows \& Exceptions & \textbf{A1 — Validation Error on Client} \newline Display the error clearly and DO NOT upload. \\
+& \textbf{A2 — Upload Interruption / Network Failure} \newline Reattempt and/or restore from temporary local copy (if possible) \\
+& \textbf{A3 — Server-side Validation Failure} \newline Server refuses the file and asks the user to re-upload. \\
+& \textbf{A4 — Duplicate or Previously Uploaded Document} \newline UI displays both, both have a time of last check and the new one is marked current, replacement will result in re-verification. \\
+& \textbf{A5 — Unauthorized Upload Attempt} \newline Uploads that are not authorized are denied. \\
 \hline
 Business Rules (BR) & \textbf{BR-1:} Accepted file formats: JPG, PNG (configurable). \\
 & \textbf{BR-2:} Max file size: 5 MB (configurable); reject larger files. \\
@@ -273,8 +273,8 @@ Business Rules (BR) & \textbf{BR-1:} Accepted file formats: JPG, PNG (configurab
 & \textbf{BR-4:} Account QR required if the user opts for bank-transfer payouts. \\
 & \textbf{BR-5:} Replace/overwrite policy: uploading a new CNIC or license image sets status to PENDING\_REVIEW and triggers re-verification by Admin. \\
 \hline
-Assumptions & $\bullet$ Storage service is available. \\
-& $\bullet$ Admins have a secure Admin portal to view/review documents. \\
+Assumptions & $\bullet$ Storage service is on offer. \\
+& $\bullet$ Admins have a secure Admin portal to view and review documents. \\
 \end{longtable}
 
 % ============================================================================
@@ -304,43 +304,44 @@ Use Case Name & OTP Verification \\
 Actors & \textbf{Primary Actor:} Unverified User (or User performing email/phone change) \\
 & \textbf{Secondary Actors:} Notification Service (email/SMS), Admin (for logging/alerts), Chatbot (optional help) \\
 \hline
-Description & The system validates one-time passwords (OTPs) sent to a user's email and phone to confirm ownership of contact channels. Successful OTP verification transitions the account to PENDING\_ADMIN\_VERIFICATION. OTPs are short-lived (default 5 minutes) and subject to resend and attempt limits to prevent abuse. \\
+Description & One-time password is verified by the system when it receives it via email and cell phone to verify ownership of contact channels. When OTP is successful, the account will go into the status of PENDING_ADMIN_VERIFICATION. The OTPs are generated and have time validity of 5 minutes (as default) and there are resend and attempts limits to prevent abuse. \\
 \hline
 Trigger & System sends OTPs after registration submission or when a user requests an email/phone change that requires re-verification; user navigates to the OTP entry screen. \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. Following registration (UC-1) or contact-change request, the system generates an email OTP and an SMS OTP and sends them via Notification Service. \\
-& 2. OTPs are stored securely with timestamps, expiry (default 5 minutes) and attempt counters. \\
-& 3. User receives OTPs and opens the OTP entry screen. \\
-& 4. User submits both OTP codes. \\
-& 5. Server validates OTPs; if both are correct and within expiry, account state changes to PENDING\_ADMIN\_VERIFICATION and success is returned. \\
-& 6. System shows a success message and redirects user to the appropriate screen (login or profile). \\
+Normal (Basic) Flow (Main Success Scenario) & 1. After enrollment/change of contact, it creates a (One Time Password) OTP for email and SMS and sends it via the Notification Service. \\
+& 2. OTP's are safely stored, with a time stamp, with an expiry time and with counters to track up to how many times that particular OTP has been used. \\
+& 3. OTPs are sent to the user who clicks the "login" button of the OTP entry screen. \\
+& 4. Both OTP codes are provided by the user. \\
+& 5. Both OTPs are validated by the server. Both are valid and in-expiry, then the state is set as PENDING_ADMIN_VERIFICATION and success is returned. \\
+& 6. The system will display a success message and take the user to the correct screen (e.g., login screen, profile). \\
 \hline
-Preconditions & $\bullet$ User has completed the registration form or requested contact information change. \\
-& $\bullet$ User has access to the provided email and phone for OTP reception. \\
-& $\bullet$ Notification Service is operational. \\
+Preconditions 
+& $\bullet$ The user has filled out the registration form or made a request to change the contact information. \\
+& $\bullet$ User can get email and telephone number given to them. \\
+& $\bullet$ Notification Service is up and running. \\
 \hline
 Postconditions & $\bullet$ \textbf{On success:} User account state transitions to PENDING\_ADMIN\_VERIFICATION. \\
-& $\bullet$ \textbf{On failure:} User remains in current state; OTP attempts are logged. \\
-& $\bullet$ OTP verification event recorded in audit logs. \\
+& $\bullet$ \textbf{On failure:} the user will not move to any other state and OTP attempts will be recorded. \\
+& $\bullet$ The audit logs are updated during the OTP verification event. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{A1 — Wrong OTP Entered} \newline If user enters an incorrect OTP, display error with remaining attempts; user may retry within limits. \\
-& \textbf{A2 — OTP Expired} \newline If OTP expires (default 5 minutes), inform user and offer resend. \\
-& \textbf{A3 — Exceeded Attempt Limit} \newline If attempts exceed allowed limit (default 5), lock verification for a cooldown (default 15 minutes) and require support. \\
-& \textbf{A4 — OTP Delivery Failure} \newline If Notification Service fails, log the failure, alert Admin, and provide alternate delivery options. \\
-& \textbf{A5 — Resend OTP Requested} \newline On resend request, system issues new OTPs (invalidating prior ones) subject to resend limits. \\
-& \textbf{A6 — User Cancels/Abandons} \newline If user leaves the OTP screen, OTPs remain until expiry; server may garbage-collect unused OTPs per retention policy. \\
+Alternate Flows \& Exceptions & \textbf{A1 — Wrong OTP Entered} \newline Show the user an error message and let them know how many attempts they have left. \\
+& \textbf{A2 — OTP Expired} \newline Notify the user, and provide resend option \\
+& \textbf{A3 — Exceeded Attempt Limit} \newline Lock verification need to be set as a cooldown period and support from them is required. \\
+& \textbf{A4 — OTP Delivery Failure} \newline Delivery Failure, record failure, notify Admin, offer alternate delivery options. \\
+& \textbf{A5 — Resend OTP Requested} \newline Need to send new OTPs and cancel out the previous ones as per texts resend caps. \\
+& \textbf{A6 — User Cancels/Abandons} \newline OTP will stay in the system until expiry time, and can be later deleted by the server based on retention policy. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} OTP expiry default = 5 minutes (Admin-configurable). \\
-& \textbf{BR-2:} Max OTP verification attempts per OTP code = 5 (Admin-configurable); on exceed, impose cooldown (e.g., 15 minutes). \\
-& \textbf{BR-3:} Max OTP resends per time window (e.g., 3 per hour) to avoid abuse. \\
-& \textbf{BR-4:} OTPs are single-use; resending invalidates prior OTPs. \\
-& \textbf{BR-5:} Avoid revealing which OTP channel failed; show generic ``OTP invalid'' with remaining attempts. \\
-& \textbf{BR-6:} Record OTP generation and verification attempts for audit and fraud detection. \\
-& \textbf{BR-7:} For contact-change workflows, require re-verification of the changed contact before applying the change. \\
+Business Rules (BR) & \textbf{BR-1:} OTP expiry default is 5 minutes (Admin-configurable) \\
+& \textbf{BR-2:} Allow max 5 times for OTP verification per code (configurable) and cooldown if exceeded. \\
+& \textbf{BR-3:} To prevent abuse, the maximum number of resends for OTP's is limited for each time window. \\
+& \textbf{BR-4:} The reason is BR-4: OTPs should be sent only once, if sent again, previous ones are invalidated. \\
+& \textbf{BR-5:} Do not indicate what failed OTP channel, instead display a generic invalid OTP that does not fail and provides the number of attempts that are left. \\
+& \textbf{BR-6:} Document generation & verification of OTPs for auditing purposes and fraud control. \\
+& \textbf{BR-7:} When a workflow depends on the change in contact, re-verify before trying to apply the change. \\
 \hline
-Assumptions & $\bullet$ Users can access the email and phone they provide. \\
-& $\bullet$ Time drift between server and client is negligible for 5-minute expiry; server time is authoritative. \\
-& $\bullet$ Notification Service has reliable delivery mechanisms for email and SMS. \\
+Assumptions & $\bullet$ User provides email, phone that can be accessed by users. \\
+& $\bullet$ Expires are authoritative for the Servers. \\
+& $\bullet$ There is a reliable delivery mechanism for notification service – both email and SMS. \\
 \end{longtable}
 
 % ============================================================================
@@ -370,38 +371,39 @@ Use Case Name & Admin Verify / Reject / Ban User \\
 Actors & \textbf{Primary Actor:} Admin \\
 & \textbf{Secondary Actors:} User (awaiting verification), Notification Service (for sending approval/rejection messages) \\
 \hline
-Description & This use case defines how Admin reviews newly registered users and submitted documents, then chooses to verify, reject, or ban. Verification grants full access; rejection denies access with feedback and reapplication instructions; banning prevents future registrations with the same CNIC. Admins also handle disputes and can create accounts for special requests. \\
+Description & This use case will explain what the Admin sees when his users register or when his users submit documents and what he decides to do with them – either verify or reject or ban. The following are the consequences of verification: full access, rejection of access with feedback and reapplication instructions, and banning of future registrations with the same CNIC. Admins also manage problems with accounts and could make special accounts for requests. \\
 \hline
 Trigger & Admin logs into the Admin portal and navigates to the User Verification section or receives an automated alert for new pending verifications. \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. Admin opens the Admin Portal dashboard. \\
-& 2. System lists users with status ``Pending Admin Verification.'' \\
-& 3. Admin selects a user and views details: Name, Username, Email, Phone, CNIC, Gender, Address, and uploaded documents (profile photo, CNIC front/back, live photo, driving license). \\
-& 4. Admin inspects documents for authenticity and completeness. \\
-& 5. If acceptable, Admin selects ``Verify User'' and confirms. \\
-& 6. System updates status from PENDING to VERIFIED. \\
-& 7. Notification Service sends approval via email/SMS. \\
-& 8. User receives full system access (login to dashboard). \\
+Normal (Basic) Flow (Main Success Scenario) 
+& 1. Admin opens Admin Portal dashboard. \\
+& 2. The system shows pending Admin Verification users. \\
+& 3. A user is selected by the admin and he/she will be able to see the details like name, username, email, phone, CNIC, gender, address and uploaded documents. \\
+& 4. Admin checks the documents for authenticity and completeness. \\
+& 5. Admin clicks on Verify User and confirms (if okay). \\
+& 6. The system changes the status to VERIFIED from PENDING. \\
+& 7. Approval is sent via Notification Service - Email or SMS. \\
+& 8. The user will have complete access to the system and log in to the dashboard. \\
 \hline
-Preconditions & $\bullet$ User has completed registration and OTP verification (UC-1, UC-3). \\
-& $\bullet$ Admin is logged in with verification privileges. \\
-& $\bullet$ Database and document storage are accessible. \\
+Preconditions & $\bullet$ User has finished signing up and has successfully verified OTP. \\
+& $\bullet$ Admin is logged in as verification user. \\
+& $\bullet$ Database is available, along with documents storage. \\
 \hline
-Postconditions & $\bullet$ \textbf{On success:} User becomes active (verified) and can log in normally. \\
-& $\bullet$ \textbf{On rejection:} User remains unverified; rejected status and reason recorded; user may reapply. \\
-& $\bullet$ \textbf{On ban:} CNIC added to blacklist; login and registration disabled for that CNIC. \\
+Postconditions & $\bullet$ \textbf{On failure:} user remains inactive, and may not log in. \\
+& $\bullet$ \textbf{On rejection:} user stays unverified, rejected reason and rejected status are stored, user can apply again. \\
+& $\bullet$ \textbf{On ban:} If the CNIC is added into the blacklist, then user is unable to login and register for that CNIC and gets the message “on ban”. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{A1 — Rejection} \newline If Admin finds incomplete or inconsistent documents, they choose ``Reject User'' and provide a reason (e.g., ``Invalid CNIC''). System sets status to REJECTED and notifies user with reason. \\
-& \textbf{A2 — Ban (Permanent Block)} \newline For confirmed fraud/unethical behaviour, Admin chooses ``Ban User'', confirms the action; system blacklists the CNIC, sets account to BANNED and notifies the user. \\
-& \textbf{A3 — Dispute Resolution (Related Function)} \newline Admin reviews disputes in the Dispute Center, communicates with parties, and marks disputes Resolved or Escalated; system updates records accordingly. \\
-& \textbf{A4 — Create Account (By Admin)} \newline Admin may create user accounts manually for support/test cases; such accounts can be created as Verified (bypassing OTP) per policy. \\
-& \textbf{A5 — Verification Delay / Timeout} \newline Accounts without verification within 24 hours are flagged for Admin attention; system sends reminders or escalations per policy. \\
+Alternate Flows \& Exceptions & \textbf{A1 — Rejection} \newline A reason is entered, the user is notified, and the status is set to REJECTED, and the User is rejected. \\
+& \textbf{A2 — Ban} \newline System requires the CNIC to be blacklisted, the account is set to BANNED and an alert is sent to the user, who is also sanctioned by the admin. \\
+& \textbf{A3 — Dispute Resolution } \newline Admin reviews Disputes in Dispute Center, notifies parties and sets Disputes as Resolved or Escalated. \\
+& \textbf{A4 — Create Account By Admin} \newline Admin can create user accounts manually for support / test cases, if policy allows, the users shall be considered as verified accounts. \\
+& \textbf{A5 — Verification Delay / Timeout} \newline Verification Delay / Timeout is marked for Admin attention for Accounts that are not verified within 24 hours. \\
 \hline
 Business Rules (BR) & \textbf{BR-1:} Verification should occur within 24 hours of submission. \\
-& \textbf{BR-2:} Only Admins with Verification Privilege may approve or reject users. \\
-& \textbf{BR-3:} Banned CNICs cannot be re-registered. \\
-& \textbf{BR-4:} All verification/rejection/ban actions must record Admin ID, timestamp and reason. \\
-& \textbf{BR-5:} Notification Service should send decision messages within 2 minutes. \\
+& \textbf{BR-2:} Only Admins having verification privilege can approve or deny users. \\
+& \textbf{BR-3:} The Banned CNICs are not allowed to be re-registered. \\
+& \textbf{BR-4:} All verification, rejection and ban actions need to include a reason, admin id, and time stamp. \\
+& \textbf{BR-5:} Notification Service need to be sending the decision message within 2 minutes. \\
 & \textbf{BR-6:} Admin cannot verify users missing mandatory documents. \\
 & \textbf{BR-7:} Rejection retains the user record for audit and possible reapplication. \\
 & \textbf{BR-8:} Verification changes are irreversible except by Super-Admin override. \\
@@ -442,36 +444,37 @@ Use Case Name & Add Vehicle \\
 Actors & \textbf{Primary Actor:} Verified Driver \\
 & \textbf{Secondary Actors:} Map/Routing Service, Notification Service, ML Service (for indexing) \\
 \hline
-Description & A verified Driver registers a vehicle by providing required vehicle details (model, variant, company, plate number, type, color, seats, engine/chassis optional, fuel type, registration/insurance optional, and vehicle images). The system validates inputs, stores vehicle metadata, and links the vehicle to the driver account. Vehicle verification may be required by Admin per policy. \\
+Description & A verified Driver registers a vehicle by submitting the necessary vehicle information such as Model, Variant, Company, Plate Number, Vehicle Type, Colour, Seating Capacity, Chassis /Engine Details (optional), Fuel Type, Registration Details (optional), Insurance Details (optional) and Vehicle images. System verifies and confirms information given, and saves the vehicle registration and details, linking to the driver's account. However, depending on policy, administrative review of the vehicle verification may be required. \\
 \hline
 Trigger & Driver navigates to Profile $\rightarrow$ Vehicles and taps Add Vehicle. \\
 \hline
 Normal (Basic) Flow (Main Success Scenario) & 1. Driver opens Profile $\rightarrow$ Vehicles and taps Add Vehicle. \\
-& 2. System displays a form with required fields: vehicle model, company, variant, plate number, type (2W/4W), color, number of seats, fuel type, and optional engine/chassis numbers. \\
-& 3. Driver fills in vehicle details; client validates format and required fields. \\
-& 4. Driver uploads vehicle images (front, back, documents) with client-side format/size validation. \\
-& 5. Driver submits the form. \\
-& 6. Server validates inputs, checks plate uniqueness, validates image sizes/formats, and stores vehicle record linked to driver account. \\
-& 7. Vehicle status set to VERIFIED (or PENDING\_REVIEW if policy requires Admin approval for critical fields). \\
-& 8. System displays success message; vehicle appears in driver's vehicle list and becomes available for ride creation. \\
+& 2. The system uses a form with the fields: Vehicle model, company, variant, plate number, vehicle type (2W/4W), color, seating capacity, fuel type, and optionally, engine/chassis information. \\
+& 3. The driver types in vehicle data, and client checks the fields and format. \\
+& 4. The driver uploads vehicle photos (front/back along with the supporting documents), and the software validates the files on the client. \\
+& 5. Driver personally fills out the form. \\
+& 6. All data entered by the server is validated, checks the uniqueness of the plate number, validates the image requirement and saves the vehicle record associated with the driver's profile. \\
+& 7. Vehicles are assigned to statuses of VERIFIED or PENDING_REVIEW per policy. \\
+& 8. A success message is printed and the vehicle becomes eligible for rides to be created. \\
 \hline
 Preconditions & $\bullet$ Driver is authenticated and verified. \\
 & $\bullet$ Driver has completed registration including document upload. \\
 \hline
-Postconditions & $\bullet$ \textbf{On success:} Vehicle record created and linked to driver account; vehicle available for ride creation. \\
-& $\bullet$ \textbf{On failure:} User shown error; vehicle not saved; client retains form data for retry. \\
+Postconditions & $\bullet$ \textbf{Success result:} The success to create a vehicle record and to associate the record with the driver's account. \\
+& $\bullet$ \textbf{Failure Results:} Error message will be shown and vehicle data will not be stored. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Validation Failure (required field missing / invalid format)} \newline If validation fails (missing model, invalid plate format), display inline errors and block submission. \\
-& \textbf{AF-2 — Image Upload Failure} \newline If image size or format invalid, show error and allow retry. \\
-& \textbf{AF-3 — Duplicate Plate Number} \newline If plate number already registered to another user, reject and show error; driver corrects and resubmits. \\
-& \textbf{AF-4 — Vehicle Type Mismatch} \newline If driver selects 2W but enters seat count $\neq$ 2, show warning and auto-correct seats to 2. \\
-& \textbf{AF-5 — Admin Review Required} \newline If vehicle record requires Admin approval per policy, system sets status to PENDING\_REVIEW and notifies driver to wait for verification. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — Validation Failure} \newline Inline errors or no information means you will not be able to submit. \\
+& \textbf{AF-2 — Image Upload Failure} \newline An image upload property was not found.An image upload property did not exist. If image size is not valid or the image format is not correct, it will show an error with the possibility of trying again.\\
+& \textbf{AF-3 — Duplicate Plate Number} \newline Does a duplicate plate exist?Is there a duplicate plate number? The system denies the entry if it does not have a new plate. \\
+& \textbf{AF-4 — Vehicle Type Mismatch} \newline Incorrect seat count is alerted and adjusted by the system if a two-wheeler is assigned a wrong seat count. \\
+& \textbf{AF-5 — Admin Review Required} \newline If administrative review is needed, then the vehicle is not taken out of pending review until the vehicle is approved. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} 2W vehicles must have seat count = 2 (system-enforced). \\
-& \textbf{BR-2:} 4W vehicles can have 4–7 seats (configurable); system enforces min/max. \\
-& \textbf{BR-3:} Plate number must be unique across all vehicles in the system. \\
-& \textbf{BR-4:} Vehicle images must be valid format (JPG/PNG) and less than 1 MB. \\
-& \textbf{BR-5:} Optional fields (insurance expiry, engine/chassis) may be added or edited later. \\
+Business Rules (BR) 
+& \textbf{BR-1:} 2W vehicles must have seat count = 2 (system-enforced). \\
+& \textbf{BR-2:} Four-wheel vehicles can have a configurable number of seats. \\
+& \textbf{BR-3:} Numbers on the plates should be distinct. \\
+& \textbf{BR-4:} Images of cars are required to be a specific format and size. \\
+& \textbf{BR-5:} More detail of the vehicle can be added later if necessary. \\
 \hline
 Assumptions & $\bullet$ Driver is familiar with vehicle registration details. \\
 & $\bullet$ Plate numbers provided are correct and unique. \\
@@ -505,37 +508,38 @@ Use Case Name & Edit / Delete Vehicle \\
 Actors & \textbf{Primary Actor:} Driver (verified, with vehicle(s) registered) \\
 & \textbf{Secondary Actors:} Admin (may be required for approvals), Notification Service (in-app/email confirmations) \\
 \hline
-Description & A verified Driver may edit details of an existing vehicle (for example color, insurance expiry, or permitted seat changes for 4W) or request deletion. The system validates edits, applies business rules, may set the vehicle to PENDING\_REVIEW for Admin approval for critical changes, and prevents deletion if the vehicle is linked to active or scheduled rides unless policy allows. \\
+Description & A verified driver may change any information on the vehicle, including colour, insurance or seating configuration (where permitted). The driver has the option of requesting that the vehicle be deleted as well. Changes are validated, applied to business rules, and might need to be reviewed by a programme administrator for critical changes. When active or scheduled rides are dependable on the vehicle deletion will be restricted. \\
 \hline
 Trigger & Driver selects a vehicle from their profile listing and chooses Edit or Delete. \\
 \hline
-Normal (Basic) Flow --- Edit Vehicle & 1. Driver opens Profile $\rightarrow$ Vehicles and selects a vehicle. \\
-& 2. Driver clicks Edit; the system presents current details in an editable form. \\
-& 3. Driver modifies allowed fields (color, insurance expiry, engine/chassis if permitted, number of seats for 4W). \\
-& 4. Client validates constraints and submits changes. \\
-& 5. Server enforces business rules (e.g., 2W seats fixed=2, plate uniqueness). \\
-& 6. If non-critical, server updates record, logs the change, and returns success. \\
-& 7. If critical (plate, registration) or policy requires, server sets status to PENDING\_REVIEW and notifies Admin. \\
+Normal (Basic) Flow --- Edit Vehicle 
+& 1. Driver starts the vehicle log.Driver starts the log. \\
+& 2. Driver selects Edit. \\
+& 3. The driver was allowed to update the fields. \\
+& 4. Client approves the changes and starts submitting. \\
+& 5. A server is used to apply business rules. \\
+& 6. Data about the vehicle is in-revived and is recorded. \\
+& 7. The car is transferred to pending review status if necessary. \\
 \hline
-Normal (Basic) Flow --- Delete Vehicle & 1. Driver selects Delete; system shows confirmation. \\
+Normal (Basic) Flow --- Delete Vehicle & 1. Driver clicks Delete; System prompts as to confirmation.. \\
 & 2. Driver confirms. \\
-& 3. Server checks dependencies (active/future rides). If dependencies exist, block deletion and report affected rides; otherwise perform a soft delete and return success. \\
+& 3. If there are no dependencies, the car is removed or is removed and considered as deleted. \\
 \hline
 Preconditions & $\bullet$ Driver is authenticated and owns the vehicle. \\
 & $\bullet$ Vehicle record exists and is accessible. \\
 \hline
-Postconditions & $\bullet$ \textbf{On successful edit:} vehicle updated and audit logged; possibly set to PENDING\_REVIEW. \\
-& $\bullet$ \textbf{On successful delete:} vehicle marked deleted and removed from selection lists; historical references preserved. \\
+Postconditions & $\bullet$ \textbf{On successful edit:} Successful edits will be saved and recorded. \\
+& $\bullet$ \textbf{On successful delete:} The cars have been removed but historical data has been retained. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{A1 — Validation Error on Edit} \newline If server-side validation fails (invalid plate, seats not allowed, duplicate plate), return error and do not persist changes. \\
-& \textbf{A2 — Edit Requiring Admin Approval} \newline If critical fields are changed, set status to PENDING\_REVIEW and restrict usage until review completes. \\
-& \textbf{A3 — Attempt to Delete Vehicle with Active/Future Rides} \newline Block deletion and show affected rides. \\
-& \textbf{A4 — Unauthorized Action} \newline Reject unauthorised edit/delete attempts (401/403). \\
+Alternate Flows \& Exceptions & \textbf{A1 — Validation Error on Edit} \newline Any change that is not valid will be rejected. \\
+& \textbf{A2 — Edit Requiring Admin Approval} \newline Certain changes need to be considered for activation. \\
+& \textbf{A3 — Attempt to Delete Vehicle with Active/Future Rides} \newline If there are any rides active now or on the future list, deletion is disallowed. \\
+& \textbf{A4 — Unauthorized Action} \newline Unauthorized requests are denied. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Only the vehicle owner or Admin may edit/delete vehicle records. \\
-& \textbf{BR-2:} 2W vehicles must have seats fixed to 2. \\
-& \textbf{BR-3:} Plate number changes may trigger PENDING\_REVIEW and require Admin approval. \\
-& \textbf{BR-4:} Vehicles tied to active or future rides cannot be deleted unless policy allows. \\
+Business Rules (BR) & \textbf{BR-1:} Vehicle information can only be changed by the vehicle owner or authorized vehicle administrator. \\
+& \textbf{BR-2:} The number of seats on two-wheelers will remain at 2. \\
+& \textbf{BR-3:} The number of plates may change and needs to be reviewed. \\
+& \textbf{BR-4:} Rides that are still running cannot be deleted if a vehicle is attached to them. \\
 \hline
 Assumptions & $\bullet$ Admin review workflow (if enabled) is available. \\
 & $\bullet$ Vehicle-ride relationships are enforced to prevent accidental deletion. \\
@@ -580,40 +584,41 @@ Normal (Basic) Flow (Main Success Scenario) & 1. Driver opens Create Ride $\righ
 & 2. Driver marks the route: tap to add start stop, then intermediate stops, and an end stop. UI shows start (green), intermediates (orange), end (red) the system connects these stops with polylines and suggests a sample route. \\
 & 3. For each stop the system fetches a suggested place name from map provider (autofill); the driver may accept or edit the stop name inline. Driver may re-order stops or delete a stop. \\
 & 4. Driver uses the search bar (free-text) to find/insert known places or addresses if desired. \\
-& 5. Driver selects a registered vehicle for the ride from a modal list (vehicle metadata preview shown). If no vehicle exists, the UI prompts the driver to add a vehicle (link to UC-5). The driver confirms vehicle selection. \\
-& 6. Driver provides ride parameters: Date \& departure time, Available seats (system reserves 1 seat for driver), Gender preference (All / Male Only / Female Only), Allow fare negotiation?, Base/total fare (system displays auto-calculated fare, driver may edit whole-route fare or per-stop pricing), Optional description/rules. \\
-& 7. System performs validations (see Business Rules) and computes: Route polyline + distance (km), Estimated duration (minutes), Default fare per seat and total fare, Estimated per-stop fares. \\
-& 8. Driver previews ride summary (map, stops, date/time, seats, fare, vehicle). \\
-& 9. Driver clicks Create Ride / Publish. System persists ride with status PUBLISHED (or PENDING if Admin/vehicle review required). \\
-& 10. System adds rides to My Rides (driver view) and to passenger discovery feeds per ML Service. \\
-& 11. If any post-creation background actions apply (e.g., route indexing, ML indexing), the system queues them and marks the ride fully available when indexing finishes. \\
+& 5. Driver chooses to drive a registered car. \\
+& 6. Driver provides ride parameters: Driver adds information to the ride such as the time they're departing, if they are able to offer a seat, gender preference, fare negotiation, fare amount, and also notes. \\
+& 7. The system validates route and then calculates distance, duration and estimated cost of fare. \\
+& 8. Driver reads the feedback about the ride. \\
+& 9. Driver publishes the ride. \\
+& 10. Ride put on driver listings and passenger discovery feeds. \\
+& 11. The ride will be processed by background indexing services, when needed. \\
 \hline
-Preconditions & $\bullet$ Driver is authenticated and Verified (FR-2 / FR-14), or driver has license number present per policy. \\
+Preconditions & $\bullet$ Driver is certified and approved. (FR-2 / FR-14), or Driver has registered at least one vehicle. \\
 & $\bullet$ Driver has at least one registered vehicle available (FR-3). \\
-& $\bullet$ Map and routing service available (online). \\
-& $\bullet$ Driver is not blocked from creating rides by Admin sanctions. \\
+& $\bullet$ Maps are provided. (online). \\
+& $\bullet$ Driver is permitted to create rides. \\
 \hline
-Postconditions & $\bullet$ \textbf{On success:} Ride record saved (route polyline, stops, metadata), Ride appears in driver's My Rides list with status CREATED or PUBLISHED, Ride is discoverable by passengers. \\
+Postconditions & $\bullet$ \textbf{On success:} Ride saved and published. There is a feature to allow the passengers to experience the ride. Allowing for Alternate Flows and Exceptions \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Missing required fields / validation fails} \newline If driver fails validations (date in past, no vehicle selected, seats = 0, less than two stops), show inline errors and block publishing until corrected. \\
-& \textbf{AF-2 — Low-quality or incomplete route} \newline If route is illogical (very short distance, reverse ordering) system warns and suggests corrections; driver can confirm override if allowed by policy. \\
-& \textbf{AF-3 — Vehicle not verified or suspended} \newline If selected vehicle is PENDING\_REVIEW or SUSPENDED, UI warns driver and either blocks publishing or allows publishing depending on policy. If blocked, prompt to choose another vehicle or contact Admin. \\
-& \textbf{AF-4 — Driver has an active in-progress ride} \newline Per policy, driver is allowed to create a new ride listing even if they have an active ride but cannot start a different in-progress ride (FR-16.6). Show a note reminding drivers they cannot start another active ride until current ride completed. \\
-& \textbf{AF-5 — Edits after passengers booked} \newline If driver attempts to edit a published ride that already has confirmed bookings, system does not allow alternative actions (cancel ride or contact passengers). \\
-& \textbf{AF-6 — Network / Map service fails} \newline If routing/map provider fails, allow driver to save a draft ride with basic data (start, end, textual stops) and queue a background job to compute route when service is available. Indicate draft status in UI. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — validation fails} \newline You should not publish until you are ready to correct all the errors. \\
+& \textbf{AF-2 — Invalid Route} \newline System alerts the driver if they encounter problems with their route. \\
+& \textbf{AF-3 — Vehicle Restrictions} \newline Vehicles on the engine that are pending or suspended for other reasons may not be ride published. \\
+& \textbf{AF-4 — Existing Actively riding a bike.} \newline Driver can make more rides but can't start a simultaneous ride. \\
+& \textbf{AF-5 — Edits after passengers booked} \newline The arrival of available passenger bookings.Arrival of passenger bookings. Once confirmed bookings are made, there are no changes that can be made to the critical ride. \\
+& \textbf{AF-6 — Map service fails} \newline Rides can be stored as a draft to await mapping. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Driver seat reserved: available passenger seats = vehicle seats − 1 (enforced). \\
-& \textbf{BR-2:} Departure date/time must be in the future. \\
-& \textbf{BR-3:} Minimum stops: at least a start and an end (>=2 stops). \\
-& \textbf{BR-4:} If driver enables negotiation, negotiation flags stored in ride metadata and passenger negotiation UI enabled. \\
-& \textbf{BR-5:} Auto-fare calculation uses distance $\times$ vehicle\_rate + base\_fee; driver may override but must confirm when overriding auto fare. Formula is configurable in Admin settings. \\
-& \textbf{BR-6:} Edits to route, seat counts, or fare are blocked if confirmed bookings exist (unless driver cancels ride). \\
-& \textbf{BR-7:} If vehicle is multi-seat (4W), driver can set passenger seat split by gender preference; UI must enforce gender-based avail seats. \\
-& \textbf{BR-8:} Ride status lifecycle: DRAFT $\rightarrow$ PUBLISHED $\rightarrow$ IN\_PROGRESS $\rightarrow$ COMPLETED $\rightarrow$ ARCHIVED. Publishing sets visible to passengers and driver. \\
+Business Rules (BR) 
+& \textbf{BR-1:}A seat is always reserved for the driver.
+& \textbf{BR-2:}The departure time should be after the current time.
+& \textbf{BR-3:}Two or more stop(s) needed.
+& \textbf{BR-4:}Ride data is stored with negotiation settings.
+& \textbf{BR-5:}Fare calculations are per a user-configured formula.
+& \textbf{BR-6:}Any modifications to rides are limited once the ride has been confirmed.
+& \textbf{BR-7:}The policy of seat allocation may be based on Gender.
+& \textbf{BR-8:}The lifecycle of ride status is known.
 \hline
-Assumptions & $\bullet$ Map/routing provider (e.g., Google/OSM) is available and returns reliable place names, polylines, distance and duration. \\
+Assumptions & $\bullet$ Maps/Mapping services are available. Pilots are aware of a seat reservation procedure. \\
 & $\bullet$ Driver understands the effect of reserving one seat for themselves. \\
-& $\bullet$ Admin-configurable rules (max stops, auto-fare formula, review policy) exist and are set before go-live. \\
+& $\bullet$ The administrative ride settings are set up. \\
 \end{longtable}
 
 % ============================================================================
@@ -643,14 +648,14 @@ Use Case Name & Edit / Cancel Ride \\
 Actors & \textbf{Primary Actor:} Driver \\
 & \textbf{Secondary Actors:} Passenger(s), Notification Service, Admin \\
 \hline
-Description & Driver may edit a published ride (when permitted by policy) or cancel a ride. The system enforces edit restrictions when confirmed bookings exist and notifies affected passengers on cancellation. \\
+Description & Drivers have the ability to adjust ride information if allowed or to cancel a ride. Restrictions are applied if there are bookings, and notifications are made if a booking is cancelled. \\
 \hline
 Trigger & Driver selects a ride from My Rides and chooses Edit or Cancel. \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. Driver opens My Rides and selects a ride. \\
-& 2. If Edit is chosen, the system displays editable fields and validates changes before saving. \\
-& 3. If Cancel is chosen, the system requests a reason and asks for confirmation. \\
-& 4. On confirmation, the system updates ride status to CANCELLED and notifies affected passengers. \\
+Normal (Basic) Flow (Main Success Scenario) & 1. Opens ride as the driver. \\
+& 2. The information or the desire for cancellation is determined by driver edits.System validates updates. \\
+& 3. If being cancelled, a reason would be requested. \\
+& 4. Ride status is updated and notification sent. \\
 \hline
 Preconditions & $\bullet$ Driver is authenticated and is the owner of the ride. \\
 & $\bullet$ Ride is in a state that allows editing/cancellation per policy. \\
@@ -693,18 +698,18 @@ Use Case Name & Mark Ride as Complete \\
 Actors & \textbf{Primary Actor:} Driver \\
 & \textbf{Secondary Actors:} Passenger(s), Notification Service, Admin \\
 \hline
-Description & At trip end the Driver marks the ride as complete. The system finalizes ride state, records completion timestamp, triggers notifications, and enables rating and feedback workflows. \\
+Description & Driver completes the trip at the end of the trip. The system captures the completed information, updates the riding information, informs the riders and enables the rating and feedback function. \\
 \hline
 Trigger & Driver selects Mark Ride as Complete in the driver app. \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. Driver reaches the final destination. \\
-& 2. Driver taps Mark Ride as Complete. \\
-& 3. System validates ride state (must be IN\_PROGRESS) and records completion timestamp. \\
-& 4. System notifies passengers and opens rating/feedback prompts. \\
+Normal (Basic) Flow (Main Success Scenario) & 1. After reaching the destination point, driver drives away. \\
+& 2. Driver finishes the ride. \\
+& 3. Recording happens of the passage of time. \\
+& 4. Passenger is alerted and rates are prompted. \\
 \hline
-Preconditions & $\bullet$ Ride status is IN\_PROGRESS. \\
+Preconditions & $\bullet$ The ride status is IN_PROGRESS. \\
 \hline
-Postconditions & $\bullet$ Ride status becomes COMPLETED and completion event is recorded in audit logs. \\
+Postconditions & $\bullet$ Ride is marked as completed. Records of completion are kept. Alternate Flows and Exceptions. \\
 \hline
 Alternate Flows \& Exceptions & \textbf{AF-1 — Completion blocked by active dispute/SOS} \newline If an active dispute or SOS exists, block completion until resolution. \\
 \hline
@@ -740,14 +745,14 @@ Use Case Name & Browse Rides \\
 Actors & \textbf{Primary Actor:} Passenger \\
 & \textbf{Secondary Actors:} ML Service (for ranking), Map Service, Notification Service \\
 \hline
-Description & A verified Passenger searches and browses available rides using filters (origin/destination, date/time, gender preference, price, vehicle type, negotiation). The system returns ride cards with key information and options to view details or book. \\
+Description & Verified passenger uses the filters to browse and search public transport options, including their origin and destination, dates and times, gender preferences, costs, vehicle type, and negotiation. Matching ride cards will appear on the system with important details as well as a view or go link to view ride details or book a ride. \\
 \hline
 Trigger & Passenger opens the Browse Rides screen. \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. Passenger opens Browse Rides and sees a default list (e.g., recommended rides and a search box). \\
-& 2. Passenger enters search criteria or applies filters. \\
-& 3. System queries the ride index and returns matching rides sorted by relevance/ranking. \\
-& 4. Passenger selects a ride to view details (UC-11) or taps Book to begin UC-12. \\
+Normal (Basic) Flow (Main Success Scenario) & 1. Passenger accesses Browne Rides web page and displays default list of rides, e.g., “recommended rides” list, or search function. \\
+& 2. The passenger enters the search criteria / applies the filters. \\
+& 3. The system performs search operations on the rides database to return some rides that are relevant to the searched query with rank based on the relevancy and recommendation criteria. \\
+& 4. Customer clicks on a ride which displays the details of the ride or starts the booking process. \\
 \hline
 Preconditions & $\bullet$ Passenger is authenticated and verified. \\
 & $\bullet$ The system has active published rides. \\
@@ -756,11 +761,11 @@ Preconditions & $\bullet$ Passenger is authenticated and verified. \\
 Postconditions & $\bullet$ Passenger sees matching rides and can proceed to UC-11 or UC-12. \\
 & $\bullet$ Search activity may be logged for analytics/personalization. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — No matches found} \newline Show ``No rides found'' and suggest adjusting filters or pickup area. \\
-& \textbf{AF-2 — Map unavailable} \newline Fall back to a textual list view if map tiles fail. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — No matches found} \newline If the system doesn't find any rides that match the search criteria, it displays a message stating that no rides were found with the given filters and recommends that filters are adjusted or the pickup area might be changed. \\
+& \textbf{AF-2 — Map unavailable} \newline When maps are not available, there is a text-based list view of rides. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Only PUBLISHED rides with departure times in the future are shown. \\
-& \textbf{BR-2:} Ride cards do not expose passenger PII; contact details are hidden prior to confirmation. \\
+Business Rules (BR) & \textbf{BR-1:} Only rides that have been published and have a future departure time will be shown. \\
+& \textbf{BR-2:} The listing of people on a ride is not to be used to publish those people's personally identifiable information (PII), and contact information is not exposed until confirmed. \\
 \hline
 Assumptions & $\bullet$ Search/index data is available and refreshed periodically. \\
 \end{longtable}
@@ -841,16 +846,17 @@ Use Case Name & Book Ride (select seats / pickup \& drop) \\
 Actors & \textbf{Primary Actor:} Passenger (verified) \\
 & \textbf{Secondary Actors:} Driver, Notification Service, Admin (for escalations/disputes) \\
 \hline
-Description & Passenger books one or more seats on a published ride by selecting pickup and drop stops from the driver route, choosing seat count (and gender split if applicable), confirming fare/payment preference, and submitting a booking request. The system verifies availability, records the booking, and notifies the driver to accept or reject. \\
+Description & A passenger schedules a trip for himself or herself from a trip published by the driver, indicating the number of seats needed, any gender preference that may apply, fare and payment types, and requests a booking. This system checks whether there is a seat available or not, logs the booking and informs the driver whether to accept or decline the booking. \\
 \hline
 Trigger & Passenger taps Book Ride from Ride Details (UC-11). \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. Passenger selects pickup and drop stops from the driver's route. \\
-& 2. Passenger selects seat count; UI enforces any gender-preference constraints. \\
-& 3. System calculates fare for the selected segment and displays a breakdown. \\
-& 4. Passenger submits the booking request. \\
-& 5. System creates a booking with status REQUESTED and notifies the driver. \\
-& 6. Driver accepts or rejects; on accept booking moves to CONFIRMED and passenger is notified. \\
+Normal (Basic) Flow (Main Success Scenario) 
+& 1. The driver sends signals to the passenger to pick up or drop off located at points on his/her route. \\
+& 2. The number of seats is determined by the passenger, and a gender preference rule is enforced, if applicable. \\
+& 3. The system figures out the fare amount for the selected route piece and provides a breakdown of the fare. \\
+& 4. Passenger submits Request for booking. \\
+& 5. System generates a booking with a REQUESTED status and informs the driver. \\
+& 6. Driver accepts/rejects the request. Access to the booking is accepted and it will update to CONFIRMED and send the passenger a notification. \\
 \hline
 Preconditions & $\bullet$ Passenger is authenticated and verified. \\
 & $\bullet$ Ride is PUBLISHED and has available seats. \\
@@ -858,8 +864,8 @@ Preconditions & $\bullet$ Passenger is authenticated and verified. \\
 Postconditions & $\bullet$ Booking recorded and transitions to CONFIRMED or REJECTED. \\
 & $\bullet$ Notifications are sent to driver and passenger. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Seats no longer available} \newline If availability changes before confirmation, reject the request and prompt passenger to retry. \\
-& \textbf{AF-2 — Driver does not respond} \newline If driver does not respond within the configured window, booking expires/cancels per policy and passenger is notified. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — No Seats Left} \newline When there is change of seats before confirmation, the booking will be cancelled and offered to them once again for booking. \\
+& \textbf{AF-2 — Motorist does not respond} \newline If the driver doesn't respond within the allotted time, the booking is exponentially canceled or rolled over based on the policies and the Passenger is informed. \\
 \hline
 Business Rules (BR) & \textbf{BR-1:} Seat reservation/lock window is configurable; seats release on expiry. \\
 & \textbf{BR-2:} Driver contact details are shared only after booking is confirmed (policy-based). \\
@@ -894,7 +900,7 @@ Use Case Name & Post-Booking Chat (1:1 \& Broadcast) \\
 Actors & \textbf{Primary Actors:} Driver, Passenger(s) (confirmed bookings) \\
 & \textbf{Secondary Actors:} Notification Service, Admin (for logs/disputes) \\
 \hline
-Description & Once a booking has been made, the system allows in-app messaging between driver and passenger (one-to-one). The driver can also send a broadcast message to one or more confirmed passengers for coordination. Broadcast is delivered as separate one-to-one messages to each recipient. \\
+Description & Once booked, an in-app messaging tool enables one-on-one driver-passenger communication. The driver can additionally broadcast tasks to a number of confirmed passenger vehicles. Individual broadcasts are sent to each selected passenger. \\
 \hline
 Trigger & Booking becomes CONFIRMED or driver initiates a broadcast from ride management. \\
 \hline
@@ -907,8 +913,8 @@ Preconditions & $\bullet$ Booking status is CONFIRMED. \\
 \hline
 Postconditions & $\bullet$ Chat messages are saved and associated with booking/ride for audit and dispute resolution. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Recipient offline} \newline Message delivery is queued and delivered when recipient reconnects; push notifications are sent if possible. \\
-& \textbf{AF-2 — Blocked user} \newline If a user blocks the other, chat is disabled; Admin may review logs per policy. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — Recipient offline} \newline In case the recipient is offline, the message is queued to be delivered once the recipients' connection is restored. When applicable, push notifications are sent out. \\
+& \textbf{AF-2 — Blocked user} \newline When one user Blocks another user, no messages can be sent. Communication logs may be reviewed by the administrator per communication platform policies. \\
 \hline
 Business Rules (BR) & \textbf{BR-1:} Only driver may broadcast; passengers cannot broadcast. \\
 & \textbf{BR-2:} Broadcast recipients must be selected from confirmed passengers for that ride. \\
@@ -943,22 +949,22 @@ Use Case Name & Pre-Ride Reminders \& Permission Prompt \\
 Actors & \textbf{Primary Actors:} Passenger, Driver \\
 & \textbf{Secondary Actors:} Notification Service, GPSService, Admin \\
 \hline
-Description & Before a scheduled ride start time, the system sends reminders and prompts users to confirm readiness and grant required permissions (location/notifications). This supports timely pickup and enables live tracking features. \\
+Description & Remind users and give any permissions they need before they have ready to depart from a ride. During this process, they make sure time is kept, and they can provide the functionality of being able to track it live. \\
 \hline
 Trigger & Reminder schedule detects an upcoming ride in the configured time window, or user opens the app within the pre-ride window. \\
 \hline
-Normal (Basic) Flow (Main Success Scenario) & 1. System sends a reminder notification to the driver and passengers. \\
-& 2. User opens the reminder, sees the readiness prompt, and is asked to allow required permissions if missing. \\
-& 3. User confirms readiness; system records readiness state and notifies the other party if applicable. \\
+Normal (Basic) Flow (Main Success Scenario) & 1. Reminder messages are sent to the driver and the passengers. \\
+& 2. The user accesses the reminder notification, checks the readiness prompt and gives any required permissions when asked. \\
+& 3. Then the user confirms readiness and the state of readiness is recorded by the system and notified to the other party if it is needed. \\
 \hline
 Preconditions & $\bullet$ Ride is scheduled/confirmed and within the reminder window. \\
 & $\bullet$ Notification token is available for push notifications (if enabled). \\
 \hline
 Postconditions & $\bullet$ Reminders are sent; readiness and permission state are recorded. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Permission denied} \newline If user denies GPS/notification permission, system logs the state and continues with limited location-based features. \\
-& \textbf{AF-2 — Last-minute cancellation} \newline User cancels from the reminder flow; cancellation follows UC-8 and notifies affected parties. \\
-& \textbf{AF-3 — Notification delivery failure} \newline If push fails, system falls back to in-app notification listing and may use other configured channels. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — Permission denied} \newline If the user denies the location and notification permissions the system also saves the decision made and runs with partial location-based functionality. \\
+& \textbf{AF-2 — Last-minute cancellation} \newline When a user cancels, the cancellation process takes place per established cancellation procedure, and informs all concerned. \\
+& \textbf{AF-3 — Notification delivery failure} \newline If notifications through mms are unsuccessful then it switches to notifications in the app, and possibly establish other speaking channels. \\
 \hline
 Business Rules (BR) & \textbf{BR-1:} Reminder windows are configurable. \\
 & \textbf{BR-2:} Duplicate reminders for the same ride/window are prevented. \\
@@ -993,56 +999,64 @@ Use Case Name & Live Ride Tracking \& Status Updates \\
 Actors & \textbf{Primary Actors:} Driver, Passenger(s) \\
 & \textbf{Secondary Actors:} Notification Service, Map/Routing Service, GPSService, Admin \\
 \hline
-Description & Once a ride starts, the system provides near real-time GPS tracking of the driver's vehicle, displays live ETA updates to all passengers, and shows route progress on an interactive map. The system handles GPS loss, recalculates ETAs based on distance and speed, and sends notifications for significant events (approaching pickup/drop, delays, route deviations). \\
+Description & Once a ride starts, the system offers almost real-time GPS location of the driver's vehicle and live estimated arrival times for passengers, and documents the route progress on an interactive map. The system supports GPS disconnection, can work out the arrival time based on distance and speed and can alert users of important events like proximity to pick-up points, delays, turns and drop-offs.. \\
 \hline
-Trigger & Ride status changes to ``IN\_PROGRESS'' (after verification of pickup code or start confirmation). Driver's app activates GPSService and begins sending location updates to the backend. \\
+Once verified that the ride has been picked up or confirmed to have started, the ride status will be updated to “In Progress”. GPS positioning begins after the driver has submitted an application, and he is beginning to transmit his position to the back-end system.
+
 \hline
-Normal Flow — Driver Perspective & 1. Driver starts the ride (UC-17 triggers this). \\
-& 2. System activates GPS tracking and begins sending driver's coordinates every 3 seconds to the backend. \\
-& 3. Backend updates ride location; passengers fetch live updates using periodic REST polling and receive push notifications for critical events. \\
-& 4. Driver's app displays: \newline $\bullet$ Current route (with highlighted path). \newline $\bullet$ Passenger pickup/drop points. \newline $\bullet$ Current speed and ETA. \\
-& 5. System recalculates ETA at intervals (e.g., every 30 seconds or distance delta $>$ 100m). \\
-& 6. Driver continues journey while system maintains connection. \\
-& 7. Upon reaching destination, driver marks the ride completely (UC-9). \\
+Normal Flow — Driver  
+&1. The initial "ride" begins with the driver. \\
+&2. GPS tracking is turned on and the driver's position is sent to the backend every 3 seconds. \\
+&3. Backend updates ride location, and live updates and key notifications delivered to passengers. \\
+&4. Real-time route, passenger pick up/drop off, current speed and estimated arrival will be visible in the driver's application. \\
+&5. System updates arrival estimates at intervals or if there are any substantial changes in location. \\
+&6. While the system keeps connections, 6. The driver goes on travelling. \\
+&7. Seven Place: The driver marks the ride done once the destination is arrived at. \\
 \hline
-Normal Flow — Passenger Perspective & 1. Passenger opens the app $\rightarrow$ ride status shown as ``In Progress''. \\
-& 2. Map screen shows: \newline $\bullet$ Driver's live location (car icon). \newline $\bullet$ Passenger's pickup/drop pins. \newline $\bullet$ Real-time ETA countdown. \\
-& 3. If passenger minimizes app, background notifications update ETA or alert when ``Driver is near destination.'' \\
-& 4. Passenger can trigger SOS (UC-20) or open Chat (UC-22) directly from tracking screen. \\
-& 5. Ride continues until marked reached by passenger. \\
+Normal Flow — Passenger Perspective 
+& 1. The passenger opens the application and sees the ride marked as “In Progress.” \\
+& 2. The map screen displays the driver’s live location, pickup and drop-off locations, and a real-time ETA countdown. \\
+& 3. If the application is minimized, background notifications continue to provide ETA updates and arrival alerts. \\
+& 4. The passenger can access emergency assistance or chat features directly from the tracking screen. \\
+& 5. The ride continues until completion is confirmed. \\
 \hline
-Preconditions & $\bullet$ Ride must be in IN\_PROGRESS status. \\
-& $\bullet$ Both Driver and Passengers must have granted location permission. \\
-& $\bullet$ Internet connectivity is active for both devices. \\
-& $\bullet$ Driver's app successfully transmits GPS coordinates to the backend. \\
+Preconditions 
+& $\bullet$ The ride status is “In Progress.” \\
+& $\bullet$ Driver and passengers have granted location permissions. \\
+& $\bullet$ Internet connectivity is available. \\
+& $\bullet$ The driver’s application is successfully transmitting GPS data. \\
 \hline
-Postconditions & $\bullet$ Both sides can view continuous location updates during the ride. \\
-& $\bullet$ ETA is dynamically recalculated and displayed. \\
-& $\bullet$ Notifications sent on critical events (e.g., approaching destination, delays). \\
-& $\bullet$ Trip route and timestamps logged for future audit or dispute resolution. \\
+Postconditions 
+& $\bullet$ Continuous location updates are available to authorized users during the ride. \\
+& $\bullet$ ETA values are dynamically updated. \\
+& $\bullet$ Notifications are sent for important ride events. \\
+& $\bullet$ Route history and timestamps are stored for auditing and dispute resolution. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — GPS Signal Lost (Driver)} \newline If driver's GPS is unavailable $>$ 30 seconds, backend extrapolates last known position. System notifies passengers: ``Driver's location temporarily unavailable.'' Resumes automatically when connection is restored. \\
-& \textbf{AF-2 — Passenger GPS Disabled} \newline If passengers' GPS off, app prompts to re-enable location to improve ETA accuracy. System falls back to network-based location if possible. \\
-& \textbf{AF-3 — Internet Disconnected} \newline If any user loses connection, catch last-known route shown until reconnect. Notification Service retries updates for up to 5 minutes. \\
-& \textbf{AF-4 — Delayed Arrival} \newline If ETA delay exceeds configured threshold (e.g., $>$ 5 min), Notification Service alerts passengers automatically. \\
-& \textbf{AF-5 — Route Deviation Detected} \newline If drivers deviate significantly ($>$ 300m) from predefined route, system sends alert to passenger and logs event for Admin review. \\
-& \textbf{AF-6 — Passenger Leaves Early} \newline Passenger could mark themselves as ``Dropped Early'' if destination reached sooner. Tracking continues for remaining passengers. \\
-& \textbf{AF-7 — Multi-Passenger Ride} \newline System manages separate pickup/drop coordinates and status for each passenger. Driver's ETA per passenger updated dynamically as others are dropped off. \\
+Alternate Flows \& Exceptions 
+& \textbf{AF-1 — GPS Signal Lost} \newline When GPS signal is lost for more than 30 seconds, system works out where the vehicle is most likely to have been based on the last known position and alerts passengers. GPS tracking restarts as soon as GPS signal is received. \\
+& \textbf{AF-2 — Passenger GPS Disabled} \newline When a passenger's GPS is off, it prompts them to turn it back on again and, if that's not possible, it employs various location alternatives. \\
+& \textbf{AF-3 — Loss of Internet Connection} \newline In the event of a loss in connection, as much as the application can tell, it will show you the last known route information until you are reconnected. The updates are retried by the notification services. \\
+& \textbf{AF-4 — Delayed Arrival} \newline Notices are automatically displayed to passengers if they are expected to be late for more than an expected amount of time. \\
+& \textbf{AF-5 — Route Deviation } \newline In the event the driver deviates (to a certain extent) from the course designed, the system will warn passengers and store the incident for administration inspection. \\
+& \textbf{AF-6 — Early Passengers Departure} \newline Travellers can let the staff know that they were dropped off ahead of schedule. For those who haven't left the boat, tracking remains in effect. \\
+& \textbf{AF-7 — Multi-Passenger Ride} \newline It maintains different pickup and drop off points for each passenger and updates the ETAs in real time for each, throughout the journey. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Location update interval configurable (default 3 seconds). \\
-& \textbf{BR-2:} ETA calculation is based on distance-to-destination and the driver's speed (or inferred speed when GPS speed is unavailable). \\
-& \textbf{BR-3:} Driver GPS tracking mandatory once ride started. \\
-& \textbf{BR-4:} Only authorized passengers (linked to ride\_id) can view live maps. \\
-& \textbf{BR-5:} Route deviation threshold configurable in Admin panel. \\
-& \textbf{BR-6:} Location updates stored in databases. \\
-& \textbf{BR-7:} Admin can monitor active rides and incident signals as a safety feature, including access to trip context and latest known location data when available. \\
-& \textbf{BR-8:} Ride tracking auto-pauses if app minimized for $>$ 10 minutes (unless in background mode). \\
-& \textbf{BR-9:} System automatically stops tracking when driver marks ride complete. \\
+Business Rules (BR) 
+& \textbf{BR-1:} Initiated Location Update Frequency can be set between one (1) and three (3) seconds with a default of three (3) seconds.\\
+& \textbf{BR-2:} ETA: Based on remaining distance and vehicle speed.\\
+& \textbf{BR-3:} Ride monitoring with GPS for the driver is provided from start of ride.\\
+& \textbf{BR-4:} Live tracking is only available for passengers registered with the ride.\\
+& \textbf{BR-5:} Route deviation thresholds – can be set.\\
+& \textbf{BR-6:} The database records are used to store location updates.\\
+& \textbf{BR-7:} Ride monitoring and monitoring of incidents affecting the safety of riders is possible at any time for the administrators when they want to.\\
+& \textbf{BR-8:} Note: If the application is kept minimized for a while, tracking may be suspended automatically (unless it is set to always track).\\
+& \textbf{BR-9:} Tracking will be automatically stopped when the driver marks the ride as complete.\\
 \hline
-Assumptions & $\bullet$ GPS accuracy $\pm$10 meters under good conditions. \\
-& $\bullet$ Map API (Google/OSM) available with minimal latency. \\
-& $\bullet$ Clients fetch tracking updates using periodic REST polling; push notifications are used for critical events. \\
-& $\bullet$ Both users maintain active mobile data during the ride. \\
+Assumptions 
+& $\bullet$ The accuracy of GPS is usually within 10 meters when the conditions are normal.
+& $\bullet$ Minimal delays in the operation of Mapping services.
+& $\bullet$ Currently, updates to the clients are done by periodic requests and critical events are pushed to the clients.
+& $\bullet$ All users will have an active cellular data link on their mobile devices during the journey.
 \hline
 \end{longtable}
 
@@ -1073,43 +1087,46 @@ Use Case Name & Pickup Code Generation \& Verification (Start Ride) \\
 Actors & \textbf{Primary Actor:} Driver, Passenger (the passenger whose pickup is next) \\
 & \textbf{Secondary Actors:} Notification Service, GPSService (geofencing), Admin, Audit/Logging service \\
 \hline
-Description & When approaching a passenger's pickup location, the driver generates a one-time pickup code (OTP-style) that the passenger must enter to verify identity and confirm boarding. This prevents wrong pickups and ensures passenger-driver pairing. The system enforces proximity (configurable default 100 m), a limited number of attempts (default 3), allows the driver to regenerate a code, and logs all attempts for audit and dispute resolution. On successful verification, booking state changes to RIDE\_STARTED and tracking/payment flows continue. \\
+Description & A one-time pick-up code will be generated as the driver gets close to the passenger's pick-up location and then will be used to verify the passenger's identity before boarding. This helps to prevent "wrong pickups" and correct passenger-to-driver match. Proximity requirements, verification limits, code regeneration when needed, and audit and dispute record keeping. Successful verification will alter the booking status to “Started”. \\
 \hline
-Trigger & Driver taps an avatar/marker of a passenger on the live map when the driver is within the configured proximity (default 100 m) and selects Generate Pickup Code. \\
+Trigger & The driver will pick a passenger marker on the map when he is within the limit distance of the pickup location and click on the button of "Generate Pickup code". \\
 \hline
-Normal Flow (success scenario) & 1. Driver arrives near passenger pickup location; driver map shows passenger avatar/marker. \\
-& 2. Driver taps passenger profile image on the map and taps Generate Pickup Code. \\
-& 3. Client calls server endpoint POST /rides/ride\_id/bookings/(booking\_id)/pickup-code. Server generates a secure random code, stores hashed code with metadata, and returns confirmation to the driver client. \\
-& 4. Driver's client displays the generated code (visible only to driver); passenger reads the code. \\
-& 5. Passenger enters the code manually in the passenger app entry field under the booking. \\
-& 6. Passenger submits the code; client calls server POST /pickup-code/verify with booking\_id, passenger\_id, entered\_code. \\
-& 7. Server verifies the code matches the stored hashed code, code is not expired, attempt\_count $<$ max\_attempts, and driver's last known location is within the allowable geofence (default 100 m) of pickup point. \\
-& 8. If verification passes, server: \newline $\bullet$ marks code as used. \newline $\bullet$ sets booking status RIDE\_STARTED. \newline $\bullet$ records pickup\_time and locations. \newline $\bullet$ triggers Notification Service to send confirmations. \newline $\bullet$ enables in-ride features. \\
-& 9. UI updates for both parties to show active ride state and next steps. \\
+Normal Flow (success scenario) 
+& 1. The driver makes it to the passenger's pick up point, and pulls up the passenger marker in the map.
+& 2. The driver then picks the profile of the passenger to whom they wish to send the car and asks for a pickup code.
+& 3. The server produces and securely saves a random number, with other related data and says it made one.
+& 4. The driver's application shows the code generated.
+& 5. Different methods for adding the code to the app.
+& 6. The code is submitted, verified by the passenger.
+& 7. System validates the code is valid, not expired, will allow for a few more attempts, and the driver is within location limits of the geofenced area.
+& 8. Upon successful verification:Marks code as used. The booking goes to “Ride Started” status. Time & location data captured. Both parties are notified. All in-ride features are made available.
+& 9. Ride information is updated for both users for the active ride.
 \hline
-Preconditions & $\bullet$ Ride status is CONFIRMED and not yet IN\_PROGRESS for that passenger. \\
-& $\bullet$ Driver and passenger are linked to the same ride/booking. \\
-& $\bullet$ Driver and passenger have granted location permission. \\
-& $\bullet$ Notification Service is available to push code/notifications. \\
-& $\bullet$ System enforces configurable proximity threshold and attempt limits. \\
+Preconditions 
+& $\bullet$ The booking is confirmed and the ride has not yet started for the passenger.
+& $\bullet$ Passenger and driver's same booking.
+& $\bullet$ Permitting Location: Both users have enabled Location.
+& $\bullet$ This service is available for notification.
+& $\bullet$ The system enforces proximity and attempts limit rules.
 \hline
-Postconditions & $\bullet$ \textbf{On successful verification:} booking becomes RIDE\_STARTED, timestamp and device/location evidence logged, pickup code marked used, notifications sent to both parties, and live tracking / in-ride UI activated. \\
-& $\bullet$ \textbf{On failed verification after max attempts:} booking remains CONFIRMED, a retry request is surfaced to driver, and failed attempts are logged. \\
-& $\bullet$ All code generation and verification events persisted for audit. \\
+Postconditions & $\bullet$ \textbf{On successful verification:} If the booking is successfully verified, it updates the booking status to “Ride Started”, saves documentation, sets the code as used, notifies and activates ride-tracking functionality. \\
+& $\bullet$ \textbf{On failed verification after max attempts:} After maximum number of attempts, if verification fails the booking will be confirmed and resubmit options will be provided. \\
+& $\bullet$ The auditing and all code gen/verifications are logged. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Passenger Enters Wrong Code} \newline Server increments the attempt counter and returns a generic error message. UI shows remaining attempts. Passenger may retry until max attempts are exhausted. \\
-& \textbf{AF-2 — Exceeded Max Attempts} \newline Server marks code as FAILED and notifies driver with action suggestion: regenerate code or ask passenger for ID. \\
-& \textbf{AF-3 — Driver Regenerates Code Before Verification} \newline Driver can generate a new code; previous code is invalidated. New code has fresh expiry and attempts. \\
-& \textbf{AF-4 — Geofence Not Satisfied} \newline If driver is not within required distance (100m) when generating or verifying, server rejects with error: ``You must be closer to pickup location.'' \\
-& \textbf{AF-5 — Code Expired} \newline If code expires before verification, passenger sees ``Code expired'' and must request a new code from driver. \\
-& \textbf{AF-6 — Network Issues During Verification} \newline If network fails during verification, client retries. If persistent, allow offline mode with manual verification. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — Incorrect Code} \newline The system increments the number of attempts until it runs out, returns the general error message and tells the passenger about remaining attempts. \\
+& \textbf{AF-2 — Maximum Attempts Reached} \newline Could not send another message, max attempts exceeded. The code is deemed as failed and the driver is reminded to create a new code or verify identity with other approved means. \\
+& \textbf{AF-3 — Code Regeneration} \newline A new code is generated by the driver before the verification process, proving to be wrong in the process. \\
+& \textbf{AF-4 — Geofence Requirement Not Met} \newline When the driver is not in the correct distance from the pick up location, the system refuses the action and asks for the driver to move nearer the pick up location. \\
+& \textbf{AF-5 — Code Expired} \newline If the code is expired prior to use, the passenger is responsible to obtaining a new code from the driver. \\
+& \textbf{AF-6 — Network Problems} \newline For each application that fails to be verified due to connectivity, the process is repeated and if it is necessary, the application allows for alternative modes of verification. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Proximity threshold configurable (default 100 m). \\
-& \textbf{BR-2:} Max attempts per code configurable (default 3). \\
-& \textbf{BR-3:} Code expiry configurable (default 10 minutes). \\
-& \textbf{BR-4:} Driver can regenerate code up to limits (max 5 per ride). \\
-& \textbf{BR-5:} Codes must be unpredictable. \\
-& \textbf{BR-6:} All code generation and verification attempts logged. \\
+Business Rules (BR) 
+& \textbf{BR-1:} The proximity thresholds can be customized: the default is 100m. \\
+& \textbf{BR-2:} There is a default allowance of 3 verification attempts (can be changed). \\
+& \textbf{BR-3:} The expiration of code will be established and it can be configured, its default duration is 10 minutes. \\
+& \textbf{BR-4:} Codes are capable of regeneration by a driver within limits that have been defined. \\
+& \textbf{BR-5:} There are security and unpredictability requirements for codes generated. \\
+& \textbf{BR-6:} All generation and verification events are logged. \\
 \hline
 Assumptions & $\bullet$ Driver and passenger devices provide reasonably accurate GPS coordinates. \\
 & $\bullet$ Users keep devices secure. \\
@@ -1211,40 +1228,43 @@ Use Case Name & Ride Completion Confirmation (Driver Side) \\
 Actors & \textbf{Primary Actor:} Driver \\
 & \textbf{Secondary Actors:} Passenger(s), Notification Service, Payment module \\
 \hline
-Description & This use case describes the driver-side flow for confirming that a ride has concluded (final destination reached). When the driver marks the ride complete, the system finalizes ride state, triggers passenger rating prompts, and enforces constraints. Payment confirmation is manual: passenger pays via Cash or Bank Transfer / QR, marks ``I have paid'', and driver confirms ``I have received payment''. \\
+Description & This use case describes what the driver will do to make sure a ride has finished. The driver completes the trip and ride records are completed, and appropriate rate requests are authorized, and completion rules will be applied. Payment is done by hand where the driver accepts the payment and the passenger checks it. \\
 \hline
 Trigger & Driver taps ``Mark as Complete'' on the ride screen after reaching the final destination. \\
 \hline
-Normal Flow & 1. Passenger taps ``Reached'' $\rightarrow$ app displays driver's bank details or QR code. \\
-& 2. Passenger pays (Cash or Bank Transfer) and taps ``I have paid'' (optional receipt upload). \\
-& 3. Notification Service sends message to driver: ``Passenger has paid you.'' \\
-& 4. Driver reaches the final destination and taps ``I have received payment''. \\
-& 5. System marks ride as Completed and sends notifications to both parties. \\
-& 6. Passenger sees rating prompt; driver sees rating prompt after passenger submits ratings. \\
-& 7. System records completion evidence: timestamp, GPS trace, and audit logs. \\
-& 8. Driver becomes available for new rides. \\
+Normal Flow 
+& 1. The passenger is letting the driver know that they've arrived and is being handed that driver's payment info or QR code. \\
+& 2. After the passenger makes the payment by cash or bank transfer, he/she confirms it within the app. An optional receipt is allowed. \\
+& 3. Driver is notified that payment has been made via the notification service \\
+& 4. The driver acknowledges the receipt of payment. \\
+& 5. The system “completes” the ride and informs all necessary parties. \\
+& 6. The rating prompts are presented to the passenger and then the driver. \\
+& 7. The system captures proof of proof, such as time stamps, GPS data and audits trails. \\
+& 8. Driver becomes available to take new ride requests. \\
 \hline
 Preconditions & $\bullet$ Ride status is IN\_PROGRESS. \\
 & $\bullet$ Driver is at or near the ride's final destination (server-side geofence check recommended). \\
 \hline
-Postconditions & $\bullet$ Ride status becomes COMPLETED. \\
-& $\bullet$ Booking statuses for all passengers are set to COMPLETED or appropriate final states. \\
-& $\bullet$ Driver becomes available for new rides. \\
-& $\bullet$ Audit logs are saved (completion time, GPS trace, driver id). \\
+Postconditions 
+& $\bullet$ The status of the ride changes to Completed. \\
+& $\bullet$ Passengers' bookings are brought to final. \\
+& $\bullet$ The driver is provided for future trips. \\
+& $\bullet$ Audit data for rides completed is securely stored. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Active SOS or Dispute Blocks Completion} \newline If an active SOS or unresolved dispute exists that blocks completion, the server allows driver to complete the ride and start anew. \\
-& \textbf{AF-2 — Geofence Check Fails} \newline If driver is outside the allowed geofence, server still allows completion and returns to the payment received confirmation and passenger rating screen. \\
-& \textbf{AF-3 — Network/Server Unavailable} \newline If the server cannot be reached, client shows an error and retries later. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — but is it more active than it is at Dispute?} \newline Even in the case of an emergency, the system enables completion of a case and the recording of any facts and events for later evaluation in the case of an unresolved dispute. \\
+& \textbf{AF-2 — Geofence Validation Failure:} \newline The system can allow completion if the driver is not in the designated completion area, but it will still be logged as a completion. \\
+& \textbf{AF-3 — Internet access is down.Network or Server Failure} \newline If the server connection fails, the application shows an error message and tries again in the background at a later time.\\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Driver may not start another IN\_PROGRESS ride until the current ride is marked COMPLETED. \\
-& \textbf{BR-2:} Server must perform geofence-based validation (default radius configurable; recommended 100 m). \\
-& \textbf{BR-3:} Completion event logs GPS evidence, device identifiers, and timestamp as immutable audit data. \\
-& \textbf{BR-4:} Driver-initiated completion requires confirmation opt-in for automatic passenger rating prompt. \\
-& \textbf{BR-5:} Soft-blocks and penalties apply for abnormal completion patterns. \\
-& \textbf{BR-6:} Driver can supply optional completion notes saved with the audit record. \\
+Business Rules (BR) 
+& \textbf{BR-1:} Drivers are not able to start another active ride until the ride has been officially done.
+& \textbf{BR-2:} Whenever possible, validate the geofence before it is finished in order to ensure the geofence is valid.
+& \textbf{BR-3:} Incident completion records should contain GPS data, device identification and time stamps.
+& \textbf{BR-4:} The automated rating prompts should be supported by completion actions.
+& \textbf{BR-5:} If a completion of the form is performed more than once in a way that affects the subsequent use, a suitable restriction or penalty can occur.
+& \textbf{BR-6:} Completed information notes can be optionally added to the ride record.
 \hline
-Assumptions & $\bullet$ Server clocks are authoritative and synchronized to avoid expiry/time-window inconsistencies. \\
-& $\bullet$ Admin has workflow and UI to view flagged completions and resolve disputes. \\
+Assumptions & $\bullet$ The time on the server is authoritative and synced. \\
+& $\bullet$ Administrative aids exist for review of flagged completions and to dispute a completion. \\
 \hline
 \end{longtable}
 % ============================================================================
@@ -1274,45 +1294,50 @@ Use Case Name & SOS / Emergency \\
 Actors & \textbf{Primary Actor:} User \\
 & \textbf{Secondary Actors:} Emergency Contacts, Admin, Notification Service, System Database \\
 \hline
-Description & This case describes the process when a user triggers an SOS emergency request during an active ride. The system immediately notifies the user's emergency contacts and Admin, provides location and incident details, and begins an incident response workflow. \\
+This use case is the process of emergency response that will be activated if an emergency occurs while your user is on the road. The system notifies emergency contacts, administrators and initiates an incident management flow in realtime and shares critical location and incident data. \\
 \hline
 Trigger & User presses the SOS button on the in-ride map screen (deliberate interaction, e.g., 321 countdown). \\
 \hline
-Normal Flow (Immediate SOS) & 1. User presses the SOS button on the in-ride map screen with deliberate confirmation. \\
-& 2. Client displays local feedback: ``SOS sent – help is being notified.'' \\
-& 3. Client sends SOS event to server with user\_id, ride\_id, booking\_id, timestamp, last\_known\_location, and device metadata. \\
-& 4. Server acknowledges receipt, returns a unique incident\_id, and marks the incident OPEN. \\
-& 5. Server notifies: \newline $\bullet$ Emergency contacts via SMS/email with username, ride id, phone, location, and suggested actions. \newline $\bullet$ Admin emergency queue with full details, recent GPS trace, chat logs, booking info, and connected flags. \\
-& 6. Server creates a high-priority Admin ticket and optionally opens a live Admin response channel. \\
-& 7. Notification content includes a one-tap link to open live location in a map app and quick-actions for contacts. \\
-& 8. System starts escalation timers; if unresolved within configured windows (e.g., 2h / 12h), it re-notifies emergency contacts or escalates to the Admin dispute queue. \\
-& 9. Admin monitors the incident, contacts emergency contacts, and escalates to authorities if required. \\
+Normal Flow (Immediate SOS) 
+& 1. The user has turned the SOS feature on purpose.
+& 2. Confirmation is shown on the application that help is being sent.
+& 3. Application shows SOS event with User details / Ride Information / Device location / Device metadata to server.
+& 4. Server accepts request, generates an incident record then activates the incident record.
+& 5. Notifications contain information related to the incident and response options to a 5 for the 5-actors outlined above.
+& 6. A high priority Administrative ticket is raised and a live response channel is set up as necessary.
+& 7. Quick access to live location information and emergency response actions were provided when people are notified.
+& 8. A key 8 rule of escalation timers is to ensure that incidents that do not solve escalate further and receive more administration.
+& 9. Administrators monitor and track situation, inform Emergency Contacts, seek enforcement assistance as needed
 \hline
-Preconditions & $\bullet$ User is logged in and associated with an active ride. \\
-& $\bullet$ User has at least one EmergencyContact configured. \\
-& $\bullet$ Device location services are enabled. \\
-& $\bullet$ Notification Service is available and fallback channels are configured. \\
+Preconditions 
+& $\bullet$ The user is signed in and taking part in a live ride. \\
+& $\bullet$ At least one emergency contact has been set up. \\
+& $\bullet$ The location services are turned on for the device. \\
+& $\bullet$ Notification services and fall back communications are in place. \\
 \hline
-Postconditions & $\bullet$ Emergency contacts and Admin receive prioritized incident notifications. \\
-& $\bullet$ Incident ticket is created with substantiating evidence. \\
-& $\bullet$ System records SOS events and responder actions for audit. \\
-& $\bullet$ Escalation timers are activated. \\
+Postconditions 
+& $\bullet$ Emergency contact and administrator receives urgent notification(s). \\
+& $\bullet$ An incident record is established and maintained along with supporting evidence. \\
+& $\bullet$ Auditing of sos actions and responses. \\
+& $\bullet$ Escalation procedures are activated. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Accidental Press Prevention} \newline SOS requires a deliberate confirmation action. If the user cancels, the system records an attempted SOS but does not notify contacts. \\
-& \textbf{AF-2 — False Alarm Cancelled} \newline If the user cancels immediately after activation, the system displays ``false alarm canceled'' and no SOS notification is sent. \\
-& \textbf{AF-3 — Admin Follow-up Calls} \newline Admin may contact emergency services or contacts manually; these actions are logged. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — Accidental Activation Prevention} \newline The SOS actually needs to be confirmed before you can use it. The system will mark an attempt, but not notify a contact if the user cancels out before completing. \\
+& \textbf{AF-2 — False Alarm Cancellation} \newline If request is cancelled immediately after it is activated, the system will close the request and prevent from sending out emergency notifications. \\
+& \textbf{AF-3 — Administrative Follow-Up} \newline The administrator(s) can directly call emergency services or designated contacts and all such calls are documented. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} SOS events are recorded immutably with timestamps, GPS trace, device metadata, and actor id. \\
-& \textbf{BR-2:} Outbound SOS notifications include only necessary information to protect privacy. \\
-& \textbf{BR-3:} SOS activation must be deliberate; rapid double-tap is not permitted. \\
-& \textbf{BR-4:} Notification delivery should use multi-channel escalation: push $\rightarrow$ SMS $\rightarrow$ email. \\
-& \textbf{BR-5:} Misuse thresholds for repeated false alarms are configurable and trigger Admin review. \\
-& \textbf{BR-6:} Sensitive fields such as CNIC and bank details must not be included in outward SOS messages. \\
-& \textbf{BR-7:} Admin response actions follow a documented incident-response playbook. \\
+Business Rules (BR) 
+& \textbf{BR-1:} SOS records need to be saved forever, and include timestamps, location, device details and identifiers of users.
+& \textbf{BR-2:} Only essential information is to be included in emergency notifications; information that might compromise privacy should not be included.
+& \textbf{BR-3:} The actuator is designed so that "SOS" is only activated when user action such as button pressing or micro-press is used.
+& \textbf{BR-4:} Remember to send a lot of notifications out, for reliability.
+& \textbf{BR-5:} If there are multiple false alarms it can lead to administrative review.
+& \textbf{BR-6:} Do not use sensitive personal information for emergency notifications.
+& \textbf{BR-7:} Administrative actions to be taken shall be in accordance with the established procedure for handling incidents.
 \hline
-Assumptions & $\bullet$ Users provide valid emergency contact phone numbers. \\
-& $\bullet$ Notification Service supports reliable SMS and push delivery. \\
-& $\bullet$ Admin responders exist to handle active SOS incidents. \\
+Assumptions 
+& $\bullet$ Users supply accurate Emergency contact details. \\
+& $\bullet$ Notification systems can consistently get a message to supported channels. \\
+& $\bullet$ Administrative staff are on hand to respond to emergency incidents. \\
 \hline
 
 \end{longtable}
