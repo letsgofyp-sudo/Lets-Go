@@ -248,7 +248,7 @@ Normal (Basic) Flow (Main Success Scenario) & 1. User opens the Upload Documents
 & 2. The node dialog displays document slots that are required and optional, accepted formats, and size limits. \\
 & 3. The user chooses one of the slots, e.g. CNIC front, and loads or takes a picture of it. \\
 & 4. The client validates (light validation) – file type, file size – and displays errors if validation fails. \\
-& 5. The client will send a multipart form with the file itself and the metadata like user ID, document type, date and time and optional vehicle ID for the file.
+& 5. The client will send a multipart form with the file itself and the metadata like user ID, document type, date and time and optional vehicle ID for the file. \\
 & 6. The server validates the file type, signature, size and dimensions of the file and stores this file securely. \\
 & 7. The server will generate a document record for this file, with status PENDING_REVIEW and information related to the file's location, document type, user ID or vehicle ID, upload date and time. \\
 & 8. Success is returned and the interface shows a thumbnail and status message indicating that the document is uploaded and awaiting Admin review. Yes, it is possible to receive confirmation from Notification Service. \\
@@ -315,8 +315,7 @@ Normal (Basic) Flow (Main Success Scenario) & 1. After enrollment/change of cont
 & 5. Both OTPs are validated by the server. Both are valid and in-expiry, then the state is set as PENDING_ADMIN_VERIFICATION and success is returned. \\
 & 6. The system will display a success message and take the user to the correct screen (e.g., login screen, profile). \\
 \hline
-Preconditions 
-& $\bullet$ The user has filled out the registration form or made a request to change the contact information. \\
+Preconditions & $\bullet$ The user has filled out the registration form or made a request to change the contact information. \\
 & $\bullet$ User can get email and telephone number given to them. \\
 & $\bullet$ Notification Service is up and running. \\
 \hline
@@ -336,7 +335,7 @@ Business Rules (BR) & \textbf{BR-1:} OTP expiry default is 5 minutes (Admin-conf
 & \textbf{BR-3:} To prevent abuse, the maximum number of resends for OTP's is limited for each time window. \\
 & \textbf{BR-4:} The reason is BR-4: OTPs should be sent only once, if sent again, previous ones are invalidated. \\
 & \textbf{BR-5:} Do not indicate what failed OTP channel, instead display a generic invalid OTP that does not fail and provides the number of attempts that are left. \\
-& \textbf{BR-6:} Document generation & verification of OTPs for auditing purposes and fraud control. \\
+& \textbf{BR-6:} Document generation \& verification of OTPs for auditing purposes and fraud control. \\
 & \textbf{BR-7:} When a workflow depends on the change in contact, re-verify before trying to apply the change. \\
 \hline
 Assumptions & $\bullet$ User provides email, phone that can be accessed by users. \\
@@ -464,12 +463,12 @@ Postconditions & $\bullet$ \textbf{Success result:} The success to create a vehi
 & $\bullet$ \textbf{Failure Results:} Error message will be shown and vehicle data will not be stored. \\
 \hline
 Alternate Flows \& Exceptions & \textbf{AF-1 — Validation Failure} \newline Inline errors or no information means you will not be able to submit. \\
-& \textbf{AF-2 — Image Upload Failure} \newline An image upload property was not found.An image upload property did not exist. If image size is not valid or the image format is not correct, it will show an error with the possibility of trying again.\\
-& \textbf{AF-3 — Duplicate Plate Number} \newline Does a duplicate plate exist?Is there a duplicate plate number? The system denies the entry if it does not have a new plate. \\
+& \textbf{AF-2 — Image Upload Failure} \newline An image upload property was not found. An image upload property did not exist. If image size is not valid or the image format is not correct, it will show an error with the possibility of trying again. \\
+& \textbf{AF-3 — Duplicate Plate Number} \newline Does a duplicate plate exist? Is there a duplicate plate number? The system denies the entry if it does not have a new plate. \\
 & \textbf{AF-4 — Vehicle Type Mismatch} \newline Incorrect seat count is alerted and adjusted by the system if a two-wheeler is assigned a wrong seat count. \\
 & \textbf{AF-5 — Admin Review Required} \newline If administrative review is needed, then the vehicle is not taken out of pending review until the vehicle is approved. \\
 \hline
-Business Rules (BR) 
+Business Rules (BR) & \\
 & \textbf{BR-1:} 2W vehicles must have seat count = 2 (system-enforced). \\
 & \textbf{BR-2:} Four-wheel vehicles can have a configurable number of seats. \\
 & \textbf{BR-3:} Numbers on the plates should be distinct. \\
@@ -606,15 +605,15 @@ Alternate Flows \& Exceptions & \textbf{AF-1 — validation fails} \newline You 
 & \textbf{AF-5 — Edits after passengers booked} \newline The arrival of available passenger bookings.Arrival of passenger bookings. Once confirmed bookings are made, there are no changes that can be made to the critical ride. \\
 & \textbf{AF-6 — Map service fails} \newline Rides can be stored as a draft to await mapping. \\
 \hline
-Business Rules (BR) 
-& \textbf{BR-1:}A seat is always reserved for the driver.
-& \textbf{BR-2:}The departure time should be after the current time.
-& \textbf{BR-3:}Two or more stop(s) needed.
-& \textbf{BR-4:}Ride data is stored with negotiation settings.
-& \textbf{BR-5:}Fare calculations are per a user-configured formula.
-& \textbf{BR-6:}Any modifications to rides are limited once the ride has been confirmed.
-& \textbf{BR-7:}The policy of seat allocation may be based on Gender.
-& \textbf{BR-8:}The lifecycle of ride status is known.
+Business Rules (BR) & \\
+& \textbf{BR-1:}A seat is always reserved for the driver.\\
+& \textbf{BR-2:}The departure time should be after the current time.\\
+& \textbf{BR-3:}Two or more stop(s) needed.\\
+& \textbf{BR-4:}Ride data is stored with negotiation settings.\\
+& \textbf{BR-5:}Fare calculations are per a user-configured formula.\\
+& \textbf{BR-6:}Any modifications to rides are limited once the ride has been confirmed.\\
+& \textbf{BR-7:}The policy of seat allocation may be based on Gender.\\
+& \textbf{BR-8:}The lifecycle of ride status is known.\\
 \hline
 Assumptions & $\bullet$ Maps/Mapping services are available. Pilots are aware of a seat reservation procedure. \\
 & $\bullet$ Driver understands the effect of reserving one seat for themselves. \\
@@ -999,13 +998,9 @@ Use Case Name & Live Ride Tracking \& Status Updates \\
 Actors & \textbf{Primary Actors:} Driver, Passenger(s) \\
 & \textbf{Secondary Actors:} Notification Service, Map/Routing Service, GPSService, Admin \\
 \hline
-Description & Once a ride starts, the system offers almost real-time GPS location of the driver's vehicle and live estimated arrival times for passengers, and documents the route progress on an interactive map. The system supports GPS disconnection, can work out the arrival time based on distance and speed and can alert users of important events like proximity to pick-up points, delays, turns and drop-offs.. \\
+Description & Once a ride starts, the system offers almost real-time GPS location of the driver's vehicle and live estimated arrival times for passengers, and documents the route progress on an interactive map. The system supports GPS disconnection, can work out the arrival time based on distance and speed and can alert users of important events like proximity to pick-up points, delays, turns and drop-offs. Once verified that the ride has been picked up or confirmed to have started, the ride status will be updated to “In Progress”. GPS positioning begins after the driver has submitted an application, and he is beginning to transmit his position to the back-end system. \\
 \hline
-Once verified that the ride has been picked up or confirmed to have started, the ride status will be updated to “In Progress”. GPS positioning begins after the driver has submitted an application, and he is beginning to transmit his position to the back-end system.
-
-\hline
-Normal Flow — Driver  
-&1. The initial "ride" begins with the driver. \\
+Normal Flow — Driver & 1. The initial "ride" begins with the driver. \\
 &2. GPS tracking is turned on and the driver's position is sent to the backend every 3 seconds. \\
 &3. Backend updates ride location, and live updates and key notifications delivered to passengers. \\
 &4. Real-time route, passenger pick up/drop off, current speed and estimated arrival will be visible in the driver's application. \\
@@ -1020,14 +1015,12 @@ Normal Flow — Passenger Perspective
 & 4. The passenger can access emergency assistance or chat features directly from the tracking screen. \\
 & 5. The ride continues until completion is confirmed. \\
 \hline
-Preconditions 
-& $\bullet$ The ride status is “In Progress.” \\
+Preconditions & $\bullet$ The ride status is “In Progress.” \\
 & $\bullet$ Driver and passengers have granted location permissions. \\
 & $\bullet$ Internet connectivity is available. \\
 & $\bullet$ The driver’s application is successfully transmitting GPS data. \\
 \hline
-Postconditions 
-& $\bullet$ Continuous location updates are available to authorized users during the ride. \\
+Postconditions & $\bullet$ Continuous location updates are available to authorized users during the ride. \\
 & $\bullet$ ETA values are dynamically updated. \\
 & $\bullet$ Notifications are sent for important ride events. \\
 & $\bullet$ Route history and timestamps are stored for auditing and dispute resolution. \\
@@ -1041,7 +1034,7 @@ Alternate Flows \& Exceptions
 & \textbf{AF-6 — Early Passengers Departure} \newline Travellers can let the staff know that they were dropped off ahead of schedule. For those who haven't left the boat, tracking remains in effect. \\
 & \textbf{AF-7 — Multi-Passenger Ride} \newline It maintains different pickup and drop off points for each passenger and updates the ETAs in real time for each, throughout the journey. \\
 \hline
-Business Rules (BR) 
+Business Rules (BR) & \\
 & \textbf{BR-1:} Initiated Location Update Frequency can be set between one (1) and three (3) seconds with a default of three (3) seconds.\\
 & \textbf{BR-2:} ETA: Based on remaining distance and vehicle speed.\\
 & \textbf{BR-3:} Ride monitoring with GPS for the driver is provided from start of ride.\\
@@ -1052,11 +1045,10 @@ Business Rules (BR)
 & \textbf{BR-8:} Note: If the application is kept minimized for a while, tracking may be suspended automatically (unless it is set to always track).\\
 & \textbf{BR-9:} Tracking will be automatically stopped when the driver marks the ride as complete.\\
 \hline
-Assumptions 
-& $\bullet$ The accuracy of GPS is usually within 10 meters when the conditions are normal.
-& $\bullet$ Minimal delays in the operation of Mapping services.
-& $\bullet$ Currently, updates to the clients are done by periodic requests and critical events are pushed to the clients.
-& $\bullet$ All users will have an active cellular data link on their mobile devices during the journey.
+Assumptions & $\bullet$ The accuracy of GPS is usually within 10 meters when the conditions are normal. \\
+& $\bullet$ Minimal delays in the operation of Mapping services. \\
+& $\bullet$ Currently, updates to the clients are done by periodic requests and critical events are pushed to the clients. \\
+& $\bullet$ All users will have an active cellular data link on their mobile devices during the journey. \\
 \hline
 \end{longtable}
 
@@ -1091,23 +1083,21 @@ Description & A one-time pick-up code will be generated as the driver gets close
 \hline
 Trigger & The driver will pick a passenger marker on the map when he is within the limit distance of the pickup location and click on the button of "Generate Pickup code". \\
 \hline
-Normal Flow (success scenario) 
-& 1. The driver makes it to the passenger's pick up point, and pulls up the passenger marker in the map.
-& 2. The driver then picks the profile of the passenger to whom they wish to send the car and asks for a pickup code.
-& 3. The server produces and securely saves a random number, with other related data and says it made one.
-& 4. The driver's application shows the code generated.
-& 5. Different methods for adding the code to the app.
-& 6. The code is submitted, verified by the passenger.
-& 7. System validates the code is valid, not expired, will allow for a few more attempts, and the driver is within location limits of the geofenced area.
-& 8. Upon successful verification:Marks code as used. The booking goes to “Ride Started” status. Time & location data captured. Both parties are notified. All in-ride features are made available.
-& 9. Ride information is updated for both users for the active ride.
+Normal Flow (success scenario) & 1. The driver makes it to the passenger's pick up point, and pulls up the passenger marker in the map. \\
+& 2. The driver then picks the profile of the passenger to whom they wish to send the car and asks for a pickup code. \\
+& 3. The server produces and securely saves a random number, with other related data and says it made one. \\
+& 4. The driver's application shows the code generated. \\
+& 5. Different methods for adding the code to the app. \\
+& 6. The code is submitted, verified by the passenger. \\
+& 7. System validates the code is valid, not expired, will allow for a few more attempts, and the driver is within location limits of the geofenced area. \\
+& 8. Upon successful verification:Marks code as used. The booking goes to “Ride Started” status. Time \& location data captured. Both parties are notified. All in-ride features are made available. \\
+& 9. Ride information is updated for both users for the active ride. \\
 \hline
-Preconditions 
-& $\bullet$ The booking is confirmed and the ride has not yet started for the passenger.
-& $\bullet$ Passenger and driver's same booking.
-& $\bullet$ Permitting Location: Both users have enabled Location.
-& $\bullet$ This service is available for notification.
-& $\bullet$ The system enforces proximity and attempts limit rules.
+Preconditions & $\bullet$ The booking is confirmed and the ride has not yet started for the passenger. \\
+& $\bullet$ Passenger and driver's same booking. \\
+& $\bullet$ Permitting Location: Both users have enabled Location. \\
+& $\bullet$ This service is available for notification. \\
+& $\bullet$ The system enforces proximity and attempts limit rules. \\
 \hline
 Postconditions & $\bullet$ \textbf{On successful verification:} If the booking is successfully verified, it updates the booking status to “Ride Started”, saves documentation, sets the code as used, notifies and activates ride-tracking functionality. \\
 & $\bullet$ \textbf{On failed verification after max attempts:} After maximum number of attempts, if verification fails the booking will be confirmed and resubmit options will be provided. \\
@@ -1232,8 +1222,7 @@ Description & This use case describes what the driver will do to make sure a rid
 \hline
 Trigger & Driver taps ``Mark as Complete'' on the ride screen after reaching the final destination. \\
 \hline
-Normal Flow 
-& 1. The passenger is letting the driver know that they've arrived and is being handed that driver's payment info or QR code. \\
+Normal Flow & 1. The passenger is letting the driver know that they've arrived and is being handed that driver's payment info or QR code. \\
 & 2. After the passenger makes the payment by cash or bank transfer, he/she confirms it within the app. An optional receipt is allowed. \\
 & 3. Driver is notified that payment has been made via the notification service \\
 & 4. The driver acknowledges the receipt of payment. \\
@@ -1245,8 +1234,7 @@ Normal Flow
 Preconditions & $\bullet$ Ride status is IN\_PROGRESS. \\
 & $\bullet$ Driver is at or near the ride's final destination (server-side geofence check recommended). \\
 \hline
-Postconditions 
-& $\bullet$ The status of the ride changes to Completed. \\
+Postconditions & $\bullet$ The status of the ride changes to Completed. \\
 & $\bullet$ Passengers' bookings are brought to final. \\
 & $\bullet$ The driver is provided for future trips. \\
 & $\bullet$ Audit data for rides completed is securely stored. \\
@@ -1255,13 +1243,13 @@ Alternate Flows \& Exceptions & \textbf{AF-1 — but is it more active than it i
 & \textbf{AF-2 — Geofence Validation Failure:} \newline The system can allow completion if the driver is not in the designated completion area, but it will still be logged as a completion. \\
 & \textbf{AF-3 — Internet access is down.Network or Server Failure} \newline If the server connection fails, the application shows an error message and tries again in the background at a later time.\\
 \hline
-Business Rules (BR) 
-& \textbf{BR-1:} Drivers are not able to start another active ride until the ride has been officially done.
-& \textbf{BR-2:} Whenever possible, validate the geofence before it is finished in order to ensure the geofence is valid.
-& \textbf{BR-3:} Incident completion records should contain GPS data, device identification and time stamps.
-& \textbf{BR-4:} The automated rating prompts should be supported by completion actions.
-& \textbf{BR-5:} If a completion of the form is performed more than once in a way that affects the subsequent use, a suitable restriction or penalty can occur.
-& \textbf{BR-6:} Completed information notes can be optionally added to the ride record.
+Business Rules (BR) & \\
+& \textbf{BR-1:} Drivers are not able to start another active ride until the ride has been officially done. \\
+& \textbf{BR-2:} Whenever possible, validate the geofence before it is finished in order to ensure the geofence is valid. \\
+& \textbf{BR-3:} Incident completion records should contain GPS data, device identification and time stamps. \\
+& \textbf{BR-4:} The automated rating prompts should be supported by completion actions. \\
+& \textbf{BR-5:} If a completion of the form is performed more than once in a way that affects the subsequent use, a suitable restriction or penalty can occur. \\
+& \textbf{BR-6:} Completed information notes can be optionally added to the ride record. \\
 \hline
 Assumptions & $\bullet$ The time on the server is authoritative and synced. \\
 & $\bullet$ Administrative aids exist for review of flagged completions and to dispute a completion. \\
@@ -1294,29 +1282,26 @@ Use Case Name & SOS / Emergency \\
 Actors & \textbf{Primary Actor:} User \\
 & \textbf{Secondary Actors:} Emergency Contacts, Admin, Notification Service, System Database \\
 \hline
-This use case is the process of emergency response that will be activated if an emergency occurs while your user is on the road. The system notifies emergency contacts, administrators and initiates an incident management flow in realtime and shares critical location and incident data. \\
+Description & This use case is the process of emergency response that will be activated if an emergency occurs while your user is on the road. The system notifies emergency contacts, administrators and initiates an incident management flow in realtime and shares critical location and incident data. \\
 \hline
 Trigger & User presses the SOS button on the in-ride map screen (deliberate interaction, e.g., 321 countdown). \\
 \hline
-Normal Flow (Immediate SOS) 
-& 1. The user has turned the SOS feature on purpose.
-& 2. Confirmation is shown on the application that help is being sent.
-& 3. Application shows SOS event with User details / Ride Information / Device location / Device metadata to server.
-& 4. Server accepts request, generates an incident record then activates the incident record.
-& 5. Notifications contain information related to the incident and response options to a 5 for the 5-actors outlined above.
-& 6. A high priority Administrative ticket is raised and a live response channel is set up as necessary.
-& 7. Quick access to live location information and emergency response actions were provided when people are notified.
-& 8. A key 8 rule of escalation timers is to ensure that incidents that do not solve escalate further and receive more administration.
-& 9. Administrators monitor and track situation, inform Emergency Contacts, seek enforcement assistance as needed
+Normal Flow (Immediate SOS) & 1. The user has turned the SOS feature on purpose. \\
+& 2. Confirmation is shown on the application that help is being sent. \\
+& 3. Application shows SOS event with User details / Ride Information / Device location / Device metadata to server. \\
+& 4. Server accepts request, generates an incident record then activates the incident record. \\
+& 5. Notifications contain information related to the incident and response options to a 5 for the 5-actors outlined above. \\
+& 6. A high priority Administrative ticket is raised and a live response channel is set up as necessary. \\
+& 7. Quick access to live location information and emergency response actions were provided when people are notified. \\
+& 8. A key 8 rule of escalation timers is to ensure that incidents that do not solve escalate further and receive more administration. \\
+& 9. Administrators monitor and track situation, inform Emergency Contacts, seek enforcement assistance as needed \\
 \hline
-Preconditions 
-& $\bullet$ The user is signed in and taking part in a live ride. \\
+Preconditions & $\bullet$ The user is signed in and taking part in a live ride. \\
 & $\bullet$ At least one emergency contact has been set up. \\
 & $\bullet$ The location services are turned on for the device. \\
 & $\bullet$ Notification services and fall back communications are in place. \\
 \hline
-Postconditions 
-& $\bullet$ Emergency contact and administrator receives urgent notification(s). \\
+Postconditions & $\bullet$ Emergency contact and administrator receives urgent notification(s). \\
 & $\bullet$ An incident record is established and maintained along with supporting evidence. \\
 & $\bullet$ Auditing of sos actions and responses. \\
 & $\bullet$ Escalation procedures are activated. \\
@@ -1325,17 +1310,16 @@ Alternate Flows \& Exceptions & \textbf{AF-1 — Accidental Activation Preventio
 & \textbf{AF-2 — False Alarm Cancellation} \newline If request is cancelled immediately after it is activated, the system will close the request and prevent from sending out emergency notifications. \\
 & \textbf{AF-3 — Administrative Follow-Up} \newline The administrator(s) can directly call emergency services or designated contacts and all such calls are documented. \\
 \hline
-Business Rules (BR) 
-& \textbf{BR-1:} SOS records need to be saved forever, and include timestamps, location, device details and identifiers of users.
-& \textbf{BR-2:} Only essential information is to be included in emergency notifications; information that might compromise privacy should not be included.
-& \textbf{BR-3:} The actuator is designed so that "SOS" is only activated when user action such as button pressing or micro-press is used.
-& \textbf{BR-4:} Remember to send a lot of notifications out, for reliability.
-& \textbf{BR-5:} If there are multiple false alarms it can lead to administrative review.
-& \textbf{BR-6:} Do not use sensitive personal information for emergency notifications.
-& \textbf{BR-7:} Administrative actions to be taken shall be in accordance with the established procedure for handling incidents.
+Business Rules (BR) & \\
+& \textbf{BR-1:} SOS records need to be saved forever, and include timestamps, location, device details and identifiers of users. \\
+& \textbf{BR-2:} Only essential information is to be included in emergency notifications; information that might compromise privacy should not be included. \\
+& \textbf{BR-3:} The actuator is designed so that "SOS" is only activated when user action such as button pressing or micro-press is used. \\
+& \textbf{BR-4:} Remember to send a lot of notifications out, for reliability. \\
+& \textbf{BR-5:} If there are multiple false alarms it can lead to administrative review. \\
+& \textbf{BR-6:} Do not use sensitive personal information for emergency notifications. \\
+& \textbf{BR-7:} Administrative actions to be taken shall be in accordance with the established procedure for handling incidents. \\
 \hline
-Assumptions 
-& $\bullet$ Users supply accurate Emergency contact details. \\
+Assumptions & $\bullet$ Users supply accurate Emergency contact details. \\
 & $\bullet$ Notification systems can consistently get a message to supported channels. \\
 & $\bullet$ Administrative staff are on hand to respond to emergency incidents. \\
 \hline
@@ -1369,38 +1353,39 @@ Use Case Name & View Disputes \& Evidence \\
 Actors & \textbf{Primary Actor:} Admin \\
 & \textbf{Secondary Actors:} Passenger (reporter), Driver (respondent), Notification Service, System Database \\
 \hline
-Description & This case describes how the Admin views disputes reported by users or auto-generated by the system. The Admin reviews dispute cases in a dashboard, examines attached evidence, and prepares the case for resolution. \\
+Description & This use case describes the process for an administrator to access and review users' or systems generated dispute. Administrators can review case information and view the supporting evidence, and make a dispute for resolution or to action further. \\
 \hline
-Trigger & A user submits a dispute, the system auto-generates a dispute, or Admin opens the ``Disputes'' section in the portal. \\
+Trigger & A dispute is brought to the Disputes section by the user, generated automatically by the system, or the administrator opens the Disputes section of the administration portal. \\
 \hline
-Normal Flow & 1. Admin navigates to Dispute Management $\rightarrow$ View Disputes. \\
-& 2. System displays a list of dispute cases sorted by priority, reported time, and status. \\
-& 3. Admin clicks on a specific dispute case. \\
-& 4. System retrieves dispute details, including: \newline $\bullet$ Dispute ID, reporter, respondent. \newline $\bullet$ Ride ID, route details, date/time. \newline $\bullet$ Description of complaints and category. \newline $\bullet$ Attached evidence (chat logs, GPS tracks, photos, receipts, SOS logs). \\
-& 5. Admin reviews all evidence and optionally filters timeline by timestamps. \\
-& 6. System allows Admin to annotate or highlight evidence. \\
-& 7. Admin marks the dispute as ``Reviewed'' or adds review notes. \\
-& 8. System saves Admin actions and updates the dispute record's status. \\
+Normal Flow & 1. The administrator clicks on the dispute management area and clicks on the view disputes link. \\
+& 2. The system displays a list of the Disputes sorted per priority, reporting time and the status of the current disputes. \\
+& 3. The administrator makes a specific dispute the subject of consideration. \\
+& 4. The system shows detailed dispute data information such as dispute identifier, dispute party, information of the rider, complaint information, and supporting information. \\
+& 5. If there is any indication of the trust, the administrator looks into the evidence and can filter on timestamp. \\
+& 6. Annotations, highlights and review comments can be added to the system. \\
+& 7. If it is determined that there is no evidence this content is inappropriate or a violation of the policies, the administrator marks the dispute as reviewed and/or records review notes. \\
+& 8. All actions are recorded and dispute record updated. \\
 \hline
-Preconditions & $\bullet$ Admin is logged in. \\
-& $\bullet$ Disputes exist in the system (Pending / Unresolved / Resolved). \\
-& $\bullet$ Dispute records are stored with related metadata. \\
+Preconditions & $\bullet$ The administrator is logged-on. \\
+& $\bullet$ There are dispute records in database. \\
+& $\bullet$ Applicable info about the dispute and metadata can be found. \\
 \hline
-Postconditions & $\bullet$ Admin has viewed dispute details and evidence. \\
-& $\bullet$ System updates the ``Last Viewed By'' and ``Viewed Timestamp'' fields. \\
+Postconditions & $\bullet$ The administrator has reviewed the issue and the supporting evidence. \\
+& $\bullet$ The system captures viewing and reviewer data, which includes timestamps and reviewers' information. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — No Evidence Attached} \newline If no evidence is attached, system shows ``No supporting evidence provided''. Admin may mark for ``User Follow-up''. \\
-& \textbf{AF-2 — Linked SOS Incident} \newline If a dispute is related to an SOS event, system includes SOS logs in the evidence viewer. \\
-& \textbf{AF-3 — Multiple Disputes on Same Ride} \newline System groups disputes by ride\_id and displays a consolidated view. \\
-& \textbf{AF-4 — Dispute Already Resolved} \newline If a dispute is already resolved, system shows a read-only view with resolution notes. \\
-& \textbf{AF-5 — Missing or Corrupted Evidence File} \newline If evidence is missing or corrupted, system logs a warning and displays a placeholder. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — No Supporting Evidence} \newline Student has not provided proof of content area standards. \\
+& \textbf{AF-2 — Related SOS Incident} \newline If a dispute is related to an SOS event, system includes SOS logs in the evidence viewer. \\
+& \textbf{AF-3 — Multiple Disputes for the Same Ride} \newline The system clusters together connected disputes and presents them grouped in one presentation. \\
+& \textbf{AF-4 — Old Dispute Solved} \newline In case the above resolution has been done precedingly, the system shows the read only version that has the resolution information. \\
+& \textbf{AF-5 — Missing or Missing or Damaged evidence} \newline If the evidence files don't exist or are corrupt, the system writes a warning and shows a stubbed out notification. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Only Admins with ``Dispute Management'' privileges can access dispute cases. \\
-& \textbf{BR-2:} Evidence records are immutable and cannot be edited by Admins. \\
-& \textbf{BR-3:} Sensitive information (CNIC, bank details) is masked from display. \\
-& \textbf{BR-4:} Admins can tag disputes by severity (Low, Medium, Critical). \\
-& \textbf{BR-5:} Viewing a dispute updates the audit log automatically. \\
-& \textbf{BR-6:} Resolved disputes are auto-archived after 90 days. \\
+Business Rules (BR) & \\
+& \textbf{BR-1:} Dispute records are only available to administrators who have dispute-management permissions. \\
+& \textbf{BR-2:} Evidence is Inalterable—does not change. \\
+& \textbf{BR-3:} Sensitive information is masked when displayed. \\
+& \textbf{BR-4:} Conflict/adversarial issues may be divided into levels of severity. \\
+& \textbf{BR-5:} Activity is automatically tracked for viewing in audit logs. \\
+& \textbf{BR-6:} Disputes that are resolved get archived after set retention period. \\
 \hline
 Assumptions & $\bullet$ All disputes are associated with existing rides. \\
 & $\bullet$ Chat and ride tracking data are stored and accessible by Admin tools. \\
@@ -1434,35 +1419,36 @@ Use Case Name & Resolve Dispute \\
 Actors & \textbf{Primary Actor:} Admin \\
 & \textbf{Secondary Actors:} Passenger (reporter), Driver (respondent), Notification Service (push/email/SMS) \\
 \hline
-Description & Admin reviews a dispute case with attached evidence and makes a decision to resolve the conflict. The system records the resolution, notifies involved parties, and updates related records such as refunds, penalties, or account status. \\
+Description & This use case outlines the dispute assessment, support/examination of evidence, decision-making and formal dispute resolution steps taken by the administrator. The system keeps track of the results, implements the steps needed and informs the relevant individuals. \\
 \hline
 Trigger & Admin opens a dispute case and decides to resolve it after reviewing evidence. \\
 \hline
-Normal Flow & 1. Admin opens a dispute case (UC-20) and reviews all evidence. \\
-& 2. Admin analyzes evidence and determines the appropriate resolution. \\
-& 3. Admin selects ``Resolve Dispute'' and chooses a resolution type (Refund, Warning, Suspension, No action, etc.). \\
-& 4. Admin enters resolution notes describing the decision and evidence references. \\
-& 5. Admin confirms resolution. System: \newline $\bullet$ updates dispute status to RESOLVED. \newline $\bullet$ records resolution details (Admin ID, timestamp, decision, notes). \newline $\bullet$ applies required system actions (refunds, account changes). \newline $\bullet$ sends notifications to involved parties. \newline $\bullet$ logs the resolution event for audit. \\
-& 6. Involved parties receive notifications and can view resolution details in dispute history. \\
+Normal Flow & 1. The administrator reviews the evidence and accesses the case of the dispute. \\
+& 2. The administrator reviews the information and conclude what Courseware Construction will or should do. \\
+& 3. The administrator chooses to resolve the dispute and chooses a resolution category (refund, warning, suspension, or no action). \\
+& 4. Resolution notes are written in to provide justification and evidence for the resolution. \\
+& 5. The admin approves the resolution. System: \newline $\bullet$ The dispute status. \newline $\bullet$ details of the dispute are captured. \newline $\bullet$ any actions are applied . \newline $\bullet$ notifications are sent to the various participants \newline $\bullet$ an audit trail is logged of the action taken. \\
+& 6. Users involved are notified and can check the resolution in their disputes history. \\
 \hline
-Preconditions & $\bullet$ Admin is logged in with dispute resolution privileges. \\
-& $\bullet$ Dispute exists and is in PENDING or UNDER\_REVIEW status. \\
-& $\bullet$ Relevant evidence is collected and available. \\
+Preconditions & $\bullet$ The admin is logged in and has dispute resolving powers. \\
+& $\bullet$ The dispute is ‘fixable'. \\
+& $\bullet$ Review of relevant evidence is available. \\
 \hline
-Postconditions & $\bullet$ Dispute status is updated to RESOLVED. \\
-& $\bullet$ Resolution details are recorded in the audit log. \\
-& $\bullet$ Notifications are sent to all involved parties. \\
-& $\bullet$ Any system actions (refunds, penalties) are applied. \\
+Postconditions & $\bullet$ Under the agreement, the dispute is resolved. \\
+& $\bullet$ Resolution data is recorded on audits. \\
+& $\bullet$ Users will be notificated accordingly. \\
+& $\bullet$ Withdrawals not in compliance with these rules are subject to penalties, refunds and/or account changes as required. \\
 \hline
-Alternate Flows \& Exceptions & \textbf{AF-1 — Admin requests clarification} \newline System sets the dispute to Awaiting User Response and notifies the user. Once the user replies, the dispute returns to Pending Review. \\
-& \textbf{AF-2 — User Appeals Resolution} \newline If the user requests an appeal, system opens an appeal workflow and notifies the review team. \\
-& \textbf{AF-3 — Incomplete Evidence} \newline If evidence is insufficient, Admin may mark the dispute as ``Insufficient Evidence'' and close it with notes. \\
+Alternate Flows \& Exceptions & \textbf{AF-1 — Additional Information Requested} \newline If clarification is needed, the system puts the dispute in a hold state and informs the user of the dispute in a hold state. After further information is received the case goes back into the review queue. \\
+& \textbf{AF-2 — Appeal Request} \newline In the case of a challenge from a user, the system will start the appeal process and notify the review team. \\
+& \textbf{AF-3 — Insufficient Evidence} \newline When evidence is not found, the administrator can summarily dismiss the case, clearly outlining the reasons why the information was not enough for the administrator to take further action. \\
 \hline
-Business Rules (BR) & \textbf{BR-1:} Only Admins can change dispute status to Resolved. \\
-& \textbf{BR-2:} Resolution decisions must include notes or evidence references. \\
-& \textbf{BR-3:} Resolved disputes are immutable and cannot be edited. \\
-& \textbf{BR-4:} Every action updates the audit trail with timestamp, Admin ID, and action type. \\
-& \textbf{BR-5:} Users may view only anonymized excerpts of Admin notes. \\
+Business Rules (BR) & \\
+& \textbf{BR-1:} Administrators may only resolve disputes. \\
+& \textbf{BR-2:} Supporting notes or references must be provided in Resolution decisions. \\
+& \textbf{BR-3:} Disputes which have been resolved may not be revised. \\
+& \textbf{BR-4:} All activities are documented in the audit trail. \\
+& \textbf{BR-5:} Limited and anonymized parts of administrative notes are accessible to Users. \\
 \hline
 Assumptions & $\bullet$ Admin has access to relevant user and ride data. \\
 & $\bullet$ Notification channels (push/email/SMS) are operational. \\
@@ -1495,7 +1481,7 @@ Use Case Name & Admin Communication with Users (Post-Resolution Chat) \\
 Actors & \textbf{Primary Actor:} Admin \\
 & \textbf{Secondary Actors:} Passenger, Driver, Notification Service, Audit/Logging Service, Chatbot (optional) \\
 \hline
-Description & After a dispute is resolved, Admins may need to communicate directly with involved users to explain decisions, collect additional evidence, confirm account actions, or support appeals. This provides secure, auditable post-resolution communication. \\
+Description & Administrators can send personalized emails to affected users to discuss and/or clarify the resolution or outcome and request further information, or even confirm account action and/or provide assistance in appealing decisions once a dispute has been resolved. All communications are secure, traceable and related to the specific case. \\
 \hline
 Trigger & Admin selects ``Contact User'' from a dispute case or user account, or the system initiates an Admin follow-up. \\
 \hline

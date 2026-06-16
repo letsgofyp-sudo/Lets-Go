@@ -30,68 +30,68 @@
 \contentsline {subsection}{\numberline {3.4.1}Use Case Diagram}{18}{subsection.43}%
 \contentsline {subsection}{\numberline {3.4.2}Use Case Descriptions}{24}{subsection.62}%
 \contentsline {subsubsection}{\numberline {3.4.2.1}Registration \& Verification (UC-1 to UC-4)}{24}{subsubsection.63}%
-\contentsline {subsubsection}{\numberline {3.4.2.2}Vehicle Management (UC-5 to UC-6)}{32}{subsubsection.64}%
+\contentsline {subsubsection}{\numberline {3.4.2.2}Vehicle Management (UC-5 to UC-6)}{31}{subsubsection.64}%
 \contentsline {subsubsection}{\numberline {3.4.2.3}Ride Management (UC-7 to UC-9)}{35}{subsubsection.65}%
-\contentsline {section}{\numberline {3.5}Functional Requirements}{63}{section.66}%
+\contentsline {section}{\numberline {3.5}Functional Requirements}{62}{section.66}%
 \contentsline {subsection}{\numberline {3.5.1}FR-1: User Registration \& Authentication}{63}{subsection.67}%
 \contentsline {subsubsection}{\numberline {3.5.1.1}FR-1.1: Registration Fields}{63}{subsubsection.68}%
 \contentsline {subsubsection}{\numberline {3.5.1.2}FR-1.2: Document/Image Uploads}{64}{subsubsection.69}%
 \contentsline {subsubsection}{\numberline {3.5.1.3}FR-1.3: OTP Verification}{64}{subsubsection.70}%
-\contentsline {subsubsection}{\numberline {3.5.1.4}FR-1.4: Post-OTP State and Login}{65}{subsubsection.71}%
+\contentsline {subsubsection}{\numberline {3.5.1.4}FR-1.4: Post-OTP State and Login}{64}{subsubsection.71}%
 \contentsline {subsection}{\numberline {3.5.2}FR-2: Admin Verification \& Management}{65}{subsection.72}%
 \contentsline {subsubsection}{\numberline {3.5.2.1}FR-2.1: Admin User List \& Details}{65}{subsubsection.73}%
-\contentsline {subsubsection}{\numberline {3.5.2.2}FR-2.2: Verify/Reject/Ban/Create}{66}{subsubsection.74}%
+\contentsline {subsubsection}{\numberline {3.5.2.2}FR-2.2: Verify/Reject/Ban/Create}{65}{subsubsection.74}%
 \contentsline {subsubsection}{\numberline {3.5.2.3}FR-2.3: Verification SLA}{66}{subsubsection.75}%
 \contentsline {subsection}{\numberline {3.5.3}FR-3: Vehicle Management (Drivers)}{66}{subsection.76}%
-\contentsline {subsubsection}{\numberline {3.5.3.1}FR-3.1: Vehicle Creation}{67}{subsubsection.77}%
+\contentsline {subsubsection}{\numberline {3.5.3.1}FR-3.1: Vehicle Creation}{66}{subsubsection.77}%
 \contentsline {subsubsection}{\numberline {3.5.3.2}FR-3.2: Multiple Vehicles \& Edit/Delete}{67}{subsubsection.78}%
-\contentsline {subsection}{\numberline {3.5.4}FR-4: Ride Creation (Driver)}{68}{subsection.79}%
+\contentsline {subsection}{\numberline {3.5.4}FR-4: Ride Creation (Driver)}{67}{subsection.79}%
 \contentsline {subsubsection}{\numberline {3.5.4.1}FR-4.1: Map-based Route Editor}{68}{subsubsection.80}%
 \contentsline {subsubsection}{\numberline {3.5.4.2}FR-4.2: Ride Parameters}{68}{subsubsection.81}%
-\contentsline {subsubsection}{\numberline {3.5.4.3}FR-4.3: Ride Editing/Cancel Rules}{69}{subsubsection.82}%
+\contentsline {subsubsection}{\numberline {3.5.4.3}FR-4.3: Ride Editing/Cancel Rules}{68}{subsubsection.82}%
 \contentsline {subsection}{\numberline {3.5.5}FR-5: Ride Browsing \& Booking (Passengers)}{69}{subsection.83}%
 \contentsline {subsubsection}{\numberline {3.5.5.1}FR-5.1: Browse \& Ride Card}{69}{subsubsection.84}%
-\contentsline {subsubsection}{\numberline {3.5.5.2}FR-5.2: Booking Flow}{70}{subsubsection.85}%
+\contentsline {subsubsection}{\numberline {3.5.5.2}FR-5.2: Booking Flow}{69}{subsubsection.85}%
 \contentsline {subsection}{\numberline {3.5.6}FR-6: Fare Negotiation}{70}{subsection.86}%
-\contentsline {subsubsection}{\numberline {3.5.6.1}FR-6.1: Negotiation Messaging \& Recording}{71}{subsubsection.87}%
+\contentsline {subsubsection}{\numberline {3.5.6.1}FR-6.1: Negotiation Messaging \& Recording}{70}{subsubsection.87}%
 \contentsline {subsection}{\numberline {3.5.7}FR-7: Booking Confirmation \& Notifications}{71}{subsection.88}%
 \contentsline {subsubsection}{\numberline {3.5.7.1}FR-7.1: Notifications for Booking Events}{71}{subsubsection.89}%
-\contentsline {subsubsection}{\numberline {3.5.7.2}FR-7.2: Booking Summaries}{72}{subsubsection.90}%
+\contentsline {subsubsection}{\numberline {3.5.7.2}FR-7.2: Booking Summaries}{71}{subsubsection.90}%
 \contentsline {subsection}{\numberline {3.5.8}FR-8: Profile Management}{72}{subsection.91}%
 \contentsline {subsubsection}{\numberline {3.5.8.1}FR-8.1: Profile CRUD}{72}{subsubsection.92}%
-\contentsline {subsection}{\numberline {3.5.9}FR-9: Admin \& System Notifications}{73}{subsection.93}%
+\contentsline {subsection}{\numberline {3.5.9}FR-9: Admin \& System Notifications}{72}{subsection.93}%
 \contentsline {subsection}{\numberline {3.5.10}FR-10: Dispute Management}{73}{subsection.94}%
 \contentsline {subsection}{\numberline {3.5.11}FR-11: Machine Learning Recommendation Module}{73}{subsection.95}%
-\contentsline {subsection}{\numberline {3.5.12}FR-12: Chatbot Support}{74}{subsection.96}%
+\contentsline {subsection}{\numberline {3.5.12}FR-12: Chatbot Support}{73}{subsection.96}%
 \contentsline {subsection}{\numberline {3.5.13}FR-13: Payment System}{74}{subsection.97}%
-\contentsline {subsubsection}{\numberline {3.5.13.1}FR-13.1: Payment Methods \& Validation Rules}{75}{subsubsection.98}%
+\contentsline {subsubsection}{\numberline {3.5.13.1}FR-13.1: Payment Methods \& Validation Rules}{74}{subsubsection.98}%
 \contentsline {subsubsection}{\numberline {3.5.13.2}FR-13.2: Manual Payment Confirmation}{75}{subsubsection.99}%
 \contentsline {subsection}{\numberline {3.5.14}FR-14: Safety \& Verification}{75}{subsection.100}%
-\contentsline {subsection}{\numberline {3.5.15}FR-15: Scalability \& Modular Architecture}{76}{subsection.101}%
+\contentsline {subsection}{\numberline {3.5.15}FR-15: Scalability \& Modular Architecture}{75}{subsection.101}%
 \contentsline {subsection}{\numberline {3.5.16}FR-16: Post-Booking, Live-Tracking, Pickup Verification}{76}{subsection.102}%
-\contentsline {subsubsection}{\numberline {3.5.16.1}FR-16.1: Post-booking Chat (1:1 \& Broadcast)}{77}{subsubsection.103}%
+\contentsline {subsubsection}{\numberline {3.5.16.1}FR-16.1: Post-booking Chat (1:1 \& Broadcast)}{76}{subsubsection.103}%
 \contentsline {subsubsection}{\numberline {3.5.16.2}FR-16.2: Pre-Ride Reminder \& Location Permission}{77}{subsubsection.104}%
 \contentsline {subsubsection}{\numberline {3.5.16.3}FR-16.3: Live Map \& SOS UI}{77}{subsubsection.105}%
-\contentsline {subsubsection}{\numberline {3.5.16.4}FR-16.4: Pickup Code Generation \& Verification}{78}{subsubsection.106}%
+\contentsline {subsubsection}{\numberline {3.5.16.4}FR-16.4: Pickup Code Generation \& Verification}{77}{subsubsection.106}%
 \contentsline {subsubsection}{\numberline {3.5.16.5}FR-16.5: Mark as Reached, Payment \& Ratings}{78}{subsubsection.107}%
-\contentsline {subsubsection}{\numberline {3.5.16.6}FR-16.6: Ride Completion Rules \& Driver Constraint}{79}{subsubsection.108}%
+\contentsline {subsubsection}{\numberline {3.5.16.6}FR-16.6: Ride Completion Rules \& Driver Constraint}{78}{subsubsection.108}%
 \contentsline {subsubsection}{\numberline {3.5.16.7}FR-16.7: SOS \& Emergency Workflows}{79}{subsubsection.109}%
 \contentsline {subsubsection}{\numberline {3.5.16.8}FR-16.8: Escalation Timers \& Notifications}{79}{subsubsection.110}%
-\contentsline {subsubsection}{\numberline {3.5.16.9}FR-16.9: Audit, Logging \& Anti-Fraud}{80}{subsubsection.111}%
+\contentsline {subsubsection}{\numberline {3.5.16.9}FR-16.9: Audit, Logging \& Anti-Fraud}{79}{subsubsection.111}%
 \contentsline {subsubsection}{\numberline {3.5.16.10}FR-16.10: UX \& Accessibility Requirements}{80}{subsubsection.112}%
-\contentsline {section}{\numberline {3.6}Non-Functional Requirements}{81}{section.113}%
-\contentsline {subsection}{\numberline {3.6.1}Performance Requirements}{81}{subsection.114}%
+\contentsline {section}{\numberline {3.6}Non-Functional Requirements}{80}{section.113}%
+\contentsline {subsection}{\numberline {3.6.1}Performance Requirements}{80}{subsection.114}%
 \contentsline {subsection}{\numberline {3.6.2}Security Requirements}{81}{subsection.115}%
-\contentsline {subsection}{\numberline {3.6.3}Reliability Requirements}{82}{subsection.116}%
-\contentsline {subsection}{\numberline {3.6.4}Usability Requirements}{82}{subsection.117}%
+\contentsline {subsection}{\numberline {3.6.3}Reliability Requirements}{81}{subsection.116}%
+\contentsline {subsection}{\numberline {3.6.4}Usability Requirements}{81}{subsection.117}%
 \contentsline {subsection}{\numberline {3.6.5}Scalability Requirements}{82}{subsection.118}%
 \contentsline {subsection}{\numberline {3.6.6}Maintainability Requirements}{82}{subsection.119}%
-\contentsline {section}{\numberline {3.7}External Interface Requirements}{83}{section.120}%
-\contentsline {subsection}{\numberline {3.7.1}User Interface Requirements}{83}{subsection.121}%
+\contentsline {section}{\numberline {3.7}External Interface Requirements}{82}{section.120}%
+\contentsline {subsection}{\numberline {3.7.1}User Interface Requirements}{82}{subsection.121}%
 \contentsline {subsection}{\numberline {3.7.2}Hardware Interface Requirements}{83}{subsection.122}%
 \contentsline {subsection}{\numberline {3.7.3}Software Interface Requirements}{83}{subsection.123}%
-\contentsline {subsection}{\numberline {3.7.4}Communication Interface Requirements}{84}{subsection.124}%
-\contentsline {section}{\numberline {3.8}Assumptions and Dependencies}{84}{section.125}%
+\contentsline {subsection}{\numberline {3.7.4}Communication Interface Requirements}{83}{subsection.124}%
+\contentsline {section}{\numberline {3.8}Assumptions and Dependencies}{83}{section.125}%
 \contentsline {section}{\numberline {3.9}Requirement Traceability Matrix}{85}{section.126}%
 \contentsline {chapter}{\numberline {4}Software Design}{87}{chapter.127}%
 \contentsline {section}{\numberline {4.1}Introduction to Software Design}{87}{section.128}%

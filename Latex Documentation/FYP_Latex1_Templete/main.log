@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.7)  16 JUN 2026 22:32
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (TeX Live 2025/Debian) (preloaded format=pdflatex 2026.5.7)  17 JUN 2026 02:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1066,48 +1066,29 @@ ignored error: Infinite glue shrinkage found in box being split [24
 ]
 ignored error: Infinite glue shrinkage found in box being split [25{/usr/share/
 texmf/fonts/enc/dvips/lm/lm-mathsy.enc}]
-! Extra alignment tab has been changed to \cr.
-<template> ... width\arrayrulewidth }\endtemplate 
-                                                  
-l.252 &
-        6. The server validates the file type, signature, size and dimension...
-
-? 
 ignored error: Infinite glue shrinkage found in box being split [26]
 ignored error: Infinite glue shrinkage found in box being split [27]
-! Extra alignment tab has been changed to \cr.
-<template> ... width\arrayrulewidth }\endtemplate 
-                                                  
-l.339 & \textbf{BR-6:} Document generation &
-                                             verification of OTPs for auditi...
-
-? 
-ignored error: Infinite glue shrinkage found in box being split [28]
-ignored error: Infinite glue shrinkage found in box being split [29]
-ignored error: Infinite glue shrinkage found in box being split [30]
-ignored error: Infinite glue shrinkage found in box being split [31]
+ignored error: Infinite glue shrinkage found in box being split [28] [29]
+ignored error: Infinite glue shrinkage found in box being split [30] [31]
 ignored error: Infinite glue shrinkage found in box being split [32]
-ignored error: Infinite glue shrinkage found in box being split [33{/usr/share/
-texmf/fonts/enc/dvips/lm/lm-rm.enc}]
+ignored error: Infinite glue shrinkage found in box being split [33]
 ignored error: Infinite glue shrinkage found in box being split [34]
 ignored error: Infinite glue shrinkage found in box being split [35]
-ignored error: Infinite glue shrinkage found in box being split [36]
-ignored error: Infinite glue shrinkage found in box being split [37] [38]
+ignored error: Infinite glue shrinkage found in box being split [36] [37]
+ignored error: Infinite glue shrinkage found in box being split [38]
 ignored error: Infinite glue shrinkage found in box being split [39]
-ignored error: Infinite glue shrinkage found in box being split [40]
-ignored error: Infinite glue shrinkage found in box being split [41]
-ignored error: Infinite glue shrinkage found in box being split [42]
+ignored error: Infinite glue shrinkage found in box being split [40] [41]
+[42]
 ignored error: Infinite glue shrinkage found in box being split [43]
 ignored error: Infinite glue shrinkage found in box being split [44]
-ignored error: Infinite glue shrinkage found in box being split [45{/usr/share/
-texmf/fonts/enc/dvips/lm/lm-mathit.enc}]
+ignored error: Infinite glue shrinkage found in box being split [45]
 ignored error: Infinite glue shrinkage found in box being split [46]
 ignored error: Infinite glue shrinkage found in box being split [47]
 ignored error: Infinite glue shrinkage found in box being split [48]
-ignored error: Infinite glue shrinkage found in box being split [49] [50]
+ignored error: Infinite glue shrinkage found in box being split [49]
+ignored error: Infinite glue shrinkage found in box being split [50]
 ignored error: Infinite glue shrinkage found in box being split [51]
-ignored error: Infinite glue shrinkage found in box being split [52]
-ignored error: Infinite glue shrinkage found in box being split [53]
+ignored error: Infinite glue shrinkage found in box being split [52] [53]
 ignored error: Infinite glue shrinkage found in box being split [54]
 ignored error: Infinite glue shrinkage found in box being split [55]
 ignored error: Infinite glue shrinkage found in box being split [56]
@@ -1115,42 +1096,41 @@ ignored error: Infinite glue shrinkage found in box being split [57]
 ignored error: Infinite glue shrinkage found in box being split [58]
 ignored error: Infinite glue shrinkage found in box being split [59]
 ignored error: Infinite glue shrinkage found in box being split [60]
-ignored error: Infinite glue shrinkage found in box being split [61]
-ignored error: Infinite glue shrinkage found in box being split [62]
-ignored error: Infinite glue shrinkage found in box being split [63]
+ignored error: Infinite glue shrinkage found in box being split [61] [62]
+[63]
 ignored error: Infinite glue shrinkage found in box being split [64]
 ignored error: Infinite glue shrinkage found in box being split [65] [66]
-[67]
+ignored error: Infinite glue shrinkage found in box being split [67]
 ignored error: Infinite glue shrinkage found in box being split [68] [69]
 ignored error: Infinite glue shrinkage found in box being split [70]
 ignored error: Infinite glue shrinkage found in box being split [71]
 ignored error: Infinite glue shrinkage found in box being split [72] [73]
 ignored error: Infinite glue shrinkage found in box being split [74]
-ignored error: Infinite glue shrinkage found in box being split [75] [76]
-ignored error: Infinite glue shrinkage found in box being split [77] [78]
-ignored error: Infinite glue shrinkage found in box being split [79]
-ignored error: Infinite glue shrinkage found in box being split [80] [81]
-[82] [83] [84] [85
+ignored error: Infinite glue shrinkage found in box being split [75]
+ignored error: Infinite glue shrinkage found in box being split [76]
+ignored error: Infinite glue shrinkage found in box being split [77]
+ignored error: Infinite glue shrinkage found in box being split [78] [79]
+[80] [81] [82] [83] [84] [85
 
 ]) (./ch_4_SDD.tex [86]
 Chapter 4.
 [87
 
 ] [88] [89]
-<assets/context Diagram-Page-2.jpg, id=2436, 1193.45876pt x 926.46124pt>
+<assets/context Diagram-Page-2.jpg, id=2434, 1193.45876pt x 926.46124pt>
 File: assets/context Diagram-Page-2.jpg Graphic file (type jpg)
 <use assets/context Diagram-Page-2.jpg>
 Package pdftex.def Info: assets/context Diagram-Page-2.jpg  used on input line 
 121.
 (pdftex.def)             Requested size: 446.69003pt x 346.75769pt.
  [90] [91 <./assets/context Diagram-Page-2.jpg>] [92]
-<assets/architecture.jpg, id=2452, 1306.8825pt x 624.3325pt>
+<assets/architecture.jpg, id=2450, 1306.8825pt x 624.3325pt>
 File: assets/architecture.jpg Graphic file (type jpg)
 <use assets/architecture.jpg>
 Package pdftex.def Info: assets/architecture.jpg  used on input line 247.
 (pdftex.def)             Requested size: 446.68726pt x 213.39436pt.
  [93]
-<assets/activity diagrams/activity_auth.jpg, id=2457, 781.92125pt x 744.7825pt>
+<assets/activity diagrams/activity_auth.jpg, id=2455, 781.92125pt x 744.7825pt>
 
 File: assets/activity diagrams/activity_auth.jpg Graphic file (type jpg)
 <use assets/activity diagrams/activity_auth.jpg>
@@ -1160,7 +1140,7 @@ put line 267.
 
 [94 <./assets/architecture.jpg>] [95 <./assets/activity diagrams/activity_auth.
 jpg>]
-<assets/activity diagrams/activity_document.jpg, id=2469, 452.69125pt x 845.157
+<assets/activity diagrams/activity_document.jpg, id=2467, 452.69125pt x 845.157
 5pt>
 File: assets/activity diagrams/activity_document.jpg Graphic file (type jpg)
 <use assets/activity diagrams/activity_document.jpg>
@@ -1170,7 +1150,7 @@ n input line 280.
  [96
 
  <./assets/activity diagrams/activity_document.jpg>]
-<assets/activity diagrams/module 3.jpg, id=2475, 569.12625pt x 877.2775pt>
+<assets/activity diagrams/module 3.jpg, id=2473, 569.12625pt x 877.2775pt>
 File: assets/activity diagrams/module 3.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module 3.jpg>
 Package pdftex.def Info: assets/activity diagrams/module 3.jpg  used on input l
@@ -1179,7 +1159,7 @@ ine 293.
  [97
 
  <./assets/activity diagrams/module 3.jpg>]
-<assets/activity diagrams/module4.jpg, id=2481, 654.445pt x 815.045pt>
+<assets/activity diagrams/module4.jpg, id=2479, 654.445pt x 815.045pt>
 File: assets/activity diagrams/module4.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module4.jpg>
 Package pdftex.def Info: assets/activity diagrams/module4.jpg  used on input li
@@ -1188,7 +1168,7 @@ ne 306.
  [98
 
  <./assets/activity diagrams/module4.jpg>]
-<assets/activity diagrams/module5.jpg, id=2488, 431.6125pt x 855.195pt>
+<assets/activity diagrams/module5.jpg, id=2486, 431.6125pt x 855.195pt>
 File: assets/activity diagrams/module5.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module5.jpg>
 Package pdftex.def Info: assets/activity diagrams/module5.jpg  used on input li
@@ -1198,7 +1178,7 @@ ne 319.
 [99
 
  <./assets/activity diagrams/module5.jpg>]
-<assets/activity diagrams/module6.jpg, id=2494, 675.52374pt x 1014.79124pt>
+<assets/activity diagrams/module6.jpg, id=2492, 675.52374pt x 1014.79124pt>
 File: assets/activity diagrams/module6.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module6.jpg>
 Package pdftex.def Info: assets/activity diagrams/module6.jpg  used on input li
@@ -1207,7 +1187,7 @@ ne 332.
  [100
 
  <./assets/activity diagrams/module6.jpg>]
-<assets/activity diagrams/module7.jpg, id=2500, 468.75125pt x 733.74126pt>
+<assets/activity diagrams/module7.jpg, id=2498, 468.75125pt x 733.74126pt>
 File: assets/activity diagrams/module7.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module7.jpg>
 Package pdftex.def Info: assets/activity diagrams/module7.jpg  used on input li
@@ -1216,7 +1196,7 @@ ne 345.
  [101
 
  <./assets/activity diagrams/module7.jpg>]
-<assets/activity diagrams/module8.jpg, id=2506, 443.6575pt x 861.2175pt>
+<assets/activity diagrams/module8.jpg, id=2504, 443.6575pt x 861.2175pt>
 File: assets/activity diagrams/module8.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module8.jpg>
 Package pdftex.def Info: assets/activity diagrams/module8.jpg  used on input li
@@ -1225,7 +1205,7 @@ ne 358.
  [102
 
  <./assets/activity diagrams/module8.jpg>]
-<assets/activity diagrams/module9.jpg, id=2512, 614.295pt x 865.2325pt>
+<assets/activity diagrams/module9.jpg, id=2510, 614.295pt x 865.2325pt>
 File: assets/activity diagrams/module9.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module9.jpg>
 Package pdftex.def Info: assets/activity diagrams/module9.jpg  used on input li
@@ -1234,7 +1214,7 @@ ne 371.
  [103
 
  <./assets/activity diagrams/module9.jpg>]
-<assets/activity diagrams/module10.jpg, id=2518, 552.0625pt x 795.97375pt>
+<assets/activity diagrams/module10.jpg, id=2516, 552.0625pt x 795.97375pt>
 File: assets/activity diagrams/module10.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module10.jpg>
 Package pdftex.def Info: assets/activity diagrams/module10.jpg  used on input l
@@ -1244,7 +1224,7 @@ ine 384.
 [104
 
  <./assets/activity diagrams/module10.jpg>]
-<assets/activity diagrams/module11.jpg, id=2525, 794.97pt x 799.98875pt>
+<assets/activity diagrams/module11.jpg, id=2523, 794.97pt x 799.98875pt>
 File: assets/activity diagrams/module11.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module11.jpg>
 Package pdftex.def Info: assets/activity diagrams/module11.jpg  used on input l
@@ -1253,7 +1233,7 @@ ine 397.
  [105
 
  <./assets/activity diagrams/module11.jpg>]
-<assets/activity diagrams/module 12.jpg, id=2531, 540.0175pt x 835.12pt>
+<assets/activity diagrams/module 12.jpg, id=2529, 540.0175pt x 835.12pt>
 File: assets/activity diagrams/module 12.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module 12.jpg>
 Package pdftex.def Info: assets/activity diagrams/module 12.jpg  used on input 
@@ -1262,7 +1242,7 @@ line 410.
  [106
 
  <./assets/activity diagrams/module 12.jpg>]
-<assets/activity diagrams/module 13.jpg, id=2537, 398.48875pt x 825.0825pt>
+<assets/activity diagrams/module 13.jpg, id=2535, 398.48875pt x 825.0825pt>
 File: assets/activity diagrams/module 13.jpg Graphic file (type jpg)
 <use assets/activity diagrams/module 13.jpg>
 Package pdftex.def Info: assets/activity diagrams/module 13.jpg  used on input 
@@ -1271,7 +1251,7 @@ line 423.
  [107
 
  <./assets/activity diagrams/module 13.jpg>]
-<assets/class diagram.jpg, id=2543, 1326.9575pt x 1760.5775pt>
+<assets/class diagram.jpg, id=2541, 1326.9575pt x 1760.5775pt>
 File: assets/class diagram.jpg Graphic file (type jpg)
 <use assets/class diagram.jpg>
 Package pdftex.def Info: assets/class diagram.jpg  used on input line 440.
@@ -1280,7 +1260,7 @@ Package pdftex.def Info: assets/class diagram.jpg  used on input line 440.
 
  <./assets/class diagram.jpg>] [109]
 <assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jpg, id=2
-553, 610.28pt x 724.7075pt>
+551, 610.28pt x 724.7075pt>
 File: assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jpg 
 Graphic file (type jpg)
 <use assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jpg>
@@ -1290,7 +1270,7 @@ Package pdftex.def Info: assets/sequence diagrams/sequence diagram-USER SIGNUP
 
 [110 <./assets/sequence diagrams/sequence diagram-USER SIGNUP (REGISTRATION).jp
 g>]
-<assets/sequence diagrams/sequence diagram-post a ride.jpg, id=2560, 489.83pt x
+<assets/sequence diagrams/sequence diagram-post a ride.jpg, id=2558, 489.83pt x
  192.72pt>
 File: assets/sequence diagrams/sequence diagram-post a ride.jpg Graphic file (t
 ype jpg)
@@ -1302,7 +1282,7 @@ jpg  used on input line 503.
 
  <./assets/sequence diagrams/sequence diagram-post a ride.jpg>]
 <assets/sequence diagrams/sequence diagram-post ride (starting to reached).jpg,
- id=2567, 1116.17pt x 1305.87875pt>
+ id=2565, 1116.17pt x 1305.87875pt>
 File: assets/sequence diagrams/sequence diagram-post ride (starting to reached)
 .jpg Graphic file (type jpg)
 <use assets/sequence diagrams/sequence diagram-post ride (starting to reached).
@@ -1315,7 +1295,7 @@ tarting to reached).jpg  used on input line 516.
 
  <./assets/sequence diagrams/sequence diagram-post ride (starting to reached).j
 pg>]
-<assets/sequence diagrams/counter.jpg, id=2573, 655.44875pt x 704.6325pt>
+<assets/sequence diagrams/counter.jpg, id=2571, 655.44875pt x 704.6325pt>
 File: assets/sequence diagrams/counter.jpg Graphic file (type jpg)
 <use assets/sequence diagrams/counter.jpg>
 Package pdftex.def Info: assets/sequence diagrams/counter.jpg  used on input li
@@ -1325,7 +1305,7 @@ ne 529.
 
  <./assets/sequence diagrams/counter.jpg>]
 <assets/state transition diagrams/state transition-Ride Request → Booking Flo
-w.jpg, id=2579, 985.6825pt x 2220.295pt>
+w.jpg, id=2577, 985.6825pt x 2220.295pt>
 File: assets/state transition diagrams/state transition-Ride Request → Bookin
 g Flow.jpg Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-Ride Request → Booking
@@ -1334,7 +1314,7 @@ Package pdftex.def Info: assets/state transition diagrams/state transition-Ride
  Request → Booking Flow.jpg  used on input line 547.
 (pdftex.def)             Requested size: 191.70346pt x 431.82085pt.
 <assets/state transition diagrams/state transition-DRIVER STATE MACHINE.jpg, id
-=2580, 1005.7575pt x 2119.92pt>
+=2578, 1005.7575pt x 2119.92pt>
 File: assets/state transition diagrams/state transition-DRIVER STATE MACHINE.jp
 g Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-DRIVER STATE MACHINE.jpg
@@ -1347,7 +1327,7 @@ ER STATE MACHINE.jpg  used on input line 566.
  <./assets/state transition diagrams/state transition-Ride Request → Booking 
 Flow.jpg>]
 <assets/state transition diagrams/state transition-ASSENGER BOOKING STATE MACHI
-NE.jpg, id=2586, 794.97pt x 2641.87pt>
+NE.jpg, id=2584, 794.97pt x 2641.87pt>
 File: assets/state transition diagrams/state transition-ASSENGER BOOKING STATE 
 MACHINE.jpg Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-ASSENGER BOOKING STATE M
@@ -1358,7 +1338,7 @@ NGER BOOKING STATE MACHINE.jpg  used on input line 585.
  [115 <./assets/state transition diagrams/state transition-DRIVER STATE MACHINE
 .jpg>]
 <assets/state transition diagrams/state transition-SOS STATE MACHINE — DRAW.I
-O READY.jpg, id=2592, 663.47874pt x 814.04124pt>
+O READY.jpg, id=2590, 663.47874pt x 814.04124pt>
 File: assets/state transition diagrams/state transition-SOS STATE MACHINE — D
 RAW.IO READY.jpg Graphic file (type jpg)
 <use assets/state transition diagrams/state transition-SOS STATE MACHINE — DR
@@ -1369,7 +1349,7 @@ STATE MACHINE — DRAW.IO READY.jpg  used on input line 604.
 
 [116 <./assets/state transition diagrams/state transition-ASSENGER BOOKING STAT
 E MACHINE.jpg>]
-<assets/state transition diagrams/DISPUTE STATE MACHINE.jpg, id=2599, 643.40375
+<assets/state transition diagrams/DISPUTE STATE MACHINE.jpg, id=2597, 643.40375
 pt x 984.67876pt>
 File: assets/state transition diagrams/DISPUTE STATE MACHINE.jpg Graphic file (
 type jpg)
@@ -1380,13 +1360,13 @@ Package pdftex.def Info: assets/state transition diagrams/DISPUTE STATE MACHINE
  [117 <./assets/state transition diagrams/state transition-SOS STATE MACHINE �
 � DRAW.IO READY.jpg>] [118 <./assets/state transition diagrams/DISPUTE STATE MA
 CHINE.jpg>]
-<assets/DFD/first registration module.jpg, id=2610, 601.24625pt x 539.01375pt>
+<assets/DFD/first registration module.jpg, id=2608, 601.24625pt x 539.01375pt>
 File: assets/DFD/first registration module.jpg Graphic file (type jpg)
 <use assets/DFD/first registration module.jpg>
 Package pdftex.def Info: assets/DFD/first registration module.jpg  used on inpu
 t line 651.
 (pdftex.def)             Requested size: 446.71341pt x 400.47595pt.
-<assets/DFD/second module documents registartion.jpg, id=2611, 543.02875pt x 56
+<assets/DFD/second module documents registartion.jpg, id=2609, 543.02875pt x 56
 7.11874pt>
 File: assets/DFD/second module documents registartion.jpg Graphic file (type jp
 g)
@@ -1397,7 +1377,7 @@ sed on input line 670.
  [119
 
  <./assets/DFD/first registration module.jpg>]
-<assets/DFD/3rd module add vechile.jpg, id=2617, 821.0675pt x 390.45876pt>
+<assets/DFD/3rd module add vechile.jpg, id=2615, 821.0675pt x 390.45876pt>
 File: assets/DFD/3rd module add vechile.jpg Graphic file (type jpg)
 <use assets/DFD/3rd module add vechile.jpg>
 Package pdftex.def Info: assets/DFD/3rd module add vechile.jpg  used on input l
@@ -1405,7 +1385,7 @@ ine 694.
 (pdftex.def)             Requested size: 446.6899pt x 212.42343pt.
 
 [120 <./assets/DFD/second module documents registartion.jpg>]
-<assets/module_4_ride_management.jpg, id=2623, 925.4575pt x 378.41376pt>
+<assets/module_4_ride_management.jpg, id=2621, 925.4575pt x 378.41376pt>
 File: assets/module_4_ride_management.jpg Graphic file (type jpg)
 <use assets/module_4_ride_management.jpg>
 Package pdftex.def Info: assets/module_4_ride_management.jpg  used on input lin
@@ -1413,13 +1393,13 @@ e 718.
 (pdftex.def)             Requested size: 446.6999pt x 182.65277pt.
  [121 <./assets/DFD/3rd module add vechile.jpg> <./assets/module_4_ride_managem
 ent.jpg>]
-<assets/DFD/module 5 view rides.jpg, id=2630, 795.97375pt x 385.44pt>
+<assets/DFD/module 5 view rides.jpg, id=2628, 795.97375pt x 385.44pt>
 File: assets/DFD/module 5 view rides.jpg Graphic file (type jpg)
 <use assets/DFD/module 5 view rides.jpg>
 Package pdftex.def Info: assets/DFD/module 5 view rides.jpg  used on input line
  743.
 (pdftex.def)             Requested size: 446.68962pt x 216.30367pt.
-<assets/DFD/module 6 booking.jpg, id=2631, 655.44875pt x 616.3025pt>
+<assets/DFD/module 6 booking.jpg, id=2629, 655.44875pt x 616.3025pt>
 File: assets/DFD/module 6 booking.jpg Graphic file (type jpg)
 <use assets/DFD/module 6 booking.jpg>
 Package pdftex.def Info: assets/DFD/module 6 booking.jpg  used on input line 76
@@ -1428,14 +1408,14 @@ Package pdftex.def Info: assets/DFD/module 6 booking.jpg  used on input line 76
  [122
 
  <./assets/DFD/module 5 view rides.jpg>]
-<assets/DFD/module 7 chat and message.jpg, id=2638, 927.465pt x 745.78625pt>
+<assets/DFD/module 7 chat and message.jpg, id=2636, 927.465pt x 745.78625pt>
 File: assets/DFD/module 7 chat and message.jpg Graphic file (type jpg)
 <use assets/DFD/module 7 chat and message.jpg>
 Package pdftex.def Info: assets/DFD/module 7 chat and message.jpg  used on inpu
 t line 789.
 (pdftex.def)             Requested size: 446.6924pt x 359.19098pt.
  [123 <./assets/DFD/module 6 booking.jpg>]
-<assets/DFD/module 8 notification handlers.jpg, id=2644, 821.0675pt x 493.845pt
+<assets/DFD/module 8 notification handlers.jpg, id=2642, 821.0675pt x 493.845pt
 >
 File: assets/DFD/module 8 notification handlers.jpg Graphic file (type jpg)
 <use assets/DFD/module 8 notification handlers.jpg>
@@ -1444,21 +1424,21 @@ Package pdftex.def Info: assets/DFD/module 8 notification handlers.jpg  used on
 (pdftex.def)             Requested size: 446.6899pt x 268.66922pt.
 
 [124 <./assets/DFD/module 7 chat and message.jpg>]
-<assets/DFD/module 9 code verify.jpg, id=2650, 619.31375pt x 934.49126pt>
+<assets/DFD/module 9 code verify.jpg, id=2648, 619.31375pt x 934.49126pt>
 File: assets/DFD/module 9 code verify.jpg Graphic file (type jpg)
 <use assets/DFD/module 9 code verify.jpg>
 Package pdftex.def Info: assets/DFD/module 9 code verify.jpg  used on input lin
 e 836.
 (pdftex.def)             Requested size: 286.19188pt x 431.83896pt.
  [125 <./assets/DFD/module 8 notification handlers.jpg>]
-<assets/DFD/module 10 payment.jpg, id=2656, 563.10374pt x 674.52pt>
+<assets/DFD/module 10 payment.jpg, id=2654, 563.10374pt x 674.52pt>
 File: assets/DFD/module 10 payment.jpg Graphic file (type jpg)
 <use assets/DFD/module 10 payment.jpg>
 Package pdftex.def Info: assets/DFD/module 10 payment.jpg  used on input line 8
 60.
 (pdftex.def)             Requested size: 360.51405pt x 431.84572pt.
  [126 <./assets/DFD/module 9 code verify.jpg>]
-<assets/DFD/module 11 ratings.jpg, id=2662, 883.3pt x 653.44125pt>
+<assets/DFD/module 11 ratings.jpg, id=2660, 883.3pt x 653.44125pt>
 File: assets/DFD/module 11 ratings.jpg Graphic file (type jpg)
 <use assets/DFD/module 11 ratings.jpg>
 Package pdftex.def Info: assets/DFD/module 11 ratings.jpg  used on input line 8
@@ -1466,51 +1446,51 @@ Package pdftex.def Info: assets/DFD/module 11 ratings.jpg  used on input line 8
 (pdftex.def)             Requested size: 446.68971pt x 330.44885pt.
 
 [127 <./assets/DFD/module 10 payment.jpg>]
-<assets/DFD/module 12.jpg, id=2669, 766.865pt x 614.295pt>
+<assets/DFD/module 12.jpg, id=2667, 766.865pt x 614.295pt>
 File: assets/DFD/module 12.jpg Graphic file (type jpg)
 <use assets/DFD/module 12.jpg>
 Package pdftex.def Info: assets/DFD/module 12.jpg  used on input line 907.
 (pdftex.def)             Requested size: 446.70105pt x 357.82857pt.
  [128 <./assets/DFD/module 11 ratings.jpg>]
-<assets/DFD/module13.jpg, id=2676, 587.19376pt x 593.21625pt>
+<assets/DFD/module13.jpg, id=2674, 587.19376pt x 593.21625pt>
 File: assets/DFD/module13.jpg Graphic file (type jpg)
 <use assets/DFD/module13.jpg>
 Package pdftex.def Info: assets/DFD/module13.jpg  used on input line 931.
 (pdftex.def)             Requested size: 427.46518pt x 431.84943pt.
  [129 <./assets/DFD/module 12.jpg>]
-<assets/DFD/module14.jpg, id=2682, 443.6575pt x 774.895pt>
+<assets/DFD/module14.jpg, id=2680, 443.6575pt x 774.895pt>
 File: assets/DFD/module14.jpg Graphic file (type jpg)
 <use assets/DFD/module14.jpg>
 Package pdftex.def Info: assets/DFD/module14.jpg  used on input line 955.
 (pdftex.def)             Requested size: 247.24826pt x 431.84541pt.
  [130 <./assets/DFD/module13.jpg>]
-<assets/DFD/module15.jpg, id=2688, 699.61375pt x 632.3625pt>
+<assets/DFD/module15.jpg, id=2686, 699.61375pt x 632.3625pt>
 File: assets/DFD/module15.jpg Graphic file (type jpg)
 <use assets/DFD/module15.jpg>
 Package pdftex.def Info: assets/DFD/module15.jpg  used on input line 979.
 (pdftex.def)             Requested size: 446.70511pt x 403.76501pt.
 
 [131 <./assets/DFD/module14.jpg>]
-<assets/DFD/module16.jpg, id=2694, 874.26625pt x 488.82625pt>
+<assets/DFD/module16.jpg, id=2692, 874.26625pt x 488.82625pt>
 File: assets/DFD/module16.jpg Graphic file (type jpg)
 <use assets/DFD/module16.jpg>
 Package pdftex.def Info: assets/DFD/module16.jpg  used on input line 1003.
 (pdftex.def)             Requested size: 446.69698pt x 249.76053pt.
  [132 <./assets/DFD/module15.jpg>]
-<assets/DFD/module17.jpg, id=2700, 613.29124pt x 614.295pt>
+<assets/DFD/module17.jpg, id=2698, 613.29124pt x 614.295pt>
 File: assets/DFD/module17.jpg Graphic file (type jpg)
 <use assets/DFD/module17.jpg>
 Package pdftex.def Info: assets/DFD/module17.jpg  used on input line 1027.
 (pdftex.def)             Requested size: 431.13512pt x 431.84074pt.
  [133 <./assets/DFD/module16.jpg>] [134 <./assets/DFD/module17.jpg>]
-<assets/db_diagrams/ERD_DIAGRAMAS.png, id=2712, 1849.91125pt x 1017.8025pt>
+<assets/db_diagrams/ERD_DIAGRAMAS.png, id=2710, 1849.91125pt x 1017.8025pt>
 File: assets/db_diagrams/ERD_DIAGRAMAS.png Graphic file (type png)
 <use assets/db_diagrams/ERD_DIAGRAMAS.png>
 Package pdftex.def Info: assets/db_diagrams/ERD_DIAGRAMAS.png  used on input li
 ne 1090.
 (pdftex.def)             Requested size: 664.37186pt x 365.52339pt.
  [135] [136 <./assets/db_diagrams/ERD_DIAGRAMAS.png>]
-<assets/db_diagrams/DB_SCHEM.png, id=2724, 1438.37375pt x 1508.63625pt>
+<assets/db_diagrams/DB_SCHEM.png, id=2722, 1438.37375pt x 1508.63625pt>
 File: assets/db_diagrams/DB_SCHEM.png Graphic file (type png)
 <use assets/db_diagrams/DB_SCHEM.png>
 Package pdftex.def Info: assets/db_diagrams/DB_SCHEM.png  used on input line 11
@@ -1538,7 +1518,8 @@ s/sos/share/<token>/...
 [156]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
 put line 199.
- [157] [158]
+ [157{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc}] [158{/usr/share/texmf
+/fonts/enc/dvips/lm/lm-rm.enc}]
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10.95> on input line 288.
  [159] [160] [161] [162]
@@ -2523,7 +2504,7 @@ Package rerunfilecheck Info: File `main.out' has not changed.
 Here is how much of TeX's memory you used:
  25838 strings out of 469438
  498617 string characters out of 5468411
- 866290 words of memory out of 5000000
+ 863288 words of memory out of 5000000
  53072 multiletter control sequences out of 15000+600000
  704837 words of font info for 78 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
@@ -2537,7 +2518,8 @@ lm/lmr12.pfb></usr/share/texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf
 /fonts/type1/public/lm/lmri12.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy1
 0.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy8.pfb></usr/share/texmf/fonts
 /type1/public/lm/lmtk10.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt12.pfb>
-Output written on main.pdf (252 pages, 21214675 bytes).
+
+Output written on main.pdf (252 pages, 21213769 bytes).
 PDF statistics:
  3640 PDF objects out of 4296 (max. 8388607)
  3164 compressed objects within 32 object streams
