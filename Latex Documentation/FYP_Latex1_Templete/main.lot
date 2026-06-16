@@ -1,9 +1,9 @@
 \addvspace {10\p@ }
 \contentsline {table}{\numberline {1.1}{\ignorespaces Comparative Analysis of Existing Systems}}{3}{table.5}%
-\contentsline {table}{\numberline {1.2}{\ignorespaces Tools and Technologies Used in the Project}}{6}{table.18}%
+\contentsline {table}{\numberline {1.2}{\ignorespaces Tools and Technologies Used in the Project}}{6}{table.17}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {3.1}{\ignorespaces User Classes and Characteristics}}{18}{table.42}%
+\contentsline {table}{\numberline {3.1}{\ignorespaces User Classes and Characteristics}}{18}{table.41}%
 \contentsline {table}{\numberline {3.2}{UC-1: Register Account}}{24}{table.3.2}%
 \contentsline {table}{\numberline {3.3}{UC-2: Upload Documents}}{26}{table.3.3}%
 \contentsline {table}{\numberline {3.4}{UC-3: OTP Verification}}{28}{table.3.4}%
@@ -77,45 +77,45 @@
 \contentsline {table}{\numberline {3.72}{FR-16.10: UX \& Accessibility Requirements}}{81}{table.3.72}%
 \contentsline {table}{\numberline {3.73}{Requirement Traceability Matrix}}{86}{table.3.73}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {4.1}{\ignorespaces Backend MVC Structure}}{92}{table.147}%
-\contentsline {table}{\numberline {4.2}{\ignorespaces Data Dictionary – Booking Table}}{140}{table.301}%
-\contentsline {table}{\numberline {4.3}{\ignorespaces Data Dictionary – ChatMessage Table}}{141}{table.303}%
-\contentsline {table}{\numberline {4.4}{\ignorespaces Data Dictionary – SosIncident Table}}{141}{table.305}%
-\contentsline {table}{\numberline {4.5}{\ignorespaces Data Dictionary – Driver Fields in UsersData}}{142}{table.307}%
-\contentsline {table}{\numberline {4.6}{\ignorespaces Data Dictionary – TripLiveLocationUpdate Table}}{142}{table.309}%
-\contentsline {table}{\numberline {4.7}{\ignorespaces Data Dictionary – Passenger Fields in UsersData}}{142}{table.311}%
-\contentsline {table}{\numberline {4.8}{\ignorespaces Data Dictionary – TripPayment Table}}{143}{table.313}%
-\contentsline {table}{\numberline {4.9}{\ignorespaces Data Dictionary – Trip Table}}{143}{table.315}%
-\contentsline {table}{\numberline {4.10}{\ignorespaces Data Dictionary – Route Table}}{144}{table.317}%
-\contentsline {table}{\numberline {4.11}{\ignorespaces Data Dictionary – EmergencyContact Table}}{144}{table.319}%
-\contentsline {table}{\numberline {4.12}{\ignorespaces Data Dictionary – UsersData Table}}{145}{table.321}%
-\contentsline {table}{\numberline {4.13}{\ignorespaces Data Dictionary – Vehicle Table}}{145}{table.323}%
-\contentsline {table}{\numberline {4.14}{\ignorespaces Data Dictionary – RouteStop Table}}{146}{table.325}%
-\contentsline {table}{\numberline {4.15}{\ignorespaces UsersData Table Structure}}{147}{table.329}%
-\contentsline {table}{\numberline {4.16}{\ignorespaces Passenger-Specific Table Fields}}{147}{table.333}%
-\contentsline {table}{\numberline {4.17}{\ignorespaces Driver-Specific Table Fields}}{148}{table.336}%
-\contentsline {table}{\numberline {4.18}{\ignorespaces Vehicle Table}}{148}{table.339}%
-\contentsline {table}{\numberline {4.19}{\ignorespaces Route Table}}{149}{table.342}%
-\contentsline {table}{\numberline {4.20}{\ignorespaces Booking Table}}{149}{table.345}%
-\contentsline {table}{\numberline {4.21}{\ignorespaces Trip Table}}{150}{table.348}%
-\contentsline {table}{\numberline {4.22}{\ignorespaces TripPayment Table}}{150}{table.351}%
-\contentsline {table}{\numberline {4.23}{\ignorespaces SosIncident Table}}{151}{table.354}%
-\contentsline {table}{\numberline {4.24}{\ignorespaces EmergencyContact Table}}{151}{table.357}%
-\contentsline {table}{\numberline {4.25}{\ignorespaces ChatMessage Table}}{151}{table.360}%
+\contentsline {table}{\numberline {4.1}{\ignorespaces Backend MVC Structure}}{92}{table.146}%
+\contentsline {table}{\numberline {4.2}{\ignorespaces Data Dictionary – Booking Table}}{140}{table.300}%
+\contentsline {table}{\numberline {4.3}{\ignorespaces Data Dictionary – ChatMessage Table}}{141}{table.302}%
+\contentsline {table}{\numberline {4.4}{\ignorespaces Data Dictionary – SosIncident Table}}{141}{table.304}%
+\contentsline {table}{\numberline {4.5}{\ignorespaces Data Dictionary – Driver Fields in UsersData}}{142}{table.306}%
+\contentsline {table}{\numberline {4.6}{\ignorespaces Data Dictionary – TripLiveLocationUpdate Table}}{142}{table.308}%
+\contentsline {table}{\numberline {4.7}{\ignorespaces Data Dictionary – Passenger Fields in UsersData}}{142}{table.310}%
+\contentsline {table}{\numberline {4.8}{\ignorespaces Data Dictionary – TripPayment Table}}{143}{table.312}%
+\contentsline {table}{\numberline {4.9}{\ignorespaces Data Dictionary – Trip Table}}{143}{table.314}%
+\contentsline {table}{\numberline {4.10}{\ignorespaces Data Dictionary – Route Table}}{144}{table.316}%
+\contentsline {table}{\numberline {4.11}{\ignorespaces Data Dictionary – EmergencyContact Table}}{144}{table.318}%
+\contentsline {table}{\numberline {4.12}{\ignorespaces Data Dictionary – UsersData Table}}{145}{table.320}%
+\contentsline {table}{\numberline {4.13}{\ignorespaces Data Dictionary – Vehicle Table}}{145}{table.322}%
+\contentsline {table}{\numberline {4.14}{\ignorespaces Data Dictionary – RouteStop Table}}{146}{table.324}%
+\contentsline {table}{\numberline {4.15}{\ignorespaces UsersData Table Structure}}{147}{table.328}%
+\contentsline {table}{\numberline {4.16}{\ignorespaces Passenger-Specific Table Fields}}{147}{table.332}%
+\contentsline {table}{\numberline {4.17}{\ignorespaces Driver-Specific Table Fields}}{148}{table.335}%
+\contentsline {table}{\numberline {4.18}{\ignorespaces Vehicle Table}}{148}{table.338}%
+\contentsline {table}{\numberline {4.19}{\ignorespaces Route Table}}{149}{table.341}%
+\contentsline {table}{\numberline {4.20}{\ignorespaces Booking Table}}{149}{table.344}%
+\contentsline {table}{\numberline {4.21}{\ignorespaces Trip Table}}{150}{table.347}%
+\contentsline {table}{\numberline {4.22}{\ignorespaces TripPayment Table}}{150}{table.350}%
+\contentsline {table}{\numberline {4.23}{\ignorespaces SosIncident Table}}{151}{table.353}%
+\contentsline {table}{\numberline {4.24}{\ignorespaces EmergencyContact Table}}{151}{table.356}%
+\contentsline {table}{\numberline {4.25}{\ignorespaces ChatMessage Table}}{151}{table.359}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {5.1}{\ignorespaces External Services and Technologies Used}}{170}{table.408}%
-\contentsline {table}{\numberline {5.2}{\ignorespaces Deployment Details}}{207}{table.520}%
+\contentsline {table}{\numberline {5.1}{\ignorespaces External Services and Technologies Used}}{170}{table.407}%
+\contentsline {table}{\numberline {5.2}{\ignorespaces Deployment Details}}{207}{table.519}%
 \addvspace {10\p@ }
-\contentsline {table}{\numberline {6.1}{\ignorespaces Unit Testing Execution Summary}}{209}{table.525}%
-\contentsline {table}{\numberline {6.2}{\ignorespaces Backend – Authentication and Profile Views}}{209}{table.528}%
-\contentsline {table}{\numberline {6.3}{\ignorespaces Backend – Database Integration and Smoke Tests}}{210}{table.530}%
-\contentsline {table}{\numberline {6.4}{\ignorespaces Backend – Ride Posting and Trip Management}}{210}{table.532}%
-\contentsline {table}{\numberline {6.5}{\ignorespaces Backend – Administration and SOS Handling}}{210}{table.534}%
-\contentsline {table}{\numberline {6.6}{\ignorespaces Frontend – Routing and Path Execution Logic}}{211}{table.537}%
-\contentsline {table}{\numberline {6.7}{\ignorespaces Frontend – Utilities and Controllers Contract Verification}}{211}{table.540}%
-\contentsline {table}{\numberline {6.8}{\ignorespaces Frontend – UI Screen Structure Verification}}{212}{table.542}%
-\contentsline {table}{\numberline {6.9}{\ignorespaces Integration Testing Summary}}{212}{table.545}%
-\contentsline {table}{\numberline {6.10}{\ignorespaces Automated Security Testing Tools and Findings}}{220}{table.576}%
-\contentsline {table}{\numberline {6.11}{\ignorespaces ML Model Evaluation - Accuracy and Ranking Metrics}}{222}{table.587}%
-\contentsline {table}{\numberline {6.12}{\ignorespaces Worst 10 Events by Booked Rank (Out of 50 Candidates)}}{223}{table.590}%
+\contentsline {table}{\numberline {6.1}{\ignorespaces Unit Testing Execution Summary}}{209}{table.524}%
+\contentsline {table}{\numberline {6.2}{\ignorespaces Backend – Authentication and Profile Views}}{209}{table.527}%
+\contentsline {table}{\numberline {6.3}{\ignorespaces Backend – Database Integration and Smoke Tests}}{210}{table.529}%
+\contentsline {table}{\numberline {6.4}{\ignorespaces Backend – Ride Posting and Trip Management}}{210}{table.531}%
+\contentsline {table}{\numberline {6.5}{\ignorespaces Backend – Administration and SOS Handling}}{210}{table.533}%
+\contentsline {table}{\numberline {6.6}{\ignorespaces Frontend – Routing and Path Execution Logic}}{211}{table.536}%
+\contentsline {table}{\numberline {6.7}{\ignorespaces Frontend – Utilities and Controllers Contract Verification}}{211}{table.539}%
+\contentsline {table}{\numberline {6.8}{\ignorespaces Frontend – UI Screen Structure Verification}}{212}{table.541}%
+\contentsline {table}{\numberline {6.9}{\ignorespaces Integration Testing Summary}}{212}{table.544}%
+\contentsline {table}{\numberline {6.10}{\ignorespaces Automated Security Testing Tools and Findings}}{220}{table.575}%
+\contentsline {table}{\numberline {6.11}{\ignorespaces ML Model Evaluation - Accuracy and Ranking Metrics}}{222}{table.586}%
+\contentsline {table}{\numberline {6.12}{\ignorespaces Worst 10 Events by Booked Rank (Out of 50 Candidates)}}{223}{table.589}%
 \addvspace {10\p@ }

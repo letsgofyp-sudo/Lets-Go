@@ -106,12 +106,12 @@ Bykea &
 % 1.4 Project Deliverables
 % --------------------------------
 
-The Lets Go Ride Sharing App mobile application project will produce the following tangible outputs, encompassing software modules, documentation artifacts, and implementation deliverables.
+The tangible Outputs of the Lets Go Ride Sharing App mobile application project are software modules, documentation artefacts and implementation deliverables.
 
 \textbf{List of Deliverables:}
 
 \begin{enumerate}
-    \item \textbf{Registration \& Verification Module} – A comprehensive user registration system supporting both drivers and passengers. This module gathers and validates user information including name, phone number, email, postal address, CNIC, driving license, and vehicle registration details. Its features include role switching between driver and passenger and two-factor authentication for extra security.
+    \item \textbf{Registration \& Verification Module} – A complete system to register users (Drivers & Passengers). This module gathers and validates the user data. Name, Phone number, e-mail, Post oce address, CNIC, driving license, Vehicle. registration details. They come with capability to swap roles between driver and passenger, and two-factor authentication for added security.
 
     \item \textbf{Ride Request \& Acceptance Module} – Facilitates smooth communication between drivers and passengers through ride requests, real-time notifications, fare estimates, and ride progress updates. It includes a well-defined cancellation policy with clear conditions.
 
@@ -129,46 +129,46 @@ The Lets Go Ride Sharing App mobile application project will produce the followi
 
     \item \textbf{Software Documentation} – Complete project documentation consisting of Software Requirements Specification (SRS), Software Design Document (SDD), test cases, user manuals, and API documentation for future maintenance and scalability.
 
-    \item \textbf{Deployed Application} – A fully functional mobile application build for testing and demonstration purposes. The delivered build is in the form of an Android APK, and iOS distribution is planned as future work.
+    \item \textbf{Deployed Application} – A fully functional mobile application that is deployed for testing and demo use. The released build is available as an Android APK, and soon will be released for iOS as well.
 \end{enumerate}
 
 % --------------------------------
 % 1.5 System Limitations / Constraints
 % --------------------------------
 
-The Lets Go Ride Sharing App mobile application, while comprehensive in its design, operates within certain limitations and constraints that must be acknowledged for realistic project expectations.
+While well designed, the mobile application Lets Go Ride Sharing App has a number of limits and restrictions that need to be recognized for realistic expectations of the project.
 
 \begin{itemize}
-    \item \textbf{Dependence on User Participation:} The effectiveness of ride matching depends heavily on a critical mass of active users. With a small user base, efficient ride matching becomes difficult, potentially leading to limited ride options for passengers and fewer passenger requests for drivers during the initial deployment phase.
+    \item \textbf{User Participation is essential for the success of ride matching:} A critical player of the process is having a large number of active users. There are fewer options passengers will have to match up with drivers during the first deployment because there is limited use of the system, and ecient ride matching is difficult.
 
-    \item \textbf{Reliance on Third-Party Services:} The application depends on external mapping APIs for location tracking and route calculation, as well as LLM APIs for chatbot integration. Service downtime, API changes, or rate limitations imposed by these third-party providers may temporarily affect application functionality and user experience.
+    \item \textbf{Relying on Third-Party Services:} The app relies on third-party mapping APIs to provide location tracking, route calculation, and LLM APIs to enhance the chatbot feature. This could cause a period of downtime, API changes, or limitations on API rates from these third-party providers, and make the functionality of the application operate differently for some period of time, depending on the specific changes made.
 
-    \item \textbf{Internet Connectivity \& Location Accuracy:} Real-time features including ride matching, location tracking, and fare calculation require stable internet connectivity and accurate GPS data. Users in areas with poor network coverage or inaccurate GPS signals may experience degraded performance or inability to use core features.
+    \item \textbf{Internet Connectivity \& Location Accuracy:} The need for real-time features such as ride-matching, location tracking and fare calculations come with the condition of robust Internet connectivity and accurate GPS information. Depending on the location, if GPS signal is not convenient or accurate, the user could experience poor performance and/or not have access to core features.
 
-    \item \textbf{Security \& Verification Overheads:} The thorough manual verification process for user documents (CNIC, driving license, vehicle registration) enhances safety but may slow down the registration process. New users might face delays before they can fully utilize the platform, which could affect user acquisition and retention.
+    \item \textbf{Comprehensive manual Security and Verification Overheads:} Manual validation of User documents (CNIC, driving license, vehicle registration) increases security but could slow down the Registration process. However, there may be delays for new users to leverage their full capacity with the platform, potentially impacting user acquisition and retention.
 
-    \item \textbf{Payment Gateways:} The current scope does not include integration with automated online payment gateways. Transactions rely on cash and manual verification of bank transfers, which may introduce delays in payment confirmation and requires additional administrative overhead for payment reconciliation.
+    \item \textbf{Automated Payment Gateways:} Payment Gateways are also outside of the scope of the current work. Transactions are dependent on cash payments and manual verification of bank payments and can lead to delays in payment confirmation and extra administration in reconciling payments.
 
-    \item \textbf{Geographic Scope:} Initial deployment is limited to specific local communities and urban areas. Rural regions and smaller cities may not be served during the initial phases, limiting the application's reach and accessibility.
+    \item \textbf{Geographic Scope:} Early deployment to certain local communities and urban areas: During the initial stages, the application may be provided only for rural areas and for smaller cities, which will confine its scope of service and its usage and reduced accessibility.
 
-    \item \textbf{Time and Resource Constraints:} As an academic project with defined timelines, certain advanced features or extensive scalability testing may be deferred to future iterations. The development team comprises two students, limiting development capacity and specialization.
+    \item \textbf{Resource and Time Constraints:} Some high level features or deep testing of scalability testing could be planned as future improvements due to time and resources constraints as part of the academic project with a fixed timeline. A development team of two students reduces both the capacity for development and level of specialization.
 \end{itemize}
 
 % --------------------------------
 % 1.6 Tools and Technologies
 % --------------------------------
 
-The Lets Go Ride Sharing App mobile application leverages a carefully selected technology stack for compatibility across platforms, performance on the backend, efficient data handling, and scalable architecture. Specific project needs and constraints guide each technology choice.
+Our mobile application named Lets Go Ride Sharing App Rideshare App uses a strategically updated tech stack for end-to-end compatibility, optimized processing, efficient data management and future-proof scalable architecture. Each choice of technology reflects specific needs or restrictions of the project.
 
-\textbf{Frontend Development:} Flutter with Dart SDK is chosen for cross-platform mobile app development so that one codebase can be used for both Android and iOS platforms. This saves development time and effort while keeping native-like performance and a smooth user experience on all devices. Flutter's widget library also provides ample scope to implement the user-friendly interface required by the project.
+\textbf{For cross-platform mobile app development, Frontend Development:} Flutter with Dart SDK is selected, meaning that the same code is used for both Android and iOS platforms. It saves development time and effort, and maintains native-like performance and smooth user experience across all devices. Flutter's "widgets" library also gives a lot of flexibility to get the user-friendly interface that this project needs.
 
-\textbf{Backend Development:} Python with Django offers a powerful, scalable, and secure backend framework. Django's security features, ORM, and template system help development while promoting good authentication and access control practices. The implemented backend uses Django 6.0.5 as per the project dependency, and the test environment uses Python 3.12.
+\textbf{Backend Development frame-work:} Python with Django provides a productive backend framework that is powerful, scalable, and secure. Django's security capabilities, ORM and template system assist development and encourage well-designed security and access control. The backend implemented with Django 6.0.5 is based on the project dependency and for testing, Python 3.12 is used.
 
-\textbf{Database Management:} PostgreSQL is used as the main database for real-time data management, offering reliability, ACID compliance, and support for complex queries needed for route matching and user data management. Its JSON support allows it to be used flexibly with diverse data structures across different modules.
+\textbf{Real time data management:} PostgreSQL as main data source for data real-time access: highly reliable, ACID compliant, supports complex query requirements which are essential for route matching and user data management. It is flexible with various data types and can be used within various modules thanks to its JSON support.
 
-\textbf{Administrative Interface:} HTML5, CSS3, and JavaScript are used to create the web-based administrative interface, which is responsive and user-friendly for administrators to manage users, track transactions, and settle disagreements.
+\textbf{Admin UI: } Responsive and easy-to-use, HTML5/CSS3/JS web interface for administration – for user management, transactions monitoring, conflict resolutions etc.
 
-\textbf{External APIs:} Maps API integration allows route visualization, distance calculation, and real-time location tracking for fare estimation. LLM API integration powers the chatbot module for natural language understanding and automatic user support.
+\textbf{External APIs Used:} Maps API integration with External API enables visualization of route, calculation of distance, and tracking of current position in real time for fare calculation. The module with natural language understanding and automatic user support is powered by the integration with the LLM API.
 
 \textbf{Machine Learning:} Python machine learning libraries such as scikit-learn and TensorFlow enable the development of content-based recommendation systems, predictive analytics, and personalized ride suggestions.
 
@@ -211,15 +211,15 @@ The Lets Go Ride Sharing App project shows full-fledged integration of academic 
 
 \subsection{Programming Fundamentals}
 
-The project uses basic programming logic and principles of object-oriented programming in all modules. Classes and objects represent real-world objects like users, vehicles, routes, and rides. Encapsulation helps to ensure data integrity in each module of the application, inheritance helps in code reuse in similar cases, and polymorphism provides flexibility in dealing with different user roles and components. Modular concepts and practices are followed in the separation of concerns across the modules that form the system. Each feature has clearly defined interfaces. Good coding style, such as sensible naming, properly formatted conventions, indentation, and detailed comments, supports maintainability and readability.
+All modules of the project are based on basic programming logic and principles of the object-oriented programming. Classes and objects are used to represent real-world objects, such as users, vehicles, routes, and rides. Each module of the application will have data integrity ensured by encapsulation, inheritance will help in code reuse in similar situations and polymorphism will be flexible in addressing different roles of the users and component of the application. The separation of concerns applies to the different modules that make up the system, in accordance with modular approaches and practices. Well defined interfaces of each feature. Readability and maintainability support good coding style, which includes sensible naming, the conventions followed should be properly formulated, code should be indented and detailed comments were used.
 
 \subsection{Data Structures and Algorithms}
 
-Proper data management is essential for route matching and ride recommendations. The project uses suitable data structures such as hash maps for fast user lookups, queues for ride request maintenance and processing, and graphs for route representation and optimization. Search algorithms facilitate efficient matchmaking of passengers with drivers according to shared routes. Sorting algorithms present ride listings based on relevance, distance, and time. Optimization techniques minimize route deviations and reduce computational complexity for real-time updates. Machine learning algorithms look at travel patterns for personalized recommendations.
+Effective data management is key to route matching and ride recommendations. This project relies on the appropriate data structures like hash maps for quick user access, queues for ride requests as well as their management and processing, and graphs for route representation and optimization. The search algorithms allow the efficient matching process of passengers and drivers, based on specifically shared routes. Sorting algorithms provide a list of rides by relevance, distance, and time. Various techniques are proposed and tested in this work to reduce deviations in the routes and computational complexity for real-time updates.Various techniques are discussed and tested in this work to reduce deviations in the routes and computational complexity for real-time updates. Travel pattern analysis takes place using machine learning algorithms for the purpose of personal recommendation.
 
 \subsection{Database Management Systems}
 
-Database design is based on normalization principles that eliminate data redundancy and ensure data integrity. An entity-relationship diagram is used to describe relationships between users, vehicles, rides, payments, and reviews. PostgreSQL uses these relationships through well-formulated tables, primary keys, foreign keys, and indexes to optimize queries. Complex SQL queries fetch rides according to location and time, based on user preferences. Transaction management guarantees consistency of data throughout the payment system and ride confirmation. Database security measures are implemented to protect detailed user information such as CNIC and license details.
+The principles of database design used are normalization principles which aim to avoid data duplication and maintain data integrity. User-vehicle-ride-payment-review relations are described by an entity-relationship diagram. These relationships are managed by well-made tables and relationships using primary and foreign keys and indexes in PostgreSQL. Based on users' preferences, complex SQL queries are used to retrieve rides by location and time. Transaction management guarantees consistency of data throughout the payment system and ride confirmation. The security measures are taken by the database to keep detailed information of the user, like CNIC, license details safe.
 
 \subsection{Software Engineering}
 
